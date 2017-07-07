@@ -1,0 +1,8 @@
+---- video_chId Matches (7 in 2 files) ----
+Displayer.cpp (src):	m_renders[0].video_chId = 0;
+Displayer.cpp (src):	m_renders[1].video_chId = -1;
+Displayer.cpp (src):		m_renders[iPrm].video_chId = chId;
+Displayer.cpp (src):		chId = m_renders[winId].video_chId;
+Displayer.cpp (src):		chId = m_renders[winId].video_chId;
+Displayer.cpp (src):		chId = m_renders[winId].video_chId;
+Displayer.hpp (include):	int video_chId;
