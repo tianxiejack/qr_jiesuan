@@ -23,6 +23,7 @@
 #include "app_global.h"
 #include "msgDriv.h"
 
+#if 0
 typedef enum _sys_msg_id_ {
     MSGID_SYS_INIT  = 0x00000000,           ///< internal cmd system init.
     MSGID_SYS_RESET,
@@ -64,6 +65,7 @@ typedef enum _sys_msg_id_ {
 
 }
 eSysMsgId, MSG_PROC_ID;
+#endif
 
 //void MSGAPI_initial(MSGDRIV_Handle handle);
 void MSGAPI_unInitial(MSGDRIV_Handle handle);

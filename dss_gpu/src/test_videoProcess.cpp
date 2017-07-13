@@ -16,6 +16,8 @@
 #include "process021.hpp"
 #include "dx_main.h"
 #include "Gpio026.h"
+#include  "Tasklist.h"
+
 using namespace std;
 using namespace cv;
 
@@ -28,13 +30,12 @@ int main(int argc, char **argv)
 	App_dxmain();
 
 	proc.creat();
-
+	
 
 	proc.init();
 
 	proc.run();
-
-
+	mainCtrl();
 	//Hard_Init();
 	
 	glutMainLoop();

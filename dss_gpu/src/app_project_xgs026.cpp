@@ -460,8 +460,8 @@ int APP_text_genContext(int chId, int winId, char * str, int strBufLen, Int16 *t
 		year = gDXD_info.sysConfig[CFGID_OC25_SOFTVER_YEAR];
 		month =gDXD_info.sysConfig[CFGID_OC25_SOFTVER_MON];
 		day  = gDXD_info.sysConfig[CFGID_OC25_SOFTVER_DAY];
-                enableShow  = gDXD_info.sysConfig[CFGID_OC25_SOFTVER_EN];//w
-
+              enableShow  = gDXD_info.sysConfig[CFGID_OC25_SOFTVER_EN];//w
+		
 		if(work == 0 && enableShow != 0)
 			sprintf(pStr+lineStrLen,"SSDS SW V%d.%02d 20%02d %02d %02d",ver1,ver2,year,month,day);
 		else
@@ -532,7 +532,8 @@ int APP_text_genContext(int chId, int winId, char * str, int strBufLen, Int16 *t
             work = (work == 11)?11:((work -1)%10);
 
 		
-			
+	//printf("!!!!!!!work = %d\n ",work);	
+	
             if(Vps_Stat == 1 && work != 3)
                 sprintf(pStr, "%s      ",&gWorkStr[work][0]);
             else if(Vps_Stat == 0 && work == 3)

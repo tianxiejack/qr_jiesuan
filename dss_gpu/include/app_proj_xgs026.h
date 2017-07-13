@@ -453,7 +453,7 @@ static int vcapWH[2/*eSen_Max*/][2] = {{1280, 1024}, {1280, 1024}};
 static int vcapWH[2/*eSen_Max*/][2] = {{720, 576}, {720, 576}};
 #endif
 
-static int vdisWH[2][2] = {{720, 576}, {320, 256}};		// main and picp
+static int vdisWH[2][2] ={{720, 576}, {720, 576}};	 //{{720, 576}, {320, 256}};		// main and picp
 
 //static double FOVw[2][4]={{24.0, 9.6,3.0,1.1},{40.0,9.6,3.2,0.83}};
 //static double FOVh[2][4]={{19.2, 7.68,2.4,0.88},{32.0,9.6,3.2,0.83}};

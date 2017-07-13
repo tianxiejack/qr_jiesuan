@@ -42,7 +42,7 @@ int OSA_thrCreate(OSA_ThrHndl *hndl, OSA_ThrEntryFunc entryFunc, Uint32 pri, Uin
 
   status = pthread_create(&hndl->hndl, &thread_attr, entryFunc, prm);
 
-  printf("*****fun=%s  line=%d   status=%d*****\n",__func__,__LINE__,status);
+  //printf("*****fun=%s  line=%d   status=%d*****\n",__func__,__LINE__,status);
   if(status != OSA_SOK) {
 	  printf("fun=%s  line=%d\n",__func__,__LINE__);
     OSA_ERROR("OSA_thrCreate() - Could not create thread [%d]\n", status);

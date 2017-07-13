@@ -287,7 +287,7 @@ void v4l2_camera::parse_line_header2(int channels, unsigned char *p)
 				putFullBuffer(split_buffer_ch[chId]);
 				split_buffer_ch[chId] = getEmptyBuffer(chId);
 				fieldmask[chId] = 0;
-				OSA_printf("%s: YES ***************!!!!\n", __func__);
+			//	OSA_printf("%s: YES ***************!!!!\n", __func__);
 			}else if(fieldId == 1){
 				//OSA_printf("%s: YES !!!!\n", __func__);
 			}

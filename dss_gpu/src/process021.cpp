@@ -16,6 +16,7 @@
 #include"app_ctrl.h"
 #include"dx.h"
 #include"osd_cv.h"
+#define VIDEO1280X1024 1
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
 {
@@ -238,7 +239,7 @@ void CProcess021::OnCreate()
 	if(pIStuts->PicpPosStat<0||pIStuts->PicpPosStat>3)
 		pIStuts->PicpPosStat=0;
 	//pIStuts->PicpPosStat=0;
-#endif
+	#endif
 
 };
 void CProcess021::OnDestroy(){};
@@ -286,7 +287,7 @@ void CProcess021::process_osd(void *pPrm)
 	Line_Param_fb * lineParam = NULL;
 	Text_Param_fb * textParampri = NULL;
 	Line_Param_fb * lineParampri = NULL;
-	
+	//printf("!!!!!!!!!!!!!!!!!!!!! OSD !!!!!!!!!!!!!!!!!!!!!!!!!\n");	
 #if 0
 	static int iFrameCnt=0;
 	iFrameCnt++;
@@ -308,10 +309,10 @@ void CProcess021::process_osd(void *pPrm)
 		lineParam = (Line_Param_fb *)&grpxChWinPrms.chParam[devId].winPrms[winId];
 		lineParampri = (Line_Param_fb *)&grpxChWinPrms.chParam[devId].winPrms_pri[winId];
 		if(onece<ALG_LINK_GRPX_MAX_WINDOWS)
-			{
-				memcpy(textParampri,textParam,sizeof(Text_Param_fb));
-				onece++;
-			}
+		{
+			memcpy(textParampri,textParam,sizeof(Text_Param_fb));
+			onece++;
+		}
 		
 		//if(textParampri->enableWin)
 		//	{
@@ -319,9 +320,9 @@ void CProcess021::process_osd(void *pPrm)
 		//	}
 
 		if(winId==WINID_TV_FOV_CHOOSE_1/2)
-			{
-				//printf("textParam->enableWin=%d  objType=%d valid=%d\n",textParam->enableWin,textParam->objType,textParam->text_valid);
-			}
+		{
+			//printf("textParam->enableWin=%d  objType=%d valid=%d\n",textParam->enableWin,textParam->objType,textParam->text_valid);
+		}
 		//printf("textParam->enableWin=%d  objType=%d valid=%d\n",textParam->enableWin,textParam->objType,textParam->text_valid);
 		if(!textParam->enableWin)
 			continue;
@@ -925,68 +926,67 @@ void CProcess021::DrawMeanuCross(int lenx,int leny,int fcolour , bool bShow )
 {
 	int templenx=lenx;
 	int templeny=leny;
-	int lenw=50;
+	int lenw=25;
 	unsigned char colour = (bShow) ?fcolour : 0;
-	int centerx=vdisWH[0][0]/2;
-	int centery=vdisWH[0][1]/2;
+	int centerx=640;//vdisWH[0][0]/2;
+	int centery=512;//vdisWH[0][1]/2;
 	Osd_cvPoint start;
 	Osd_cvPoint end;
 
 	////v
+	
 	start.x=centerx-templenx;
-	start.y=centery-templeny;
-	end.x=centerx-templenx+lenw;
-	end.y=centery-templeny;
+	start.y=centery-templeny-100;
+	end.x=start.x + lenw;
+	end.y=start.y;
 	DrawcvLine(m_dccv,&start,&end,colour,1);
+
 
 	start.x=centerx+templenx-lenw;
-	start.y=centery-templeny;
-	end.x=centerx+templenx;
-	end.y=centery-templeny;
+	start.y=centery-templeny-100;
+	end.x=start.x + lenw;
+	end.y=start.y;
 	DrawcvLine(m_dccv,&start,&end,colour,1);
 
 
-	start.x=centerx-templenx;
-	start.y=centery+templeny;
-	end.x=centerx-templenx+lenw;
-	end.y=centery+templeny;
+	start.x=centerx - templenx;
+	start.y=centery + templeny;
+	end.x=start.x + lenw;
+	end.y=start.y;
 	DrawcvLine(m_dccv,&start,&end,colour,1);
+
 
 	start.x=centerx+templenx-lenw;
 	start.y=centery+templeny;
-	end.x=centerx+templenx;
-	end.y=centery+templeny;
+	end.x=start.x+lenw;
+	end.y=start.y;
 	DrawcvLine(m_dccv,&start,&end,colour,1);
 
 	//h
-	start.x=centerx-templenx;
+	start.x=centerx-templenx-100;
 	start.y=centery-templeny;
-	end.x=centerx-templenx;
-	end.y=centery-templeny+lenw;
+	end.x=start.x;
+	end.y=start.y+lenw;
 	DrawcvLine(m_dccv,&start,&end,colour,1);
 
 	start.x=centerx+templenx;
 	start.y=centery-templeny;
-	end.x=centerx+templenx;
-	end.y=centery-templeny+lenw;
+	end.x=start.x;
+	end.y=start.y +lenw;
 	DrawcvLine(m_dccv,&start,&end,colour,1);
 
 
-	start.x=centerx-templenx;
+	start.x=centerx-templenx-100;
 	start.y=centery+templeny-lenw;
-	end.x=centerx-templenx;
-	end.y=centery+templeny;
+	end.x=start.x;
+	end.y=start.y + lenw;
 	DrawcvLine(m_dccv,&start,&end,colour,1);
 
 	start.x=centerx+templenx;
 	start.y=centery+templeny-lenw;
-	end.x=centerx+templenx;
-	end.y=centery+templeny;
+	end.x=start.x;
+	end.y=start.y + lenw;
 	DrawcvLine(m_dccv,&start,&end,colour,1);
-
-
-
-	
 
 
 }
@@ -1019,44 +1019,44 @@ void CProcess021::DrawdashCross(int x,int y,int fcolour ,bool bShow /*= true*/)
 	
 	//Drawcvcross(m_dc,&lineparm);
 	if(!bShow)
-		{
-				//startx=PiexltoWindowsx(secBak[1].x,extInCtrl.SensorStat);
-				//starty=PiexltoWindowsy(secBak[1].y,extInCtrl.SensorStat);
-				lineparm.x=secBak[1].x;
-				lineparm.y=secBak[1].y;
-				DrawcvDashcross(m_dccv,&lineparm,dashlen,dashlen);
-				startx=secBak[0].x;//PiexltoWindowsx(secBak[0].x,extInCtrl.SensorStat);
-				starty=secBak[0].y;//PiexltoWindowsy(secBak[0].y,extInCtrl.SensorStat);
-				endx=secBak[1].x;//PiexltoWindowsx(secBak[1].x,extInCtrl.SensorStat);
- 				endy=secBak[1].y;//PiexltoWindowsy(secBak[1].y,extInCtrl.SensorStat);
-				
-				drawdashlinepri(m_dccv,startx,starty,endx,endy,dashlen,dashlen,colour);
-		}
+	{
+			//startx=PiexltoWindowsx(secBak[1].x,extInCtrl.SensorStat);
+			//starty=PiexltoWindowsy(secBak[1].y,extInCtrl.SensorStat);
+			lineparm.x=secBak[1].x;
+			lineparm.y=secBak[1].y;
+			DrawcvDashcross(m_dccv,&lineparm,dashlen,dashlen);
+			startx=secBak[0].x;//PiexltoWindowsx(secBak[0].x,extInCtrl.SensorStat);
+			starty=secBak[0].y;//PiexltoWindowsy(secBak[0].y,extInCtrl.SensorStat);
+			endx=secBak[1].x;//PiexltoWindowsx(secBak[1].x,extInCtrl.SensorStat);
+				endy=secBak[1].y;//PiexltoWindowsy(secBak[1].y,extInCtrl.SensorStat);
+			
+			drawdashlinepri(m_dccv,startx,starty,endx,endy,dashlen,dashlen,colour);
+	}
 
 	else if((extInCtrl.SecAcqFlag)&&(extInCtrl.DispGrp[extInCtrl.SensorStat]<3))
-		{
-				//printf("ImgPixelX=%d,ImgPixelY=%d  extInCtrl.DispGrp[extInCtrl.SensorStat]=%d \n",extInCtrl.ImgPixelX,extInCtrl.ImgPixelY,extInCtrl.DispGrp[extInCtrl.SensorStat]);
-				DrawcvDashcross(m_dccv,&lineparm,dashlen,dashlen);
-				startx=PiexltoWindowsx(extInCtrl.unitAxisX[extInCtrl.SensorStat ],extInCtrl.SensorStat);
-				starty=PiexltoWindowsy(extInCtrl.unitAxisY[extInCtrl.SensorStat ],extInCtrl.SensorStat);
-				endx=lineparm.x;//PiexltoWindowsx(extInCtrl.ImgPixelX[extInCtrl.SensorStat],extInCtrl.SensorStat);
- 				endy=lineparm.y;//PiexltoWindowsy(extInCtrl.ImgPixelY[extInCtrl.SensorStat],extInCtrl.SensorStat);
-				
-				drawdashlinepri(m_dccv,startx,starty,endx,endy,dashlen,dashlen,colour);
+	{
+			//printf("ImgPixelX=%d,ImgPixelY=%d  extInCtrl.DispGrp[extInCtrl.SensorStat]=%d \n",extInCtrl.ImgPixelX,extInCtrl.ImgPixelY,extInCtrl.DispGrp[extInCtrl.SensorStat]);
+			DrawcvDashcross(m_dccv,&lineparm,dashlen,dashlen);
+			startx=PiexltoWindowsx(extInCtrl.unitAxisX[extInCtrl.SensorStat ],extInCtrl.SensorStat);
+			starty=PiexltoWindowsy(extInCtrl.unitAxisY[extInCtrl.SensorStat ],extInCtrl.SensorStat);
+			endx=lineparm.x;//PiexltoWindowsx(extInCtrl.ImgPixelX[extInCtrl.SensorStat],extInCtrl.SensorStat);
+				endy=lineparm.y;//PiexltoWindowsy(extInCtrl.ImgPixelY[extInCtrl.SensorStat],extInCtrl.SensorStat);
+			
+			drawdashlinepri(m_dccv,startx,starty,endx,endy,dashlen,dashlen,colour);
 
-				secBak[0].x=startx;
-				secBak[0].y=starty;
-				secBak[1].x=endx;
-				secBak[1].y=endy;
-				
-				Osdflag[osdindex]=1;
-				
-		      	
-				//DrawcvDashliner(m_dc,extInCtrl.unitAxisX,extInCtrl.unitAxisX,extInCtrl.ImgPixelX,extInCtrl.ImgPixelY,4,4,colour);
-				//drawdashcross(frame,extInCtrl.ImgPixelX,extInCtrl.ImgPixelY,50,4,4);
-				//drawdashline(frame,extInCtrl.unitAxisX,extInCtrl.unitAxisX,extInCtrl.ImgPixelX,extInCtrl.ImgPixelY,4,4);
-				
-		}
+			secBak[0].x=startx;
+			secBak[0].y=starty;
+			secBak[1].x=endx;
+			secBak[1].y=endy;
+			
+			Osdflag[osdindex]=1;
+			
+	      	
+			//DrawcvDashliner(m_dc,extInCtrl.unitAxisX,extInCtrl.unitAxisX,extInCtrl.ImgPixelX,extInCtrl.ImgPixelY,4,4,colour);
+			//drawdashcross(frame,extInCtrl.ImgPixelX,extInCtrl.ImgPixelY,50,4,4);
+			//drawdashline(frame,extInCtrl.unitAxisX,extInCtrl.unitAxisX,extInCtrl.ImgPixelX,extInCtrl.ImgPixelY,4,4);
+			
+	}
 }
 
 bool CProcess021::OnProcess(int chId, Mat &frame)
@@ -1071,7 +1071,6 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 	int crossshifty=cvRound(vdisWH[0][1]/3);
 	
 	CvScalar colour=GetcvColour(frcolor);
-	
 
 	osdindex=0;
 		//picp cross
@@ -1080,58 +1079,58 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 			startx=crosspicpBak.x;//PiexltoWindowsx(crossBak.x,extInCtrl.SensorStat);
 	 		starty=crosspicpBak.y;//PiexltoWindowsy(crossBak.y,extInCtrl.SensorStat);
 	 		if(Osdflag[osdindex]==1)
-	 			{
-					DrawCross(startx,starty,frcolor,false);
-					Osdflag[osdindex]=0;
-	 			}
+ 			{
+				DrawCross(startx,starty,frcolor,false);
+				Osdflag[osdindex]=0;
+ 			}
 			startx=PiexltoWindowsx(extInCtrl.SensorStat?extInCtrl.AvtPosXTv:extInCtrl.AvtPosXFir,1-extInCtrl.SensorStat);
 	 		starty=PiexltoWindowsy(extInCtrl.SensorStat?extInCtrl.AvtPosYTv:extInCtrl.AvtPosYFir,1-extInCtrl.SensorStat);
 			//printf("pri the startx=%d  starty=%d\n ",startx,starty);
 			switch(extInCtrl.PicpPosStat)
-				{
-					case 0:
-						startx+=crossshiftx;
-						starty-=crossshifty;
-						break;
-					case 1:
-						startx+=crossshiftx;
-						starty+=crossshifty;
-						break;
-					case 2:
-						startx-=crossshiftx;
-						starty+=crossshifty;
-						break;
-					case 3:
-						startx-=crossshiftx;
-						starty-=crossshifty;
-						break;
+			{
+				case 0:
+					startx+=crossshiftx;
+					starty-=crossshifty;
+					break;
+				case 1:
+					startx+=crossshiftx;
+					starty+=crossshifty;
+					break;
+				case 2:
+					startx-=crossshiftx;
+					starty+=crossshifty;
+					break;
+				case 3:
+					startx-=crossshiftx;
+					starty-=crossshifty;
+					break;
 
-					default:
-						break;
-				}
-			
+				default:
+					break;
+			}
+		
 			if(startx<0)
-				{
-					startx=0;
-				}
+			{
+				startx=0;
+			}
 			else if(startx>vdisWH[0][0])
-				{
-					startx=0;
-				}
+			{
+				startx=0;
+			}
 			if(starty<0)
-				{
-					starty=0;
-				}
+			{
+				starty=0;
+			}
 			else if(starty>vdisWH[0][0])
-				{
-					starty=0;
-				}
+			{
+				starty=0;
+			}
 			if(((extInCtrl.PicpSensorStat==1)||(extInCtrl.PicpSensorStat==0))&&(extInCtrl.FrCollimation!=1))
-				{
-					DrawCross(startx,starty,frcolor,true);
-					//printf("picp***********lat the startx=%d  starty=%d\n ",startx,starty);
-					Osdflag[osdindex]=1;
-				}
+			{
+				DrawCross(startx,starty,frcolor,true);
+				//printf("picp***********lat the startx=%d  starty=%d\n ",startx,starty);
+				Osdflag[osdindex]=1;
+			}
 			crosspicpBak.x=startx;
 			crosspicpBak.y=starty;
 
@@ -1343,12 +1342,13 @@ osdindex++;
 osdindex++;
 	// blob detect
 	{
-	if(Osdflag[osdindex]==1)
-	 			{
-					DrawBlob(blob_rectBak, false);
-					Osdflag[osdindex]=0;
-				}
-		if(m_bBlobDetect){
+		if(Osdflag[osdindex]==1)
+		{
+			DrawBlob(blob_rectBak, false);
+			Osdflag[osdindex]=0;
+		}
+		if(m_bBlobDetect)
+		{
 			DrawBlob(m_blobRect, true);
 			memcpy(&blob_rectBak, &m_blobRect, sizeof(BlobRect));
 			Osdflag[osdindex]=1;
@@ -1366,25 +1366,28 @@ osdindex++;
 		DrawdashCross(0,0,frcolor,true);
 		
 	}
-osdindex++;
-	
+
+	osdindex++;	
+
+	//printf("!!!!!!osdflag[%d] = %d\n",osdindex,Osdflag[osdindex]);	//osdindex =5 ;osdflag[5] =0,1,1,1,1...... ;
 	//cross aim
 	{
 		startx=crossBak.x;//PiexltoWindowsx(crossBak.x,extInCtrl.SensorStat);
 	 	starty=crossBak.y;//PiexltoWindowsy(crossBak.y,extInCtrl.SensorStat);
 	 	if(Osdflag[osdindex]==1)
-			{
-				DrawCross(startx,starty,frcolor,false);
-				Osdflag[osdindex]=0;
-	 		}
+		{
+			DrawCross(startx,starty,frcolor,false);
+			Osdflag[osdindex]=0;
+ 		}
 		startx=PiexltoWindowsx(extInCtrl.unitAxisX[extInCtrl.SensorStat],extInCtrl.SensorStat);
 	 	starty=PiexltoWindowsy(extInCtrl.unitAxisY[extInCtrl.SensorStat ],extInCtrl.SensorStat);
 		//OSA_printf("unitAxisX=%d  unitAxisY=%d sensor=%d  prix=%d  prix=%d\n",startx,starty,extInCtrl.SensorStat,extInCtrl.unitAxisX[extInCtrl.SensorStat],extInCtrl.unitAxisY[extInCtrl.SensorStat ]);
+		//printf("!!!!!!extInCtrl.DispGrp[extInCtrl.SensorStat] = %d\n",extInCtrl.DispGrp[extInCtrl.SensorStat]);	// 1
 		if(extInCtrl.DispGrp[extInCtrl.SensorStat]<=3)
-			{
-				DrawCross(startx,starty,frcolor,true);
-				Osdflag[osdindex]=1;
-			}
+		{
+			DrawCross(startx,starty,frcolor,true);
+			Osdflag[osdindex]=1;
+		}
 		//DrawCross(extInCtrl.unitAxisX,extInCtrl.unitAxisY,1,true);
 		crossBak.x=PiexltoWindowsx(extInCtrl.unitAxisX[extInCtrl.SensorStat ],extInCtrl.SensorStat);
 		crossBak.y=PiexltoWindowsy(extInCtrl.unitAxisY[extInCtrl.SensorStat ],extInCtrl.SensorStat);
@@ -1392,16 +1395,12 @@ osdindex++;
 		//memcpy(&crossBak, &m_blobRect, sizeof(BlobRect));
 	}
 
-
-
-
-osdindex++;
+	osdindex++;
 	
-
 	{
 		if(extInCtrl.FrCollimation==1)
 			{
-				
+				//printf("!!!!!!!!!!!!!!!2323223232!!!!!!!!!!\n");  no enter
 				//CFGID_FIELD_GET(tvcorx ,CFGID_TRACK_TV_AXIX);
 				//CFGID_FIELD_GET(tvcory ,CFGID_TRACK_TV_AXIY);
 				tvcorx=extInCtrl.CollPosXFir;
@@ -1456,51 +1455,51 @@ osdindex++;
 	}
 ///fov
 	osdindex++;
-
+//  
 	if(Osdflag[osdindex]==1)
-		{
-			DrawMeanuCross(rectfovBak.x,rectfovBak.y,frcolor,false);
-			Osdflag[osdindex]=0;
-		}
+	{
+		DrawMeanuCross(rectfovBak.x,rectfovBak.y,frcolor,false);
+		Osdflag[osdindex]=0;
+	}
 	if(extInCtrl.DispGrp[extInCtrl.SensorStat]<=3)
-		{
-			int fovw=0;
-			int fovh=0;
-			double ratiox=0.0;
-			double ratioy=0.0;
-			#if 0
-			switch(extInCtrl.FovStat)
-				{
-				case 1:
-					fovw=FOVw[extInCtrl.SensorStat][extInCtrl.FovStat-1][0]/2;
-					fovh=FOVw[extInCtrl.SensorStat][extInCtrl.FovStat-1][1]/2;
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-				case 5:
-					break;
-				default :
-					break;
+	{
+		int fovw=0;
+		int fovh=0;
+		double ratiox=0.0;
+		double ratioy=0.0;
+		#if 0
+		switch(extInCtrl.FovStat)
+			{
+			case 1:
+				fovw=FOVw[extInCtrl.SensorStat][extInCtrl.FovStat-1][0]/2;
+				fovh=FOVw[extInCtrl.SensorStat][extInCtrl.FovStat-1][1]/2;
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			default :
+				break;
 
-				}
-			#endif
-			if(extInCtrl.FovStat<5)
-				{
-					ratiox=FOVw[extInCtrl.SensorStat][(extInCtrl.FovStat)%5][0]/FOVw[extInCtrl.SensorStat][(extInCtrl.FovStat-1)%5][0];
-					ratioy=FOVw[extInCtrl.SensorStat][(extInCtrl.FovStat)%5][1]/FOVw[extInCtrl.SensorStat][(extInCtrl.FovStat-1)%5][1];
-					fovw=vdisWH[0][0]/2*ratiox;
-					fovh=vdisWH[0][1]/2*ratioy;
-					Fovpri[extInCtrl.SensorStat]=extInCtrl.FovStat;
-					DrawMeanuCross(fovw,fovh,frcolor,true);
-					Osdflag[osdindex]=1;
-					rectfovBak.x=fovw;
-					rectfovBak.y=fovh;
-				}
+			}
+		#endif
+		if(extInCtrl.FovStat<5)
+		{
+			ratiox=FOVw[extInCtrl.SensorStat][(extInCtrl.FovStat)%5][0]/FOVw[extInCtrl.SensorStat][(extInCtrl.FovStat-1)%5][0];
+			ratioy=FOVw[extInCtrl.SensorStat][(extInCtrl.FovStat)%5][1]/FOVw[extInCtrl.SensorStat][(extInCtrl.FovStat-1)%5][1];
+			fovw=80;//vdisWH[0][0]/2*ratiox;
+			fovh=80;//vdisWH[0][1]/2*ratioy;
+			Fovpri[extInCtrl.SensorStat]=extInCtrl.FovStat;
+			DrawMeanuCross(fovw,fovh,frcolor,true);
+			Osdflag[osdindex]=1;
+			rectfovBak.x=fovw;
+			rectfovBak.y=fovh;
 		}
+	}
 	
 	//process_osd_test(NULL);
 	
@@ -1538,13 +1537,15 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	if(key == 'a' || key == 'A')
 	{
 		pIStuts->SensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
-		msgdriv_event(MSGID_EXT_INPUT_SENSOR, NULL);
+		//msgdriv_event(MSGID_EXT_INPUT_SENSOR, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_SENSOR,NULL);
 	}
 
 	if(key == 'b' || key == 'B')
 	{
 		pIStuts->PicpSensorStat = (pIStuts->PicpSensorStat + 1) % (eSen_Max+1);
-		msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
+		//msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_ENPICP,NULL);
 	}
 
 	if(key == 'c'|| key == 'C')
@@ -1553,7 +1554,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 			pIStuts->AvtTrkStat = eTrk_mode_acq;
 		else
 			pIStuts->AvtTrkStat = eTrk_mode_target;
-		msgdriv_event(MSGID_EXT_INPUT_TRACK, NULL);
+		//msgdriv_event(MSGID_EXT_INPUT_TRACK, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_TRACK,NULL);
 	}
 
 	if(key == 'd'|| key == 'D')
@@ -1562,7 +1564,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 			pIStuts->ImgMtdStat[pIStuts->SensorStat] = eImgAlg_Disable;
 		else
 			pIStuts->ImgMtdStat[pIStuts->SensorStat] = eImgAlg_Enable;
-		msgdriv_event(MSGID_EXT_INPUT_ENMTD, NULL);
+		//msgdriv_event(MSGID_EXT_INPUT_ENMTD, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_ENMTD,NULL);
 	}
 
 	if (key == 'e' || key == 'E')
@@ -1571,7 +1574,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 			pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Disable;
 		else
 			pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Enable;
-		msgdriv_event(MSGID_EXT_INPUT_ENENHAN, NULL);
+		//msgdriv_event(MSGID_EXT_INPUT_ENENHAN, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_ENENHAN,NULL);
 	}
 
 	if (key == 'o' || key == 'O')
@@ -1580,45 +1584,55 @@ void CProcess021::OnKeyDwn(unsigned char key)
 			pIStuts->ImgBlobDetect[pIStuts->SensorStat] = eImgAlg_Disable;
 		else
 			pIStuts->ImgBlobDetect[pIStuts->SensorStat] = eImgAlg_Enable;
-		msgdriv_event(MSGID_EXT_INPUT_ENBDT, NULL);
+		//msgdriv_event(MSGID_EXT_INPUT_ENBDT, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_ENBDT,NULL);
 	}
 
 	if (key == 't' || key == 'T')
-		{
-			if(pIStuts->ImgVideoTrans[pIStuts->SensorStat])
-				pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Disable;
-			else
-				pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Enable;
-			msgdriv_event(MSGID_EXT_INPUT_RST_THETA, NULL);
-		}
+	{
+		if(pIStuts->ImgVideoTrans[pIStuts->SensorStat])
+			pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Disable;
+		else
+			pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Enable;
+		//msgdriv_event(MSGID_EXT_INPUT_RST_THETA, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_RST_THETA,NULL);
+	}
+	
 	if (key == 'f' || key == 'F')
-		{
-			if(pIStuts->ImgFrezzStat[pIStuts->SensorStat])
-				pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Disable;
-			else
-				pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Enable;
-			
-			msgdriv_event(MSGID_EXT_INPUT_ENFREZZ, NULL);
-		}
+	{
+		if(pIStuts->ImgFrezzStat[pIStuts->SensorStat])
+			pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Disable;
+		else
+			pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Enable;
+		
+		//msgdriv_event(MSGID_EXT_INPUT_ENFREZZ, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_ENFREZZ,NULL);
+	}
+	
 	if (key == 'p'|| key == 'P')
-		{
-			
-			pIStuts->PicpPosStat=(pIStuts->PicpPosStat+1)%4;
-			msgdriv_event(MSGID_EXT_INPUT_PICPCROP, NULL);
-		}
+	{
+		
+		pIStuts->PicpPosStat=(pIStuts->PicpPosStat+1)%4;
+		//msgdriv_event(MSGID_EXT_INPUT_PICPCROP, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_PICPCROP,NULL);
+	}
+	
 	if (key == 'g'|| key == 'G')
-		{
-			
-			
-			msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
-		}
+	{
+		
+		
+		//msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
+	}
+	
 	if (key == 'z'|| key == 'Z')
-		{
-			
-			pIStuts->ImgZoomStat[0]=(pIStuts->ImgZoomStat[0]+1)%2;
-			pIStuts->ImgZoomStat[1]=(pIStuts->ImgZoomStat[1]+1)%2;
-			msgdriv_event(MSGID_EXT_INPUT_ENZOOM, NULL);
-		}
+	{
+		
+		pIStuts->ImgZoomStat[0]=(pIStuts->ImgZoomStat[0]+1)%2;
+		pIStuts->ImgZoomStat[1]=(pIStuts->ImgZoomStat[1]+1)%2;
+		//msgdriv_event(MSGID_EXT_INPUT_ENZOOM, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_ENZOOM,NULL);
+	}
 	
 }
 
@@ -2219,6 +2233,8 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
  int  CProcess021::MSGAPI_initial()
 {
+   OSA_printf("msgapi_initial\n");
+   
    MSGDRIV_Handle handle=&g_MsgDrvObj;
     assert(handle != NULL);
     memset(handle->msgTab, 0, sizeof(MSGTAB_Class) * MAX_MSG_NUM);
@@ -2227,7 +2243,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_SENSOR,           	   MSGAPI_inputsensor,       		    0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_PICPCROP,      		   MSGAPI_croppicp,       		    0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_TRACK,          		   MSGAPI_inputtrack,     		    0);
-    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_ENMTD,                       MSGAPI_inpumtd,       		    0);
+    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_ENMTD,                      MSGAPI_inpumtd,       		    0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_MTD_SELECT,     	   MSGAPI_inpumtdSelect,    		    0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_AIMPOS,          	  	   MSGAPI_setAimRefine,    		    0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_ENENHAN,           	   MSGAPI_inpuenhance,       	    0);
@@ -2238,36 +2254,171 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_AXISPOS,     	  	   MSGAPI_inputpositon,                   0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_COAST,             	   MSGAPI_inputcoast,                      0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_FOVSELECT,                MSGAPI_inputfovselect,                 0);
-    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_FOVSTAT,                	   MSGAPI_inputfovchange,               0);
-    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_SEARCHMOD,              MSGAPI_inputsearchmod,              0);
-    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_VIDEOEN,            	   MSGAPI_inputvideotect,              0);
+    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_FOVSTAT,                   MSGAPI_inputfovchange,               0);
+    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_SEARCHMOD,             MSGAPI_inputsearchmod,              0);
+    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_VIDEOEN,            	   MSGAPI_inputvideotect,                 0);
 	
+//add function
+    MSGDRIV_attachMsgFun(handle,	MSGID_SYS_RESET,                                     MSGAPI_reset_device,	           0);
+#if 0
+    MSGDRIV_attachMsgFun(handle,	MSGID_EXT_INPUT_SYSMODE,           	           DRAMCTRL_setSysModeStat,	    0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_DRAM_GRAYSTAT,                            DRAMCTRL_crossColorState ,	    0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_DRAM_OSDSTAT,                              DRAMCTRL_osdState ,	           0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_DRAM_CHECKINFOR,                         DRAMCTRL_sysCheckResult ,	    0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_DRAM_BOREREFINE,                          DRAMCTRL_boreRefine ,	           0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_DRAM_CHECKSTART,                        DRAMCTRL_sysCheckStart,	    0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_DRAM_ENPICP,                                 DRAMCTRL_setPicp,	                  0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_DRAM_PICPMODE,                            DRAMCTRL_changePicpMode,	    0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_CTRL_ZOOM,                                    DRAMCTRL_setWrapMode ,	    0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_FLIR_STATE,                                     DRAMCTRL_dispFlirStat ,	           0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_SAVE_ARIX,                                     DRAMCTRL_saveCorrArix,	           0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_SEL_NEXTTAR,                                  DRAMCTRL_selectNextTarget ,      0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_SEL_PICPSENS,                                DRAMCTRL_selectPicpSen,  	    0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_BORESIGHT_CHANGE,                       AVTCTRL_boreSightUpdate ,	    0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_HIDE_OSD,                                      OSDCTRL_hideOsd  ,	                  0);
+    MSGDRIV_attachMsgFun(handle,	MSGID_TRA_ENLOCK,                                  DRAMCTRL_settrackBreakLock ,    0);
+#endif
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_AUTOCHECK,                         processCMD_BUTTON_AUTOCHECK ,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_BOOT_UP_CHECK_COMPLETE,              processCMD_BOOT_UP_CHECK_COMPLETE,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_EXIT_SELF_CHECK,                             processCMD_EXIT_SELF_CHECK ,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_CALIBRATION,		          processCMD_BUTTON_CALIBRATION ,	0); // У׼��ť
+	
+    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SENSOR_OK,		          onPositionSensorOK,	0); // ��λ��������
+    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SENSOR_ERR,		          onPositionSensorERR,	0); // ��λ��������
+	
+    MSGDRIV_attachMsgFun(handle,	CMD_DISPLAY_ERR,				          onDisplayErr,	0); // OSD��ʾ�쳣
+    MSGDRIV_attachMsgFun(handle,	CMD_DISPLAY_OK,				          onDisplayOK,	0); // OSD��ʾ��
+    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_OK,				          onJoyStickOK,	0); // �ֱ�����쳣
+    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_ERR,				          onJoyStickErr,	0); // �ֱ�����쳣
+    MSGDRIV_attachMsgFun(handle,	CMD_WEAPONCTRL_OK,			          onWeaponCtrlOK,		0); //�Կ���
+    
+    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_OK,				          onDipAngleSensorOK,	0); // ����Ǵ�������
+    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_ERR,				          onDipAngleSensorERR,	0); // ����Ǵ�������
+    
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_OK,	          onMachineGunSensorOK,	0); // ��ǹ��������
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_ERR,	          onMachineGunSensorERR,	0); // ��ǹ��������
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_OK,		          onMachineGunServoOK,	0); // ��ǹ�ŷ���
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_ERR,		          onMachineGunServoERR,	0); // ��ǹ�ŷ���
+    
+    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_OK,			   onPositionServoOK,	0); // ��λ�ŷ���
+    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_ERR,	     	          onPositionServoERR,	0); // ��λ�ŷ���
+    
+    MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SENSOR_OK,		          onGrenadeSensorOK,	0); // 35�񴫸�����
+    MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SENSOR_ERR,		          onGrenadeSensorERR,	0); // 35�񴫸�����
+    MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_OK,		          onGrenadeServoOK,	0); // 35���ŷ���
+    MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_ERR,		          onGrenadeServoERR,	0); // 35���ŷ���
 
-	
-
-     
-	
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE,				processCMD_BUTTON_BATTLE,	0); // �л�Ϊս��ģʽ
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_QUIT,				processCMD_BUTTON_QUIT,	0); // �˳�����
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,			processCMD_BUTTON_UNLOCK,	0); // �����
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UP,					processCMD_BUTTON_UP,	0); // ���ϰ���
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_DOWN,				processCMD_BUTTON_DOWN,	0); // ���°���
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_LEFT,				processCMD_BUTTON_LEFT,	0); // ���󰴼�
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_RIGHT,				processCMD_BUTTON_RIGHT,	0); // ���Ұ���
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_ENTER,				processCMD_BUTTON_ENTER,	0); // ȷ�ϰ���
+    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH0,			processCMD_BULLET_SWITCH0,	0); // ��ǹ0����
+    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH1,			processCMD_BULLET_SWITCH1,	0); // ��ǹ1����
+    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH2,			processCMD_BULLET_SWITCH2,	0); // ��ǹ2����
+    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH3,			processCMD_BULLET_SWITCH3,	0); // ��ǹ3����
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_AUTOCATCH,			processCMD_BUTTON_AUTOCATCH,0); // �Զ�����
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE_AUTO,		processCMD_BUTTON_BATTLE_AUTO,	0); // ս��ģʽ
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE_ALERT,		processCMD_BUTTON_BATTLE_ALERT,	0); // ����ģʽ
+    MSGDRIV_attachMsgFun(handle,	CMD_USER_FIRED,				processCMD_USER_FIRED,	0); // ȷ�Ϸ���
+    MSGDRIV_attachMsgFun(handle,	CMD_DETEND_LOCK,				processCMD_DETEND_LOCK,	0); // ֹ������
+    MSGDRIV_attachMsgFun(handle,	CMD_DETEND_UNLOCK,			processCMD_DETEND_UNLOCK,	0); // ֹ������
+    MSGDRIV_attachMsgFun(handle,	CMD_MAINTPORT_LOCK,			processCMD_MAINTPORT_LOCK,	0); //ά���Ź�
+    MSGDRIV_attachMsgFun(handle,	CMD_MAINTPORT_UNLOCK,			processCMD_MAINTPORT_UNLOCK,	0); // ά���ſ�
+    
+    MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_DISTANCE_SWITCH,			processCMD_MEASURE_DISTANCE_SWITCH,	0); //�л���෽ʽ
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_SAVE,		processCMD_CALIBRATION_SWITCH_TO_SAVE,	0); // У׼-�л�����
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_ZERO,		processCMD_CALIBRATION_SWITCH_TO_ZERO,	0); // У׼-�л�У��
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_WEATHER,	processCMD_CALIBRATION_SWITCH_TO_WEATHER,	0); // У׼-�л�����
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_GENERAL,	processCMD_CALIBRATION_SWITCH_TO_GENERAL,	0); // У׼-�л�����
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_GENPRAM,	processCMD_CALIBRATION_SWITCH_TO_GENPRAM,	0); // У׼-�۲�У׼
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_HORIZEN,	processCMD_CALIBRATION_SWITCH_TO_HORIZEN,	0); // У׼-��ƽУ��
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_LASER,		processCMD_CALIBRATION_SWITCH_TO_LASER,	0); // У׼-����У��
+    MSGDRIV_attachMsgFun(handle,	CMD_LASER_FAIL,							processCMD_LASER_FAIL,		0); // ������ʧ��
+    MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_FAIL,						processCMD_TRACKING_FAIL,	0); // �Զ�����ʧ��
+    MSGDRIV_attachMsgFun(handle,	CMD_VELOCITY_FAIL,						processCMD_VELOCITY_FAIL,	0); // ����ʧ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_VELOCITY,					processCMD_MEASURE_VELOCITY,0); // ����ָ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_DISTANCE,					processCMD_MEASURE_DISTANCE,0); // ���ָ��
+    MSGDRIV_attachMsgFun(handle,	CMD_LASER_OK,							processCMD_LASER_OK,		0); // ��������
+    MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_OK,						processCMD_TRACKING_OK,			0); // ������
+    MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_LOAD_OK,				processCMD_FIRING_TABLE_LOAD_OK,		0); // �����Ԫװ����
+    MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // �����Ԫװ��ʧ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				       processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_SKY,						processCMD_MODE_AIM_SKY,		0); // �л��Կ�Ŀ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,				processCMD_MODE_ATTACK_SIGLE,		0); // �л�Ϊ����
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,				processCMD_MODE_ATTACK_MULTI,		0); // �л�Ϊ����
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_SMALL,					processCMD_MODE_FOV_SMALL,		0); // �л�ΪС�ӳ�
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_LARGE,					processCMD_MODE_FOV_LARGE,		0); // �л�Ϊ���ӳ�
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,				processCMD_MODE_SCALE_SWITCH,		0); // �л��Ŵ�
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_PIC_COLOR_SWITCH,			processCMD_MODE_PIC_COLOR_SWITCH,		0); // �л�ͼ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ENHANCE_SWITCH,				processCMD_MODE_ENHANCE_SWITCH,		0); // ��Ƶ��ǿ�л�
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_SHORT,					processCMD_MODE_SHOT_SHORT,		0); // �л�Ϊ�̵��䡢������
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_LONG,					processCMD_MODE_SHOT_LONG,		0); // �л�Ϊ�����䡢����
+    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_GUN,						processCMD_SCHEDULE_GUN,		0); // ��ǹ��
+    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_STRONG,					processCMD_SCHEDULE_STRONG,		0); // ��ǿ��
+    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_RESET,					processCMD_SCHEDULE_RESET,		0); // ����λ
+    
+    MSGDRIV_attachMsgFun(handle,	CMD_TIMER_SENDFRAME0,					processCMD_TIMER_SENDFRAME0,		0); //send frame0 through CAN
+    MSGDRIV_attachMsgFun(handle,	CMD_TRACE_SENDFRAME0,					processCMD_TRACE_SENDFRAME0,		0); //send frame0 through TracePort
+    MSGDRIV_attachMsgFun(handle,	CMD_TRIGGER_AVT,						processCMD_TRIGGER_AVT,		0); //����AVT������������
+    MSGDRIV_attachMsgFun(handle,	CMD_QUIT_AVT_TRACKING,					quitAVTtrigger,		0); //����AVT�˳���������
+    MSGDRIV_attachMsgFun(handle,	CMD_SEND_MIDPARAMS,					processCMD_SEND_MIDPARAMS,		0); //�����м����
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_LOAD_IN_POSITION,			processCMD_GRENADE_LOAD_IN_POSITION,		0); //35��װ�?λָʾ��
+    MSGDRIV_attachMsgFun(handle,	CMD_CALCNUM_SHOW,						processCMD_CALCNUM_SHOW,		0); //�����м�ֵ��ʾ
+    MSGDRIV_attachMsgFun(handle,	CMD_CALCNUM_HIDE,						processCMD_CALCNUM_HIDE,		0); //�����м�ֵ����
+    MSGDRIV_attachMsgFun(handle,	CMD_MIDPARAMS_SWITCH,					processCMD_MIDPARAMS_SWITCH,		0); //����F5
+    MSGDRIV_attachMsgFun(handle,	CMD_LASERSELECT_SWITCH,				processCMD_LASERSELECT_SWITCH,		0); //F5
+    MSGDRIV_attachMsgFun(handle,	CMD_STABLEVIDEO_SWITCH,				processCMD_STABLEVIDEO_SWITCH,		0); //����F3(��Ƶ��ǿ)
+    
+    MSGDRIV_attachMsgFun(handle,	CMD_SENSOR_SWITCH,					processCMD_SENSOR_SWITCH,		0); //F6
+    MSGDRIV_attachMsgFun(handle,	CMD_CONNECT_SWITCH,					processCMD_CONNECT_SWITCH,		0); //����F6
+    
+    MSGDRIV_attachMsgFun(handle,	CMD_IDENTIFY_KILL,						processCMD_IDENTIFY_KILL,		0); //�����ʾ��ϢΪKILL
+    MSGDRIV_attachMsgFun(handle,	CMD_IDENTIFY_GAS,						processCMD_IDENTIFY_GAS,		0); //�����ʾ��ϢΪGAS
+    MSGDRIV_attachMsgFun(handle,	CMD_SERVO_INIT,							processCMD_SERVO_INIT,		0); //��ʼ���ŷ�����������
+    MSGDRIV_attachMsgFun(handle,	CMD_SERVOTIMER_MACHGUN,				processCMD_SERVOTIMER_MACHGUN,	0); //��ʼ���ŷ�����������
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVESPEED,				processCMD_MACHSERVO_MOVESPEED,	0); //��ǹ�ŷ��ٶȿ���
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVESPEED,			processCMD_GRENADESERVO_MOVESPEED,	0); //���ŷ��ٶȿ���
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_STOP,					processCMD_MACHSERVO_STOP,	0); //��ǹ�ŷ�ֹͣ
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVEOFFSET,			processCMD_MACHSERVO_MOVEOFFSET,	0); //��ǹ�ŷ�λ�ÿ���
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVEOFFSET,			processCMD_GRENADESERVO_MOVEOFFSET,	0); //��λ�ŷ�λ�ÿ���
+    
+ 
     return 0;
 }
+
+
 
  #if 1
  void CProcess021::MSGAPI_init_device(long lParam )
 {
 	
-	sThis->msgdriv_event(MSGID_SYS_INIT,NULL);
-	printf("hello world\n");
+	//sThis->msgdriv_event(MSGID_SYS_INIT,NULL);
+	OSA_printf("%s,line:%d ... MSGAPI_init_device!",__func__,__LINE__);
+	return ;
 }
 
-  void CProcess021::MSGAPI_inputsensor(long lParam )
+
+
+ void CProcess021::MSGAPI_inputsensor(long lParam )
 {
+	#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	//	pIStuts->SensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
 	sThis->msgdriv_event(MSGID_EXT_INPUT_SENSOR,NULL);
-	printf("hello world\n");
+	#endif
+	OSA_printf("%s,line:%d ... MSGAPI_inputsensor!",__func__,__LINE__);
+	return ;
 }
 
-  void CProcess021::MSGAPI_picp(long lParam )
+
+
+ void CProcess021::MSGAPI_picp(long lParam )
 {
+	#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		if(pIStuts->PicpSensorStat == 0xFF)
 			pIStuts->PicpSensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
@@ -2275,12 +2426,16 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 			pIStuts->PicpSensorStat = 0xFF;
 	
 	sThis->msgdriv_event(MSGID_EXT_INPUT_ENPICP,NULL);
-	printf("hello world\n");
+	#endif
+	OSA_printf("%s,line:%d ... MSGAPI_picp!",__func__,__LINE__);
+	return ;
 }
 
 
-   void CProcess021::MSGAPI_croppicp(long lParam )
+
+ void CProcess021::MSGAPI_croppicp(long lParam )
 {
+	#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	//	if(pIStuts->PicpSensorStat == 0xFF)
 	//		pIStuts->PicpSensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
@@ -2309,15 +2464,18 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 			pIStuts->PicpPosStat=(pIStuts->PicpPosStat+1)%4;
 			sThis->msgdriv_event(MSGID_EXT_INPUT_PICPCROP,NULL);
 
-		}
-	
-	
-	
-	printf("hello world\n");
+		}		
+	#endif
+	OSA_printf("%s,line:%d ... MSGAPI_croppicp!",__func__,__LINE__);
+	return ;
 }
-   void CProcess021::MSGAPI_inputtrack(long lParam )
+
+
+   
+ void CProcess021::MSGAPI_inputtrack(long lParam )
 {
-printf("%s^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",__func__);
+	#if 0
+	printf("%s^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",__func__);
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		//if(pIStuts->AvtTrkStat)
 		//	pIStuts->AvtTrkStat = eTrk_mode_acq;
@@ -2325,18 +2483,26 @@ printf("%s^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",__func__);
 		//	pIStuts->AvtTrkStat = eTrk_mode_target;
 	
 	sThis->msgdriv_event(MSGID_EXT_INPUT_TRACK,NULL);
-	//printf("%s\n,__func__");
+	#endif
+	OSA_printf("%s,line:%d ... MSGAPI_inputtrack",__func__,__LINE__);
+	return ;
 }
 
 
-     void CProcess021::MSGAPI_inpumtd(long lParam )
+
+ void CProcess021::MSGAPI_inpumtd(long lParam )
 {
-	CMD_EXT *pIStuts = &sThis->extInCtrl;
-	sThis->msgdriv_event(MSGID_EXT_INPUT_ENMTD,NULL);
-	printf("hello world\n");
+	//CMD_EXT *pIStuts = &sThis->extInCtrl;
+	//sThis->msgdriv_event(MSGID_EXT_INPUT_ENMTD,NULL);
+	OSA_printf("%s,line:%d ... MSGAPI_inpumtd",__func__,__LINE__);
+	return ;
 }
-     void CProcess021::MSGAPI_inpumtdSelect(long lParam )
+
+ 
+ void CProcess021::MSGAPI_inpumtdSelect(long lParam )
 {
+	OSA_printf("%s,line:%d ... MSGAPI_inpumtdSelect",__func__,__LINE__);
+	#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	int i;
 	if(pIStuts->MMTTempStat==3)
@@ -2356,7 +2522,7 @@ printf("%s^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",__func__);
 
 			
 		}
-	else if(pIStuts->MMTTempStat==4)
+		else if(pIStuts->MMTTempStat==4)
 		{
 
 			for(i=0;i<MAX_TARGET_NUMBER;i++)
@@ -2379,27 +2545,27 @@ printf("%s^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",__func__);
 
 
 		}
-
-	
-		//majormmtid=majormmtid;
-	printf("MSGAPI_inpumtdSelect\n");
+	//majormmtid=majormmtid;
+	#endif	
+	return ;
 }
 
 
-	   void CProcess021::MSGAPI_inpuenhance(long lParam )
+void CProcess021::MSGAPI_inpuenhance(long lParam )
 {
 	//	CMD_EXT *pIStuts = &pThis->extInCtrl;
 	//	if(pIStuts->ImgEnhStat[pIStuts->SensorStat])
 	//		pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Disable;
 	//	else
 	//		pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Enable;
-	sThis->msgdriv_event(MSGID_EXT_INPUT_ENENHAN,NULL);
-	printf("hello world\n");
+	//sThis->msgdriv_event(MSGID_EXT_INPUT_ENENHAN,NULL);
+	OSA_printf("%s,line:%d ... MSGAPI_inpuenhance",__func__,__LINE__);
+	return ;
 }
 
 void CProcess021::MSGAPI_setAimRefine(long lParam          /*=NULL*/)
 {
-
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	OSA_printf("%s msgextInCtrl->TrkBomenCtrl=%d pIStuts->AvtMoveY=%d\n",__func__,pIStuts->AvtMoveX,pIStuts->AvtMoveY);
 	if(pIStuts->AvtMoveX==eTrk_ref_left)
@@ -2419,36 +2585,48 @@ void CProcess021::MSGAPI_setAimRefine(long lParam          /*=NULL*/)
 			pIStuts->AvtMoveY=1;
 		}
 	sThis->msgdriv_event(MSGID_EXT_INPUT_AIMPOS,NULL);
-
+#endif
+	OSA_printf("%s,line:%d ... MSGAPI_setAimRefine",__func__,__LINE__);
+	return ;
 }
 
-	     void CProcess021::MSGAPI_inputbdt(long lParam )
+
+
+void CProcess021::MSGAPI_inputbdt(long lParam )
 {
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		if(pIStuts->ImgBlobDetect[pIStuts->SensorStat])
 			pIStuts->ImgBlobDetect[pIStuts->SensorStat] = eImgAlg_Disable;
 		else
 			pIStuts->ImgBlobDetect[pIStuts->SensorStat] = eImgAlg_Enable;
 	sThis->msgdriv_event(MSGID_EXT_INPUT_ENBDT,NULL);
-	
-	printf("fun=%s line=%d \n",__func__,__LINE__);
+#endif	
+	OSA_printf("%s,line:%d ... MSGAPI_inputbdt",__func__,__LINE__);
+	return ;
 }
 
 
-		   void CProcess021::MSGAPI_inputzoom(long lParam )
+
+void CProcess021::MSGAPI_inputzoom(long lParam )
 {
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		//if(pIStuts->ImgZoomStat[pIStuts->SensorStat])
 		//	pIStuts->ImgZoomStat[pIStuts->SensorStat] = eImgAlg_Disable;
 		//else
 		//	pIStuts->ImgZoomStat[pIStuts->SensorStat] = eImgAlg_Enable;
 	sThis->msgdriv_event(MSGID_EXT_INPUT_ENZOOM,NULL);
-	printf("hello world\n");
+#endif
+	OSA_printf("%s,line:%d ... MSGAPI_inputzoom",__func__,__LINE__);
+	return ;
 }
+
 
 
 void CProcess021::MSGAPI_inputfrezz(long lParam )
 {
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		//if(pIStuts->ImgZoomStat[pIStuts->SensorStat])
 		//	pIStuts->ImgZoomStat[pIStuts->SensorStat] = eImgAlg_Disable;
@@ -2489,15 +2667,17 @@ void CProcess021::MSGAPI_inputfrezz(long lParam )
 			
 			OSA_printf("the*****************************************disable PicpSensorStatpri=%d\n",pIStuts->PicpSensorStatpri);
 		}
-
+#endif
 			
-	
-	printf("%s\n",__func__);
+	OSA_printf("%s,line:%d ... MSGAPI_inputfrezz",__func__,__LINE__);
+	return ;
 }
+
 
 
 void CProcess021::MSGAPI_inputmmtselect(long lParam )
 {
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		//if(pIStuts->ImgZoomStat[pIStuts->SensorStat])
 		//	pIStuts->ImgZoomStat[pIStuts->SensorStat] = eImgAlg_Disable;
@@ -2510,13 +2690,17 @@ void CProcess021::MSGAPI_inputmmtselect(long lParam )
 		{
 			majormmtid=(majormmtid-1+MAX_TARGET_NUMBER)%MAX_TARGET_NUMBER;
 		}
-	printf("%s\n",__func__);
+#endif
+
+	OSA_printf("%s,line:%d ... MSGAPI_inputmmtselect",__func__,__LINE__);
+	return ;
 }
 
 
 
 void CProcess021::MSGAPI_inputpositon(long lParam )
 {
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	if(pIStuts->SensorStat==0)
 		{
@@ -2560,52 +2744,59 @@ void CProcess021::MSGAPI_inputpositon(long lParam )
 #endif
 
 		}
-
-	
-	
-	
-	
-	
 	printf("%s   THE=unitAimX=%d unitAxisY=%d\n",__func__,pIStuts->unitAxisX[pIStuts->SensorStat ],pIStuts->unitAxisY[pIStuts->SensorStat ]);
+#endif	
+	OSA_printf("%s,line:%d ... MSGAPI_inputpositon",__func__,__LINE__);
+	return ;
 }
+
+
 
 void CProcess021::MSGAPI_inputcoast(long lParam )
 {
-
+	OSA_printf("%s,line:%d ... MSGAPI_inputcoast",__func__,__LINE__);
 	
-	sThis->msgdriv_event(MSGID_EXT_INPUT_COAST,NULL);
-	
-	//printf("%s\n",__func__);
+	//sThis->msgdriv_event(MSGID_EXT_INPUT_COAST,NULL);
+	return ;
 }
+
+
 
 void CProcess021::MSGAPI_inputfovselect(long lParam )
 {
-
+	OSA_printf("%s,line:%d ... MSGAPI_inputfovselect",__func__,__LINE__);
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	sThis->m_intervalFrame=1;
 	sThis->m_rcAcq.x=pIStuts->unitAxisX[pIStuts->SensorStat]-trkWinWH[pIStuts->SensorStat][pIStuts->AvtTrkAimSize][0]/2;
 	sThis->m_rcAcq.y=pIStuts->unitAxisY[pIStuts->SensorStat]-trkWinWH[pIStuts->SensorStat][pIStuts->AvtTrkAimSize][1]/2;
 	sThis->m_rcAcq.width=trkWinWH[pIStuts->SensorStat][pIStuts->AvtTrkAimSize][0];
 	sThis->m_rcAcq.height=trkWinWH[pIStuts->SensorStat][pIStuts->AvtTrkAimSize][1];
-
+#endif
+	return ;
 }
+
+
 
 void CProcess021::MSGAPI_inputfovchange(long lParam )
 {
-
+	OSA_printf("%s,line:%d ... MSGAPI_inputfovchange",__func__,__LINE__);
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	sThis->m_intervalFrame=1;
 	sThis->m_rcAcq.x=pIStuts->unitAxisX[pIStuts->SensorStat]-trkWinWH[pIStuts->SensorStat][pIStuts->AvtTrkAimSize][0]/2;
 	sThis->m_rcAcq.y=pIStuts->unitAxisY[pIStuts->SensorStat]-trkWinWH[pIStuts->SensorStat][pIStuts->AvtTrkAimSize][1]/2;
 	sThis->m_rcAcq.width=trkWinWH[pIStuts->SensorStat][pIStuts->AvtTrkAimSize][0];
 	sThis->m_rcAcq.height=trkWinWH[pIStuts->SensorStat][pIStuts->AvtTrkAimSize][1];
-
+#endif
+	return ;
 }
 
 
 void CProcess021::MSGAPI_inputsearchmod(long lParam )
 {
-
+	OSA_printf("%s,line:%d ... MSGAPI_inputsearchmod",__func__,__LINE__);
+#if 0
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	float panenv=pIStuts->TrkPanev/4000.0;
 	float TrkTitlev=pIStuts->TrkTitlev/4000.0;
@@ -2621,18 +2812,876 @@ void CProcess021::MSGAPI_inputsearchmod(long lParam )
 		{
 			//sThis->m_searchmod=0;
 		}
-	
+
 	// printf("the TrkPanev=%f TrkTitlev=%f\n",pIStuts->TrkPanev/4000.0,pIStuts->TrkTitlev/4000.0);
-	
+#endif		
+	return ;
 }
 
 
+
  void CProcess021::MSGAPI_inputvideotect(long lParam )
- 	{
+{
+	OSA_printf("%s,line:%d ... MSGAPI_inputvideotect",__func__,__LINE__);
+	
+	//sThis->msgdriv_event(MSGID_EXT_INPUT_VIDEOEN,NULL);
+	return ;
+}
 
-		printf("MSGAPI_inputvideotect*******************\n");
-		sThis->msgdriv_event(MSGID_EXT_INPUT_VIDEOEN,NULL);
- 	}
+
+
+void CProcess021::MSGAPI_reset_device(LPARAM lParam      /*=NULL*/)
+{
+	OSA_printf("%s,line:%d ... MSGAPI_reset_device",__func__,__LINE__);
+	#if 0
+    pAppPrt = (APP_OBJ *)lParam;
+    SDK_ASSERT(pAppPrt);
+
+    CMD_ext *pIStuts = (CMD_ext*)&pAppPrt->extInCtrl;
+    int i, iSens;
+
+    /** < select a8 display */
+    msgfunc_checkSwmsSens(pIStuts, pAppPrt->dbgCtrl.nullSrcStat);
+    IMGCTRL_swmsSetLayout(pIStuts->unitSensorStat, pIStuts->unitPicpSensorStat);
+
+    // mtd default
+    for (iSens = 0; iSens < eSen_Max; iSens++)
+    {
+        pIStuts->pUnitMtdTgs[iSens] = IMGCTRL_mtdPrmGet(iSens);
+        if (pIStuts->pUnitMtdTgs[iSens] == NULL)
+            continue;
+        for (i = 0; i < MMT_TARGET_NUM; i++)
+            pIStuts->unitMtdTgsId[iSens][i] = i;
+    }
+
+    /** < set video formula */
+    if (pIStuts->SensorStat == 0)
+    {
+        GPORT_set_avt_winx_pos(iAvtCapPosX[pIStuts->SensorStat]);
+        GPORT_set_avt_winy_pos(iAvtCapPosY[pIStuts->SensorStat]);
+        GPORT_fifo_reset();
+        GPORT_fifo_unreset();
+    }
+    GPORT_select_avt_sens(pIStuts->SensorStat);     // use current sens
+    GPORT_select_avt_dis(pAppPrt->dbgCtrl.avtInOutStat);
+#if 0
+    /** < set avt21 input config */
+    if (AVTCTRL_loadConfig(pAppPrt->avtCtrl) != SDK_SOK)
+    {
+        AVTCTRL_destroy();
+        pAppPrt->avtCtrl = NULL;
+    }
+#endif
+    /** < start report timer */
+    OSA_waitMsecs(100);
+    TIMER_start(eChk_Timer);
+    if (pAppPrt->avtCtrl == NULL)
+        TIMER_start(eOsd_Timer);
+
+    OSA_waitMsecs(100);
+ //   printf(" [DEBUG:] %s done\n", __func__);
+    pAppPrt->dbgCtrl.disCaseSet = 0;
+    pAppPrt->extInCtrl.unitWorkMode = NORMAL_MODE;  // self init check end
+	#endif
+   return ;
+}
+
+
+//ADD PLUS
+
+ void CProcess021::MSGAPI_setSysModeStat(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_setSysModeStat",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::MSGAPI_osdState(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_osdState",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::MSGAPI_sysCheckResult(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_sysCheckResult",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::MSGAPI_boreRefine(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_boreRefine",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::MSGAPI_sysCheckStart(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_sysCheckStart",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::MSGAPI_setPicp(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_setPicp",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::MSGAPI_changePicpMode(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_changePicpMode",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::MSGAPI_setWrapMode(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_setWrapMode",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::MSGAPI_dispFlirStat(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_dispFlirStat",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::MSGAPI_saveCorrArix(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_saveCorrArix",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::MSGAPI_selectNextTarget(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_selectNextTarget",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::MSGAPI_selectPicpSen(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_selectPicpSen",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::MSGAPI_boreSightUpdate(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_boreSightUpdate",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::MSGAPI_hideOsd(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_hideOsd",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::MSGAPI_settrackBreakLock(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... MSGAPI_settrackBreakLock",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCHECK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BOOT_UP_CHECK_COMPLETE",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_EXIT_SELF_CHECK",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::processCMD_BUTTON_CALIBRATION(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_CALIBRATION",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::onPositionSensorOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onPositionSensorOK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onPositionSensorERR(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onPositionSensorERR",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onDisplayErr(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onDisplayErr",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onDisplayOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onDisplayOK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onJoyStickOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onJoyStickOK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onJoyStickErr(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onJoyStickErr",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onWeaponCtrlOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onWeaponCtrlOK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onDipAngleSensorOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onDipAngleSensorOK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onDipAngleSensorERR(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onDipAngleSensorERR",__func__,__LINE__);
+	return ;
+ }
+
+
+
+
+
+void CProcess021::onMachineGunSensorOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onMachineGunSensorOK",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::onMachineGunSensorERR(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onMachineGunSensorERR",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::onMachineGunServoOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onMachineGunServoOK",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::onMachineGunServoERR(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onMachineGunServoERR",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::onPositionServoOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onPositionServoOK",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::onPositionServoERR(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onPositionServoERR",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::onGrenadeSensorOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onGrenadeSensorOK",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::onGrenadeSensorERR(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onGrenadeSensorERR",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onGrenadeServoOK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onGrenadeServoOK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::onGrenadeServoERR(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... onGrenadeServoERR",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_BATTLE(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_QUIT",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_UNLOCK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_UP",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_DOWN",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_LEFT",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_RIGHT",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_ENTER",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH0",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH1",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH2",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH3",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::processCMD_BUTTON_AUTOCATCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCATCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_BATTLE_AUTO(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE_AUTO",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_BUTTON_BATTLE_ALERT(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE_ALERT",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_USER_FIRED",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_DETEND_LOCK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_DETEND_LOCK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_DETEND_UNLOCK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_DETEND_UNLOCK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MAINTPORT_LOCK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MAINTPORT_LOCK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MAINTPORT_UNLOCK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MAINTPORT_UNLOCK",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALIBRATION_SWITCH_TO_SAVE(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_SAVE",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALIBRATION_SWITCH_TO_ZERO(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_ZERO",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALIBRATION_SWITCH_TO_WEATHER(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_WEATHER",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENERAL(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_GENERAL",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENPRAM(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_GENPRAM",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALIBRATION_SWITCH_TO_HORIZEN(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_HORIZEN",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALIBRATION_SWITCH_TO_LASER(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_LASER",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_LASER_FAIL",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_TRACKING_FAIL(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_TRACKING_FAIL",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_VELOCITY_FAIL",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MEASURE_VELOCITY",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_LASER_OK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_LASER_OK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_TRACKING_OK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_FIRING_TABLE_LOAD_OK",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_FIRING_TABLE_FAILURE(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_FIRING_TABLE_FAILURE",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_AIM_LAND(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_AIM_LAND",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_AIM_SKY(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_AIM_SKY",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_ATTACK_SIGLE(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_ATTACK_SIGLE",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_ATTACK_MULTI(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_ATTACK_MULTI",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_FOV_LARGE(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_SCALE_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_SCALE_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_PIC_COLOR_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_PIC_COLOR_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_ENHANCE_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_ENHANCE_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_SHOT_SHORT(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_SHOT_SHORT",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_SHOT_LONG(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_SHOT_LONG",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SCHEDULE_GUN(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SCHEDULE_GUN",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SCHEDULE_STRONG(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SCHEDULE_STRONG",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SCHEDULE_RESET",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_TIMER_SENDFRAME0(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_TIMER_SENDFRAME0",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_TRACE_SENDFRAME0(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_TRACE_SENDFRAME0",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_TRIGGER_AVT(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_TRIGGER_AVT",__func__,__LINE__);
+	return ;
+ }
+
+
+
+void CProcess021::quitAVTtrigger(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... quitAVTtrigger",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SEND_MIDPARAMS(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SEND_MIDPARAMS",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_GRENADE_LOAD_IN_POSITION(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_GRENADE_LOAD_IN_POSITION",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALCNUM_SHOW(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALCNUM_SHOW",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CALCNUM_HIDE(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CALCNUM_HIDE",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MIDPARAMS_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MIDPARAMS_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_LASERSELECT_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_LASERSELECT_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_STABLEVIDEO_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_STABLEVIDEO_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SENSOR_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SENSOR_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_CONNECT_SWITCH(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_CONNECT_SWITCH",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_IDENTIFY_KILL(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_IDENTIFY_KILL",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_IDENTIFY_GAS(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_IDENTIFY_GAS",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SERVO_INIT(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SERVO_INIT",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SERVOTIMER_MACHGUN",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_MACHSERVO_MOVESPEED(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MACHSERVO_MOVESPEED",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_GRENADESERVO_MOVESPEED",__func__,__LINE__);
+	return ;
+ }
+void CProcess021::processCMD_MACHSERVO_STOP(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MACHSERVO_STOP",__func__,__LINE__);
+	return ;
+ }
+void CProcess021::processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_MACHSERVO_MOVEOFFSET",__func__,__LINE__);
+	return ;
+ }
+void CProcess021::processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_GRENADESERVO_MOVEOFFSET",__func__,__LINE__);
+	return ;
+ }
+
+
  #endif
-
 

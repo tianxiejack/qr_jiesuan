@@ -29,6 +29,7 @@
 								<option id="nvcc.compiler.pic.784120388" name="Position Independent Code (-fPIC)" superClass="nvcc.compiler.pic"/>
 								<option id="nvcc.compiler.include.paths.1035477013" name="Include paths (-I)" superClass="nvcc.compiler.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include/opencv"/>
+									<listOptionValue builtIn="false" value="../include/PRI"/>
 									<listOptionValue builtIn="false" value="/usr/include/opencv2"/>
 									<listOptionValue builtIn="false" value="/usr/include/GL"/>
 									<listOptionValue builtIn="false" value="../include"/>
@@ -105,21 +106,23 @@
 						<toolChain id="com.nvidia.cuda.ide.toolchain.seven_five.exe.release.1856695773" name="CUDA Toolkit 8.0" superClass="com.nvidia.cuda.ide.toolchain.seven_five.exe.release">
 							<targetPlatform archList="all" binaryParser="com.nvidia.cuda.ide.elf;com.nvidia.cuda.ide.macho;com.nvidia.cuda.ide.cubin" id="com.nvidia.cuda.ide.targetPlatform.503489660" isAbstract="false" name="Debug Platform" osList="linux,macosx" superClass="com.nvidia.cuda.ide.targetPlatform"/>
 							<builder buildPath="${workspace_loc:/dss_625}/Release" id="com.nvidia.cuda.ide.builder.1579925670" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CUDA Toolkit 8.0 Builder" superClass="com.nvidia.cuda.ide.builder"/>
-							<tool id="nvcc.compiler.base.2100313719" name="NVCC Compiler" superClass="nvcc.compiler.base">
+							<tool command="nvcc  " id="nvcc.compiler.base.2100313719" name="NVCC Compiler" superClass="nvcc.compiler.base">
 								<option id="nvcc.compiler.deviceDebug.1734579497" name="Generate device debug information (-G)" superClass="nvcc.compiler.deviceDebug"/>
 								<option id="nvcc.compiler.option.level.789289201" name="Generate host debug information (-g)" superClass="nvcc.compiler.option.level"/>
 								<option defaultValue="nvcc.compiler.optimization.level.most" id="nvcc.compiler.optimization.level.2144905085" name="Optimization Level" superClass="nvcc.compiler.optimization.level" valueType="enumerated"/>
 								<option id="nvcc.compiler.pic.22111267" name="Position Independent Code (-fPIC)" superClass="nvcc.compiler.pic"/>
-								<option id="nvcc.compiler.include.paths.1026051142" superClass="nvcc.compiler.include.paths" valueType="includePath">
+								<option id="nvcc.compiler.include.paths.1026051142" name="Include paths (-I)" superClass="nvcc.compiler.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include/opencv"/>
 									<listOptionValue builtIn="false" value="/usr/include/opencv2"/>
 									<listOptionValue builtIn="false" value="/usr/include/GL"/>
 									<listOptionValue builtIn="false" value="../include"/>
 									<listOptionValue builtIn="false" value="../include/APP"/>
+									<listOptionValue builtIn="false" value="../include/PRI"/>
 									<listOptionValue builtIn="false" value="../include/dxutc"/>
 									<listOptionValue builtIn="false" value="../src/OSA_CAP/inc"/>
+									<listOptionValue builtIn="false" value="../src/osa_cap/inc"/>
 								</option>
-								<option id="nvcc.compiler.compileroptions.1894823799" superClass="nvcc.compiler.compileroptions" valueType="stringList">
+								<option id="nvcc.compiler.compileroptions.1894823799" name="Preprocessor options (-Xcompiler)" superClass="nvcc.compiler.compileroptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="-fopenmp"/>
 								</option>
 								<inputType id="nvcc.compiler.input.cu.1978761682" superClass="nvcc.compiler.input.cu"/>
@@ -127,7 +130,7 @@
 								<inputType id="nvcc.compiler.input.c.213462956" superClass="nvcc.compiler.input.c"/>
 							</tool>
 							<tool id="nvcc.linker.base.1123059378" name="NVCC Linker" superClass="nvcc.linker.base">
-								<option id="nvcc.linker.option.libs.1361093831" superClass="nvcc.linker.option.libs" valueType="libs">
+								<option id="nvcc.linker.option.libs.1361093831" name="Libraries (-l)" superClass="nvcc.linker.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="opencv_highgui"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="glut"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="opencv_legacy"/>
@@ -142,7 +145,7 @@
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="cudart"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="gomp"/>
 								</option>
-								<option id="nvcc.linker.option.paths.1723028157" superClass="nvcc.linker.option.paths" valueType="libPaths">
+								<option id="nvcc.linker.option.paths.1723028157" name="Library search path (-L)" superClass="nvcc.linker.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../lib"/>
 								</option>
 								<inputType id="nvcc.linker.input.955444741" superClass="nvcc.linker.input">
@@ -195,4 +198,5 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

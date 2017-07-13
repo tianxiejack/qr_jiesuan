@@ -11,6 +11,10 @@
 #include "VideoProcess.hpp"
 #include "osd_graph.h"
 #include"osd_cv.h"
+//#include "msgProcessDef.h"
+#define LPARAM long
+
+
 class CProcess021 : public CVideoProcess
 {
 	UTC_RECT_float rcTrackBak;
@@ -68,7 +72,7 @@ protected:
 	int  WindowstoPiexlx(int x,int channel);
 	int  WindowstoPiexly(int y,int channel);
 
-
+	static void MSGAPI_reset_device(LPARAM lParam      /*=NULL*/);
 	 static int  MSGAPI_initial(void);
 	 static void MSGAPI_init_device(long lParam );
 	 static void MSGAPI_inputsensor(long lParam );
@@ -89,6 +93,121 @@ protected:
 	 static void MSGAPI_inputfovchange(long lParam );
 	 static void MSGAPI_inputsearchmod(long lParam );
 	 static void MSGAPI_inputvideotect(long lParam );
+
+	//add plus
+	 static void MSGAPI_setSysModeStat(LPARAM lParam);
+        static void MSGAPI_osdState(LPARAM lParam);
+        static void MSGAPI_sysCheckResult(LPARAM lParam);
+        static void MSGAPI_boreRefine(LPARAM lParam);
+        static void MSGAPI_sysCheckStart(LPARAM lParam);
+        static void MSGAPI_setPicp(LPARAM lParam);
+        static void MSGAPI_changePicpMode(LPARAM lParam);
+        static void MSGAPI_setWrapMode(LPARAM lParam);
+        static void MSGAPI_dispFlirStat(LPARAM lParam);
+        static void MSGAPI_saveCorrArix(LPARAM lParam);
+        static void MSGAPI_selectNextTarget(LPARAM lParam);
+        static void MSGAPI_selectPicpSen(LPARAM lParam);
+        static void MSGAPI_boreSightUpdate(LPARAM lParam);
+        static void MSGAPI_hideOsd(LPARAM lParam);
+        static void MSGAPI_settrackBreakLock(LPARAM lParam);
+        static void processCMD_BUTTON_AUTOCHECK(LPARAM lParam);
+        static void processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam);
+        static void processCMD_EXIT_SELF_CHECK(LPARAM lParam);
+        static void processCMD_BUTTON_CALIBRATION(LPARAM lParam);
+        static void onPositionSensorOK(LPARAM lParam);
+        static void onPositionSensorERR(LPARAM lParam);
+        static void onDisplayErr(LPARAM lParam);
+        static void onDisplayOK(LPARAM lParam);
+        static void onJoyStickOK(LPARAM lParam);
+        static void onJoyStickErr(LPARAM lParam);
+        static void onWeaponCtrlOK(LPARAM lParam);
+        static void onDipAngleSensorOK(LPARAM lParam);
+        static void onDipAngleSensorERR(LPARAM lParam);
+        static void onMachineGunSensorOK(LPARAM lParam);
+        static void onMachineGunSensorERR(LPARAM lParam);
+        static void onMachineGunServoOK(LPARAM lParam);
+        static void onMachineGunServoERR(LPARAM lParam);
+        static void onPositionServoOK(LPARAM lParam);
+        static void onPositionServoERR(LPARAM lParam);
+        static void onGrenadeSensorOK(LPARAM lParam);
+        static void onGrenadeSensorERR(LPARAM lParam);
+        static void onGrenadeServoOK(LPARAM lParam);
+        static void onGrenadeServoERR(LPARAM lParam);
+        static void processCMD_BUTTON_BATTLE(LPARAM lParam);
+        static void processCMD_BUTTON_QUIT(LPARAM lParam);
+        static void processCMD_BUTTON_UNLOCK(LPARAM lParam);
+        static void processCMD_BUTTON_UP(LPARAM lParam);
+        static void processCMD_BUTTON_DOWN(LPARAM lParam);
+        static void processCMD_BUTTON_LEFT(LPARAM lParam);
+        static void processCMD_BUTTON_RIGHT(LPARAM lParam);
+        static void processCMD_BUTTON_ENTER(LPARAM lParam);
+        static void processCMD_BULLET_SWITCH0(LPARAM lParam);
+        static void processCMD_BULLET_SWITCH1(LPARAM lParam);
+        static void processCMD_BULLET_SWITCH2(LPARAM lParam);
+        static void processCMD_BULLET_SWITCH3(LPARAM lParam);
+        static void processCMD_BUTTON_AUTOCATCH(LPARAM lParam);
+        static void processCMD_BUTTON_BATTLE_AUTO(LPARAM lParam);
+        static void processCMD_BUTTON_BATTLE_ALERT(LPARAM lParam);
+        static void processCMD_USER_FIRED(LPARAM lParam);
+        static void processCMD_DETEND_LOCK(LPARAM lParam);
+        static void processCMD_DETEND_UNLOCK(LPARAM lParam);
+        static void processCMD_MAINTPORT_LOCK(LPARAM lParam);
+        static void processCMD_MAINTPORT_UNLOCK(LPARAM lParam);
+        static void processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam);
+        static void processCMD_CALIBRATION_SWITCH_TO_SAVE(LPARAM lParam);
+        static void processCMD_CALIBRATION_SWITCH_TO_ZERO(LPARAM lParam);
+        static void processCMD_CALIBRATION_SWITCH_TO_WEATHER(LPARAM lParam);
+        static void processCMD_CALIBRATION_SWITCH_TO_GENERAL(LPARAM lParam);
+        static void processCMD_CALIBRATION_SWITCH_TO_GENPRAM(LPARAM lParam);
+        static void processCMD_CALIBRATION_SWITCH_TO_HORIZEN(LPARAM lParam);
+        static void processCMD_CALIBRATION_SWITCH_TO_LASER(LPARAM lParam);
+        static void processCMD_LASER_FAIL(LPARAM lParam);
+        static void processCMD_TRACKING_FAIL(LPARAM lParam);
+        static void processCMD_VELOCITY_FAIL(LPARAM lParam);
+        static void processCMD_MEASURE_VELOCITY(LPARAM lParam);
+        static void processCMD_MEASURE_DISTANCE(LPARAM lParam);
+        static void processCMD_LASER_OK(LPARAM lParam);
+        static void processCMD_TRACKING_OK(LPARAM lParam);
+        static void processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam);
+        static void processCMD_FIRING_TABLE_FAILURE(LPARAM lParam);
+        static void processCMD_MODE_AIM_LAND(LPARAM lParam);
+        static void processCMD_MODE_AIM_SKY(LPARAM lParam);
+        static void processCMD_MODE_ATTACK_SIGLE(LPARAM lParam);
+        static void processCMD_MODE_ATTACK_MULTI(LPARAM lParam);
+        static void processCMD_MODE_FOV_SMALL(LPARAM lParam);
+        static void processCMD_MODE_FOV_LARGE(LPARAM lParam);
+        static void processCMD_MODE_SCALE_SWITCH(LPARAM lParam);
+        static void processCMD_MODE_PIC_COLOR_SWITCH(LPARAM lParam);
+        static void processCMD_MODE_ENHANCE_SWITCH(LPARAM lParam);
+        static void processCMD_MODE_SHOT_SHORT(LPARAM lParam);
+        static void processCMD_MODE_SHOT_LONG(LPARAM lParam);
+        static void processCMD_SCHEDULE_GUN(LPARAM lParam);
+        static void processCMD_SCHEDULE_STRONG(LPARAM lParam);
+        static void processCMD_SCHEDULE_RESET(LPARAM lParam);
+        static void processCMD_TIMER_SENDFRAME0(LPARAM lParam);
+        static void processCMD_TRACE_SENDFRAME0(LPARAM lParam);
+        static void processCMD_TRIGGER_AVT(LPARAM lParam);
+        static void quitAVTtrigger(LPARAM lParam);
+        static void processCMD_SEND_MIDPARAMS(LPARAM lParam);
+        static void processCMD_GRENADE_LOAD_IN_POSITION(LPARAM lParam);
+        static void processCMD_CALCNUM_SHOW(LPARAM lParam);
+        static void processCMD_CALCNUM_HIDE(LPARAM lParam);
+        static void processCMD_MIDPARAMS_SWITCH(LPARAM lParam);
+        static void processCMD_LASERSELECT_SWITCH(LPARAM lParam);
+        static void processCMD_STABLEVIDEO_SWITCH(LPARAM lParam);
+        static void processCMD_SENSOR_SWITCH(LPARAM lParam);
+        static void processCMD_CONNECT_SWITCH(LPARAM lParam);
+        static void processCMD_IDENTIFY_KILL(LPARAM lParam);
+        static void processCMD_IDENTIFY_GAS(LPARAM lParam);
+        static void processCMD_SERVO_INIT(LPARAM lParam);
+        static void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam);
+        static void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam);
+        static void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam);
+        static void processCMD_MACHSERVO_STOP(LPARAM lParam);
+        static void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam);
+        static void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam);
+
+	 
 
 private:
 	ACK_EXT extOutAck;

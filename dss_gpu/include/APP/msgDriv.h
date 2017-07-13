@@ -33,7 +33,7 @@ extern "C" {
 #include <osa_tsk.h>
 //#include "app_global.h"
 
-#define MAX_MSG_NUM         100
+#define MAX_MSG_NUM         220
 
 #define MSGDRIV_FREE_CMD    0xFFFF
 

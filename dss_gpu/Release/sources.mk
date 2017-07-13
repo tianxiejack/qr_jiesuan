@@ -27,6 +27,7 @@ C_UPPER_DEPS :=
 SUBDIRS := \
 src \
 src/UART \
+src/PRI \
 src/OSD_CR \
 src/OSD \
 src/OSA_CAP/src \

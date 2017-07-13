@@ -154,7 +154,7 @@ void MSGDRIV_attachMsgFun(MSGDRIV_Handle handle, int msgId, MsgApiFun pRtnFun, i
 
     handle->msgTab[msgId].refContext = context;
 
-   printf("^^^^^^msgId=%d  pRtnFun=%p\n",msgId,pRtnFun);
+//   printf("^^^^^^msgId=%d  pRtnFun=%p\n",msgId,pRtnFun);
 }
 
 /********************************************************************************************************

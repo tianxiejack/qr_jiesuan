@@ -700,15 +700,18 @@ void  osdgraph_init(osdprocess_CB fun)
 			winId = i/2;
 			textParam = &grpxChWinPrms.chParam[devId].winPrms[winId];
 			lineParam = (Line_Param_fb *)&grpxChWinPrms.chParam[devId].winPrms[winId];
-
+			
 			if(winId == WINID_TV_CROSSAXIS)
 			{
 				lineParam->enableWin = 1;
 				lineParam->objType = grpx_ObjId_Cross;
 				//lineParam->objType = grpx_ObjId_Cross_Black_White;
 				lineParam->frcolor = WHITECOLOR;
-				lineParam->x = vdisWH[devId][0]/2;
+				lineParam->x = 
+					vdisWH[devId][0]/2;
 				lineParam->y = vdisWH[devId][1]/2;
+				//lineParam->x = vdisWH[0][0];
+				//lineParam->y = vdisWH[0][1];
 				lineParam->width = 60;
 				lineParam->height = 40;
 				lineParam->linePixels = 2;
@@ -740,7 +743,7 @@ void  osdgraph_init(osdprocess_CB fun)
 				lineParam->y = vdisWH[devId][1]/2;
 				lineParam->width = 60;
 				lineParam->height = 40;
-				lineParam->linePixels = 2;
+				lineParam->linePixels = 12;
 				lineParam->lineGapWidth = lineParam->width;
 				lineParam->lineGapHeight = lineParam->height;
 			}
@@ -768,7 +771,7 @@ void  osdgraph_init(osdprocess_CB fun)
 		}
 	}
 #endif
-	  grpxChWinPrms.tskGraphicLoop = TRUE;
+    grpxChWinPrms.tskGraphicLoop = TRUE;
     grpxChWinPrms.tskGraphicStopDone = FALSE;
 
     status = OSA_semCreate(&grpxChWinPrms.tskGraphicSem, 1, 0);
@@ -782,13 +785,13 @@ void  osdgraph_init(osdprocess_CB fun)
                 (void *)fun
              );
 
+
+
     OSA_assert(status == OSA_SOK);
 
     grpxChWinPrms.bGraphicInit = TRUE;
 
     OSA_printf(" %s done.\n", __func__);
-
-
 
 }
 #endif
@@ -814,7 +817,10 @@ void MultichGrpx_update_sem_post(void)
         return ;
 
 	if(timecount==0)
-   			 OSA_semSignal(&pMultGraphicObj->tskGraphicSem);
+	{
+		  OSA_semSignal(&pMultGraphicObj->tskGraphicSem);
+		   //printf("!!!!!!!!!!!!%s,line : %d\n",__func__,__LINE__);
+	}
 	else
 			timecount++;
 	if(timecount>=1)

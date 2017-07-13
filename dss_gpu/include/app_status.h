@@ -334,24 +334,23 @@ typedef struct
 
 typedef enum 
 {
-    MSGID_SYS_INIT  = 0x00000000,           ///< internal cmd system init.
+    MSGID_SYS_INIT  = 0x00000000,          		 //< internal cmd system init.
     MSGID_SYS_RESET,
-    //MSGID_AVT_RESET,
 
-    MSGID_EXT_INPUT_SYSMODE = 0x00000010,   ///< external cmd, system work mode.
-    MSGID_EXT_INPUT_SENSOR,                 ///< external cmd, switch sensor.
+    MSGID_EXT_INPUT_SYSMODE,    		//< external cmd, system work mode.
+    MSGID_EXT_INPUT_SENSOR,                    //< external cmd, switch sensor.
 
     // AVT21 track
-    MSGID_EXT_INPUT_FOVSTAT,                ///< external cmd, switch fov.
+    MSGID_EXT_INPUT_FOVSTAT = 0x00000010,              //< external cmd, switch fov.
     MSGID_EXT_INPUT_CFGSAVE,                ///< external cmd, config save(here only for axis save)
     MSGID_EXT_INPUT_AXISPOS,                ///< external cmd, set pos of cross axis.
     MSGID_EXT_INPUT_TRACKALG,             ///< external cmd, set track alg.
-    MSGID_EXT_INPUT_TRACK,                  ///< external cmd, start track or stop.
+    MSGID_EXT_INPUT_TRACK,                  //< external cmd, start track or stop.
     MSGID_EXT_INPUT_AIMPOS,                 ///< external cmd, set pos of aim area.
     MSGID_EXT_INPUT_AIMSIZE,                ///< external cmd, set size of aim area.
     //MSGID_EXT_INPUT_SCENELOCK,                ///< external cmd, scene set or clear
     //MSGID_EXT_INPUT_TRKBLEED,               ///< external cmd, close bleed
-    MSGID_EXT_INPUT_COAST,              ///< external cmd, coast set or cannel
+    MSGID_EXT_INPUT_COAST,                  //< external cmd, coast set or cannel
     MSGID_EXT_INPUT_FOVSELECT,        //FOVSELECT
     MSGID_EXT_INPUT_SEARCHMOD,        //FOVSELECT
 
@@ -373,12 +372,158 @@ typedef enum
     // osd control
     MSGID_EXT_INPUT_DISPGRADE = 0x00000030,  ///< external cmd, osd show or hide
     MSGID_EXT_INPUT_DISPCOLOR,              ///< external cmd, osd color
+    MSGID_SHIN_OSD	,		//闪烁OSD字符
 
-
-     MSGID_EXT_INPUT_COLOR,                 ///< external cmd, switch input video color.
+    MSGID_EXT_INPUT_COLOR,                 ///< external cmd, switch input video color.
 
     // video control
     MSGID_EXT_INPUT_VIDEOCTRL,              ///< external cmd, video record or replay.
+
+   // add control
+    MSGID_DRAM_LASER			 = 0x00000040,      
+    MSGID_DRAM_GRAYSTAT			,              
+    MSGID_DRAM_OSDSTAT			,            
+    MSGID_DRAM_CHECKINFOR	,               
+    MSGID_DRAM_BOREREFINE		,
+    MSGID_DRAM_CORRECTAXIS		,         
+    MSGID_DRAM_CHECKSTART		,              
+    MSGID_DRAM_ENPICP			,                
+    MSGID_DRAM_PICPMODE			,         
+    MSGID_FLIR_STATE			,    
+    MSGID_SAVE_ARIX,
+    MSGID_SEL_NEXTTAR			,
+    MSGID_HIDE_OSD				,
+    MSGID_SEL_PICPSENS			,          
+    MSGID_BORESIGHT_CHANGE		,               
+    MSGID_CTRL_ZOOM				,
+    MSGID_TRA_ENLOCK			,         
+    CMD_EXIT_SELF_CHECK			,              
+    CMD_BOOT_UP_CHECK_COMPLETE,                
+    CMD_BUTTON_AUTOCHECK	 ,         
+    CMD_BUTTON_CALIBRATION	 ,            
+    CMD_DISPLAY_ERR,   
+    CMD_DISPLAY_OK,
+    CMD_JOYSTICK_OK,                 
+    CMD_JOYSTICK_ERR,
+    CMD_DIP_ANGLE_OK, 
+    CMD_DIP_ANGLE_ERR,
+    CMD_MACHINEGUN_SENSOR_OK,         
+    CMD_MACHINEGUN_SENSOR_ERR,         
+    CMD_MACHINEGUN_SERVO_OK,          
+    CMD_MACHINEGUN_SERVO_ERR,          
+    CMD_POSITION_SENSOR_OK	   ,		//方位传感器正常
+    CMD_POSITION_SENSOR_ERR,
+    CMD_POSITION_SERVO_OK,            
+    CMD_POSITION_SERVO_ERR,
+    CMD_GENERADE_SENSOR_OK,           
+    CMD_GENERADE_SENSOR_ERR,
+    CMD_GENERADE_SERVO_OK,            
+    CMD_GENERADE_SERVO_ERR,
+
+    CMD_WEAPONCTRL_OK  = 0x00000070,
+    CMD_BUTTON_BATTLE,                
+    CMD_BUTTON_QUIT,                  
+    CMD_BUTTON_UNLOCK,                
+    CMD_BUTTON_UP,                    
+    CMD_BUTTON_DOWN,                  
+    CMD_BUTTON_LEFT,                  
+    CMD_BUTTON_RIGHT,                 
+    CMD_BUTTON_ENTER,                 
+    CMD_BULLET_SWITCH0,               
+    CMD_BULLET_SWITCH1,               
+    CMD_BULLET_SWITCH2,               
+    CMD_BULLET_SWITCH3,               
+    CMD_BUTTON_AUTOCATCH,             
+    CMD_BUTTON_BATTLE_AUTO,           
+    CMD_BUTTON_BATTLE_ALERT,          
+    CMD_USER_FIRED,                   
+     
+    CMD_CALIBRATION_SWITCH_TO_WEATHER,
+    CMD_CALIBRATION_SWITCH_TO_ZERO,  	
+    CMD_CALIBRATION_SWITCH_TO_GENERAL,
+    CMD_CALIBRATION_SWITCH_TO_SAVE, 
+    CMD_CALIBRATION_SWITCH_TO_GENPRAM,	
+    CMD_CALIBRATION_SWITCH_TO_HORIZEN,	
+    CMD_CALIBRATION_SWITCH_TO_LASER,
+    CMD_LASER_FAIL,                   
+    CMD_TRACKING_FAIL,                
+    CMD_VELOCITY_FAIL,                
+    CMD_MEASURE_VELOCITY,             
+    CMD_MEASURE_DISTANCE,             
+    CMD_LASER_OK,                     
+    CMD_TRACKING_OK,                  
+    CMD_FIRING_TABLE_LOAD_OK,         
+    CMD_FIRING_TABLE_FAILURE,
+    CMD_FIRING_ENABLE,
+    CMD_FIRING_DISABLE,
+    CMD_TRIGGER_AVT,
+    
+    CMD_MODE_AIM_LAND,
+    CMD_MODE_AIM_SKY,
+    CMD_MODE_ATTACK_SIGLE,
+    CMD_MODE_ATTACK_MULTI,
+    CMD_MODE_FOV_SMALL,
+    CMD_MODE_FOV_LARGE,
+    CMD_MODE_SHOT_SHORT,
+    CMD_MODE_SHOT_LONG,
+    CMD_MODE_SCALE_SWITCH,
+    CMD_MODE_PIC_COLOR_SWITCH,
+    CMD_MODE_ENHANCE_SWITCH,
+    CMD_STABLEVIDEO_SWITCH,
+    CMD_MEASURE_DISTANCE_SWITCH,
+    
+    CMD_DETEND_LOCK,
+    CMD_DETEND_UNLOCK,
+    CMD_MAINTPORT_LOCK,
+    CMD_MAINTPORT_UNLOCK,
+    CMD_SCHEDULE_GUN,
+    CMD_SCHEDULE_STRONG,
+    CMD_SCHEDULE_RESET,
+    CMD_TIMER_SENDFRAME0,
+    CMD_TRACE_SENDFRAME0,
+    CMD_PELCO_LEFT,
+    CMD_PELCO_RIGHT,
+    CMD_PELCO_STOP,
+    CMD_GRENADE_LOAD_IN_POSITION,
+    CMD_QUIT_AVT_TRACKING,
+    CMD_SEND_MIDPARAMS,
+    CMD_CALCNUM_SHOW,
+    CMD_CALCNUM_HIDE,
+    CMD_MIDPARAMS_SWITCH,
+    CMD_SENSOR_SWITCH,
+    CMD_CONNECT_SWITCH,
+    
+    CMD_LIHEQI_CLOSE,
+    CMD_LIHEQI_OPEN,
+    CMD_GRENADE_ERR,
+    CMD_GRENADE_OK,
+    CMD_FIREBUTTON_ERR,
+    CMD_FIREBUTTON_OK,
+    CMD_FULSCREENCAN_ERR,
+    CMD_FULSCREENCAN_OK,
+    CMD_DISCONTRLCAN0_ERR,
+    CMD_DISCONTRLCAN0_OK,
+    CMD_DISCONTRLCAN1_ERR,
+    CMD_DISCONTRLCAN1_OK,
+    CMD_DIANCITIE_ERR,
+    CMD_DIANCITIE_OK,
+    CMD_POSMOTOR_ERR,
+    CMD_POSMOTOR_OK,
+    CMD_MACHGUNMOTOR_ERR,
+    CMD_MACHGUNMOTOR_OK,
+    CMD_GRENADEMOTOR_ERR,
+    CMD_GRENADEMOTOR_OK,
+    CMD_IDENTIFY_KILL,
+    CMD_IDENTIFY_GAS,
+    CMD_LASERSELECT_SWITCH,
+    CMD_SERVO_INIT,
+    CMD_SERVOTIMER_MACHGUN,
+    CMD_MACHSERVO_MOVESPEED,
+    CMD_GRENADESERVO_MOVESPEED,
+    CMD_MACHSERVO_STOP,
+    CMD_MACHSERVO_MOVEOFFSET,
+    CMD_GRENADESERVO_MOVEOFFSET,
+    MAX_MSG_NUM,
 
 }MSG_PROC_ID;
 

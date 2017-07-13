@@ -159,7 +159,7 @@ static void* dxmain(void *pPrm)
     Dx_run();
     Dx_initparam();//init dx param
     OSA_semSignal((OSA_SemHndl *)pPrm);
-    OSA_printf("%s:%d\n", __func__, __LINE__);
+    OSA_printf("***%s:%d\n", __func__, __LINE__);
 
     while (ui_loop)
     {
@@ -194,6 +194,7 @@ static void* dxmain(void *pPrm)
   OSA_MutexHndl muxLock;
   OSA_SemHndl tskGraphicSemmain;
   OSA_ThrHndl tskGraphicHndlmain;
+
 int App_dxmain( )
 {
 	int status=0;

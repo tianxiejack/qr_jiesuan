@@ -271,13 +271,13 @@ void MultiChVideo::pal4process(int chid)
 			status = OSA_bufGetFull(VCap[chId]->m_bufferHndl, &bufId, OSA_TIMEOUT_FOREVER);
 
 			if(status == 0){
-				printf("****wjGetFull ChId[%d] bufId=%d****\n", chId, bufId);
+			//	printf("****wjGetFull ChId[%d] bufId=%d****\n", chId, bufId);
 				bufdata	= BUFFER_DATA(VCap[chId]->m_bufferHndl->bufInfo[bufId].virtAddr);
 				CHID = *BUFFER_CHID(VCap[chId]->m_bufferHndl->bufInfo[bufId].virtAddr);
 				width	= VCap[chId]->m_bufferHndl->bufInfo[bufId].width;
 				height	= VCap[chId]->m_bufferHndl->bufInfo[bufId].height;
 
-				OSA_printf("bufId = %d chId = %d w x h (%d x %d)", bufId, CHID, width, height);
+			//	OSA_printf("bufId = %d chId = %d w x h (%d x %d)", bufId, CHID, width, height);
 				
 				//frame = cv::Mat(VCap[chId]->imgheight, VCap[chId]->imgwidth, VCap[chId]->imgtype,
 				//		bufdata);

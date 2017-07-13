@@ -222,7 +222,6 @@ int CVideoProcess::creat()
 /***********************************/
 
 	m_display.create();
-
 	MultiCh.m_user = this;
 	MultiCh.m_usrFunc = callback_process;
 	MultiCh.creat();
@@ -329,14 +328,14 @@ int CVideoProcess::init()
 	dsInit.winPosY = 100;
 	dsInit.winWidth = 1280;
 	dsInit.winHeight = 1024;
-
+	
 	m_display.init(&dsInit);
 
 	m_display.m_bOsd = true;//false;//true;
 	m_dc = m_display.m_imgOsd[0];
 	m_dccv=m_display.m_imgOsd[1];
 	OnInit();
-	
+
 	return 0;
 }
 
@@ -411,7 +410,6 @@ int CVideoProcess::run()
 	MultiCh.run();
 	//BigChannel.run();
 	m_display.run();
-
 	m_track = CreateUtcTrk();
 
 	for(int i=0; i<MAX_CHAN; i++){
@@ -423,7 +421,7 @@ int CVideoProcess::run()
 	}
 
 	OnRun();
-
+	
 	return 0;
 }
 
