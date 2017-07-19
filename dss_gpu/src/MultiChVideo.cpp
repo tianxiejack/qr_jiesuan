@@ -282,7 +282,7 @@ void MultiChVideo::pal4process(int chid)
 				//frame = cv::Mat(VCap[chId]->imgheight, VCap[chId]->imgwidth, VCap[chId]->imgtype,
 				//		bufdata);
 				//to xie tian
-				frame = cv::Mat(VCap[chId]->imgheight, 720, VCap[chId]->imgtype,
+				frame = cv::Mat(576, 720, VCap[chId]->imgtype,
 						bufdata);
 				
 				m_usrFunc(m_user, CHID, frame);

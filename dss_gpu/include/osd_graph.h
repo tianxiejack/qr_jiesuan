@@ -8,6 +8,7 @@
 #include "osa.h"
 #include "osa_thr.h"
 #include "osa_buf.h"
+#include "osdProcess.h"
 using namespace std;
 using namespace cv;
 extern Multich_graphic grpxChWinPrms;
@@ -30,9 +31,12 @@ int process_draw_text(Mat frame,int startx,int starty,char *pstring,int frcolor,
 
 void Draw_graph_osd(Mat frame, void *tParam,void *lParam);
 
+
+
 void EraseDraw_graph_osd(Mat frame, void *Param,void *Parampri);
+void osd_chtext(Mat frame, int startx, int starty, char * pString, UInt32 frcolor, UInt32 bgcolor);
 typedef void (* osdprocess_CB)(void *pPrm);
-void  osdgraph_init(osdprocess_CB fun);
+void  osdgraph_init(osdprocess_CB fun,Mat frame);
 //void CVideoProcess::process_osd(int devId)
 void MultichGrpx_update_sem_post(void);
 void  APP_tracker_timer_alarm();
@@ -47,7 +51,7 @@ void APP_graphic_timer_alarm();
 Int32 APP_get_colour( int sensorid);
 
 void  set_graph();
-
+void OSDCTRL_draw1(Mat frame,OSDCTRL_Handle pCtrlObj);
 
 
 #endif

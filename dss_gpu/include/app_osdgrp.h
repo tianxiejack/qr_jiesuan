@@ -14,6 +14,7 @@
 #define _MULTICH_GRAPHIC_H
 #include <osa_sem.h>
 #include <osa.h>
+#include "osa_mutex.h"
 #define ALG_LINK_GRPX_MAX_CH	2
 #define ALG_LINK_GRPX_MAX_WINDOWS	64
 
@@ -93,6 +94,7 @@ typedef struct _Multich_graphic_
     AlgLink_GrpxChParams  chParam[ALG_LINK_GRPX_MAX_CH];
     OSA_MutexHndl muxLock;
     OSA_SemHndl tskGraphicSem;
+    //OSA_ThrHndl tskGraphicHndl;
     OSA_ThrHndl tskGraphicHndl;
     Bool tskGraphicLoop;
     Bool tskGraphicStopDone;

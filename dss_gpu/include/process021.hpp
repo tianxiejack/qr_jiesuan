@@ -11,6 +11,8 @@
 #include "VideoProcess.hpp"
 #include "osd_graph.h"
 #include"osd_cv.h"
+#include "osdProcess.h"
+
 //#include "msgProcessDef.h"
 #define LPARAM long
 

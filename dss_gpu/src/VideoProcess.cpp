@@ -326,8 +326,8 @@ int CVideoProcess::init()
 	dsInit.bFullScreen = true;
 	dsInit.winPosX = 200;
 	dsInit.winPosY = 100;
-	dsInit.winWidth = 1280;
-	dsInit.winHeight = 1024;
+	dsInit.winWidth = 720;//720;
+	dsInit.winHeight = 576;//576;
 	
 	m_display.init(&dsInit);
 

@@ -673,7 +673,7 @@ void CDisplayer::gl_init()
 		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);//GL_NEAREST);//GL_NEAREST_MIPMAP_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);//GL_CLAMP);//GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);//GL_CLAMP);//GL_CLAMP_TO_EDGE);
-		glTexImage2D(GL_TEXTURE_2D, 0, 3, 1280, 1024, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, 3, 720, 576, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, NULL);
 	}
 
 
@@ -692,7 +692,7 @@ void CDisplayer::gl_init()
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_imgOsd[i].cols, m_imgOsd[i].rows, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, NULL);
 
 		glBindBuffer(GL_PIXEL_UNPACK_BUFFER, buffId_osd[i]);
-		glBufferData(GL_PIXEL_UNPACK_BUFFER, m_imgOsd[i].cols*m_imgOsd[i].rows*m_imgOsd[i].cols*m_imgOsd[i].channels(), m_imgOsd[i].data, GL_DYNAMIC_COPY);//GL_STATIC_DRAW);//GL_DYNAMIC_DRAW);
+		glBufferData(GL_PIXEL_UNPACK_BUFFER, m_imgOsd[i].cols*m_imgOsd[i].rows*m_imgOsd[i].channels(), m_imgOsd[i].data, GL_DYNAMIC_COPY);//GL_STATIC_DRAW);//GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 
 	}

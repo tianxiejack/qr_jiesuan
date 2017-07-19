@@ -87,7 +87,7 @@ typedef OSA_MsgHndl     MSG_ID;
 
 #define SDK_MSGQUE_CREATE(hndl)                                         OSA_msgqCreate(hndl)
 #define SDK_MSGQUE_DESTROY(hndl)                                        OSA_msgqDelete(hndl)
-#define SDK_MSGQUE_SEND(to,from,cmd,prm,msgFlags,msg)                   OSA_msgqSendMsg(to,from,cmd,prm,msgFlags,msg)
+#define SDK_MSGQUE_SEND(to,from,cmd,prm,msgFlags,msg)          OSA_msgqSendMsg(to,from,cmd,prm,msgFlags,msg)
 #define SDK_MSGQUE_RECV(hndl,msg,timeout)                               OSA_msgqRecvMsgEx(hndl,msg,timeout)
 
 #if 0

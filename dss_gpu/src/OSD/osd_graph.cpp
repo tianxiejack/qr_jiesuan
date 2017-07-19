@@ -10,7 +10,50 @@
 #include"app_ctrl.h"
 #include "msgDriv.h"
 
+
+//#include "opencv2/opencv.hpp"
+
 Multich_graphic grpxChWinPrms;
+
+/*
+ *  ======== OSDCTRL_draw========
+ *
+ *  This function is used to draw all the items
+ */
+void OSDCTRL_draw1(Mat frame,OSDCTRL_Handle pCtrlObj)
+{
+	int i=0;
+	//static int gun=0;//,type=0;
+	//volatile FONT_OBJ *pFont = &g_Font;
+	OSDText_Obj * pTextObj = NULL;
+	int startx,starty;
+	char *ptr;
+	UInt32 frcolor,bgcolor;
+
+	
+	
+	for(i=eModeId;i<eBoreSightLinId;i++){
+		pTextObj = &pCtrlObj->pTextList[i];
+
+		
+		
+			OSDCTRL_genOsdContext(pCtrlObj,i);
+			startx   = pTextObj->osdInitX;
+			starty   = pTextObj->osdInitY;
+			frcolor  = WHITECOLOR;
+			bgcolor = BGCOLOR;
+			ptr   = (char*)pTextObj->osdContext;
+			//pFont->cSize   = pTextObj->osdTextLen;
+			osd_chtext(frame, startx, starty, ptr, frcolor, bgcolor);
+		//	osd_draw_text(Mat frame, void * prm);
+		
+	}
+	//CDC_drawCircle(hIMG,NULL);
+	//CDC_drawSLine(hIMG,(HANDLE)pFont);
+	//CDC_drawTest(hIMG,(HANDLE)pFont);
+
+}
+
 
 
 
@@ -84,9 +127,7 @@ void DrawChar(Mat frame, int startx, int starty, char *pChar, UInt32 frcolor, UI
 
 void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor, UInt32 bgcolor)
 {
-
-
-#if 0
+	#if 0
 	uchar *q,*pin,c;
 	q=FONT_LIBRARY_0814;
 	int numchar=strlen(pString);
@@ -110,7 +151,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 			}
 		}
 	}
-#endif
+	#endif
 
 
 	uchar *pin, *pChar, *fontData;
@@ -139,28 +180,27 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 		for(k=0; k<numchar; k++)
 		{
 			index = (UInt32)pString[k];
-			index=index-' ';
-			pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
+			//index=index-' ';
+			//index=128+index;
 			//printf("draw str:%c [%d]\n", pString[k], index);
-			for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
-			{
-				offset 	= j-startx-k*fontWidth;
-				data 	= *(pChar + offset/8);
-				data 	<<= (offset%8);
+		
+					pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
+					for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
+					{
+						offset 	= j-startx-k*fontWidth;
+						data 	= *(pChar + offset/8);
+						data 	<<= (offset%8);
 
-				pixcolor		= (data&0x80)?frcolor:bgcolor;
-				*(pin+j*4)		= pixcolor & 0xFF;
-				*(pin+j*4+1)	= (pixcolor >> 8) & 0xFF;
-				*(pin+j*4+2)	= (pixcolor >> 16) & 0xFF;
-				*(pin+j*4+3)	= (pixcolor >> 24) & 0xFF;
-			}
+						pixcolor		= (data&0x80)?frcolor:bgcolor;
+						*(pin+j*4)		= pixcolor & 0xFF;
+						*(pin+j*4+1)	= (pixcolor >> 8) & 0xFF;
+						*(pin+j*4+2)	= (pixcolor >> 16) & 0xFF;
+						*(pin+j*4+3)	= (pixcolor >> 24) & 0xFF;
+					}
+		
 		}
 	}
 
-
-
-
-	
 }
 
 void osd_draw_cross(Mat frame, void *prm)
@@ -171,7 +211,7 @@ void osd_draw_cross(Mat frame, void *prm)
 
 	if(pObj == NULL)
 		return ;
-
+//return ;
 	width = pObj->linePixels;
 	iColor = pObj->frcolor;
 
@@ -229,7 +269,7 @@ void osd_draw_rect(Mat frame, void *prm)
 	Line_Param_fb * pObj = (Line_Param_fb *)prm;
 	UInt32 iX, iY, iColor;
 	UInt32 width, len, height;
-
+//return ;
 	if(pObj == NULL)
 		return ;
 
@@ -264,7 +304,7 @@ void osd_draw_rect_gap(Mat frame, void *prm)
 	Line_Param_fb * pObj = (Line_Param_fb *)prm;
 	UInt32 iX, iY, iColor;
 	UInt32 width, len, height;
-
+//return ;
 	if(pObj == NULL)
 		return ;
 
@@ -318,14 +358,36 @@ void osd_draw_rect_gap(Mat frame, void *prm)
 	return ;
 }
 
+
+void osd_chtext(Mat frame, int startx, int starty, char * pString, UInt32 frcolor, UInt32 bgcolor)
+{
+	
+
+	DrawString(frame, startx, starty, pString, frcolor, bgcolor);
+
+}
+
+
+
+
 void osd_draw_text(Mat frame, void *prm)
 {
 	Text_Param_fb * pObj = (Text_Param_fb *)prm;
 	UInt32 fontfrColor,fontbgColor;
 
-	if(pObj == NULL)
-		return ;
-
+	//if(pObj == NULL)
+	//	return ;
+printf("111111\n");
+Scalar color = Scalar(255,255,255,255);	
+fontfrColor =WHITECOLOR;
+fontbgColor =BGCOLOR; 
+//process_draw_line(frame,100,100,200,2,255,255,255,255);
+//return ;
+char WorkOsd[10] ;
+sprintf(WorkOsd,"%c%c",249,185);
+DrawString(frame, 100, 100, WorkOsd, fontfrColor, fontbgColor);
+putText(frame,"haha",cvPoint(30,30),CV_FONT_HERSHEY_SIMPLEX,0.8,color);
+return ;
 	int i;
 	int x[3];
 	int y[3];
@@ -356,29 +418,66 @@ void osd_draw_text(Mat frame, void *prm)
 	{
 		if(vaild[i] != 0)
 		{
-			fontfrColor = pObj->frcolor;
-			fontbgColor = pObj->bgcolor;
+			fontfrColor = WHITECOLOR;//pObj->frcolor;
+			fontbgColor = BGCOLOR;//pObj->bgcolor;
 		}
 		else
 		{
-			fontfrColor = pObj->bgcolor;
-			fontbgColor = pObj->bgcolor;
+			fontfrColor = WHITECOLOR;//pObj->bgcolor;
+			fontbgColor =BGCOLOR;// pObj->bgcolor;
 		}
-	
-		DrawString(frame, x[i], y[i], textStr[i], fontfrColor, fontbgColor);
+		//DrawString(frame, x[i], y[i], "123", fontfrColor, fontbgColor);
+		
+		
+		//DrawString(frame, x[i], y[i], textStr[i], fontfrColor, fontbgColor);
+
+		
 		//printf("x[%d]=%d,y[%d]=%d,testStr[%d]=%s\n",i,x[i],i,y[i],i,textStr[i]);
 		//DrawString(frame, x[i], y[i], textStr[i], iColor);
 	}
-
+	
+	
 	return ;
+
+
+	#if 0
+	Point start,end;
+	start.x=100;
+	start.y=100;
+	end.x=300;
+	end.y=300;
+	char numbuf[200];
+	Scalar color = Scalar(255,255,255,255);	
+	//if(pObj == NULL)
+		//return ;
+	fontfrColor =WHITECOLOR;
+	fontbgColor =BGCOLOR; 
+	//process_draw_line(frame,100,100,200,50,0,0,255,255);
+
+	//Scalar color = Scalar(255,255,255);	
+	//line(frame,100,200,color,1,LINE_AA);
+	//DrawString(frame, 100, 200, "ABC", fontfrColor, fontbgColor);
+	//line(frame, start, end, color, 1, 8, 0 ); 
+	//putText(frame,text,Point(200,200),CV_FONT_HERSHEY_COMPLEX,1.0,Scalar(122,255,255),3,8);
+	//sprintf(numbuf,"%s","auto");
+	//putText(frame,numbuf,cvPoint(30,30),CV_FONT_HERSHEY_SIMPLEX,0.8,color);
+	
+	
+	//DrawString(frame, 100, 200, "ABC", fontfrColor, fontbgColor);
+	
+	//DrawString(frame, x[i], y[i], textStr[i], fontfrColor, fontbgColor);
+	return ;
+	#endif
+
 }
+
 
 void osd_draw_cross_black_white(Mat frame, void *prm)
 {
 	Line_Param_fb * pObj = (Line_Param_fb *)prm;
 	UInt32 iX, iY, iColor;
 	UInt32 width, len, height;
-
+//return ;
 	if(pObj == NULL)
 		return ;
 
@@ -437,7 +536,7 @@ int osd_draw_Hori_Menu(Mat frame, void *prm)
 	//pObj->y=65*2;//TEST BLINK;
 	//pObj->x=pObj->x+9;
 	//pObj->y=pObj->y-2;
-
+//return 0;
 	iColor=pObj->frcolor;
 	iX=pObj->x;
 	iY = pObj->y;
@@ -505,7 +604,7 @@ int osd_draw_Vert_Menu(Mat frame, void *prm)
 	UInt32 iX, iY, iColor;
 	UInt32 width, len, height;
 	//pParamFb->color = 0x00EEEEEE;
-
+//return 0;
 	//printf(" %s the x =%d   the y=%d  the width=%d  the len=%d\n",__func__, pObj->x,pObj->y,pObj->linePixels,pObj->width);
 
 /*
@@ -676,8 +775,10 @@ static void* MultichGrpx_task(void *pPrm)
 
     return NULL;
 }
+
+
 #if 1
-void  osdgraph_init(osdprocess_CB fun)
+void  osdgraph_init(osdprocess_CB fun,Mat frame)
 {
 	int status=0;
 	int i, devId, winId;
@@ -771,6 +872,8 @@ void  osdgraph_init(osdprocess_CB fun)
 		}
 	}
 #endif
+
+
     grpxChWinPrms.tskGraphicLoop = TRUE;
     grpxChWinPrms.tskGraphicStopDone = FALSE;
 
@@ -1143,16 +1246,17 @@ void Draw_graph_osd(Mat frame, void *tParam,void *lParam)
 		Line_Param_fb * lineParam = (Line_Param_fb *)lParam;
 		//if(text)
 
-		switch(textParam->objType)
+		//switch(textParam->objType)
+		switch(4)
 		{
 		case grpx_ObjId_Cross:
-			osd_draw_cross(frame, lineParam);
+			//osd_draw_cross(frame, lineParam);
 			break;
 		case grpx_ObjId_Rect:
-			osd_draw_rect(frame, lineParam);
+			//osd_draw_rect(frame, lineParam);
 			break;
 		case grpx_ObjId_Rect_gap:
-			osd_draw_rect_gap(frame, lineParam);
+			//osd_draw_rect_gap(frame, lineParam);
 			break;
 		case grpx_ObjId_Compass:
 			break;
@@ -1291,7 +1395,7 @@ void APP_graphic_timer_alarm()
 			pIStuts->unitFaultStatpri=pIStuts->unitFaultStat;
 			MSGDRIV_send(MSGID_EXT_INPUT_VIDEOEN, 0);
 			//MSGAPI_AckSnd( AckCheck);
-			printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^MSGID_EXT_INPUT_VIDEOEN**********\n");
+			printf("MSGID_EXT_INPUT_VIDEOEN**********\n");
 		}
 
 	
@@ -1312,14 +1416,14 @@ void APP_graphic_timer_alarm()
     {
 
         blkId = CFGID_blkId(CFGID_OSD_TEXT_OBJ_ID(i));
-	APP_set_graphic_parms_fb(blkId, 2,&grpxChWinPrms,i);
+	//APP_set_graphic_parms_fb(blkId, 2,&grpxChWinPrms,i);
     }
 
 
     for(i = WINID_TV_HORI_MENU; i <= WINID_FR_VERT_MENU; i++)
     {
         blkId = CFGID_blkId(CFGID_OSD_GRAPH_OBJ_ID(i));
-	 APP_set_graphic_parms_line_fb(blkId, 2,&grpxChWinPrms);
+	// APP_set_graphic_parms_line_fb(blkId, 2,&grpxChWinPrms);
     }
     MultichGrpx_update_sem_post();
 

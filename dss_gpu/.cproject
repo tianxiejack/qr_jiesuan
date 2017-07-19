@@ -175,7 +175,14 @@
 		<project id="dss_625.com.nvidia.cuda.ide.seven_five.exe.1364409701" name="Executable" projectType="com.nvidia.cuda.ide.seven_five.exe"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/dss_noon"/>
+		</configuration>
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/dss_noon"/>
+		</configuration>
+	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="com.nvidia.cuda.ide.seven_five.configuration.debug.1954987328;com.nvidia.cuda.ide.seven_five.configuration.debug.1954987328.;nvcc.compiler.base.245607873;nvcc.compiler.input.c.1277197558">

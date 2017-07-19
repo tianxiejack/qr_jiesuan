@@ -5,6 +5,7 @@
  *      Author: ubuntu
  */
 #include <glut.h>
+#include <vector>
 #include "process021.hpp"
 #include "vmath.h"
 //#include "grpFont.h"
@@ -16,7 +17,17 @@
 #include"app_ctrl.h"
 #include"dx.h"
 #include"osd_cv.h"
+
+
 #define VIDEO1280X1024 1
+
+using namespace std;
+using namespace cv;
+
+extern OSDCTRL_Handle pOsdCtrlObj;
+
+OSDCTRL_OBJ * pCtrlObj = NULL;
+
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
 {
@@ -33,21 +44,21 @@ CProcess021::CProcess021()
 	// default cmd value
 	CMD_EXT *pIStuts = &extInCtrl;
 
-	pIStuts->unitAxisX[0]      = 640;
-	pIStuts->unitAxisY[0]      = 512;
+	pIStuts->unitAxisX[0]      = 360;
+	pIStuts->unitAxisY[0]      = 288;
 #ifdef VIDEO1280X1024
 	pIStuts->unitAxisX[1]      = 640;
 	pIStuts->unitAxisY[1]      = 512;
 #else
-	pIStuts->unitAxisX[1]      = 320;
-	pIStuts->unitAxisY[1]      = 256;
+	pIStuts->unitAxisX[1]      = 360;
+	pIStuts->unitAxisY[1]      = 288;
 #endif
 
 
 	pIStuts->unitAimW = 64;
 	pIStuts->unitAimH = 64;
-	pIStuts->unitAimX=640;
-	pIStuts->unitAimY=512;
+	pIStuts->unitAimX=360;
+	pIStuts->unitAimY=288;
 	pIStuts->SensorStat     = eSen_TV;
 	pIStuts->PicpSensorStatpri=pIStuts->PicpSensorStat = 0xFF;
 
@@ -65,31 +76,31 @@ CProcess021::CProcess021()
 	crossBak.y=extInCtrl.unitAxisY[pIStuts->SensorStat ];
 	pIStuts->AvtTrkAimSize=2;
 
-	pIStuts->ImgPixelX[0]=640;
-	pIStuts->ImgPixelY[0]=512;
+	pIStuts->ImgPixelX[0]=360;
+	pIStuts->ImgPixelY[0]=288;
 
-	pIStuts->AvtPosXTv=640;
-	pIStuts->AvtPosYTv=512;
+	pIStuts->AvtPosXTv=360;
+	pIStuts->AvtPosYTv=288;
 
 	pIStuts->FovStat=1;
 #ifdef VIDEO1280X1024
 	pIStuts->ImgPixelX[1]=800;
 	pIStuts->ImgPixelY[1]=800;
 
-	pIStuts->AvtPosXFir=640;
-	pIStuts->AvtPosYFir=512;
+	pIStuts->AvtPosXFir=360;
+	pIStuts->AvtPosYFir=288;
 #else
-	pIStuts->ImgPixelX[1]=320;
-	pIStuts->ImgPixelY[1]=256;
+	pIStuts->ImgPixelX[1]=360;
+	pIStuts->ImgPixelY[1]=288;
 
-	pIStuts->AvtPosXFir=320;
-	pIStuts->AvtPosYFir=256;
+	pIStuts->AvtPosXFir=360;
+	pIStuts->AvtPosYFir=288;
 	
 #endif
 	pIStuts->FrCollimation=2;
 	pIStuts->PicpSensorStatpri=2;
-	tvcorx=1280-100;
-	tvcory=1024-100;
+	tvcorx=720-100;
+	tvcory=576-100;
 	memset(secBak,0,sizeof(secBak));
 
 	memset(Osdflag,0,sizeof(Osdflag));
@@ -206,9 +217,12 @@ int  CProcess021::PiexltoWindowsy(int y,int channel)
 
 void CProcess021::OnCreate()
 {
+	
 
-
-	osdgraph_init(process_osd);
+	osdgraph_init(process_osd,sThis->m_dc);
+	
+       pCtrlObj = OSDCTRL_create();
+	
 	MSGDRIV_create();
 	MSGAPI_initial();
 	//App_dxmain();
@@ -278,7 +292,7 @@ bool CProcess021::OnPreProcess(int chId, Mat &frame)
 int onece=0;
 void CProcess021::process_osd(void *pPrm)
 {
-
+   
 	int devId=0;
 	Mat frame=sThis->m_dc;//.m_imgOsd;
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
@@ -288,12 +302,45 @@ void CProcess021::process_osd(void *pPrm)
 	Text_Param_fb * textParampri = NULL;
 	Line_Param_fb * lineParampri = NULL;
 	//printf("!!!!!!!!!!!!!!!!!!!!! OSD !!!!!!!!!!!!!!!!!!!!!!!!!\n");	
-#if 0
+
+		
+	OSDCTRL_draw1(frame,pCtrlObj);
+
+	//add
+	#if 0	
+	IMAGE_Handle himg;
+	Mat frame=sThis->m_dc;
+	vector<BYTE*> img_vec;
+	
+	split(frame,img_vec);
+	BYTE* Y_img = img_vec[0];
+	BYTE* U_img = img_vec[1];
+	BYTE* V_img = img_vec[2];
+	
+	
+	himg->height = 1280;
+	himg->imageData = frame.data;
+	himg->imageSize =1280*1024;
+	himg->ImgU = U_img;
+	himg->ImgY = Y_img;
+	himg->ImgV = V_img;
+	himg->nSize = 0;
+	himg->width = 1024;
+	himg->widthStep = 1024;
+	
+	OSDCTRL_Handle tmp = pOsdCtrlObj;
+
+	//OSDCTRL_draw();
+	#endif
+	//end
+
+#if 1
+	#if 0
 	static int iFrameCnt=0;
 	iFrameCnt++;
 	OSA_printf(" %d:%s devId %d iFrameCnt %d\n",OSA_getCurTimeInMsec(),__func__,
 		devId, iFrameCnt);
-#endif
+	#endif
 
 	//OSA_printf(" %d:%s devId %d grplevel %d grpcolor %d\n",OSA_getCurTimeInMsec(),__func__,
 	//	devId, pIStuts->DispGrp[devId], pIStuts->DispColor[devId]);
@@ -336,8 +383,8 @@ void CProcess021::process_osd(void *pPrm)
 		memcpy(textParampri,textParam,sizeof(Text_Param_fb));
 
 	}
-
-
+	#endif
+	
 
 }
 
@@ -1071,7 +1118,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 	int crossshifty=cvRound(vdisWH[0][1]/3);
 	
 	CvScalar colour=GetcvColour(frcolor);
-
+//putText(frame,"heolo",Point(200,200),CV_FONT_HERSHEY_COMPLEX,1.0,Scalar(0,0,255),3,8);
 	osdindex=0;
 		//picp cross
 	{
@@ -1536,7 +1583,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'a' || key == 'A')
 	{
-		pIStuts->SensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
+		pIStuts->SensorStat = (pIStuts->SensorStat + 1)%3;
 		//msgdriv_event(MSGID_EXT_INPUT_SENSOR, NULL);
 		MSGDRIV_send(MSGID_EXT_INPUT_SENSOR,NULL);
 	}
@@ -2405,7 +2452,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
  void CProcess021::MSGAPI_inputsensor(long lParam )
 {
-	#if 0
+	#if 1
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	//	pIStuts->SensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
 	sThis->msgdriv_event(MSGID_EXT_INPUT_SENSOR,NULL);
