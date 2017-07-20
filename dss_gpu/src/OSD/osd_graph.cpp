@@ -16,11 +16,11 @@
 Multich_graphic grpxChWinPrms;
 
 /*
- *  ======== OSDCTRL_draw========
+ *  ======== OSDCTRL_draw_text========
  *
  *  This function is used to draw all the items
  */
-void OSDCTRL_draw1(Mat frame,OSDCTRL_Handle pCtrlObj)
+void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 {
 	int i=0;
 	//static int gun=0;//,type=0;
@@ -32,20 +32,21 @@ void OSDCTRL_draw1(Mat frame,OSDCTRL_Handle pCtrlObj)
 
 	
 	
-	for(i=eModeId;i<eBoreSightLinId;i++){
-		pTextObj = &pCtrlObj->pTextList[i];
+	for(i=eModeId;i<eBoreSightLinId;i++)
+	{
+			pTextObj = &pCtrlObj->pTextList[i];
 
-		
-		
-			OSDCTRL_genOsdContext(pCtrlObj,i);
-			startx   = pTextObj->osdInitX;
-			starty   = pTextObj->osdInitY;
-			frcolor  = WHITECOLOR;
-			bgcolor = BGCOLOR;
-			ptr   = (char*)pTextObj->osdContext;
-			//pFont->cSize   = pTextObj->osdTextLen;
-			osd_chtext(frame, startx, starty, ptr, frcolor, bgcolor);
-		//	osd_draw_text(Mat frame, void * prm);
+				if (pTextObj->osdState==eOsd_Disp)
+				{
+					if(pTextObj)
+					OSDCTRL_genOsdContext(pCtrlObj,i);
+					startx   = pTextObj->osdInitX;
+					starty   = pTextObj->osdInitY;
+					frcolor  = WHITECOLOR;
+					bgcolor = BGCOLOR;
+					ptr   = (char*)pTextObj->osdContext;
+					osd_chtext(frame, startx, starty, ptr, frcolor, bgcolor);
+				}
 		
 	}
 	//CDC_drawCircle(hIMG,NULL);
@@ -53,8 +54,6 @@ void OSDCTRL_draw1(Mat frame,OSDCTRL_Handle pCtrlObj)
 	//CDC_drawTest(hIMG,(HANDLE)pFont);
 
 }
-
-
 
 
 void DrawLine(Mat frame, int startx, int starty, int endx, int endy, int width, UInt32 colorRGBA)
@@ -165,7 +164,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 
 	fontWidth 	= 	OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814;
 	fontHeight 	= 	OSDUTIL_FONT_FLR_DEFAULT_HEIGHT_0814;
-	fontData      =	FONT_LIBRARY_0814;
+	fontData         =	FONT_LIBRARY_0814;
 	if(fontWidth%8!=0)
 		{
 			add=1;
@@ -209,59 +208,9 @@ void osd_draw_cross(Mat frame, void *prm)
 	UInt32 iX, iY, iColor;
 	UInt32 width, len, height;
 
-	if(pObj == NULL)
-		return ;
-//return ;
-	width = pObj->linePixels;
-	iColor = pObj->frcolor;
+	
 
-	if(1)
-	{
-		// only cross
-		len = pObj->width;
-		iX = pObj->x - (pObj->width>>1);
-		iY = pObj->y;
-		DrawHLine(frame,iX,iY,width,len,iColor);
 
-		height = pObj->height;
-		len = height;
-		iX = pObj->x;
-		iY = pObj->y - (len>>1);
-		DrawVLine(frame,iX,iY,width,len,iColor);
-	}
-	else
-	{
-		// with center point
-		//left horizonal line
-		len = (pObj->width>>1)-(pObj->lineGapWidth>>1);
-		iX = pObj->x - (pObj->width>>1);
-		iY = pObj->y;
-		DrawHLine(frame,iX,iY,width,len,iColor);
-		//middle horizonal line
-		len = pObj->linePixels;
-		iX = pObj->x;
-		iY = pObj->y;
-		DrawHLine(frame,iX,iY,width,len,iColor);
-		//right horizonal line
-		len = (pObj->width>>1)-(pObj->lineGapWidth>>1);
-		iX = pObj->x+(pObj->lineGapWidth>>1)+2;
-		iY = pObj->y;
-		DrawHLine(frame,iX,iY,width,len,iColor);
-		//top vertical line
-		height = pObj->height;
-		len = (height>>1)-(pObj->lineGapHeight>>1);
-		iX = pObj->x;
-		iY = pObj->y - (height>>1);
-		DrawVLine(frame,iX,iY,width,len,iColor);
-		//bottom vertical line
-		height = pObj->height;
-		len = (height>>1)-(pObj->lineGapHeight>>1);
-		iX = pObj->x;
-		iY = pObj->y+(pObj->lineGapHeight>>1)+2;
-		DrawVLine(frame,iX,iY,width,len,iColor);
-	}
-
-	return ;
 }
 
 void osd_draw_rect(Mat frame, void *prm)
@@ -361,10 +310,9 @@ void osd_draw_rect_gap(Mat frame, void *prm)
 
 void osd_chtext(Mat frame, int startx, int starty, char * pString, UInt32 frcolor, UInt32 bgcolor)
 {
-	
 
 	DrawString(frame, startx, starty, pString, frcolor, bgcolor);
-
+	return ;	
 }
 
 
@@ -374,7 +322,7 @@ void osd_draw_text(Mat frame, void *prm)
 {
 	Text_Param_fb * pObj = (Text_Param_fb *)prm;
 	UInt32 fontfrColor,fontbgColor;
-
+return ;
 	//if(pObj == NULL)
 	//	return ;
 printf("111111\n");

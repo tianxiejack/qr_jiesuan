@@ -34,5 +34,6 @@ void Drawcvcross(Mat frame,Line_Param_fb *lineparm);
  void DrawcvDashliner(Mat frame,int startx,int starty,int endx,int endy,int linelength,int dashlength,int frcolor);
  void drawdashlinepri(Mat frame,int startx,int starty,int endx,int endy,int linelength,int dashlength,int colour);
  void DrawcvLine(Mat frame,Osd_cvPoint *start,Osd_cvPoint *end,int frcolor,int linew);
+void DrawjsCross(Mat frame, Line_Param_fb * lineparm);
 
 #endif /* OSD_CV_H_ */

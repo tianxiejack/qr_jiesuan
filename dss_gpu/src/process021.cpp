@@ -297,15 +297,27 @@ void CProcess021::process_osd(void *pPrm)
 	Mat frame=sThis->m_dc;//.m_imgOsd;
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	int winId;
-	Text_Param_fb * textParam = NULL;
-	Line_Param_fb * lineParam = NULL;
-	Text_Param_fb * textParampri = NULL;
-	Line_Param_fb * lineParampri = NULL;
+	//Text_Param_fb * textParam = NULL;
+	//Line_Param_fb * lineParam = NULL;
+	//Text_Param_fb * textParampri = NULL;
+	//Line_Param_fb * lineParampri = NULL;
+	Line_Param_fb lineParam ={0};
 	//printf("!!!!!!!!!!!!!!!!!!!!! OSD !!!!!!!!!!!!!!!!!!!!!!!!!\n");	
 
 		
-	OSDCTRL_draw1(frame,pCtrlObj);
+	OSDCTRL_draw_text(frame,pCtrlObj);
 
+	lineParam.x = 720/2;
+	lineParam.y = 576/2;
+	lineParam.width = 100;
+	lineParam.height = 100;
+	lineParam.frcolor = 2;
+
+	DrawjsCross(frame, &lineParam);
+
+	sThis->m_display.UpDateOsd(0);
+	
+	return ;
 	//add
 	#if 0	
 	IMAGE_Handle himg;
@@ -334,7 +346,7 @@ void CProcess021::process_osd(void *pPrm)
 	#endif
 	//end
 
-#if 1
+#if 0
 	#if 0
 	static int iFrameCnt=0;
 	iFrameCnt++;
@@ -375,8 +387,8 @@ void CProcess021::process_osd(void *pPrm)
 			continue;
 		
 		
-		EraseDraw_graph_osd(frame,textParam,textParampri);
-		Draw_graph_osd(frame,textParam,lineParam);
+	//	EraseDraw_graph_osd(frame,textParam,textParampri);
+	//	Draw_graph_osd(frame,textParam,lineParam);
 		
 		//sThis->updata_osd[0]=true;
 		sThis->m_display.UpDateOsd(0);
@@ -1116,7 +1128,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 	int endy=0;
 	int crossshiftx=cvRound(vdisWH[0][0]/3);
 	int crossshifty=cvRound(vdisWH[0][1]/3);
-	
+	return 0;
 	CvScalar colour=GetcvColour(frcolor);
 //putText(frame,"heolo",Point(200,200),CV_FONT_HERSHEY_COMPLEX,1.0,Scalar(0,0,255),3,8);
 	osdindex=0;

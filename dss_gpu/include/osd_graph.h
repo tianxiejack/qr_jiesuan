@@ -51,7 +51,7 @@ void APP_graphic_timer_alarm();
 Int32 APP_get_colour( int sensorid);
 
 void  set_graph();
-void OSDCTRL_draw1(Mat frame,OSDCTRL_Handle pCtrlObj);
+void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj);
 
 
 #endif

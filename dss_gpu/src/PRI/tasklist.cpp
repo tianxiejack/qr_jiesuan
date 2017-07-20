@@ -79,7 +79,7 @@ static OSA_ThrHndl WeaponPORTHndl;
 static OSA_ThrHndl MachGunPORTHndl;
 static OSA_ThrHndl TestHndl;
 
-Line_Param_fb * lineParam = NULL;
+
 
 
 
@@ -94,40 +94,6 @@ int mainCtrl(void)
 
 void *testOsd(void* prm)
 {
-	while(1)
-	{
-		OSA_waitMsecs(2000);
-		lineParam = (Line_Param_fb *)&grpxChWinPrms.chParam[0].winPrms[0];
-		lineParam->enableWin = 1;
-		lineParam->objType = grpx_ObjId_Cross;
-		//lineParam->objType = grpx_ObjId_Cross_Black_White;
-		lineParam->frcolor = WHITECOLOR;
-		lineParam->x = vdisWH[0][0]/2;
-		lineParam->y = vdisWH[0][1]/2;
-		lineParam->width = 60;
-		lineParam->height = 40;
-		lineParam->linePixels = 2;
-		lineParam->lineGapWidth = lineParam->width/4;
-		lineParam->lineGapHeight = lineParam->height/4;
-
-		OSA_waitMsecs(2000);
-
-		lineParam = (Line_Param_fb *)&grpxChWinPrms.chParam[0].winPrms[0];
-		lineParam->enableWin = 1;
-		lineParam->objType = grpx_ObjId_Cross;
-		//lineParam->objType = grpx_ObjId_Cross_Black_White;
-		lineParam->frcolor = GREEN;
-		lineParam->x = vdisWH[0][0];
-		lineParam->y = vdisWH[0][1];
-		lineParam->width =160;
-		lineParam->height = 140;
-		lineParam->linePixels = 12;
-		lineParam->lineGapWidth = lineParam->width;
-		lineParam->lineGapHeight = lineParam->height;
-		
-	}
-	
-
 	return NULL;
 }
 

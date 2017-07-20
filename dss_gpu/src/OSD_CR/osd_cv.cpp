@@ -248,10 +248,75 @@ void DrawcvLine(Mat frame,Osd_cvPoint *start,Osd_cvPoint *end,int frcolor,int li
 	pt2.x=end->x;
 	pt2.y=end->y;
 	line(frame, pt1, pt2, colour, linew, 8, 0 );
-	 
-	 
+}
+
+
+void DrawjsCross(Mat frame,Line_Param_fb* lineparm)
+{	
+	int len = 30;
+	int linew = 1;
+	int offlen = 0;
+	if(lineparm == NULL)
+		return;
+	
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+
+	if(0)
+		offlen = 0;
+	else
+		offlen = 20;
+	
+	//ren
+	
+	
+	start.x = lineparm->x;
+	start.y = lineparm->y;
+	end.x = start.x;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, lineparm->frcolor, 3);
+
+	start.x = lineparm->x - lineparm->width/2 - offlen;
+	start.y = lineparm->y;
+	end.x = start.x +len + offlen;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+
+	start.x = lineparm->x + lineparm->width/2 + offlen;
+	start.y = lineparm->y;
+	end.x = start.x -len - offlen;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+		
+	start.x = lineparm->x;
+	start.y = lineparm->y - lineparm->height/2;
+	end.x = start.x;
+	end.y = start.y + len;
+	DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+
+	start.x = lineparm ->x;
+	start.y = lineparm ->y + lineparm->height/2;
+	end.x = start.x;
+	end.y = start.y -len;
+    	DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+	
+	start.x = lineparm->x - lineparm->width/2;
+	start.y = lineparm->y - len/2;
+	end.x = start.x;
+	end.y = start.y + len;
+	DrawcvLine(frame,&start,&end, lineparm->frcolor,linew);
+
+	start.x = lineparm->x + lineparm->width/2;
+	start.y = lineparm->y - len/2;
+	end.x = start.x;
+	end.y = start.y + len;
+	DrawcvLine(frame,&start,&end, lineparm->frcolor,linew);
+
 	
 }
+
+
+
 void Drawcvcross(Mat frame,Line_Param_fb *lineparm)
 {
 
@@ -259,9 +324,9 @@ void Drawcvcross(Mat frame,Line_Param_fb *lineparm)
 	int crossw=width;
 	Point pt1,pt2,center;
 	if(lineparm==NULL)
-		{
-			return ;
-		}
+	{
+		return ;
+	}
 	Osd_cvPoint start;
 	Osd_cvPoint end;
 	start.x=lineparm->x-lineparm->width/2;
