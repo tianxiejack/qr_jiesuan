@@ -12,6 +12,7 @@
 #include "osd_graph.h"
 #include"osd_cv.h"
 #include "osdProcess.h"
+#include "statCtrl.h"
 
 //#include "msgProcessDef.h"
 #define LPARAM long
@@ -52,6 +53,8 @@ public:
 	void OnMouseRightUp(int x, int y);
 	void OnKeyDwn(unsigned char key);
 
+
+
 	CMD_EXT extInCtrl;
 
 	static CProcess021 *sThis;
@@ -74,7 +77,7 @@ protected:
 	int  WindowstoPiexlx(int x,int channel);
 	int  WindowstoPiexly(int y,int channel);
 
-	static void MSGAPI_reset_device(LPARAM lParam      /*=NULL*/);
+	 static void MSGAPI_reset_device(LPARAM lParam      /*=NULL*/);
 	 static int  MSGAPI_initial(void);
 	 static void MSGAPI_init_device(long lParam );
 	 static void MSGAPI_inputsensor(long lParam );
@@ -172,8 +175,6 @@ protected:
         static void processCMD_TRACKING_OK(LPARAM lParam);
         static void processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam);
         static void processCMD_FIRING_TABLE_FAILURE(LPARAM lParam);
-        static void processCMD_MODE_AIM_LAND(LPARAM lParam);
-        static void processCMD_MODE_AIM_SKY(LPARAM lParam);
         static void processCMD_MODE_ATTACK_SIGLE(LPARAM lParam);
         static void processCMD_MODE_ATTACK_MULTI(LPARAM lParam);
         static void processCMD_MODE_FOV_SMALL(LPARAM lParam);
@@ -208,7 +209,6 @@ protected:
         static void processCMD_MACHSERVO_STOP(LPARAM lParam);
         static void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam);
         static void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam);
-
 	 
 
 private:
@@ -235,6 +235,8 @@ private:
 	void osd_draw_text(Mat frame, void *prm);
 	void osd_draw_cross_black_white(Mat frame, void *prm);
 
+
+	
 	int process_draw_line(Mat frame, int startx, int starty, int endx, int linewidth,char R, char G, char B, char A);
 	int process_draw_text(Mat frame,int startx,int starty,char *pstring,int frcolor,int bgcolor);
 	int process_draw_instance(Mat frame);

@@ -28,6 +28,8 @@ extern OSDCTRL_Handle pOsdCtrlObj;
 
 OSDCTRL_OBJ * pCtrlObj = NULL;
 
+UInt32 interfaceflag;
+	
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
 {
@@ -261,10 +263,7 @@ void CProcess021::OnInit(){};
 void CProcess021::OnConfig(){};
 void CProcess021::OnRun(){};
 void CProcess021::OnStop(){};
-void CProcess021::Ontimer(){
-
-	//msgdriv_event(MSGID_EXT_INPUT_VIDEOEN,NULL);
-};
+void CProcess021::Ontimer(){};
 bool CProcess021::OnPreProcess(int chId, Mat &frame)
 {
 	set_graph();
@@ -293,58 +292,92 @@ int onece=0;
 void CProcess021::process_osd(void *pPrm)
 {
    
-	int devId=0;
+	//int devId=0;
 	Mat frame=sThis->m_dc;//.m_imgOsd;
-	CMD_EXT *pIStuts = &sThis->extInCtrl;
-	int winId;
+	//D_EXT *pIStuts = &sThis->extInCtrl;
+	//int winId;
 	//Text_Param_fb * textParam = NULL;
 	//Line_Param_fb * lineParam = NULL;
 	//Text_Param_fb * textParampri = NULL;
 	//Line_Param_fb * lineParampri = NULL;
+
+	int i ;
+	OSDText_Obj * pTextObj = NULL;
 	Line_Param_fb lineParam ={0};
-	//printf("!!!!!!!!!!!!!!!!!!!!! OSD !!!!!!!!!!!!!!!!!!!!!!!!!\n");	
+	lineParam.x = 720/2;
+	lineParam.y = 576/2;
+	lineParam.width = 60;
+	lineParam.height = 60;
+	lineParam.frcolor = 2;
+	//erase
+	OSDCTRL_erase_draw_text(frame,pCtrlObj);
+
+
+	
+	switch(interfaceflag)
+	{
+	
+		case NORMAL_MODE:
+			for(i=eModeId;i<eBoreSightLinId;i++)
+			{
+				pTextObj = &pCtrlObj->pTextList[i];
+				pTextObj->osdState = eOsd_Hide;
+			}
+			for(i=eWorkMode;i<eCorrectionTip;i++)
+			{
+				pTextObj = &pCtrlObj->pTextList[i];
+				pTextObj->osdState = eOsd_Disp;
+			}
+			pTextObj = &pCtrlObj->pTextList[eLaserState];
+			pTextObj->osdState = eOsd_Hide;
+			break;
+
+		case AXIS_MODE:
+			//jiao yan jie mian
+			for(i=eModeId;i<eBoreSightLinId;i++)
+			{
+				pTextObj = &pCtrlObj->pTextList[i];
+				pTextObj->osdState = eOsd_Hide;
+			}
+			for(i=eWorkMode;i<eEnhance;i++)
+			{
+				pTextObj = &pCtrlObj->pTextList[i];
+				pTextObj->osdState = eOsd_Disp;
+			}
+			for(i=eCalibMenu_Weather;i<=eCalibMenu_Save;i++)
+			{
+				pTextObj = &pCtrlObj->pTextList[i];
+				pTextObj->osdState = eOsd_Disp;
+			}
+			for(i=eCursorX;i<=eSaveYesNo;i++)
+			{
+				pTextObj = &pCtrlObj->pTextList[i];
+				pTextObj->osdState = eOsd_Disp;
+			}
+			//shi ping yi chang
+			//pTextObj = &pCtrlObj->pTextList[eVideoErr];
+			//pTextObj->osdState = eOsd_Hide;
+			break;
+		default:
+			break;
+	}	
+
+	
+		
 
 		
 	OSDCTRL_draw_text(frame,pCtrlObj);
 
-	lineParam.x = 720/2;
-	lineParam.y = 576/2;
-	lineParam.width = 100;
-	lineParam.height = 100;
-	lineParam.frcolor = 2;
-
+	if(interfaceflag== AXIS_MODE)
+		lineParam.frcolor = 0;
 	DrawjsCross(frame, &lineParam);
+	DrawjsRuler(frame,&lineParam);
+	DrawjsCircle(frame,&lineParam);
+	
 
 	sThis->m_display.UpDateOsd(0);
 	
 	return ;
-	//add
-	#if 0	
-	IMAGE_Handle himg;
-	Mat frame=sThis->m_dc;
-	vector<BYTE*> img_vec;
-	
-	split(frame,img_vec);
-	BYTE* Y_img = img_vec[0];
-	BYTE* U_img = img_vec[1];
-	BYTE* V_img = img_vec[2];
-	
-	
-	himg->height = 1280;
-	himg->imageData = frame.data;
-	himg->imageSize =1280*1024;
-	himg->ImgU = U_img;
-	himg->ImgY = Y_img;
-	himg->ImgV = V_img;
-	himg->nSize = 0;
-	himg->width = 1024;
-	himg->widthStep = 1024;
-	
-	OSDCTRL_Handle tmp = pOsdCtrlObj;
-
-	//OSDCTRL_draw();
-	#endif
-	//end
 
 #if 0
 	#if 0
@@ -1678,10 +1711,25 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	
 	if (key == 'g'|| key == 'G')
 	{
-		
+		interfaceflag = AXIS_MODE;
 		
 		//msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
 		MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
+	}
+
+	if (key == 'h'|| key == 'H')
+	{
+		interfaceflag = NORMAL_MODE;
+	}
+
+	if (key == 'j')
+	{
+		processCMD_MODE_AIM_LAND(0);
+	}
+
+	if (key == 'J')
+	{
+		processCMD_MODE_AIM_SKY(0);
 	}
 	
 	if (key == 'z'|| key == 'Z')
@@ -2405,7 +2453,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_OK,						processCMD_TRACKING_OK,			0); // ������
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_LOAD_OK,				processCMD_FIRING_TABLE_LOAD_OK,		0); // �����Ԫװ����
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // �����Ԫװ��ʧ��
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				       processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				 	processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_SKY,						processCMD_MODE_AIM_SKY,		0); // �л��Կ�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,				processCMD_MODE_ATTACK_SIGLE,		0); // �л�Ϊ����
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,				processCMD_MODE_ATTACK_MULTI,		0); // �л�Ϊ����
@@ -3491,20 +3539,6 @@ void CProcess021::processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam)
 void CProcess021::processCMD_FIRING_TABLE_FAILURE(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_FIRING_TABLE_FAILURE",__func__,__LINE__);
-	return ;
- }
-
-
-void CProcess021::processCMD_MODE_AIM_LAND(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_AIM_LAND",__func__,__LINE__);
-	return ;
- }
-
-
-void CProcess021::processCMD_MODE_AIM_SKY(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_AIM_SKY",__func__,__LINE__);
 	return ;
  }
 

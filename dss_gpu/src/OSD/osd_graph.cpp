@@ -34,8 +34,7 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	
 	for(i=eModeId;i<eBoreSightLinId;i++)
 	{
-			pTextObj = &pCtrlObj->pTextList[i];
-
+			pTextObj = &pCtrlObj->pTextList[i]; 
 				if (pTextObj->osdState==eOsd_Disp)
 				{
 					if(pTextObj)
@@ -54,6 +53,40 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	//CDC_drawTest(hIMG,(HANDLE)pFont);
 
 }
+
+
+void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
+{
+	int i=0;
+	//static int gun=0;//,type=0;
+	//volatile FONT_OBJ *pFont = &g_Font;
+	OSDText_Obj * pTextObj = NULL;
+	int startx,starty;
+	char *ptr;
+	UInt32 frcolor,bgcolor;
+
+	
+	
+	for(i=eModeId;i<eBoreSightLinId;i++)
+	{
+			pTextObj = &pCtrlObj->pTextList[i]; 
+				if (pTextObj->osdState==eOsd_Disp)
+				{
+					if(pTextObj)
+					OSDCTRL_genOsdContext(pCtrlObj,i);
+					startx   = pTextObj->osdInitX;
+					starty   = pTextObj->osdInitY;
+					frcolor  = WHITECOLOR;
+					bgcolor = BGCOLOR;
+					ptr   = (char*)pTextObj->osdContext;
+					osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
+				}
+		
+	}
+
+}
+
+
 
 
 void DrawLine(Mat frame, int startx, int starty, int endx, int endy, int width, UInt32 colorRGBA)
@@ -126,33 +159,6 @@ void DrawChar(Mat frame, int startx, int starty, char *pChar, UInt32 frcolor, UI
 
 void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor, UInt32 bgcolor)
 {
-	#if 0
-	uchar *q,*pin,c;
-	q=FONT_LIBRARY_0814;
-	int numchar=strlen(pString);
-	int i,j,k,pixcolor,data,index;
-	for(i=starty;i<starty+OSDUTIL_FONT_FLR_DEFAULT_HEIGHT_0814;i++)
-	{
-		pin=frame.ptr<uchar>(i);
-		for(k=0;k<numchar;k++)
-		{
-			c=pString[k];
-			index=c-' ';
-			data=q[i-starty+index*OSDUTIL_FONT_FLR_DEFAULT_HEIGHT_0814];
-			for(j=startx+k*OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814;j<startx+k*OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814+OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814;j++)
-			{
-				pixcolor=(data&0x80)?frcolor:bgcolor;
-				*(pin+j*4)=pixcolor & 0xFF;
-				*(pin+j*4+1)=(pixcolor >> 8) & 0xFF;
-				*(pin+j*4+2)=(pixcolor >> 16) & 0xFF;
-				*(pin+j*4+3)=(pixcolor >> 24) & 0xFF;
-				data<<=1;
-			}
-		}
-	}
-	#endif
-
-
 	uchar *pin, *pChar, *fontData;
 	int numchar = strlen(pString);
 	UInt32 i,j,k,pixcolor,index, offset;
@@ -1194,7 +1200,7 @@ void Draw_graph_osd(Mat frame, void *tParam,void *lParam)
 		Line_Param_fb * lineParam = (Line_Param_fb *)lParam;
 		//if(text)
 
-		//switch(textParam->objType)
+		switch(textParam->objType)
 		switch(4)
 		{
 		case grpx_ObjId_Cross:

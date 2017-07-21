@@ -529,19 +529,13 @@ typedef enum
 
 
 
-
 typedef struct
 {
-	
 	unsigned int  CaptureWidth  [eSen_Max];    // for width
 	unsigned int  CaptureHeight [eSen_Max];    // for height
 	unsigned int  CaptureType    [eSen_Max];	   //date type
 	unsigned int  DispalyWidth   [eSen_Max];    // dispaly width
 	unsigned int  DispalyHeight  [eSen_Max];    // display height
-
-
-
-
 }CMD_SYS;
 
 
