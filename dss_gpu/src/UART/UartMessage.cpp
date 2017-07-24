@@ -8,7 +8,6 @@
 #include"dx_config.h"
 #include"dx.h"
 #include"app_ctrl.h"
-
 int globalflag = 1;
   OSA_SemHndl semSend;
     OSA_BufCreate tskSendBufCreate;

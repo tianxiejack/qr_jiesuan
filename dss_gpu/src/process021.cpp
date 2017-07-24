@@ -263,7 +263,10 @@ void CProcess021::OnInit(){};
 void CProcess021::OnConfig(){};
 void CProcess021::OnRun(){};
 void CProcess021::OnStop(){};
-void CProcess021::Ontimer(){};
+void CProcess021::Ontimer(){
+
+	//msgdriv_event(MSGID_EXT_INPUT_VIDEOEN,NULL);
+};
 bool CProcess021::OnPreProcess(int chId, Mat &frame)
 {
 	set_graph();
@@ -328,8 +331,9 @@ void CProcess021::process_osd(void *pPrm)
 				pTextObj = &pCtrlObj->pTextList[i];
 				pTextObj->osdState = eOsd_Disp;
 			}
-			pTextObj = &pCtrlObj->pTextList[eLaserState];
-			pTextObj->osdState = eOsd_Hide;
+			//shi ping yi chang
+			//pTextObj = &pCtrlObj->pTextList[eVideoErr];
+			//pTextObj->osdState = eOsd_Hide;
 			break;
 
 		case AXIS_MODE:
@@ -2453,7 +2457,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_OK,						processCMD_TRACKING_OK,			0); // ������
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_LOAD_OK,				processCMD_FIRING_TABLE_LOAD_OK,		0); // �����Ԫװ����
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // �����Ԫװ��ʧ��
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				 	processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				       processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_SKY,						processCMD_MODE_AIM_SKY,		0); // �л��Կ�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,				processCMD_MODE_ATTACK_SIGLE,		0); // �л�Ϊ����
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,				processCMD_MODE_ATTACK_MULTI,		0); // �л�Ϊ����
@@ -3772,6 +3776,19 @@ void CProcess021::processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
 void CProcess021::processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_GRENADESERVO_MOVEOFFSET",__func__,__LINE__);
+	return ;
+ }
+
+void CProcess021::processCMD_MODE_AIM_LAND(LPARAM lParam)
+ {
+ 	Posd[eAimType] = AimOsd[0];
+	return ;
+ }
+
+
+void CProcess021::processCMD_MODE_AIM_SKY(LPARAM lParam)
+ {
+ 	Posd[eAimType] = AimOsd[1];
 	return ;
  }
 

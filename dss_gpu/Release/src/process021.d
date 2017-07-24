@@ -273,7 +273,6 @@ src/process021.o : ../src/process021.cpp \
     ../include/app_proj_xgs026.h \
     ../include/osd_graph.h \
     /usr/include/opencv2/legacy/compat.hpp \
-    ../include/osd_cv.h \
     ../include/PRI/osdProcess.h \
     ../include/PRI/osdCdc.h \
     ../include/PRI/basePort.h \
@@ -320,6 +319,7 @@ src/process021.o : ../src/process021.cpp \
     ../include/PRI/MachGunPort.h \
     ../include/PRI/PositionPort.h \
     ../include/PRI/TurretPosPort.h \
+    ../include/osd_cv.h \
     ../src/vmath.h \
     ../include/APP/dx_main.h \
     ../include/UartMessage.h \
