@@ -245,14 +245,14 @@ src/OSD/osd_graph.o : ../src/OSD/osd_graph.cpp \
     /usr/include/c++/5/bits/stl_set.h \
     /usr/include/c++/5/bits/stl_multiset.h \
     /usr/include/opencv2/legacy/compat.hpp \
-    ../include/grpFont.h \
-    ../include/PRI/utilport.h \
-    ../include/app_status.h \
-    ../include/app_proj_xgs026.h \
-    ../include/dxutc/dx.h \
+    ../include/PRI/osdProcess.h \
+    ../include/PRI/osdCdc.h \
+    ../include/PRI/basePort.h \
+    ../include/dxutc/app_global.h \
     ../src/OSA_CAP/inc/osa_tsk.h \
     ../src/OSA_CAP/inc/osa_mbx.h \
     ../src/OSA_CAP/inc/osa_msgq.h \
+    ../src/OSA_CAP/inc/osa_i2c.h \
     /usr/include/errno.h \
     /usr/include/aarch64-linux-gnu/bits/errno.h \
     /usr/include/linux/errno.h \
@@ -273,14 +273,6 @@ src/OSD/osd_graph.o : ../src/OSD/osd_graph.cpp \
     /usr/include/aarch64-linux-gnu/bits/fcntl-linux.h \
     /usr/include/aarch64-linux-gnu/bits/uio.h \
     /usr/include/aarch64-linux-gnu/bits/fcntl2.h \
-    ../include/dxutc/dx_config.h \
-    ../include/app_ctrl.h \
-    ../include/APP/msgDriv.h \
-    ../include/PRI/osdProcess.h \
-    ../include/PRI/osdCdc.h \
-    ../include/PRI/basePort.h \
-    ../include/dxutc/app_global.h \
-    ../src/OSA_CAP/inc/osa_i2c.h \
     /usr/include/dirent.h \
     /usr/include/aarch64-linux-gnu/bits/dirent.h \
     /usr/include/aarch64-linux-gnu/sys/ioctl.h \
@@ -298,9 +290,17 @@ src/OSD/osd_graph.o : ../src/OSD/osd_graph.cpp \
     /usr/include/GL/glext.h \
     /usr/include/inttypes.h \
     /usr/include/GL/glu.h \
+    ../include/PRI/utilport.h \
     ../include/PRI/WeaponCtrl.h \
     ../include/PRI/GrenadePort.h \
     ../include/PRI/LaserPort.h \
     ../include/PRI/MachGunPort.h \
     ../include/PRI/PositionPort.h \
-    ../include/PRI/TurretPosPort.h
+    ../include/PRI/TurretPosPort.h \
+    ../include/grpFont.h \
+    ../include/app_status.h \
+    ../include/app_proj_xgs026.h \
+    ../include/dxutc/dx.h \
+    ../include/dxutc/dx_config.h \
+    ../include/app_ctrl.h \
+    ../include/APP/msgDriv.h

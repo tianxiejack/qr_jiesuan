@@ -311,7 +311,6 @@ src/test_videoProcess.o : ../src/test_videoProcess.cpp \
     ../include/app_status.h \
     ../include/app_proj_xgs026.h \
     ../include/osd_graph.h \
-    ../include/osd_cv.h \
     ../include/PRI/osdProcess.h \
     ../include/PRI/osdCdc.h \
     ../include/PRI/basePort.h \
@@ -358,6 +357,8 @@ src/test_videoProcess.o : ../src/test_videoProcess.cpp \
     ../include/PRI/MachGunPort.h \
     ../include/PRI/PositionPort.h \
     ../include/PRI/TurretPosPort.h \
+    ../include/osd_cv.h \
+    ../include/PRI/statCtrl.h \
     ../include/APP/dx_main.h \
     ../include/Gpio026.h \
     ../include/PRI/Tasklist.h
