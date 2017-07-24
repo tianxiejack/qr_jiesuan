@@ -25,7 +25,6 @@ extern "C"{
 
 
 
-
 //#define OSD_TEXT_SIZE		150 //18
 #define MAX_CONTEXT_LEN 	64
 
@@ -477,7 +476,6 @@ extern int DisValue[4];
 extern char ShotGunOsd[2][8];//ï¿½ï¿½ï¿½Ä£Ê½:ï¿½ï¿½Ç¹
 extern char LaserOsd[2][8];
 extern char GenPramMenu[4][12];
-extern char WorkOsd[10][8];	//¹¤×÷Ä£Ê½
 
 void OSDCTRL_AlgSelect();
 void OSDCTRL_AllHide();

@@ -251,84 +251,9 @@ void DrawcvLine(Mat frame,Osd_cvPoint *start,Osd_cvPoint *end,int frcolor,int li
 }
 
 
-void DrawjsCircle(Mat frame,Line_Param_fb* lineparm)
-{
-	int linew = 1;
-	Point center;
-	Point start,end;
-	center.x =650;
-	center.y = 120;
-	int radius = 30;
-	CvScalar color=GetcvColour(lineparm->frcolor);
-		
-
-	circle(frame,center,radius ,color,1,8,0);
-
-	//draw the interval
-	start.x = center.x ;
-	start.y = center.y - radius;
-	end.x = start.x ;
-	end.y = start.y + 2*radius;
-//	DrawcvLine(frame, &start, &end, 0, linew);
-	
-	start.x = center.x - radius;
-	start.y = center.y ;
-	end.x = start.x + 2*radius;
-	end.y = start.y ;	
-//	DrawcvLine(frame, &start, &end, 0, linew);
-	
-
-	
-	return ;
-}
-
-void DrawjsOblinqueLine(Mat frame,Line_Param_fb* lineparm)
-{
-	
-	
-	return ;
-}
-
-
-void DrawjsRuler(Mat frame,Line_Param_fb* lineparm)
-{
-
-	int llen = 50,slen = 25;
-	int interval = 60;
-	Osd_cvPoint start;
-	Osd_cvPoint end;
-	int linew = 1;
-	int i;
-
-	int basx = 360,basy = 250;
-
-
-	for(i = -3;i<=3;i++)
-	{
-		start.x = basx + i*interval ;
-		start.y = basy;
-		end.x = start.x ;
-		end.y = start.y -llen;
-		DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
-	}
-
-	for(i = -3;i<=2;i++)
-	{
-		start.x = basx + i*interval + interval/2;
-		start.y = basy;
-		end.x = start.x ;
-		end.y = start.y -slen;
-		DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
-	}
-
-	return ;
-}
-
-
-
 void DrawjsCross(Mat frame,Line_Param_fb* lineparm)
 {	
-	int len =	15;
+	int len = 30;
 	int linew = 1;
 	int offlen = 0;
 	if(lineparm == NULL)
@@ -336,9 +261,8 @@ void DrawjsCross(Mat frame,Line_Param_fb* lineparm)
 	
 	Osd_cvPoint start;
 	Osd_cvPoint end;
-	int flag = 1 ;  // 0 jiguang    1 ren
-	
-	if(flag)
+
+	if(0)
 		offlen = 0;
 	else
 		offlen = 20;
@@ -356,7 +280,7 @@ void DrawjsCross(Mat frame,Line_Param_fb* lineparm)
 	start.y = lineparm->y;
 	end.x = start.x +len + offlen;
 	end.y = start.y;
-	DrawcvLine(frame, &start, &end,lineparm->frcolor, linew);
+	DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
 
 	start.x = lineparm->x + lineparm->width/2 + offlen;
 	start.y = lineparm->y;

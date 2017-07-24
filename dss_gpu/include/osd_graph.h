@@ -52,7 +52,6 @@ Int32 APP_get_colour( int sensorid);
 
 void  set_graph();
 void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj);
-void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj);
 
 
 #endif
