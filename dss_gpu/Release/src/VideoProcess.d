@@ -272,51 +272,5 @@ src/VideoProcess.o : ../src/VideoProcess.cpp \
     ../include/app_proj_xgs026.h \
     ../include/osd_graph.h \
     /usr/include/opencv2/legacy/compat.hpp \
-    ../include/PRI/osdProcess.h \
-    ../include/PRI/osdCdc.h \
-    ../include/PRI/basePort.h \
-    ../include/dxutc/app_global.h \
-    ../src/OSA_CAP/inc/osa_tsk.h \
-    ../src/OSA_CAP/inc/osa_mbx.h \
-    ../src/OSA_CAP/inc/osa_msgq.h \
-    ../src/OSA_CAP/inc/osa_i2c.h \
-    /usr/include/errno.h \
-    /usr/include/aarch64-linux-gnu/bits/errno.h \
-    /usr/include/linux/errno.h \
-    /usr/include/aarch64-linux-gnu/asm/errno.h \
-    /usr/include/asm-generic/errno.h \
-    /usr/include/asm-generic/errno-base.h \
-    /usr/include/aarch64-linux-gnu/sys/wait.h \
-    /usr/include/aarch64-linux-gnu/sys/stat.h \
-    /usr/include/aarch64-linux-gnu/bits/stat.h \
-    /usr/include/unistd.h \
-    /usr/include/aarch64-linux-gnu/bits/posix_opt.h \
-    /usr/include/aarch64-linux-gnu/bits/environments.h \
-    /usr/include/aarch64-linux-gnu/bits/confname.h \
-    /usr/include/getopt.h \
-    /usr/include/aarch64-linux-gnu/bits/unistd.h \
-    /usr/include/fcntl.h \
-    /usr/include/aarch64-linux-gnu/bits/fcntl.h \
-    /usr/include/aarch64-linux-gnu/bits/fcntl-linux.h \
-    /usr/include/aarch64-linux-gnu/bits/uio.h \
-    /usr/include/aarch64-linux-gnu/bits/fcntl2.h \
-    /usr/include/dirent.h \
-    /usr/include/aarch64-linux-gnu/bits/dirent.h \
-    /usr/include/aarch64-linux-gnu/sys/ioctl.h \
-    /usr/include/aarch64-linux-gnu/bits/ioctls.h \
-    /usr/include/aarch64-linux-gnu/asm/ioctls.h \
-    /usr/include/asm-generic/ioctls.h \
-    /usr/include/linux/ioctl.h \
-    /usr/include/aarch64-linux-gnu/asm/ioctl.h \
-    /usr/include/asm-generic/ioctl.h \
-    /usr/include/aarch64-linux-gnu/bits/ioctl-types.h \
-    /usr/include/aarch64-linux-gnu/sys/ttydefaults.h \
-    ../include/PRI/utilport.h \
-    ../include/PRI/WeaponCtrl.h \
-    ../include/PRI/GrenadePort.h \
-    ../include/PRI/LaserPort.h \
-    ../include/PRI/MachGunPort.h \
-    ../include/PRI/PositionPort.h \
-    ../include/PRI/TurretPosPort.h \
     ../src/vmath.h \
     ../include/arm_neon.h

@@ -251,6 +251,7 @@ src/PRI/tasklist.o : ../src/PRI/tasklist.cpp \
     /usr/include/opencv2/legacy/compat.hpp \
     ../src/OSA_CAP/inc/osa_buf.h \
     ../src/OSA_CAP/inc/osa_que.h \
+    ../include/app_proj_xgs026.h \
     ../include/PRI/osdProcess.h \
     ../include/PRI/osdCdc.h \
     ../include/PRI/basePort.h \
@@ -297,5 +298,4 @@ src/PRI/tasklist.o : ../src/PRI/tasklist.cpp \
     ../include/PRI/MachGunPort.h \
     ../include/PRI/PositionPort.h \
     ../include/PRI/TurretPosPort.h \
-    ../include/app_proj_xgs026.h \
     ../include/PRI/Tasklist.h

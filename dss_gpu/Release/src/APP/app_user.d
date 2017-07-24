@@ -297,20 +297,4 @@ src/APP/app_user.o : ../src/APP/app_user.cpp \
     /usr/include/c++/5/bits/stl_multiset.h \
     /usr/include/opencv2/legacy/compat.hpp \
     ../src/OSA_CAP/inc/osa_buf.h \
-    ../include/PRI/osdProcess.h \
-    ../include/PRI/osdCdc.h \
-    ../include/PRI/basePort.h \
-    /usr/include/GL/glut.h \
-    /usr/include/GL/freeglut_std.h \
-    /usr/include/GL/gl.h \
-    /usr/include/GL/glext.h \
-    /usr/include/inttypes.h \
-    /usr/include/GL/glu.h \
-    ../include/PRI/utilport.h \
-    ../include/PRI/WeaponCtrl.h \
-    ../include/PRI/GrenadePort.h \
-    ../include/PRI/LaserPort.h \
-    ../include/PRI/MachGunPort.h \
-    ../include/PRI/PositionPort.h \
-    ../include/PRI/TurretPosPort.h \
     ../include/app_hardctrl.h
