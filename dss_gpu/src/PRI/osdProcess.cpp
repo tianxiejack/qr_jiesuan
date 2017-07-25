@@ -23,6 +23,7 @@
 //#include "osd_graph.h"
 #include "osdProcess.h"
 #include "Tasklist.h"
+#include "statCtrl.h"
 
 
 #define ARGSCALE	 0.0054931640625
@@ -33,9 +34,9 @@
 //extern volatile int msgLight;
 #define MIDMENU
 
-OSDCTRL_Handle  pOsdCtrlObj		= NULL;
+//OSDCTRL_Handle  pOsdCtrlObj		= NULL;
 //CVideoDev* pVideoCapObj				=NULL;
-
+OSDCTRL_OBJ * pCtrlObj = NULL;
 
 char tmparray[12] = "abcdef";
 #if 1
@@ -141,13 +142,13 @@ int codeX=0,signX='+', codeY=0,signY='+';
 float addX=0.01,addY=0.01;
 float ServoX[15]={30.0, 3.59, 2.69, 2.0, 0.8, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 float ServoY[10]={30.0,3.4, 2.6, 2.0, 0.7, 0.4, 0.0, 0.0, 0.0, 0.0};
-BOOL SHINE=FALSE;
+bool SHINE=FALSE;
 
 //extern PROJECTILE_TYPE gProjectileType;
 //extern WeatherItem gWeatherTable;
 
-PROJECTILE_TYPE gProjectileType=PROJECTILE_BULLET;
-PROJECTILE_TYPE gProjectileTypeBefore=PROJECTILE_BULLET;
+extern PROJECTILE_TYPE gProjectileType;
+extern PROJECTILE_TYPE gProjectileTypeBefore;
 WeatherItem gWeatherTable={15,101325};
 SEM_ID osdSem;
 
@@ -561,8 +562,6 @@ static void OSDCTRL_OsdInitial()
  */
 OSDCTRL_Handle OSDCTRL_create()//(MuxPotrTran * pMuxPortTran,HANDLE hAvtDev,HANDLE hTimerCtrl,UINT segId,UINT nBytes)
 {
-	OSDCTRL_OBJ * pCtrlObj = NULL;
-
 	//SDK_ASSERT(pMuxPortTran!=NULL && hAvtDev !=NULL && hTimerCtrl!=NULL);
 
 	pCtrlObj = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
@@ -573,8 +572,7 @@ OSDCTRL_Handle OSDCTRL_create()//(MuxPotrTran * pMuxPortTran,HANDLE hAvtDev,HAND
 		pCtrlObj->Interface.pCtrlSend = NULL;
 		pCtrlObj->Interface.pCtrlRecv = NULL;
 		//pCtrlObj->osdSem			= NULL;//&osdSem;
-	//	pCtrlObj->pOsdTimer			= (CTimerCtrl*)hTimerCtrl;
-		pCtrlObj->uSegId			= 0;//segId;
+		pCtrlObj->uSegId				= 0;
 		pCtrlObj->uTextNum			= 0;
 		pCtrlObj->pTextList			= g_Text;
 		pCtrlObj->uInit				= 0;
@@ -584,34 +582,31 @@ OSDCTRL_Handle OSDCTRL_create()//(MuxPotrTran * pMuxPortTran,HANDLE hAvtDev,HAND
 	}
 	
 	OSDCTRL_OsdInitial();
-	
 
 	return pCtrlObj;
 }
+
+
 void OSDCTRL_AlgSelect()
 {
 	if(Posd[eAimType]==AimOsd[0])
 		;
-		//AVTCTRL_selectCORR(pAvtCtrlObj);
 	else if(Posd[eAimType]==AimOsd[1])
-		//AVTCTRL_selectCentroid(pAvtCtrlObj);
 		;
 }
 
+
 void OSDCTRL_AllHide()
 {
-#if 0
 	int i;
-	for(i=eSuperOrder; i<=eBoreSightLinId; i++){
+	for(i=eSuperOrder; i<=eBoreSightLinId; i++)
+	{
 		OSDCTRL_ItemHide(i);
 	}
-	//AVTDEV_Normal(pAvtCtrlObj->pAvtDevObj);
-	//initilZeroParam();
-#endif
 }
+
 void OSDCTRL_NoShine()
 {
-	#if 0
 	SHINE = FALSE;
 	if(isMeasureManual()&&(eMeasureDis == ShinId))
 		OSDCTRL_ItemShow(ShinId);
@@ -620,38 +615,37 @@ void OSDCTRL_NoShine()
 	else
 		OSDCTRL_ItemHide(ShinId);
 	ShinId = 0;
-	#endif
 }
+
 void OSDCTRL_NoShineShow()
 {
 	SHINE = FALSE;
-	//OSDCTRL_ItemShow(ShinId);
+	OSDCTRL_ItemShow(ShinId);
 	ShinId = 0;
 }
+
 void OSDCTRL_ItemShine(int Id)
 {
 	SHINE = TRUE;
 	ShinId = Id;
 }
+
 void OSDCTRL_BattleShow()
 {
-	#if 0
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eWeather1; i<=eAngleV; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wAuto];
-	OSDCTRL_updateAreaN();
-//	AVTCTRL_setAquire();
+	//OSDCTRL_updateAreaN();
 	OSDCTRL_NoShine();
 	OSDCTRL_AlgSelect();
-	#endif
-
 }
+
+
 void OSDCTRL_CalibMenuShow()
 {
-	#if 0
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibMenu_Weather; i<=eCursorX; i++){
@@ -661,11 +655,13 @@ void OSDCTRL_CalibMenuShow()
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibration];
-	OSDCTRL_NoShine();
-	OSDCTRL_AlgSelect();
+	//OSDCTRL_NoShine();
+	//OSDCTRL_AlgSelect();
+	printf("%s:%d		getProjectileType() = %d\n",__func__,__LINE__,getProjectileType());
 	OSDCTRL_updateMainMenu(getProjectileType());
-	#endif
 }
+
+
 void OSDCTRL_CalibSaveShow()
 {
 #if 0
@@ -860,33 +856,29 @@ void OSDCTRL_CalibGenPramShow()
 
 void OSDCTRL_EnterCalibMode()
 {
-#if 0
 	if(isCalibrationMainMenu())
+	{
 		OSDCTRL_CalibMenuShow();
+	}
 	else if(isCalibrationGeneral())
 		OSDCTRL_CalibGeneralShow();
 	else if(isCalibrationWeather())
 		OSDCTRL_CalibWeatherShow();
 	else if(isCalibrationZero())
 		OSDCTRL_CalibZeroShow();
-	else if(isCalibrationSave())
-	{	
+	else if(isCalibrationSave())	
 		OSDCTRL_CalibSaveShow();
-	}else if(isCalibrationGenPram())
-	{	
+	else if(isCalibrationGenPram())	
 		OSDCTRL_CalibGenPramShow();
-	}else if(isCalibrationHorizen())
-	{	
+	else if(isCalibrationHorizen())	
 		OSDCTRL_CalibHorizenShow();
-	}else if(isCalibrationLaser())
-	{	
+	else if(isCalibrationLaser())	
 		OSDCTRL_CalibLaserShow();
-	}else 
-	{
+	else 
 		assert(FALSE);
-	}
-#endif 
+	
 }
+
 
 void OSDCTRL_updateAreaN()
 {
@@ -916,21 +908,9 @@ void OSDCTRL_updateAreaN()
 }
 void OSDCTRL_updateMainMenu(int i)
 {
-#if 0
 	Posd[eCalibMenu_Zero] = CalibZeroOsd[i];
 	Posd[eCalibMenu_General] = CalibGeneralOsd[i];
-
-/*
-	if(isMachineGun()){
-		Posd[eCalibMenu_Zero] = CalibZeroOsd[0];
-		Posd[eCalibMenu_General] = CalibGeneralOsd[0];
-	}else if(isGrenadeKill()){
-		Posd[eCalibMenu_Zero] = CalibZeroOsd[0];
-		Posd[eCalibMenu_General] = CalibGeneralOsd[0];
-	}else if(isGrenadeGas()){
-
-	}*/
-#endif
+	return ;
 }
 
 void OSDCTRL_updateDistanceValue()
@@ -956,8 +936,7 @@ void OSDCTRL_CheckResultsShow()
 
 void OSDCTRL_ItemShow(LPARAM lParam)
 {
-#if 1
-	OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )pOsdCtrlObj;
+	//OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )pOsdCtrlObj;
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
@@ -965,7 +944,6 @@ void OSDCTRL_ItemShow(LPARAM lParam)
 		return;
 
 	pTextObj[lParam].osdState = eOsd_Disp;
-#endif
 }
 
 void OSDCTRL_CalcNumShow(void)
@@ -1050,8 +1028,7 @@ void OSDCTRL_ConnectMenuHide()
 
 void OSDCTRL_ItemHide(LPARAM lParam)
 {
-#if 1
-	OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )pOsdCtrlObj;
+	//OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )pOsdCtrlObj;
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
@@ -1059,10 +1036,9 @@ void OSDCTRL_ItemHide(LPARAM lParam)
 		return;
 
 	pTextObj[lParam].osdState = eOsd_Hide;
-#endif
 }
 
-BOOL OSDCTRL_IsOsdDisplay(LPARAM lParam)
+bool OSDCTRL_IsOsdDisplay(LPARAM lParam)
 {
 #if 0
 	OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )pOsdCtrlObj;
@@ -1075,6 +1051,7 @@ BOOL OSDCTRL_IsOsdDisplay(LPARAM lParam)
 	return eOsd_Disp == pTextObj[lParam].osdState;
 #endif
 }
+
 /*
  *  ======== OSDCTRL_destroy========
  *
@@ -1345,40 +1322,13 @@ void OSDCTRL_draw(Mat frame,OSDCTRL_Handle pCtrlObj)
 		{
 			OSDCTRL_ItemShow(eGunType);
 		}
-/*	
-	if(isGunTypeRequesting()){
-		type++;
-		if(type%15 == 0){
-			Osd_shinItem(eGunType);//��˸
-			type = 0;
-		}
-	}else{
-		OSDCTRL_ItemShow(eGunType);
-	}
-	*/
-/*
-	if(isGunIdentify()
-		&&(
-			(isGrenadeKill()&&isIdentifyGas())
-			||(isGrenadeGas()&&(!isIdentifyGas()))
-			)
-		){
-		identify++;
-		if(identify%10 == 0){
-			Osd_shinItem(eGunTip);//��˸
-			identify = 0;
-		}
-	}else{
-		OSDCTRL_ItemHide(eGunTip);
-	}
-*/	
-	for(i=eModeId;i<eBoreSightLinId;i++){
+	
+	for(i=eModeId;i<eBoreSightLinId;i++)
+	{
 		pTextObj = &pCtrlObj->pTextList[i];
-/*		if(i==eLaserShineId && pTextObj->osdUpdate==eOsd_UnUpdate){
-			continue;
-		}*/
-		if (pTextObj->osdState==eOsd_Disp){
-		
+
+		if (pTextObj->osdState==eOsd_Disp)
+		{	
 			OSDCTRL_genOsdContext(pCtrlObj,i);
 			startx   = pTextObj->osdInitX;
 			starty   = pTextObj->osdInitY;
@@ -1390,10 +1340,6 @@ void OSDCTRL_draw(Mat frame,OSDCTRL_Handle pCtrlObj)
 		//	osd_draw_text(Mat frame, void * prm);
 		}
 	}
-	//CDC_drawCircle(hIMG,NULL);
-	//CDC_drawSLine(hIMG,(HANDLE)pFont);
-	//CDC_drawTest(hIMG,(HANDLE)pFont);
-
 }
 
 /*

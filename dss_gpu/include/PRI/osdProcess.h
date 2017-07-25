@@ -70,13 +70,7 @@ extern "C"{
 
 //extern OSDCTRL_Handle  pOsdCtrlObj	;
 
-typedef enum {
-	PROJECTILE_BULLET,
-	PROJECTILE_GRENADE_KILL,
-	PROJECTILE_GRENADE_GAS,
-	QUESTION_GRENADE_KILL,
-	QUESTION_GRENADE_GAS	
-}PROJECTILE_TYPE;
+
 
 
 typedef struct _weather_table{
@@ -460,7 +454,7 @@ extern char *Posd[OSD_TEXT_SIZE];
 extern char ResultOsd[2][8];
 extern char GunOsd[5][8];
 extern char ErrorOsd[19][8];
-extern BOOL SHINE;
+extern bool SHINE;
 extern int ShinId;
 extern char AngleCorrectOsd[3][8];
 extern char ShotOsd[2][8];
@@ -495,7 +489,7 @@ void OSDCTRL_CalibGenPramShow();
 void OSDCTRL_ItemShow(LPARAM lParam);
 void OSDCTRL_ItemHide(LPARAM lParam);
 void OSDCTRL_updateAreaN();
-BOOL OSDCTRL_IsOsdDisplay(LPARAM lParam);
+bool OSDCTRL_IsOsdDisplay(LPARAM lParam);
 void OSDCTRL_CalcNumShow(void);
 void OSDCTRL_CalcNumHide(void);
 void OSDCTRL_FulScrAngleShow();
@@ -528,6 +522,8 @@ void OSDCTRL_draw(Mat frame,OSDCTRL_Handle pCtrlObj);
 
 void OSDCTRL_sendSem(OSDCTRL_OBJ * pCtrlObj);
 void OSDCTRL_TskDrawOsd();
+
+void OSDCTRL_EnterCalibMode();
 
  
 #ifdef __cplusplus

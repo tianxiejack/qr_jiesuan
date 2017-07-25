@@ -3,7 +3,7 @@
 //
 // Design and implementation by
 // - Floris van den Berg (flvdberg@wxs.nl)
-// - Hervé Drolon (drolon@infonie.fr)
+// - Hervï¿½ Drolon (drolon@infonie.fr)
 //
 // Contributors:
 // - Adam Gates (radad@xoasis.com)
@@ -24,7 +24,7 @@
 // - Petr Pytelka (pyta@lightcomp.com)
 // - Riley McNiff (rmcniff@marexgroup.com)
 // - Ryan Rubley (ryan@lostreality.org)
-// - Volker Gärtner (volkerg@gmx.at)
+// - Volker Gï¿½rtner (volkerg@gmx.at)
 
 // "The contents of this file are subject to the FreeImage Public License Version 1.0 (the "License");
 // you may not use this file except in compliance with the License. You may obtain a copy of the License

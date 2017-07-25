@@ -9,6 +9,7 @@
 #include "process021.hpp"
 #include "vmath.h"
 //#include "grpFont.h"
+#include <string.h>
 
 
 #include "dx_main.h"
@@ -17,16 +18,19 @@
 #include"app_ctrl.h"
 #include"dx.h"
 #include"osd_cv.h"
+#include "statCtrl.h"
 
+//extern Level_one_state gLevel1Mode;
+//extern Level_one_state gLevel1LastMode;
 
 #define VIDEO1280X1024 1
 
 using namespace std;
 using namespace cv;
 
-extern OSDCTRL_Handle pOsdCtrlObj;
+//extern OSDCTRL_Handle pOsdCtrlObj;
 
-OSDCTRL_OBJ * pCtrlObj = NULL;
+extern OSDCTRL_OBJ * pCtrlObj;
 
 UInt32 interfaceflag;
 	
@@ -219,8 +223,6 @@ int  CProcess021::PiexltoWindowsy(int y,int channel)
 
 void CProcess021::OnCreate()
 {
-	
-
 	osdgraph_init(process_osd,sThis->m_dc);
 	
        pCtrlObj = OSDCTRL_create();
@@ -306,6 +308,7 @@ void CProcess021::process_osd(void *pPrm)
 
 	int i ;
 	OSDText_Obj * pTextObj = NULL;
+	OSDCTRL_OBJ pTextObjbefore;
 	Line_Param_fb lineParam ={0};
 	lineParam.x = 720/2;
 	lineParam.y = 576/2;
@@ -313,66 +316,47 @@ void CProcess021::process_osd(void *pPrm)
 	lineParam.height = 60;
 	lineParam.frcolor = 2;
 	//erase
-	OSDCTRL_erase_draw_text(frame,pCtrlObj);
-
-
-	
-	switch(interfaceflag)
+	memcpy(&pTextObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
+	OSDCTRL_erase_draw_text(frame,&pTextObjbefore);
+#if 0
+	printf("**************!!!!!!!!!!gLevel1Mode = %d \n",gLevel1Mode);
+	switch(gLevel1Mode)
 	{
-	
-		case NORMAL_MODE:
-			for(i=eModeId;i<eBoreSightLinId;i++)
-			{
-				pTextObj = &pCtrlObj->pTextList[i];
-				pTextObj->osdState = eOsd_Hide;
-			}
+		case MODE_BOOT_UP:
+			OSDCTRL_AllHide();
+			break;
+		
+		case MODE_BATTLE:
+			OSDCTRL_AllHide();
 			for(i=eWorkMode;i<eCorrectionTip;i++)
 			{
-				pTextObj = &pCtrlObj->pTextList[i];
-				pTextObj->osdState = eOsd_Disp;
+				OSDCTRL_ItemShow(i);
 			}
-			//shi ping yi chang
-			//pTextObj = &pCtrlObj->pTextList[eVideoErr];
-			//pTextObj->osdState = eOsd_Hide;
 			break;
 
-		case AXIS_MODE:
-			//jiao yan jie mian
-			for(i=eModeId;i<eBoreSightLinId;i++)
-			{
-				pTextObj = &pCtrlObj->pTextList[i];
-				pTextObj->osdState = eOsd_Hide;
-			}
+		case MODE_CALIBRATION:
+			OSDCTRL_AllHide();
 			for(i=eWorkMode;i<eEnhance;i++)
 			{
-				pTextObj = &pCtrlObj->pTextList[i];
-				pTextObj->osdState = eOsd_Disp;
+				OSDCTRL_ItemShow(i);
 			}
 			for(i=eCalibMenu_Weather;i<=eCalibMenu_Save;i++)
 			{
-				pTextObj = &pCtrlObj->pTextList[i];
-				pTextObj->osdState = eOsd_Disp;
+				OSDCTRL_ItemShow(i);
 			}
 			for(i=eCursorX;i<=eSaveYesNo;i++)
 			{
-				pTextObj = &pCtrlObj->pTextList[i];
-				pTextObj->osdState = eOsd_Disp;
+				OSDCTRL_ItemShow(i);
 			}
-			//shi ping yi chang
-			//pTextObj = &pCtrlObj->pTextList[eVideoErr];
-			//pTextObj->osdState = eOsd_Hide;
 			break;
+			
 		default:
 			break;
 	}	
-
-	
-		
-
-		
+#endif		
 	OSDCTRL_draw_text(frame,pCtrlObj);
 
-	if(interfaceflag== AXIS_MODE)
+	if(isCalibrationMainMenu())
 		lineParam.frcolor = 0;
 	DrawjsCross(frame, &lineParam);
 	DrawjsRuler(frame,&lineParam);
@@ -1715,25 +1699,25 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	
 	if (key == 'g'|| key == 'G')
 	{
-		interfaceflag = AXIS_MODE;
-		
+		//interfaceflag = AXIS_MODE;
+		MSGDRIV_send(CMD_BUTTON_CALIBRATION,NULL);//	jiao zhun
 		//msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
-		MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
+		//MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
 	}
 
 	if (key == 'h'|| key == 'H')
 	{
-		interfaceflag = NORMAL_MODE;
+		//interfaceflag = NORMAL_MODE;
 	}
 
 	if (key == 'j')
 	{
-		processCMD_MODE_AIM_LAND(0);
+		MSGDRIV_send(CMD_MODE_AIM_LAND,NULL);
 	}
 
 	if (key == 'J')
 	{
-		processCMD_MODE_AIM_SKY(0);
+		MSGDRIV_send(CMD_MODE_AIM_SKY,NULL);
 	}
 	
 	if (key == 'z'|| key == 'Z')
@@ -3115,7 +3099,29 @@ void CProcess021::MSGAPI_settrackBreakLock(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCHECK",__func__,__LINE__);
+ #if 0
+ 	if(!isBootUpMode())
+	{
+		if(isCalibrationMode()&&!isCalibrationMainMenu()){
+			if(isCalibrationZero()){
+				saveZeroParam();
+			}else if(isCalibrationGeneral()){
+				saveGeneralParam();
+			}else if(isCalibrationWeather()){
+				saveWeatherParam();
+			}		
+			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+			OSDCTRL_NoShine();
+		}	
+		gLevel1LastMode = gLevel1Mode;
+		gLevel1Mode = MODE_BOOT_UP;
+		releaseServoContrl();
+	}
+
+	//displayCheckResults();
+	OSDCTRL_CheckResultsShow();
+#endif
+ 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCHECK",__func__,__LINE__);
 	return ;
  }
 
@@ -3137,7 +3143,25 @@ void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_CALIBRATION(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_CALIBRATION",__func__,__LINE__);
+	//if( isBattleMode())
+	if(1)
+	{
+		//if(isStatBattleAlert())
+		//	return;
+		gLevel1LastMode = gLevel1Mode;
+		gLevel1Mode = MODE_CALIBRATION;
+		gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+		gLevel3CalibrationState   = Menu_FireView;
+		//releaseServoContrl();
+		// update OSD to calibration display
+	}
+	else
+	{
+		assert(FALSE);
+	}
+	//OSDCTRL_updateMainMenu(gProjectileType);
+	OSDCTRL_EnterCalibMode();
+ 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_CALIBRATION",__func__,__LINE__);
 	return ;
  }
 
