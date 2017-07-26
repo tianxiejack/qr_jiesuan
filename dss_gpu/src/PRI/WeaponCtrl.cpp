@@ -40,6 +40,7 @@ enum {
 	CAN_DEVICE_MACHGUN,
 	CAN_DEVICE_GRENADE
 }CAN_DEVICE_TYPE;
+
 BYTE FrameBuf0[7]={0xA0,0x00,0xFF,0xFF,0xFF,0xFF,0x00};
 BYTE FrameBuf1[5]={0xA1,0x10,0x44,0xFF,0x00};
 BYTE FrameBuf3[4]={0xA3,0x0F,0x00,0x00};
@@ -787,25 +788,38 @@ static int WeaponCtrlPORT_recvCfg(UartObj*pUartObj,int iLen)
 	BYTE *pCur = pUartObj->recvBuf;// + pUartObj->recvLen;
 	int ilen = 0, stat, ret = -1;;
 	while(TRUE){
-		if(GetDataFromUart(pUartObj->uartId,pCur,1, &stat)!=1){
+		if(GetDataFromUart(pUartObj->uartId,pCur,1, &stat)!=1)
+		{
 			return ret;
-		}else{
+		}
+		else
+		{
 			ilen ++;
 			pCur ++;
-			if(ilen == 2){
-				if(CAN_ID_PANEL == stoh2(pUartObj->recvBuf)){
+			if(ilen == 2)
+			{
+				if(CAN_ID_PANEL == stoh2(pUartObj->recvBuf))
+				{
 						ret = CAN_DEVIC_PANEL;
 						break;
-				}else if (CAN_ID_TURRET == stoh2(pUartObj->recvBuf)){
+				}
+				else if (CAN_ID_TURRET == stoh2(pUartObj->recvBuf))
+				{
 						ret = CAN_DEVICE_TURRET;
 						break;
-				}else if (CAN_ID_MACHGUN == stoh2(pUartObj->recvBuf)){
+				}
+				else if (CAN_ID_MACHGUN == stoh2(pUartObj->recvBuf))
+				{
 						ret = CAN_DEVICE_MACHGUN;
 						break;
-				}else if (CAN_ID_GRENADE == stoh2(pUartObj->recvBuf)){
+				}
+				else if (CAN_ID_GRENADE == stoh2(pUartObj->recvBuf))
+				{
 						ret = CAN_DEVICE_GRENADE;
 						break;
-				}else{
+				}
+				else
+				{
 					ilen=1;
 					pCur--;
 					memcpy(pUartObj->recvBuf, pUartObj->recvBuf+1, 1);
@@ -1420,6 +1434,7 @@ static void WeaponCtrlPORT_ParseFrameId(UartObj*pUartObj,BYTE type)
 	}
 #endif
 }
+
 static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 {
 	unsigned char *buf = pUartObj->recvBuf; 
@@ -1552,7 +1567,7 @@ int WeaponCtrlPort_ParseByte(BYTE* buf)
 void* WeaponCtrlPORT_recvTask(void* prm)
 {
 	int stat=0;
-//	UartObj* pUartObj = &WeaponCtrlObj.UartPort;
+	UartObj* pUartObj = &WeaponCtrlObj.UartPort;
 
 	//while (!pSysCtrlObj->tskArry[TSK_RECVTRACEMSG]) 
 	while (1) 
@@ -1560,10 +1575,9 @@ void* WeaponCtrlPORT_recvTask(void* prm)
 		//OSA_printf("WeaponCtrlPORT_recvTask\n");
 		//OSA_waitMsecs(5000);
 //		memset(buf,0,16);
-	//	WeaponCtrlObj.UartPort.recvLen = 0;	
+		WeaponCtrlObj.UartPort.recvLen = 0;	
 
-	#if 0
-		stat = WeaponCtrlPORT_recvCfg(pUartObj,2);
+		//stat = WeaponCtrlPORT_recvCfg(pUartObj,2);
 
 		if(stat < 0)
 			continue;
@@ -1584,7 +1598,6 @@ void* WeaponCtrlPORT_recvTask(void* prm)
 			default:
 				break;
 		}
-	#endif
 	}
 	
 return NULL;

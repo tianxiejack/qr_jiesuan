@@ -12,7 +12,7 @@ static Level_four_state  gLevel4subCalculatorState = WaitForFeedBack;
 PROJECTILE_TYPE gProjectileType=PROJECTILE_BULLET;
 PROJECTILE_TYPE gProjectileTypeBefore=PROJECTILE_BULLET;
 int BackColor=WHITECOLOR;
-static DIS_MEASURE_TYPE gMeasureType=MEASURETYPE_LASER;
+DIS_MEASURE_TYPE gMeasureType=MEASURETYPE_LASER;
 static SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_SHORT;
 static bool isWeaponCtrlOK=FALSE,isPositionSensorOK=FALSE, isPositionServoOK=FALSE;
 static bool isJoyStickOK=FALSE,isDipAngleSensorOK=FALSE,isMachineGunSensorOK=FALSE;
@@ -21,7 +21,7 @@ static bool isVideoOK=FALSE;
 static bool isDetendClose=TRUE,isMaintPortOpen=TRUE;
 static bool FOVSHINE = FALSE;
 Derection_Type SHINE_DERECTION=DERECTION_DOWN;
-static bool isfixingMeasure = FALSE;
+bool isfixingMeasure = FALSE;
 extern void setJoyStickStat(BOOL stat);
 extern void setServoControlObj();
 extern void setPicEnhance(BOOL context);
@@ -35,6 +35,30 @@ static bool bServoAavailable = FALSE;
 static bool bUnlock = TRUE;
 
 
+bool isBattleMode()
+{
+	return MODE_BATTLE == gLevel1Mode;
+}
+
+bool isCalibrationMode()
+{
+	return MODE_CALIBRATION == gLevel1Mode;
+}
+
+bool isBootUpMode()
+{
+	return MODE_BOOT_UP == gLevel1Mode;
+}
+
+bool isBootUpSelfCheck()
+{
+	return STATE_BOOT_UP_SELF_CHECK == gLevel2BootUpState;
+}
+
+bool bWeaponCtrlOK()
+{
+	return isWeaponCtrlOK;
+}
 
 bool isMeasureManual()
 {
@@ -94,5 +118,9 @@ PROJECTILE_TYPE getProjectileType()
 		return gProjectileType;	
 }
 
+bool isGrenadeGas()
+{
+	return PROJECTILE_GRENADE_GAS == getProjectileType();
+}
 
 

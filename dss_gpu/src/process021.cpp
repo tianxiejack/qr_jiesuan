@@ -30,7 +30,8 @@ using namespace cv;
 
 //extern OSDCTRL_Handle pOsdCtrlObj;
 
-extern OSDCTRL_OBJ * pCtrlObj;
+extern OSDCTRL_Handle pCtrlObj;
+OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 
 UInt32 interfaceflag;
 	
@@ -225,8 +226,8 @@ void CProcess021::OnCreate()
 {
 	osdgraph_init(process_osd,sThis->m_dc);
 	
-       pCtrlObj = OSDCTRL_create();
-	
+       //pCtrlObj = OSDCTRL_create();
+	OSDCTRL_create();
 	MSGDRIV_create();
 	MSGAPI_initial();
 	//App_dxmain();
@@ -305,10 +306,9 @@ void CProcess021::process_osd(void *pPrm)
 	//Line_Param_fb * lineParam = NULL;
 	//Text_Param_fb * textParampri = NULL;
 	//Line_Param_fb * lineParampri = NULL;
-
+	static int flag = 0;
 	int i ;
 	OSDText_Obj * pTextObj = NULL;
-	OSDCTRL_OBJ pTextObjbefore;
 	Line_Param_fb lineParam ={0};
 	lineParam.x = 720/2;
 	lineParam.y = 576/2;
@@ -316,50 +316,17 @@ void CProcess021::process_osd(void *pPrm)
 	lineParam.height = 60;
 	lineParam.frcolor = 2;
 	//erase
-	memcpy(&pTextObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
-	OSDCTRL_erase_draw_text(frame,&pTextObjbefore);
-#if 0
-	printf("**************!!!!!!!!!!gLevel1Mode = %d \n",gLevel1Mode);
-	switch(gLevel1Mode)
-	{
-		case MODE_BOOT_UP:
-			OSDCTRL_AllHide();
-			break;
-		
-		case MODE_BATTLE:
-			OSDCTRL_AllHide();
-			for(i=eWorkMode;i<eCorrectionTip;i++)
-			{
-				OSDCTRL_ItemShow(i);
-			}
-			break;
-
-		case MODE_CALIBRATION:
-			OSDCTRL_AllHide();
-			for(i=eWorkMode;i<eEnhance;i++)
-			{
-				OSDCTRL_ItemShow(i);
-			}
-			for(i=eCalibMenu_Weather;i<=eCalibMenu_Save;i++)
-			{
-				OSDCTRL_ItemShow(i);
-			}
-			for(i=eCursorX;i<=eSaveYesNo;i++)
-			{
-				OSDCTRL_ItemShow(i);
-			}
-			break;
-			
-		default:
-			break;
-	}	
-#endif		
+	if(!flag)
+		memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
+	if(flag)
+		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
 	OSDCTRL_draw_text(frame,pCtrlObj);
+	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
+
 	
-	if(isCalibrationMainMenu())
+	if(isCalibrationMode())
 	{
 		lineParam.frcolor = 0;
-		printf("1111111111111111111111111111\n");
 	}
 	
 	DrawjsCross(frame, &lineParam);
@@ -368,7 +335,7 @@ void CProcess021::process_osd(void *pPrm)
 	
 
 	sThis->m_display.UpDateOsd(0);
-	
+	flag = 1;
 	return ;
 
 #if 0
@@ -421,8 +388,6 @@ void CProcess021::process_osd(void *pPrm)
 
 	}
 	#endif
-	
-
 }
 
 
@@ -1617,7 +1582,7 @@ void CProcess021::OnMouseRightUp(int x, int y){};
 void CProcess021::OnKeyDwn(unsigned char key)
 {
 	CMD_EXT *pIStuts = &extInCtrl;
-
+printf("!!!!!!!key = %d\n",key);
 	if(key == 'a' || key == 'A')
 	{
 		pIStuts->SensorStat = (pIStuts->SensorStat + 1)%3;
@@ -1701,13 +1666,20 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		MSGDRIV_send(MSGID_EXT_INPUT_PICPCROP,NULL);
 	}
 	
-	if (key == 'g'|| key == 'G')
+	if (key == 'g')
 	{
-		//interfaceflag = AXIS_MODE;
 		MSGDRIV_send(CMD_BUTTON_CALIBRATION,NULL);//	jiao zhun
 		//msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
 		//MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
 	}
+
+	if (key == 'G')
+	{
+		MSGDRIV_send(CMD_BUTTON_BATTLE,NULL);
+		//msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
+		//MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
+	}
+	
 
 	if (key == 'h'|| key == 'H')
 	{
@@ -1731,6 +1703,26 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		pIStuts->ImgZoomStat[1]=(pIStuts->ImgZoomStat[1]+1)%2;
 		//msgdriv_event(MSGID_EXT_INPUT_ENZOOM, NULL);
 		MSGDRIV_send(MSGID_EXT_INPUT_ENZOOM,NULL);
+	}
+
+	if(key == 101)//up
+	{
+		MSGDRIV_send(CMD_BUTTON_UP, NULL);
+	}
+
+	if(key == 103)//down
+	{
+
+	}
+
+	if(key == 100)//left
+	{
+
+	}
+
+	if(key == 102)//right
+	{
+
 	}
 	
 }
@@ -2422,7 +2414,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_AUTOCATCH,			processCMD_BUTTON_AUTOCATCH,0); // �Զ�����
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE_AUTO,		processCMD_BUTTON_BATTLE_AUTO,	0); // ս��ģʽ
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE_ALERT,		processCMD_BUTTON_BATTLE_ALERT,	0); // ����ģʽ
-    MSGDRIV_attachMsgFun(handle,	CMD_USER_FIRED,				processCMD_USER_FIRED,	0); // ȷ�Ϸ���
+    MSGDRIV_attachMsgFun(handle,	CMD_USER_FIRED,					processCMD_USER_FIRED,	0); // ȷ�Ϸ���
     MSGDRIV_attachMsgFun(handle,	CMD_DETEND_LOCK,				processCMD_DETEND_LOCK,	0); // ֹ������
     MSGDRIV_attachMsgFun(handle,	CMD_DETEND_UNLOCK,			processCMD_DETEND_UNLOCK,	0); // ֹ������
     MSGDRIV_attachMsgFun(handle,	CMD_MAINTPORT_LOCK,			processCMD_MAINTPORT_LOCK,	0); //ά���Ź�
@@ -2445,7 +2437,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_OK,						processCMD_TRACKING_OK,			0); // ������
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_LOAD_OK,				processCMD_FIRING_TABLE_LOAD_OK,		0); // �����Ԫװ����
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // �����Ԫװ��ʧ��
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				       processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				      		processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_SKY,						processCMD_MODE_AIM_SKY,		0); // �л��Կ�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,				processCMD_MODE_ATTACK_SIGLE,		0); // �л�Ϊ����
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,				processCMD_MODE_ATTACK_MULTI,		0); // �л�Ϊ����
@@ -2482,7 +2474,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVESPEED,				processCMD_MACHSERVO_MOVESPEED,	0); //��ǹ�ŷ��ٶȿ���
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVESPEED,			processCMD_GRENADESERVO_MOVESPEED,	0); //���ŷ��ٶȿ���
     MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_STOP,					processCMD_MACHSERVO_STOP,	0); //��ǹ�ŷ�ֹͣ
-    MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVEOFFSET,			processCMD_MACHSERVO_MOVEOFFSET,	0); //��ǹ�ŷ�λ�ÿ���
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVEOFFSET,				processCMD_MACHSERVO_MOVEOFFSET,	0); //��ǹ�ŷ�λ�ÿ���
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVEOFFSET,			processCMD_GRENADESERVO_MOVEOFFSET,	0); //��λ�ŷ�λ�ÿ���
     
  
@@ -3103,28 +3095,33 @@ void CProcess021::MSGAPI_settrackBreakLock(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
  {
- #if 0
+ 	return ;
  	if(!isBootUpMode())
 	{
 		if(isCalibrationMode()&&!isCalibrationMainMenu()){
-			if(isCalibrationZero()){
-				saveZeroParam();
-			}else if(isCalibrationGeneral()){
-				saveGeneralParam();
-			}else if(isCalibrationWeather()){
-				saveWeatherParam();
+			if(isCalibrationZero())
+			{
+				//saveZeroParam();
+			}
+			else if(isCalibrationGeneral())
+			{
+				//saveGeneralParam();
+			}
+			else if(isCalibrationWeather())
+			{
+				//saveWeatherParam();
 			}		
 			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
-			OSDCTRL_NoShine();
+		//	OSDCTRL_NoShine();
 		}	
 		gLevel1LastMode = gLevel1Mode;
 		gLevel1Mode = MODE_BOOT_UP;
-		releaseServoContrl();
+	//	releaseServoContrl();
 	}
 
 	//displayCheckResults();
-	OSDCTRL_CheckResultsShow();
-#endif
+//	OSDCTRL_CheckResultsShow();
+
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCHECK",__func__,__LINE__);
 	return ;
  }
@@ -3147,8 +3144,7 @@ void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_CALIBRATION(LPARAM lParam)
  {
-	//if( isBattleMode())
-	if(1)
+	if( isBattleMode())
 	{
 		//if(isStatBattleAlert())
 		//	return;
@@ -3161,9 +3157,11 @@ void CProcess021::processCMD_BUTTON_CALIBRATION(LPARAM lParam)
 	}
 	else
 	{
-		assert(FALSE);
+		return ;
+		//assert(FALSE);
 	}
 	//OSDCTRL_updateMainMenu(gProjectileType);
+			
 	OSDCTRL_EnterCalibMode();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_CALIBRATION",__func__,__LINE__);
 	return ;
@@ -3316,7 +3314,23 @@ void CProcess021::onGrenadeServoERR(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_BATTLE(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE",__func__,__LINE__);
+	if(isCalibrationMode())
+	{
+		gLevel1Mode = MODE_BATTLE;
+	}
+	else if(isBootUpMode())
+	{
+		gLevel1Mode = MODE_BATTLE;
+	}
+	else
+	{
+		return ;
+		//assert(FALSE);
+	}
+
+	OSDCTRL_EnterBattleMode();
+
+	//OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE",__func__,__LINE__);
 	return ;
  }
 
@@ -3337,7 +3351,64 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_UP",__func__,__LINE__);
+	if(isCalibrationMode())
+	{
+		if(isCalibrationMainMenu())
+		{
+			moveUpXposition();
+		}
+		else if(isCalibrationZero())
+		{
+			if(isGrenadeGas())
+				return ;
+			//moveCrossUp();  //move the axis up
+		}
+		else if(isCalibrationWeather())
+		{
+			//increaseDigitOrSymbolZero();
+		}
+		else if(isCalibrationGeneral())
+		{
+			//increaseDigitOrSymbolGeneral();
+		}
+		else if(isCalibrationGenPram())
+		{
+		//	increaseGenPram();
+			switch(gLevel3CalibrationState){
+				case Menu_FireView:
+				//	increaseFireViewPram();
+					break;
+				case Menu_FireCtrl:
+				//	increaseFireCtrlPram();
+					break;
+				case Menu_ServoX:
+				//	increaseServoXPram();
+					break;
+				case Menu_ServoY:
+				//	increaseServoYPram();
+					break;
+				default:
+					break;
+				}
+		}
+		else if(isCalibrationSave())
+		{
+			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+			// update OSDdisplay
+			OSDCTRL_CalibMenuShow();
+			moveUpXposition();
+		}	
+	}
+	else if(isBattleMode())
+	{
+		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
+		{
+			//increaseMeasureDis();
+			//loadFiringTable_Enter();
+		}
+	}
+
+ 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_UP",__func__,__LINE__);
 	return ;
  }
 

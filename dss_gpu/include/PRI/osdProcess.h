@@ -427,9 +427,7 @@ typedef struct _modleCtrl{
 
 typedef struct _osd_ctrl_obj{
 	ModleCtrl_t Interface;
-	//AVTDEV_Handle	pAvtDevObj;
 	SEM_ID			osdSem;
-	//CTimerCtrl*		pOsdTimer;
 	FONT_OBJ*		pOsdFont;
 	unsigned int	uSegId;
 	unsigned int	uInit;
@@ -524,6 +522,9 @@ void OSDCTRL_sendSem(OSDCTRL_OBJ * pCtrlObj);
 void OSDCTRL_TskDrawOsd();
 
 void OSDCTRL_EnterCalibMode();
+
+
+
 
  
 #ifdef __cplusplus

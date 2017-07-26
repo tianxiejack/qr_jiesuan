@@ -12,8 +12,8 @@
 #include "osd_graph.h"
 #include"osd_cv.h"
 #include "osdProcess.h"
+#include "osdPort.h"
 
-//#include "msgProcessDef.h"
 #define LPARAM long
 
 

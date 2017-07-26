@@ -180,13 +180,13 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eF4Button,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	382+LOFFSET,	532,	0,	{0}},
 	{eF5Button,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500-5+LOFFSET,		532,	0,	{0}},
 	{eF6Button,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	600+LOFFSET,		532,	0,	{0}},
-	{eCalibMenu_Weather,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		65,	0,	{0}},
-	{eCalibMenu_Zero,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		100,	0,	{0}},
-	{eCalibMenu_General,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		135,	0,	{0}},
-	{eCalibMenu_Save,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		170,	0,	{0}},
-	{eCalibMenu_GenPram,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		205,	0,	{0}},
-	{eCalibMenu_Horizen,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		240,	0,	{0}},
-	{eCalibMenu_Laser,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		275,	0,	{0}},
+	{eCalibMenu_Weather,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		65,	0,	{0}},
+	{eCalibMenu_Zero,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		100,	0,	{0}},
+	{eCalibMenu_General,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		135,	0,	{0}},
+	{eCalibMenu_Save,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		170,	0,	{0}},
+	{eCalibMenu_GenPram,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		205,	0,	{0}},
+	{eCalibMenu_Horizen,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		240,	0,	{0}},
+	{eCalibMenu_Laser,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		275,	0,	{0}},
 	{eCalibMenu_Child,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		205,	0,	{0}},
 	
 	{eCursorX,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,		170,	0,	{0}},
@@ -599,7 +599,7 @@ void OSDCTRL_AlgSelect()
 void OSDCTRL_AllHide()
 {
 	int i;
-	for(i=eSuperOrder; i<=eBoreSightLinId; i++)
+	for(i=eLaserState; i<=eBoreSightLinId; i++)
 	{
 		OSDCTRL_ItemHide(i);
 	}
@@ -634,13 +634,14 @@ void OSDCTRL_BattleShow()
 {
 	int i;
 	OSDCTRL_AllHide();
+	OSDCTRL_ItemShow(eSuperOrder);
 	for(i=eWeather1; i<=eAngleV; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wAuto];
 	//OSDCTRL_updateAreaN();
-	OSDCTRL_NoShine();
-	OSDCTRL_AlgSelect();
+	//OSDCTRL_NoShine();
+	//OSDCTRL_AlgSelect();
 }
 
 
@@ -648,16 +649,20 @@ void OSDCTRL_CalibMenuShow()
 {
 	int i;
 	OSDCTRL_AllHide();
-	for(i=eCalibMenu_Weather; i<=eCursorX; i++){
+	for(i=eCalibMenu_Weather; i<=eCalibMenu_Save; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
-	for(i=eAnglePosn; i<=eAngleGred; i++){
+	
+	for(i=eCursorX; i<=eSaveYesNo; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
+	
 	Posd[eWorkMode] = WorkOsd[wCalibration];
 	//OSDCTRL_NoShine();
 	//OSDCTRL_AlgSelect();
-	printf("%s:%d		getProjectileType() = %d\n",__func__,__LINE__,getProjectileType());
+	//printf("%s:%d		getProjectileType() = %d\n",__func__,__LINE__,getProjectileType());
 	OSDCTRL_updateMainMenu(getProjectileType());
 }
 
@@ -818,19 +823,19 @@ void OSDCTRL_BattleTrackShow()
 
 void OSDCTRL_EnterBattleMode()
 {
-#if 0
-	if(isStatBattleAuto())
+	//if(isStatBattleAuto())
+	if(1)
 		OSDCTRL_BattleShow();
-	else if(isStatBattleAlert())
-	{
-	   OSDCTRL_BattleAlertShow();
-	}
+	//else if(isStatBattleAlert())
+	//{
+	//  OSDCTRL_BattleAlertShow();
+	//}
 	else 
 	{
 		assert(FALSE);
 	}
-#endif
 }
+
 void OSDCTRL_CalibGenPramShow()
 {
 #if 0
@@ -940,8 +945,8 @@ void OSDCTRL_ItemShow(LPARAM lParam)
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
-	if(pCtrlObj->uInit==0)
-		return;
+	//if(pCtrlObj->uInit==0)
+	//	return;
 
 	pTextObj[lParam].osdState = eOsd_Disp;
 }
@@ -1032,10 +1037,11 @@ void OSDCTRL_ItemHide(LPARAM lParam)
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
-	if(pCtrlObj->uInit==0)
-		return;
+	//if(pCtrlObj->uInit==0)
+	//	return;
 
 	pTextObj[lParam].osdState = eOsd_Hide;
+	
 }
 
 bool OSDCTRL_IsOsdDisplay(LPARAM lParam)
@@ -2191,3 +2197,5 @@ void TskDrawOsd()
 {
 
 }
+
+

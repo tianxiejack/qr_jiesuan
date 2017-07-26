@@ -11,6 +11,7 @@ CPP_SRCS += \
 ../src/PRI/TurretPosPort.cpp \
 ../src/PRI/WeaponCtrl.cpp \
 ../src/PRI/osdCdc.cpp \
+../src/PRI/osdPort.cpp \
 ../src/PRI/osdProcess.cpp \
 ../src/PRI/statCtrl.cpp \
 ../src/PRI/tasklist.cpp 
@@ -23,6 +24,7 @@ OBJS += \
 ./src/PRI/TurretPosPort.o \
 ./src/PRI/WeaponCtrl.o \
 ./src/PRI/osdCdc.o \
+./src/PRI/osdPort.o \
 ./src/PRI/osdProcess.o \
 ./src/PRI/statCtrl.o \
 ./src/PRI/tasklist.o 
@@ -35,6 +37,7 @@ CPP_DEPS += \
 ./src/PRI/TurretPosPort.d \
 ./src/PRI/WeaponCtrl.d \
 ./src/PRI/osdCdc.d \
+./src/PRI/osdPort.d \
 ./src/PRI/osdProcess.d \
 ./src/PRI/statCtrl.d \
 ./src/PRI/tasklist.d 

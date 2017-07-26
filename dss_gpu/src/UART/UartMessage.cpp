@@ -8,6 +8,18 @@
 #include"dx_config.h"
 #include"dx.h"
 #include"app_ctrl.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#define SIZE		64
+
+
+
 int globalflag = 1;
   OSA_SemHndl semSend;
     OSA_BufCreate tskSendBufCreate;
@@ -2126,5 +2138,77 @@ int uartMessage(void)
 	return 0;
 }
 
+
+void* fdTest_open(void* prm)
+{
+
+	int fp;
+	unsigned char messageRecvBuf[SIZE];
+	
+	if(mkfifo("fifo",0666) == -1)
+	{
+		if(errno != EEXIST)
+		{
+			perror("mkfifo");
+			return NULL;
+		}
+	}
+	
+	fp = open("/home/ubuntu/fifo",O_RDONLY);
+	
+	if(fp == -1)
+	{
+		perror("open");
+		return NULL;
+	}
+	
+	//printf("fp = %d\n",fp);
+	while(1)
+	{
+		read(fp,messageRecvBuf,SIZE);
+		printf("recv_buf = %s\n",messageRecvBuf);
+		//fputs(messageRecvBuf,stdout);
+		processMessage(messageRecvBuf);
+		if(strncmp("quit",(char *)messageRecvBuf,4) == 0)
+			break;
+	}
+	if(-1 == close(fp))
+	{
+		//perror("close");
+		return NULL;
+	}
+	return NULL;
+}
+
+
+void processMessage(unsigned char* pData)
+{
+	unsigned short cmd_ext[SIZE] ;
+	int i = 0;
+	
+	for(i=0;i<8;i+=4)
+	{
+		cmd_ext[i/2] = (pData[i+1]<<8) + pData[i];
+		cmd_ext[i/2 +1] = (pData[i+3]<<8)+pData[i+2];
+	}
+
+	printf("cmd_ext = %s\n",cmd_ext);
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	return ;
+}
 
 

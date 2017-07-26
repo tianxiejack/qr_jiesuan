@@ -65,23 +65,20 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	char *ptr;
 	UInt32 frcolor,bgcolor;
 
-	
-	
 	for(i=eModeId;i<eBoreSightLinId;i++)
 	{
-			pTextObj = &pCtrlObj->pTextList[i]; 
-				if (pTextObj->osdState==eOsd_Disp)
-				{
-					if(pTextObj)
-					OSDCTRL_genOsdContext(pCtrlObj,i);
-					startx   = pTextObj->osdInitX;
-					starty   = pTextObj->osdInitY;
-					frcolor  = WHITECOLOR;
-					bgcolor = BGCOLOR;
-					ptr   = (char*)pTextObj->osdContext;
-					osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
-				}
-		
+		pTextObj = &pCtrlObj->pTextList[i]; 
+	//	if (pTextObj->osdState==eOsd_Disp)
+		{
+			if(pTextObj)
+			OSDCTRL_genOsdContext(pCtrlObj,i);
+			startx   = pTextObj->osdInitX;
+			starty   = pTextObj->osdInitY;
+			frcolor  = WHITECOLOR;
+			bgcolor = BGCOLOR;
+			ptr   = (char*)pTextObj->osdContext;
+			osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
+		}
 	}
 
 }

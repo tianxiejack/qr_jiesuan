@@ -5,6 +5,7 @@ extern "C" {
 #endif
 //#include "app_global.h"
 
+
 #define FALSE	0
 #define TRUE 	1
 //#define BOOL		bool
@@ -117,6 +118,13 @@ bool isCalibrationZero();
 bool isCalibrationGenPram();
 bool isCalibrationHorizen();
 bool isCalibrationLaser();
+bool isBattleMode();
+bool isCalibrationMode();
+bool isBootUpMode();
+bool isGrenadeGas();
+bool isBootUpSelfCheck();
+bool bWeaponCtrlOK();
+
 
 
 PROJECTILE_TYPE getProjectileType();
@@ -125,6 +133,9 @@ extern Level_one_state gLevel1Mode;
 extern Level_one_state gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState;
 extern Level_three_state gLevel3CalibrationState;
+extern DIS_MEASURE_TYPE gMeasureType;
+extern bool isfixingMeasure;	
+	
 
 #ifdef __cplusplus
 	}

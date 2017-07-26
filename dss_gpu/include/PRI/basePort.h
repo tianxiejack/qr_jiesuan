@@ -83,7 +83,7 @@ typedef struct _UartObj {
 	int  uartId;
 	int  recvLen;
 	eUartStat uartStat;
-//	SEM_Handle syncObj;
+	//SEM_Handle syncObj;
 	BYTE sendBuf[MAXUARTBUFLEN];
 	BYTE recvBuf[1024];
 }UartObj;

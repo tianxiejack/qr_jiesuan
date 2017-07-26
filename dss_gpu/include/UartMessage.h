@@ -29,6 +29,11 @@ void* recv_pth(unsigned char *RS422,int len);
 int  send_pth(unsigned char * RS422);
 void inituartmessage();
 
+void* fdTest_open(void* prm);
+
+void processMessage(unsigned char* pData);
+
+
 #ifdef __cplusplus
 }
 #endif
