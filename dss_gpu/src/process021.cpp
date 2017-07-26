@@ -355,9 +355,13 @@ void CProcess021::process_osd(void *pPrm)
 	}	
 #endif		
 	OSDCTRL_draw_text(frame,pCtrlObj);
-
+	
 	if(isCalibrationMainMenu())
+	{
 		lineParam.frcolor = 0;
+		printf("1111111111111111111111111111\n");
+	}
+	
 	DrawjsCross(frame, &lineParam);
 	DrawjsRuler(frame,&lineParam);
 	DrawjsCircle(frame,&lineParam);
