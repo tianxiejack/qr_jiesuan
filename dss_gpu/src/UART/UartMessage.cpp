@@ -16,7 +16,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#define SIZE		64
+#define SIZE		1024
 
 
 
@@ -2141,9 +2141,13 @@ int uartMessage(void)
 
 void* fdTest_open(void* prm)
 {
-
+	int i;
 	int fp;
-	unsigned char messageRecvBuf[SIZE];
+	char messageRecvBuf[SIZE];
+	char hex[SIZE];
+	char* p_ch = messageRecvBuf;
+	char* p_hex = hex;
+
 	
 	if(mkfifo("fifo",0666) == -1)
 	{
@@ -2165,12 +2169,18 @@ void* fdTest_open(void* prm)
 	//printf("fp = %d\n",fp);
 	while(1)
 	{
+		memset(messageRecvBuf,0,sizeof(messageRecvBuf));
 		read(fp,messageRecvBuf,SIZE);
-		printf("recv_buf = %s\n",messageRecvBuf);
-		//fputs(messageRecvBuf,stdout);
-		processMessage(messageRecvBuf);
-		if(strncmp("quit",(char *)messageRecvBuf,4) == 0)
-			break;
+
+
+		strToHex(p_ch,p_hex);
+		//printf("p_hex = %s\n",p_hex);
+		for(i =0;i<10;i++)
+			printf("p_hex[%d]= %x\n",i,p_hex[i]);
+		
+		processMessage(p_hex);
+		//if(strncmp("quit",(char *)messageRecvBuf,4) == 0)
+		//	break;
 	}
 	if(-1 == close(fp))
 	{
@@ -2180,33 +2190,202 @@ void* fdTest_open(void* prm)
 	return NULL;
 }
 
+char valueToHexCh(const int value)
+{
+	char result = '\0';
+	if(value >=0 && value <=9)
+	{
+		result = (char)(value + 48);
+	}
+	else if(value >=10 && value <= 15)
+	{
+		result = (char)(value-10+65);
+	}
+	else
+		;
+	return result;
+}
 
-void processMessage(unsigned char* pData)
+int strToHex(char* ch,char* hex)
+{
+	int high,low;
+	int tmp = 0;
+	if(ch == NULL || hex == NULL)
+		return -1;
+	if(strlen(ch) == 0)
+		return -2;
+printf("strlen(ch) = %d\n",strlen(ch));
+	while(*ch)
+	{
+		tmp = (int)*ch;
+		high = (tmp >> 4)&0xf;
+		low = tmp &0xf;
+		*hex++ = high;//valueToHexCh(high);
+		*hex++ = low;//valueToHexCh(low);
+		ch++;
+	}
+	
+	*hex = '\0';
+	return 0;
+}
+
+
+void processMessage(char* pData)
 {
 	unsigned short cmd_ext[SIZE] ;
+	
 	int i = 0;
 	
-	for(i=0;i<8;i+=4)
+	for(i=0;i<16;i+=4)
 	{
+	//	printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 		cmd_ext[i/2] = (pData[i+1]<<8) + pData[i];
 		cmd_ext[i/2 +1] = (pData[i+3]<<8)+pData[i+2];
 	}
 
-	printf("cmd_ext = %s\n",cmd_ext);
+	if(cmd_ext[0] == 0xA1)
+	{
+		//B4
+		{
+			//bit 7
+			if((cmd_ext[1]>>7) & 0x1 == 0)
+				;//enable shoot
+			else
+				;//disable shoot
 
+			//bit 6-4
+			if((cmd_ext[1]>>4) & 0x7 == 0)
+				;// mei xuan zhe dan zhong
+			else if((cmd_ext[1]>>4) & 0x7 == 1)
+				;// 5.8 ji qiang dan
+			else if((cmd_ext[1]>>4) & 0x7 == 2)
+				;//35mm liu sha shang dan
+			else if((cmd_ext[1]>>4) & 0x7 == 3)
+				;//35mm liu fang bao dan
+			else
+				;//no valid
+
+			//bit 3-2
+			if((cmd_ext[1]>>2) & 0x3 == 0)
+				MSGDRIV_send(CMD_BUTTON_BATTLE,NULL);//gong zuo
+			else if((cmd_ext[1]>>2) & 0x3 == 0)
+				MSGDRIV_send(CMD_BUTTON_CALIBRATION,NULL);// jiao zhun	
+			
+			//bit 1-0
+			if((cmd_ext[1] & 0x3) == 0)
+				;//zi dong zhuang biao gong kuang
+			else if((cmd_ext[1] & 0x3) == 1)
+				;//jing jie yu jing gong kuang
+		}
+
+		//B5
+		{
+			//BIT 7-6
+			if((cmd_ext[2]>>6) & 0x3 == 1)
+				;// land
+			else if(cmd_ext[2]>>6 & 0x3 == 0)
+				;// sky
+			else
+				;//nothing
+
+			//BIT 5-4
+			if((cmd_ext[2]>>4) & 0x3 == 0)
+				;// dan fa
+			else if((cmd_ext[2]>>4) & 0x3 == 1)
+				;//lian fa
+			else
+				;//lian fa
+
+			//BIT 3-2
+			if((cmd_ext[2]>>2) & 0x3 == 0)
+				;//le jian guang -- da shi chang
+			else if((cmd_ext[2]>>2) & 0x3 == 1)
+				;//ke jian guang -- xiao shi chang
+
+			//BIT 1 default		5.8 ji qiang lian fa fang shi
+			if(cmd_ext[2] & 0x1== 0)
+				;//duan dian she		
+			else if(cmd_ext[2] & 0x1 == 1)
+				;//lian she		
+		}
+
+		//B6
+		{
+			//bit 7
+			if((cmd_ext[3]>>7) & 0x1== 0)
+				;//fang da an niu an xia
+			else if((cmd_ext[3]>>7) & 0x1== 1)
+				;//fang da an niu tai qi
+
+			
+			//bit 6
+			if((cmd_ext[3]>>6) & 0x1== 0)
+				;//tu ceng an niu an xia
+			else if((cmd_ext[3]>>6) & 0x1== 1)
+				;// tu ceng an niu tai qi
+
+			//bit 5
+			if((cmd_ext[3]>>5) & 0x1== 0)
+				;//zeng qiang xian shi an niu an xia
+			else if((cmd_ext[3]>>5) & 0x1== 1)
+				;//zeng qiang xian shi an niu tai qi
+
+			//bit 4
+			if((cmd_ext[3]>>4) & 0x1== 0)
+				;//ce ju fang shi an niu an xia
+			else if((cmd_ext[3]>>4) & 0x1== 1)
+				;//ce ju fang shi an niu tai qi
+
+			//bit 1
+			if((cmd_ext[3]>>1) & 0x1== 0)
+				;//bo dong kai guan dian ping 0
+			else if((cmd_ext[3]>>1) & 0x1== 1)
+				;//bo dong kai guan dian ping 1
+
+
+			//bit 0
+			if(cmd_ext[3] & 0x1== 0)
+				;//ji guang ce ju an niu an xia
+			else if(cmd_ext[3] & 0x1== 1)
+				;//ji guang ce ju an niu tai qi
+			
+		}
+		
+	}
+	else if(cmd_ext[0] == 0xA2)
+	{
+		//B4
+		if(cmd_ext[1] & 0xf== 0x0)
+			;//wu xiao
+		else if(cmd_ext[1] & 0xf== 0x1)
+			;//fang wei +
+		else if(cmd_ext[1] & 0xf== 0x2)
+			;//fang wei -
+		else if(cmd_ext[1] & 0xf== 0x3)
+			;//fu yang +
+		else if(cmd_ext[1] & 0xf== 0x4)
+			;//fu yang -
+		else if(cmd_ext[1] & 0xf== 0x5)
+			;//que ren
+		else if(cmd_ext[1] & 0xf== 0x6)
+			;//tui chu
+		else if(cmd_ext[1] & 0xf== 0x7)
+			;//jie suo
+		else if(cmd_ext[1] & 0xf== 0x8)
+			;//zi jian
+		else
+			;//wu xiao
+
+		
+	}
 	
 
+	//printf("cmd_ext = %s\n",cmd_ext);
 
 
-
-
-
-
-
-
-
-
-
+	//if(!memcmp(&cmd_ext[0],"00",sizeof(cmd_ext[0])))
+	{
+	}
 	
 	return ;
 }

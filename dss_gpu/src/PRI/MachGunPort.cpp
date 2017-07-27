@@ -23,6 +23,8 @@
 
 
 #include "MachGunPort.h"
+#include "msgDriv.h"
+
 
 #if 1
 #define COUNT_DIP_VELO 200
@@ -327,14 +329,17 @@ static int MachGunPORT_recvCfg(UartObj*pUartObj,int iLen)
 }
 int MachGunPORT_PhraseBye(unsigned char *buf)
 {
-#if 0
+
 	static double value=0.0;
 	BYTE* pRecv= buf;
 	int current_ms;
 	
-	if( !bMachineGunSensorOK()){
-		sendCommand(CMD_MACHINEGUN_SENSOR_OK);
+	//if( !bMachineGunSensorOK())
+	if(1)
+	{
+		MSGDRIV_send(CMD_MACHINEGUN_SENSOR_OK,0);
 	}
+#if 0
 	killSelfCheckMachGunAngleTimer();
 	startSelfCheckMachGunAngle_Timer();
 	value = (pRecv[2]<<8 | pRecv[3])/100.0;
@@ -402,9 +407,10 @@ void* MachGunPORT_recvTask(void* prm)
 		}
 
 		MachGunPORT_send(pUartObj->recvBuf, 5);
-		
-		MachGunPORT_PhraseBye(pUartObj->recvBuf);
-	#endif
+	#endif	
+		//MachGunPORT_PhraseBye(pUartObj->recvBuf);
+		MachGunPORT_PhraseBye(NULL);
+	
 	}
 	return NULL;
 }

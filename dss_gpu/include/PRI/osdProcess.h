@@ -520,10 +520,8 @@ void OSDCTRL_draw(Mat frame,OSDCTRL_Handle pCtrlObj);
 
 void OSDCTRL_sendSem(OSDCTRL_OBJ * pCtrlObj);
 void OSDCTRL_TskDrawOsd();
-
 void OSDCTRL_EnterCalibMode();
-
-
+void OSDCTRL_CheckResultsShow();
 
 
  

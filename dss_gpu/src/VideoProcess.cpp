@@ -236,7 +236,7 @@ int CVideoProcess::creat()
 
 	OnCreate();
 	
-
+	
 	return 0;
 }
 

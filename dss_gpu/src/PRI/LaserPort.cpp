@@ -320,20 +320,28 @@ BYTE LaserPORT_CheckSum(BYTE* buf){
 int LaserPORT_PhraseBye(BYTE* pRecv)
 {
 	int value;
-	value = pRecv[2]<<8 | pRecv[3];
-	if(9999 == value){
+	//value = pRecv[2]<<8 | pRecv[3];
+
+	value = 10;
+
+	if(9999 == value)
+	{
 		LaserDistance = -1;
 //		SendMessage(CMD_LASER_FAIL,LASERERR_NOECHO);
-	}else if(0 == value){
+	}
+	else if(0 == value)
+	{
 		LaserDistance = -1;
-//		SendMessage(CMD_LASER_FAIL,LASERERR_NOSAMPLE);//��ȡ��
-	}else{
+//		SendMessage(CMD_LASER_FAIL,LASERERR_NOSAMPLE);
+	}
+	else
+	{
 		LaserDistance = value;
-//		SendMessage(CMD_LASER_OK,value);//������ֵ
+//		SendMessage(CMD_LASER_OK,value);
 	}
 	
-//	LaserPORT_Ack();                  //���ȷ��
-	//TracePort �����ǰ�ֶ�
+//	LaserPORT_Ack();     
+
 	return 0;
 }
 
@@ -365,9 +373,10 @@ void * LaserPORT_recvTask(void* prm)
 			pUartObj->recvLen = 0;	
 			continue;
 		}
-		
-		LaserPORT_PhraseBye(pRecv);
-	#endif
+	#endif	
+		//LaserPORT_PhraseBye(pRecv);
+		LaserPORT_PhraseBye(NULL);
+	
 	}
 	
 	return NULL;

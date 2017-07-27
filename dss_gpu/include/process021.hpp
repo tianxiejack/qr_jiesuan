@@ -123,6 +123,7 @@ protected:
         static void onJoyStickOK(LPARAM lParam);
         static void onJoyStickErr(LPARAM lParam);
         static void onWeaponCtrlOK(LPARAM lParam);
+	 static void onWeaponCtrlErr(LPARAM lParam);
         static void onDipAngleSensorOK(LPARAM lParam);
         static void onDipAngleSensorERR(LPARAM lParam);
         static void onMachineGunSensorOK(LPARAM lParam);

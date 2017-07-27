@@ -37,7 +37,7 @@
 //#include "PVEMsgfunsTab.h"
 #include "PositionPort.h"
 //#include "byteParser_util.h"
-
+#include "msgDriv.h"
 
 extern volatile BOOL tskCapAndDispQuit;
 extern int AvtPortSend(BYTE* pSendBuf,int iLen);
@@ -280,13 +280,15 @@ BYTE PositionPORT_CheckSum(BYTE* buf)
 
 int PositionPORT_PhraseBye(BYTE* pRecv)
 {
-#if 0
-	short PlatformThetaX,PlatformThetaY,Temperature;//
 
-	if(!bDipAngleSensorOK())
+	short PlatformThetaX,PlatformThetaY,Temperature;
+
+	//if(!bDipAngleSensorOK())
+	if(1)
 	{
-		sendCommand(CMD_DIP_ANGLE_OK);
+		MSGDRIV_send(CMD_DIP_ANGLE_OK,0);
 	}
+#if 0
 	killSelfCheckDipAngleTimer();
 	startSelfCheckDipAngle_Timer();
 	
@@ -333,8 +335,10 @@ void * PositionPORT_recvTask(void* prm)
 		}
 		
 		PositionPORT_send(pUartObj->recvBuf, 8);
-		PositionPORT_PhraseBye(pRecv);
 	#endif
+		//PositionPORT_PhraseBye(pRecv);
+		PositionPORT_PhraseBye(NULL);
+	
 	}
 
 	return NULL;

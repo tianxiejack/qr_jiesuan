@@ -31,7 +31,10 @@ void inituartmessage();
 
 void* fdTest_open(void* prm);
 
-void processMessage(unsigned char* pData);
+void processMessage(char* pData);
+char valueToHexCh(const int value);
+int strToHex(char* ch,char* hex);
+
 
 
 #ifdef __cplusplus

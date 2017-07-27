@@ -336,7 +336,7 @@ void DrawjsCross(Mat frame,Line_Param_fb* lineparm)
 	
 	Osd_cvPoint start;
 	Osd_cvPoint end;
-	int flag = 1 ;  // 0 jiguang    1 ren
+	int flag = 0 ;  // 0 jiguang    1 ren
 	
 	if(flag)
 		offlen = 0;

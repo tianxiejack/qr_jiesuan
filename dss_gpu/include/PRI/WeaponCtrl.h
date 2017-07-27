@@ -65,6 +65,8 @@ BOOL isGrenadeDownLocked();
 BOOL isMachGunPosLocked();
 BOOL isGrenadePosLocked();
 
+
+
 void  updateBulletType(int);
 int getBulletType();
 Fov_Type getFovState();
@@ -82,6 +84,7 @@ char* getFulScrA0();
 float getpanoAngleV();
 float getpanoAngleH();
 
+void setJoyStickStat(BOOL stat);
 void setGrenadeInPositonFlag(void);
 void resetGrenadeInPositionFlag(void);
 

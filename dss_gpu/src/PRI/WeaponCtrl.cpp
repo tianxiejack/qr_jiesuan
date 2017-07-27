@@ -24,6 +24,8 @@
 #include "MachGunPort.h"
 #include "GrenadePort.h"
 #include "LaserPort.h"
+#include "statCtrl.h"
+#include "msgDriv.h"
 
 #define CAN_ID_PANEL (0x0002)
 #define CAN_ID_TURRET (0x02AC)
@@ -1439,10 +1441,10 @@ static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 {
 	unsigned char *buf = pUartObj->recvBuf; 
 	int stat;
-#if 0
-	if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
-		sendCommand(CMD_WEAPONCTRL_OK);
 
+	if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
+		MSGDRIV_send(CMD_WEAPONCTRL_OK,0);
+#if 0
 	stat = WeaponCtrlPORT_recv(pUartObj,1);
 	if(stat!=1)
 		return;
@@ -1501,9 +1503,11 @@ void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 }
 static void WeaponCtrlPORT_ParseTurret(UartObj*pUartObj)
 {
+
+	//if(!bPositionServoOK())
+	if(1)
+		MSGDRIV_send(CMD_POSITION_SERVO_OK,0);
 #if 0
-	if(!bPositionServoOK())
-		sendCommand(CMD_POSITION_SERVO_OK);
 	killSelfCheckPosServoTimer();
 	startSelfCheckPosServo_Timer();
 #endif
@@ -1514,9 +1518,11 @@ void WeaponCtrlPORT_ParseByteTurret(unsigned char *buf)
 }
 static void WeaponCtrlPORT_ParseMachGun(UartObj*pUartObj)
 {
+
+	//if(!bMachineGunServoOK())
+	if(1)
+		MSGDRIV_send(CMD_MACHINEGUN_SERVO_OK,0);
 #if 0
-	if(!bMachineGunServoOK())
-		sendCommand(CMD_MACHINEGUN_SERVO_OK);
 	killSelfCheckMachGunServoTimer();
 	startSelfCheckMachGunServo_Timer();
 #endif
@@ -1528,9 +1534,11 @@ void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf)
 
 static void WeaponCtrlPORT_ParseGrenade(UartObj*pUartObj)
 {
+
+	//if(!bGrenadeServoOK())
+	if(1)
+		MSGDRIV_send(CMD_GENERADE_SERVO_OK,0);
 #if 0
-	if(!bGrenadeServoOK())
-		sendCommand(CMD_GENERADE_SERVO_OK);
 	killSelfCheckGrenadeServoTimer();
 	startSelfCheckGrenadeServo_Timer();
 #endif

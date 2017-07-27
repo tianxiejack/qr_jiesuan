@@ -6,6 +6,7 @@ extern "C"{
 #endif
 //#include "sdkDef.h"
 #include "app_global.h"
+#include "app_status.h"
 #include <glut.h>
 #include "utilport.h"
 

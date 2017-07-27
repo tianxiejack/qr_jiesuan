@@ -14,9 +14,9 @@ PROJECTILE_TYPE gProjectileTypeBefore=PROJECTILE_BULLET;
 int BackColor=WHITECOLOR;
 DIS_MEASURE_TYPE gMeasureType=MEASURETYPE_LASER;
 static SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_SHORT;
-static bool isWeaponCtrlOK=FALSE,isPositionSensorOK=FALSE, isPositionServoOK=FALSE;
-static bool isJoyStickOK=FALSE,isDipAngleSensorOK=FALSE,isMachineGunSensorOK=FALSE;
-static bool isGrenadeSensorOK=FALSE,isGrenadeServoOK=FALSE,isMachineGunServoOK=FALSE;
+bool isWeaponCtrlOK=FALSE,isPositionSensorOK=FALSE, isPositionServoOK=FALSE;
+bool isJoyStickOK=FALSE,isDipAngleSensorOK=FALSE,isMachineGunSensorOK=FALSE;
+bool isGrenadeSensorOK=FALSE,isGrenadeServoOK=FALSE,isMachineGunServoOK=FALSE;
 static bool isVideoOK=FALSE;
 static bool isDetendClose=TRUE,isMaintPortOpen=TRUE;
 static bool FOVSHINE = FALSE;
@@ -57,6 +57,7 @@ bool isBootUpSelfCheck()
 
 bool bWeaponCtrlOK()
 {
+	isWeaponCtrlOK =1 ;
 	return isWeaponCtrlOK;
 }
 
@@ -106,6 +107,73 @@ bool isCalibrationZero()
 {
 	return STATE_CALIBRATION_ZERO == gLevel2CalibrationState;
 }
+
+bool bJoyStickOK()
+{
+	isJoyStickOK = 1;
+	return isJoyStickOK;
+}
+
+bool bDipAngleSensorOK()
+{
+	return isDipAngleSensorOK;
+}
+
+
+bool bPositionServoOK()
+{
+	isPositionServoOK = 1;
+	return isPositionServoOK;
+}
+
+bool bPositionSensorOK()
+{
+	return isPositionSensorOK ;
+}
+
+bool bGrenadeServoOK()
+{
+	isGrenadeServoOK = 1;
+	return isGrenadeServoOK;
+}
+
+bool bMachineGunServoOK()
+{
+	isMachineGunServoOK = 1;
+	return isMachineGunServoOK;
+}
+
+
+bool Is9stateOK()
+{
+	bool ret = isWeaponCtrlOK &&isJoyStickOK &&isPositionSensorOK &&isPositionServoOK \
+			&&isDipAngleSensorOK &&isMachineGunSensorOK &&isGrenadeSensorOK \
+			&&isGrenadeServoOK &&isMachineGunServoOK;
+
+	return ret;
+}
+
+bool bGrenadeSensorOK()
+{
+	return isGrenadeSensorOK;
+}
+
+bool isAllSensorOK()
+{
+	return isPositionSensorOK &&isDipAngleSensorOK &&isMachineGunSensorOK &&isGrenadeSensorOK;
+}
+
+bool isAllServoOK()
+{
+	return isPositionServoOK &&isGrenadeServoOK &&isMachineGunServoOK;
+}
+
+bool bMachineGunSensorOK()
+{
+	return isMachineGunSensorOK;
+}
+
+
 
 
 PROJECTILE_TYPE getProjectileType()

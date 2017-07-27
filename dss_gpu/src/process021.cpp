@@ -232,6 +232,8 @@ void CProcess021::OnCreate()
 	MSGAPI_initial();
 	//App_dxmain();
 
+	MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	
 	#if 1
 	CMD_EXT *pIStuts = &extInCtrl;
 
@@ -261,6 +263,7 @@ void CProcess021::OnCreate()
 	#endif
 
 };
+
 void CProcess021::OnDestroy(){};
 void CProcess021::OnInit(){};
 void CProcess021::OnConfig(){};
@@ -323,15 +326,16 @@ void CProcess021::process_osd(void *pPrm)
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
-	
-	if(isCalibrationMode())
-	{
+	//jiao zhun & ji jian --hide
+	if(isCalibrationMode() || isBootUpMode())
 		lineParam.frcolor = 0;
-	}
+
+	if(!isBootUpMode())
+		DrawjsCircle(frame,&lineParam);
 	
-	DrawjsCross(frame, &lineParam);
 	DrawjsRuler(frame,&lineParam);
-	DrawjsCircle(frame,&lineParam);
+	DrawjsCross(frame, &lineParam);
+	
 	
 
 	sThis->m_display.UpDateOsd(0);
@@ -1683,7 +1687,7 @@ printf("!!!!!!!key = %d\n",key);
 
 	if (key == 'h'|| key == 'H')
 	{
-		//interfaceflag = NORMAL_MODE;
+		MSGDRIV_send(CMD_BUTTON_AUTOCHECK, NULL);
 	}
 
 	if (key == 'j')
@@ -3095,7 +3099,6 @@ void CProcess021::MSGAPI_settrackBreakLock(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
  {
- 	return ;
  	if(!isBootUpMode())
 	{
 		if(isCalibrationMode()&&!isCalibrationMainMenu()){
@@ -3118,10 +3121,9 @@ void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
 		gLevel1Mode = MODE_BOOT_UP;
 	//	releaseServoContrl();
 	}
-
+	
 	//displayCheckResults();
-//	OSDCTRL_CheckResultsShow();
-
+	OSDCTRL_CheckResultsShow();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCHECK",__func__,__LINE__);
 	return ;
  }
@@ -3129,13 +3131,25 @@ void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
 
 void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BOOT_UP_CHECK_COMPLETE",__func__,__LINE__);
+ 	if(isBootUpMode())
+	{
+		gLevel2BootUpState = STATE_BOOT_UP_SELF_CHECK_FINISH;
+		// to do : update OSD to show result OK/abnormal;
+		if(Is9stateOK())
+			Posd[eSelfCheckResult] = ResultOsd[0];
+		OSDCTRL_ItemShow(eSelfCheckResult);
+	}
+	//ReadParamsFlash();//read data from flash
+	
+ 	//OSA_printf("%s,line:%d ... processCMD_BOOT_UP_CHECK_COMPLETE",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
  {
+
+ 	
  	OSA_printf("%s,line:%d ... processCMD_EXIT_SELF_CHECK",__func__,__LINE__);
 	return ;
  }
@@ -3171,14 +3185,25 @@ void CProcess021::processCMD_BUTTON_CALIBRATION(LPARAM lParam)
 
 void CProcess021::onPositionSensorOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onPositionSensorOK",__func__,__LINE__);
+	isPositionSensorOK = TRUE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+	       {
+	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	       }
+	}
+
+	//OSA_printf("%s,line:%d ... onPositionSensorOK",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::onPositionSensorERR(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onPositionSensorERR",__func__,__LINE__);
+ 	isPositionSensorOK = FALSE;
+	
+ 	//OSA_printf("%s,line:%d ... onPositionSensorERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3205,29 +3230,71 @@ void CProcess021::onJoyStickOK(LPARAM lParam)
 
 
 void CProcess021::onJoyStickErr(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... onJoyStickErr",__func__,__LINE__);
+ {	
+	isJoyStickOK = FALSE;
+	//setJoyStickStat(isJoyStickOK);
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		return;
+	}
+	// update area N 
+	//OSDCTRL_updateAreaN();
+
+ 	//OSA_printf("%s,line:%d ... onJoyStickErr",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::onWeaponCtrlOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onWeaponCtrlOK",__func__,__LINE__);
+ 	isWeaponCtrlOK = TRUE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+   		{
+   	   		MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+   		}
+		return;
+	}
+	//OSDCTRL_updateAreaN();
+ 	//OSA_printf("%s,line:%d ... onWeaponCtrlOK",__func__,__LINE__);
 	return ;
  }
+
+void CProcess021::onWeaponCtrlErr(LPARAM lParam)
+{
+	isWeaponCtrlOK = FALSE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		return;
+	}
+	// update area N 
+	//OSDCTRL_updateAreaN();
+	return ;
+}
 
 
 void CProcess021::onDipAngleSensorOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onDipAngleSensorOK",__func__,__LINE__);
+	isDipAngleSensorOK = TRUE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+	       {
+	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	       }
+	}
+
+	//OSA_printf("%s,line:%d ... onDipAngleSensorOK",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::onDipAngleSensorERR(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onDipAngleSensorERR",__func__,__LINE__);
+ 	isDipAngleSensorOK = FALSE;
+	
+	//OSA_printf("%s,line:%d ... onDipAngleSensorERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3237,7 +3304,16 @@ void CProcess021::onDipAngleSensorERR(LPARAM lParam)
 
 void CProcess021::onMachineGunSensorOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onMachineGunSensorOK",__func__,__LINE__);
+	isMachineGunSensorOK = TRUE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+	       {
+ 	  	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	       }
+	}
+
+	//OSA_printf("%s,line:%d ... onMachineGunSensorOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3245,7 +3321,8 @@ void CProcess021::onMachineGunSensorOK(LPARAM lParam)
 
 void CProcess021::onMachineGunSensorERR(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onMachineGunSensorERR",__func__,__LINE__);
+ 	isMachineGunSensorOK = FALSE;
+ 	//OSA_printf("%s,line:%d ... onMachineGunSensorERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3253,7 +3330,15 @@ void CProcess021::onMachineGunSensorERR(LPARAM lParam)
 
 void CProcess021::onMachineGunServoOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onMachineGunServoOK",__func__,__LINE__);
+	isMachineGunServoOK = TRUE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+	       {
+	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	       }
+	}
+	//OSA_printf("%s,line:%d ... onMachineGunServoOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3261,7 +3346,9 @@ void CProcess021::onMachineGunServoOK(LPARAM lParam)
 
 void CProcess021::onMachineGunServoERR(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onMachineGunServoERR",__func__,__LINE__);
+ 	isMachineGunServoOK = FALSE;
+	
+ 	//OSA_printf("%s,line:%d ... onMachineGunServoERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3269,7 +3356,16 @@ void CProcess021::onMachineGunServoERR(LPARAM lParam)
 
 void CProcess021::onPositionServoOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onPositionServoOK",__func__,__LINE__);
+ 	isPositionServoOK = TRUE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+	       {
+	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	       }
+	}
+	
+ 	//OSA_printf("%s,line:%d ... onPositionServoOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3277,7 +3373,9 @@ void CProcess021::onPositionServoOK(LPARAM lParam)
 
 void CProcess021::onPositionServoERR(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onPositionServoERR",__func__,__LINE__);
+ 	isPositionServoOK = FALSE;
+	
+ 	//OSA_printf("%s,line:%d ... onPositionServoERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3285,7 +3383,16 @@ void CProcess021::onPositionServoERR(LPARAM lParam)
 
 void CProcess021::onGrenadeSensorOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onGrenadeSensorOK",__func__,__LINE__);
+	isGrenadeSensorOK = TRUE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+	       {
+	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	       }
+	}
+ 	
+ 	//OSA_printf("%s,line:%d ... onGrenadeSensorOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3293,6 +3400,7 @@ void CProcess021::onGrenadeSensorOK(LPARAM lParam)
 
 void CProcess021::onGrenadeSensorERR(LPARAM lParam)
  {
+ 	isGrenadeSensorOK = FALSE;
  	OSA_printf("%s,line:%d ... onGrenadeSensorERR",__func__,__LINE__);
 	return ;
  }
@@ -3300,14 +3408,25 @@ void CProcess021::onGrenadeSensorERR(LPARAM lParam)
 
 void CProcess021::onGrenadeServoOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onGrenadeServoOK",__func__,__LINE__);
+	isGrenadeServoOK = TRUE;
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+	       {
+	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	       }
+	}
+	
+ 	//OSA_printf("%s,line:%d ... onGrenadeServoOK",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::onGrenadeServoERR(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onGrenadeServoERR",__func__,__LINE__);
+ 	isGrenadeServoOK = FALSE;
+	
+ 	//OSA_printf("%s,line:%d ... onGrenadeServoERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3450,7 +3569,9 @@ void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH1",__func__,__LINE__);
+
+ 	
+ 	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH1",__func__,__LINE__);
 	return ;
  }
 
@@ -3880,6 +4001,8 @@ void CProcess021::processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_AIM_LAND(LPARAM lParam)
  {
+
+		
  	Posd[eAimType] = AimOsd[0];
 	return ;
  }

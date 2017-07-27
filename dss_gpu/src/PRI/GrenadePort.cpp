@@ -25,6 +25,7 @@
 
 #include "app_global.h"
 #include "GrenadePort.h"
+#include "msgDriv.h"
 
 static GrenadePort_t GrenadeObj;
 static int ibInit=0;
@@ -126,10 +127,11 @@ static BOOL GrenadePORT_open()
 {
 #if 0
 	UartObj* pUartObj=&GrenadeObj.UartPort;
-	pUartObj->uartId=OpenUart(EUART_GRENADE_PORT,&uartParams,MAXUARTBUFLEN,512,EXTERNALHEAP);
+	//pUartObj->uartId=OpenUart(EUART_GRENADE_PORT,&uartParams,MAXUARTBUFLEN,512,EXTERNALHEAP);
 
-	if(pUartObj->uartId==-1){
-		CloseUart(EUART_GRENADE_PORT);
+	if(pUartObj->uartId==-1)
+	{
+		//CloseUart(EUART_GRENADE_PORT);
 		return FALSE;
 	}
 #endif
@@ -248,29 +250,31 @@ static int GrenadePORT_recvCfg(UartObj*pUartObj,int iLen)
 }
 int GrenadePORT_PhraseByte(BYTE* pRecv)
 {
-#if 0
+
 	double value;
-	if(!bGrenadeSensorOK()){
-		sendCommand(CMD_GENERADE_SENSOR_OK);
+	//if(!bGrenadeSensorOK())
+	if(1)
+	{
+		MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
 	}
+#if 0	
 	killSelfCheckGrenadeAngleTimer();
 	startSelfCheckGrenadeAngle_Timer();
 	value = (pRecv[2]<<8 | pRecv[3])/100.0;
 	
 	if(0xFF == pRecv[4]){
-		value = -value;//�������Ƕ�Ϊ��
+		value = -value;
 	}else if(0x00 == pRecv[4]){
-		//�������Ƕ�Ϊ��
+		
 	}else{
-		//����쳣
+		
 		return -1;
 	}
 	if(value < -5 || value > 75)
 		return -1;
 	
 	GrenadeAngle = value;
-	//д��osd��ֵ�洢�ռ�
-	//TracePort �����ǰ�ֶ�
+	
 #endif
 	return 0;
 }
@@ -280,7 +284,7 @@ int GrenadePORT_PhraseByte(BYTE* pRecv)
 void* GrenadePORT_recvTask(void * prm)
 {
 
-//	UartObj* pUartObj=&GrenadeObj.UartPort;
+	//UartObj* pUartObj=&GrenadeObj.UartPort;
 //	BYTE* pRecv= pUartObj->recvBuf;
 
 //	while (!pSysCtrlObj->tskArry[TSK_RECVTRACEMSG]) 
@@ -301,9 +305,10 @@ void* GrenadePORT_recvTask(void * prm)
 		}
 		
 		GrenadePORT_send(pUartObj->recvBuf, 5);
-		
-		GrenadePORT_PhraseByte(pRecv);
-	#endif
+	#endif	
+		//GrenadePORT_PhraseByte(pRecv);
+		GrenadePORT_PhraseByte(NULL);
+	
 	}
 	return NULL;
 }

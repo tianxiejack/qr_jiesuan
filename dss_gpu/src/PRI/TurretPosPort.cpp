@@ -1,5 +1,5 @@
 #include "TurretPosPort.h"
-
+#include "msgDriv.h"
 
 /*
 	������λ�Ƕȴ���������
@@ -327,10 +327,13 @@ void TurretPosPORT_PhraseBye(unsigned char *pRecv)
 {
 	static double value=0.0;
 	int current_ms;
-#if 0
-	if(!bPositionSensorOK()){
-		sendCommand(CMD_POSITION_SENSOR_OK);
+
+	//if(!bPositionSensorOK())
+	if (1)
+	{
+		MSGDRIV_send(CMD_POSITION_SENSOR_OK,0);
 	}
+#if 0
 	killSelfCheckPosAngleTimer();
 	startSelfCheckPosAngle_Timer();
 	value = ((pRecv[2]<<8)|pRecv[3])*0.01;//;
@@ -395,11 +398,10 @@ void * TurretPosPORT_recvTask(void * prm)
 		}
 		
 		TurretPosPORT_send(pUartObj->recvBuf, 5);
-		
-		TurretPosPORT_PhraseBye(pRecv);
-
-		pUartObj->recvLen = 0;	
-	#endif
+	#endif	
+		//TurretPosPORT_PhraseBye(pRecv);
+	TurretPosPORT_PhraseBye(NULL);
+	//	pUartObj->recvLen = 0;	
 	}
 	return NULL;
 }
