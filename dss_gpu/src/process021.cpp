@@ -33,6 +33,8 @@ using namespace cv;
 extern OSDCTRL_Handle pCtrlObj;
 OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 
+int n=0,ShinId=eCalibGeneral_XPole;
+
 UInt32 interfaceflag;
 	
 CProcess021 * CProcess021::sThis = NULL;
@@ -321,8 +323,24 @@ void CProcess021::process_osd(void *pPrm)
 	//erase
 	if(!flag)
 		memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
+	
+
+	if(SHINE)
+	{
+		n++;
+		if(n%3 == 0)
+		{
+			Osd_shinItem(ShinId);//��˸
+			n = 0;
+		}
+	}
+
+
+
 	if(flag)
+	{
 		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
+	}
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
@@ -1631,25 +1649,7 @@ printf("!!!!!!!key = %d\n",key);
 		MSGDRIV_send(MSGID_EXT_INPUT_ENENHAN,NULL);
 	}
 
-	if (key == 'o' || key == 'O')
-	{
-		if(pIStuts->ImgBlobDetect[pIStuts->SensorStat])
-			pIStuts->ImgBlobDetect[pIStuts->SensorStat] = eImgAlg_Disable;
-		else
-			pIStuts->ImgBlobDetect[pIStuts->SensorStat] = eImgAlg_Enable;
-		//msgdriv_event(MSGID_EXT_INPUT_ENBDT, NULL);
-		MSGDRIV_send(MSGID_EXT_INPUT_ENBDT,NULL);
-	}
 
-	if (key == 't' || key == 'T')
-	{
-		if(pIStuts->ImgVideoTrans[pIStuts->SensorStat])
-			pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Disable;
-		else
-			pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Enable;
-		//msgdriv_event(MSGID_EXT_INPUT_RST_THETA, NULL);
-		MSGDRIV_send(MSGID_EXT_INPUT_RST_THETA,NULL);
-	}
 	
 	if (key == 'f' || key == 'F')
 	{
@@ -1662,13 +1662,7 @@ printf("!!!!!!!key = %d\n",key);
 		MSGDRIV_send(MSGID_EXT_INPUT_ENFREZZ,NULL);
 	}
 	
-	if (key == 'p'|| key == 'P')
-	{
-		
-		pIStuts->PicpPosStat=(pIStuts->PicpPosStat+1)%4;
-		//msgdriv_event(MSGID_EXT_INPUT_PICPCROP, NULL);
-		MSGDRIV_send(MSGID_EXT_INPUT_PICPCROP,NULL);
-	}
+	
 	
 	if (key == 'g')
 	{
@@ -1683,12 +1677,17 @@ printf("!!!!!!!key = %d\n",key);
 		//msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
 		//MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
 	}
-	
 
-	if (key == 'h'|| key == 'H')
+	if (key == 'h')
 	{
 		MSGDRIV_send(CMD_BUTTON_AUTOCHECK, NULL);
 	}
+
+	if (key == 'H')
+	{
+		MSGDRIV_send(CMD_BUTTON_ENTER, NULL);
+	}
+		
 
 	if (key == 'j')
 	{
@@ -1698,6 +1697,47 @@ printf("!!!!!!!key = %d\n",key);
 	if (key == 'J')
 	{
 		MSGDRIV_send(CMD_MODE_AIM_SKY,NULL);
+	}
+
+		
+	if (key == 'L')
+		MSGDRIV_send(CMD_EXIT_SELF_CHECK,NULL);
+
+	if (key == 'o' || key == 'O')
+	{
+		if(pIStuts->ImgBlobDetect[pIStuts->SensorStat])
+			pIStuts->ImgBlobDetect[pIStuts->SensorStat] = eImgAlg_Disable;
+		else
+			pIStuts->ImgBlobDetect[pIStuts->SensorStat] = eImgAlg_Enable;
+		//msgdriv_event(MSGID_EXT_INPUT_ENBDT, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_ENBDT,NULL);
+	}
+
+
+	if (key == 'p'|| key == 'P')
+	{
+		
+		pIStuts->PicpPosStat=(pIStuts->PicpPosStat+1)%4;
+		//msgdriv_event(MSGID_EXT_INPUT_PICPCROP, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_PICPCROP,NULL);
+	}
+
+		
+	if (key == 't' || key == 'T')
+	{
+		if(pIStuts->ImgVideoTrans[pIStuts->SensorStat])
+			pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Disable;
+		else
+			pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Enable;
+		//msgdriv_event(MSGID_EXT_INPUT_RST_THETA, NULL);
+		MSGDRIV_send(MSGID_EXT_INPUT_RST_THETA,NULL);
+	}
+	
+	
+
+	if (key == 'w')
+	{
+		MSGDRIV_send(CMD_BUTTON_QUIT, NULL);
 	}
 	
 	if (key == 'z'|| key == 'Z')
@@ -1709,6 +1749,7 @@ printf("!!!!!!!key = %d\n",key);
 		MSGDRIV_send(MSGID_EXT_INPUT_ENZOOM,NULL);
 	}
 
+
 	if(key == 101)//up
 	{
 		MSGDRIV_send(CMD_BUTTON_UP, NULL);
@@ -1716,17 +1757,17 @@ printf("!!!!!!!key = %d\n",key);
 
 	if(key == 103)//down
 	{
-
-	}
+		MSGDRIV_send(CMD_BUTTON_DOWN, NULL);
+	}		
 
 	if(key == 100)//left
 	{
-
+		MSGDRIV_send(CMD_BUTTON_LEFT, NULL);
 	}
 
 	if(key == 102)//right
 	{
-
+		MSGDRIV_send(CMD_BUTTON_RIGHT, NULL);
 	}
 	
 }
@@ -2395,7 +2436,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_OK,		          onMachineGunServoOK,	0); // ��ǹ�ŷ���
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_ERR,		          onMachineGunServoERR,	0); // ��ǹ�ŷ���
     
-    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_OK,			   onPositionServoOK,	0); // ��λ�ŷ���
+    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_OK,			   	   onPositionServoOK,	0); // ��λ�ŷ���
     MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_ERR,	     	          onPositionServoERR,	0); // ��λ�ŷ���
     
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SENSOR_OK,		          onGrenadeSensorOK,	0); // 35�񴫸�����
@@ -2403,8 +2444,8 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_OK,		          onGrenadeServoOK,	0); // 35���ŷ���
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_ERR,		          onGrenadeServoERR,	0); // 35���ŷ���
 
-    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE,				processCMD_BUTTON_BATTLE,	0); // �л�Ϊս��ģʽ
-    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_QUIT,				processCMD_BUTTON_QUIT,	0); // �˳�����
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE,				processCMD_BUTTON_BATTLE,	0); // qie huan wei zhan dou mo shi
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_QUIT,				processCMD_BUTTON_QUIT,	0); //tui chu an jian
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,			processCMD_BUTTON_UNLOCK,	0); // �����
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UP,					processCMD_BUTTON_UP,	0); // ���ϰ���
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_DOWN,				processCMD_BUTTON_DOWN,	0); // ���°���
@@ -3099,20 +3140,22 @@ void CProcess021::MSGAPI_settrackBreakLock(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
  {
+#if 1
  	if(!isBootUpMode())
 	{
-		if(isCalibrationMode()&&!isCalibrationMainMenu()){
+		if(isCalibrationMode()&&!isCalibrationMainMenu())
+		{
 			if(isCalibrationZero())
 			{
-				//saveZeroParam();
+				;//saveZeroParam();
 			}
 			else if(isCalibrationGeneral())
 			{
-				//saveGeneralParam();
+				;//saveGeneralParam();
 			}
 			else if(isCalibrationWeather())
 			{
-				//saveWeatherParam();
+				;//saveWeatherParam();
 			}		
 			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
 		//	OSDCTRL_NoShine();
@@ -3121,8 +3164,7 @@ void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
 		gLevel1Mode = MODE_BOOT_UP;
 	//	releaseServoContrl();
 	}
-	
-	//displayCheckResults();
+#endif	
 	OSDCTRL_CheckResultsShow();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCHECK",__func__,__LINE__);
 	return ;
@@ -3148,8 +3190,28 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
 
 void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
  {
+	gLevel1Mode = gLevel1LastMode;
+	//update OSD elements.
 
- 	
+	if(isBattleMode())
+	{
+		OSDCTRL_EnterBattleMode();
+	}
+	else if(isCalibrationMode())
+	{
+		OSDCTRL_EnterCalibMode();
+	}
+	//OSDCTRL_updateAreaN();
+
+	if(bUnlock)
+	{
+		bUnlock = !bUnlock;
+		Posd[eDynamicZone] = DynamicOsd[0];
+		OSDCTRL_ItemShow(eDynamicZone);
+	}
+
+
+
  	OSA_printf("%s,line:%d ... processCMD_EXIT_SELF_CHECK",__func__,__LINE__);
 	return ;
  }
@@ -3456,6 +3518,83 @@ void CProcess021::processCMD_BUTTON_BATTLE(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
  {
+	if(isBootUpMode()&& isBootUpSelfCheckFinished())
+	{
+		processCMD_EXIT_SELF_CHECK(0);
+	}
+	else if(!isValidProjectileType())
+	{
+		processCMD_BULLET_SWITCH1(0);
+	}
+	else if(isCalibrationMode())
+	{
+		if(isCalibrationMainMenu())
+		{
+			return;
+		}
+		else if(isCalibrationZero()||isCalibrationWeather()||isCalibrationGeneral()||isCalibrationGenPram()||isCalibrationHorizen()||isCalibrationLaser())
+		{
+			if(isCalibrationZero())
+			{
+				//saveZeroParam();
+			}
+			else if(isCalibrationGeneral())
+			{
+				//saveGeneralParam();
+			}
+			else if(isCalibrationWeather())
+			{
+				//saveWeatherParam();
+			}
+			else if(isCalibrationGenPram())
+			{
+				switch(gLevel3CalibrationState)
+				{
+					case Menu_FireView:
+						//saveFireViewPram();
+						break;
+					case Menu_FireCtrl:
+						//saveFireCtrlPram();
+						break;
+					case Menu_ServoX:
+						//saveServoXPram();
+						break;
+					case Menu_ServoY:
+						//saveServoYPram();
+						break;
+					default:
+						break;
+				}
+			}
+			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+			// update OSDdisplay
+			OSDCTRL_CalibMenuShow();
+			Posd[eGunType] = GunOsd[getBulletType()-1];
+		}
+		else if(isCalibrationSave())
+		{
+		printf("a@@@@@@@@@@@@@aaaaaaaaaaaa\n");
+			//todo: read flash to mem
+			//wait for add the function to read from the file
+			//ReadParamsFlash();
+			processCMD_EXIT_SELF_CHECK(0);
+		}
+		SHINE = FALSE;
+		OSDCTRL_ItemHide(ShinId);
+		ShinId=0;
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&&isBattleReady())
+	{
+		enterLevel3CalculatorIdle();
+		OSDCTRL_BattleShow();
+		//AVTCTRL_setAquire();
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoReady())
+	{
+		gLevel3CalculatorState = Auto_Idle;
+		OSDCTRL_BattleShow();
+	}
+
  	OSA_printf("%s,line:%d ... processCMD_BUTTON_QUIT",__func__,__LINE__);
 	return ;
  }
@@ -3513,6 +3652,8 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		else if(isCalibrationSave())
 		{
 			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+			Posd[eSaveYesNo] = SaveYesNoOsd[1];
+			OSDCTRL_NoShine();
 			// update OSDdisplay
 			OSDCTRL_CalibMenuShow();
 			moveUpXposition();
@@ -3534,7 +3675,60 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_DOWN",__func__,__LINE__);
+	if(isCalibrationMode())
+	{
+		if(isCalibrationMainMenu())
+		{
+			moveDownXPosition();
+		}else if(isCalibrationZero())
+		{
+			if(isGrenadeGas())
+				return ;
+			//moveCrossDown();
+		}else if(isCalibrationWeather())
+		{
+			//decreaseDigitOrSymbolZero();
+		}else if(isCalibrationGeneral())
+		{
+			//decreaseDigitOrSymbolGeneral();
+		}else if(isCalibrationGenPram()){
+			switch(gLevel3CalibrationState){
+				case Menu_FireView:
+					//decreaseFireViewPram();
+					break;
+				case Menu_FireCtrl:
+					//decreaseFireCtrlPram();
+					break;
+				case Menu_ServoX:
+					//decreaseServoXPram();
+					break;
+				case Menu_ServoY:
+					//decreaseServoYPram();
+					break;
+				default:
+					break;
+				}
+		}
+		else if(isCalibrationSave())
+		{
+			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+			Posd[eSaveYesNo] = SaveYesNoOsd[1];
+			OSDCTRL_NoShine();
+			// update OSDdisplay
+			OSDCTRL_CalibMenuShow();
+			moveDownXPosition();
+		}
+	}
+	else if(isBattleMode())
+	{
+		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
+		{
+			//decreaseMeasureDis();
+			//loadFiringTable_Enter();
+		}
+	}
+
+	//OSA_printf("%s,line:%d ... processCMD_BUTTON_DOWN",__func__,__LINE__);
 	return ;
  }
 
@@ -3548,16 +3742,150 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
  {
+	if(isCalibrationMode())
+	{
+		if(isXatSave())
+		{
+			Posd[eSaveYesNo] = SaveYesNoOsd[0];
+			processCMD_CALIBRATION_SWITCH_TO_SAVE(0);	
+		}
+	}
+
  	OSA_printf("%s,line:%d ... processCMD_BUTTON_RIGHT",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_ENTER",__func__,__LINE__);
-	return ;
- }
+{
+
+	//if(!ValidateGunType())
+		//return;
+
+	if(isCalibrationMode())
+	{
+		if(isCalibrationMainMenu())
+		{
+			
+			int cmdId;//,i;
+			// assign cmdId according to XPosition
+			cmdId = CMD_CALIBRATION_SWITCH_TO_WEATHER + getXPosition();
+			//if((1 == getXPosition())&&(Posd[eCalibMenu_Zero] == CalibZeroOsd[2]))
+			//{
+			//	return ;
+			//}
+
+			//MSGDRIV_send(cmdId,0);//msg driv bug,cann't send the second msg
+			switch(cmdId)
+			{
+				case CMD_CALIBRATION_SWITCH_TO_WEATHER :
+					printf("\n****processCMD_CALIBRATION_SWITCH_TO_WEATHER\n");
+					processCMD_CALIBRATION_SWITCH_TO_WEATHER(0);
+					break;
+
+				case CMD_CALIBRATION_SWITCH_TO_GENERAL:
+					printf("\n****processCMD_CALIBRATION_SWITCH_TO_GENERAL\n");
+					processCMD_CALIBRATION_SWITCH_TO_GENERAL(0);
+					break;
+
+				case CMD_CALIBRATION_SWITCH_TO_GENPRAM:
+					printf("\n****processCMD_CALIBRATION_SWITCH_TO_GENPRAM\n");
+					processCMD_CALIBRATION_SWITCH_TO_GENPRAM(0);
+					break;
+
+				default:
+					break;
+
+				
+			}
+
+
+				
+		}
+		else if(isCalibrationZero()||isCalibrationWeather()||isCalibrationGeneral()
+		||isCalibrationGenPram()||isCalibrationHorizen()||isCalibrationLaser())
+		{
+			if(isCalibrationZero())
+			{
+				//saveZeroParam();
+				//udateMenuItem_Zero_General(getProjectileType());
+			}
+			else if(isCalibrationGeneral())
+			{
+				//saveGeneralParam();
+				//udateMenuItem_Zero_General(getProjectileType());
+			}
+			else if(isCalibrationWeather())
+			{
+				//saveWeatherParam();
+			}
+			else if(0)//(isCalibrationGenPram())
+			{
+				switch(gLevel3CalibrationState)
+				{
+					case Menu_FireView:
+						//saveFireViewPram();
+						break;
+					case Menu_FireCtrl:
+						//saveFireCtrlPram();
+						break;
+					case Menu_ServoX:
+						//saveServoXPram();
+						break;
+					case Menu_ServoY:
+						//saveServoYPram();
+						break;
+					default:
+						break;
+				}
+			}
+			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+				OSDCTRL_updateMainMenu(gProjectileType);
+			// update OSDdisplay
+			OSDCTRL_CalibMenuShow();
+			Posd[eGunType] = GunOsd[getBulletType()-1];
+		}
+		else if(isCalibrationSave())
+		{
+			if(isAtSaveYes())
+			{
+				//todo: write data to file
+				//add the function that write to the file
+				OSDCTRL_ItemShow(eCalibMenu_SaveOK);
+				//OSDCTRL_ItemShow(eSaveYesNo);
+			}
+			else
+			{
+				//todo: read flash to mem
+				//ReadParamsFlash();
+				//OSDCTRL_ItemHide(eSaveYesNo);
+			}
+			OSDCTRL_NoShine();
+		}
+	}
+	else if(isBattleMode())
+	{
+		if(MEASURETYPE_MANUAL == gMeasureType)
+		{
+			if(SHINE &&(eMeasureDis == ShinId)){
+				OSDCTRL_NoShine();
+				isfixingMeasure = FALSE;
+				if(0 == DistanceManual)
+				{
+					Posd[eDynamicZone] = DynamicOsd[6];
+					OSDCTRL_ItemShow(eDynamicZone);
+					//startDynamicTimer();
+				}
+				else if(0)//(isBeyondDistance()/*!isMachineGun()&&(DistanceManual>365)*/)
+				{
+					Posd[eDynamicZone] = DynamicOsd[5];
+					OSDCTRL_ItemShow(eDynamicZone);
+					//startDynamicTimer();
+				}
+			}
+		}
+	}
+}
 
 
 void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
@@ -3657,7 +3985,14 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 
 void CProcess021::processCMD_CALIBRATION_SWITCH_TO_SAVE(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_SAVE",__func__,__LINE__);
+	if(isCalibrationMode())
+	{
+		gLevel2CalibrationState = STATE_CALIBRATION_SAVE;
+		//update OSDdisplay
+		OSDCTRL_EnterCalibMode();
+	}
+
+ 	//OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_SAVE",__func__,__LINE__);
 	return ;
  }
 
@@ -3671,14 +4006,25 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_ZERO(LPARAM lParam)
 
 void CProcess021::processCMD_CALIBRATION_SWITCH_TO_WEATHER(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_WEATHER",__func__,__LINE__);
+ 	if(isCalibrationMode())
+	{
+	printf("000000@@@@@@@@@@@@@@@\n");
+		gLevel2CalibrationState = STATE_CALIBRATION_WEATHER;
+		//update OSDdisplay
+		initilWeatherParam();
+		OSDCTRL_ItemShine(eCalibWeather_TepPole);
+		OSDCTRL_EnterCalibMode();
+
+	}
+	printf("abcdef@@@@@@@@@@@@@@@\n");	
+ 	//OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_WEATHER",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENERAL(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_GENERAL",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_GENERAL",__func__,__LINE__);
 	return ;
  }
 
@@ -4016,4 +4362,5 @@ void CProcess021::processCMD_MODE_AIM_SKY(LPARAM lParam)
 
 
  #endif
+
 

@@ -39,6 +39,9 @@
 //#include "byteParser_util.h"
 #include "msgDriv.h"
 
+#define abs(a) (((a)>0)?(a):(0-(a)))
+
+
 extern volatile BOOL tskCapAndDispQuit;
 extern int AvtPortSend(BYTE* pSendBuf,int iLen);
 
@@ -276,7 +279,6 @@ BYTE PositionPORT_CheckSum(BYTE* buf)
 }
 
 
-#define abs(a) (((a)>0)?(a):(0-(a)))
 
 int PositionPORT_PhraseBye(BYTE* pRecv)
 {

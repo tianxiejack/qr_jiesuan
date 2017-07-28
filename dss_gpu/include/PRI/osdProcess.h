@@ -522,8 +522,14 @@ void OSDCTRL_sendSem(OSDCTRL_OBJ * pCtrlObj);
 void OSDCTRL_TskDrawOsd();
 void OSDCTRL_EnterCalibMode();
 void OSDCTRL_CheckResultsShow();
+void OSDCTRL_ItemShine(int Id);
+void OSDCTRL_NoShine();
+void Osd_shinItem(int id);
 
 
+
+
+extern WeatherItem gWeatherTable;
  
 #ifdef __cplusplus
 }

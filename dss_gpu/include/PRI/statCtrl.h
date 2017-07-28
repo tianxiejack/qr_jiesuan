@@ -135,23 +135,26 @@ bool bMachineGunSensorOK();
 bool bGrenadeSensorOK();
 bool bGrenadeServoOK();
 bool bMachineGunServoOK();
-
-
-
-
+bool isBootUpSelfCheckFinished();
+bool isValidProjectileType();
+bool isStatBattleAuto();
+bool isAutoReady();
+bool isBattleReady();
+void enterLevel3CalculatorIdle();
+bool isAtSaveYes();
 
 
 PROJECTILE_TYPE getProjectileType();
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
-
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState;
-
-extern Level_three_state gLevel3CalibrationState;
+extern Level_three_state gLevel3CalibrationState,gLevel3CalculatorState;
 extern DIS_MEASURE_TYPE gMeasureType;
-
 extern bool isfixingMeasure,isJoyStickOK,isDipAngleSensorOK,isMachineGunSensorOK,isGrenadeSensorOK;	
 extern bool isWeaponCtrlOK,isPositionSensorOK,isGrenadeServoOK,isMachineGunServoOK,isPositionServoOK;
+extern bool bUnlock;
+extern PROJECTILE_TYPE gProjectileType;
+
 
 
 #ifdef __cplusplus

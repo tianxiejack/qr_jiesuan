@@ -130,10 +130,10 @@ char *Posd[OSD_TEXT_SIZE]={NULL};
 char CalibGeneralOsd[3][8];
 int General[14]={0,0,0,0,0,0,0,0,0,0,0};
 int Weather[10]={1,0,4,0,1,0,1,3,2,5};
-int Pressure=101325,DistanceManual=0,Temparature=15;//������� ѹ�� ����
+int Pressure=101325,DistanceManual=0,Temparature=15;//xiang shu  | zuo biao | ya li | ju li
 int DisValue[4]={0,0,0,0};
 double AngleGun=0.0, AngleGrenade=0.0,PositionX=0.0,PositionY=0.0;//ǹ�ڵĶ���Ƕ���Ϣ �¶� �����ˮƽ�͸����Ƕ�ֵ
-int n=0,ShinId=eCalibGeneral_XPole;
+//int n=0,ShinId=eCalibGeneral_XPole;
 unsigned char CalibGenPram_VFLD[48]={0};
 int CCD_Big[2]={1200000,900000},CCD_Small[2]={430000,330000},IR_Big[2]={11600000,11200000};
 unsigned char TimeValue[8]={0};
@@ -222,18 +222,18 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibZero_AngleGrenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
 	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
 
-	{eCalibWeather_Tep,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		100,	0,	{0}},
-	{eCalibWeather_Pre,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_TepPole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	516+LOFFSET,		100,	0,	{0}},
-	{eCalibWeather_TepVal1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	527+LOFFSET,		100,	0,	{0}},
-	{eCalibWeather_TepVal2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	538+LOFFSET,		100,	0,	{0}},
-	{eCalibWeather_PreVal1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	516+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	527+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	538+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	549+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	571+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	582+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_Tep,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		100,	0,	{0}},
+	{eCalibWeather_Pre,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_TepPole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		100,	0,	{0}},
+	{eCalibWeather_TepVal1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	480+LOFFSET,		100,	0,	{0}},
+	{eCalibWeather_TepVal2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	495+LOFFSET,		100,	0,	{0}},
+	{eCalibWeather_PreVal1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	481+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	492+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	503+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	514+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	525+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	536+LOFFSET,		135,	0,	{0}},
 
 	{eCalibGeneral_Dis,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		150,	0,	{0}},
 	{eCalibGeneral_X,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		185,	0,	{0}},
@@ -469,59 +469,59 @@ static void OSDCTRL_OsdInitial()
 	sprintf(MeasureTypeOsd[4],"ECNL");//ECNL
 	sprintf(MeasureTypeOsd[5],"SMNL");//SMNL
 
-	sprintf(GunOsd[0],"%c%c",200,216);
-	sprintf(GunOsd[1],"%c%c",223,224);
-	sprintf(GunOsd[2],"%c%c",189,176);
-	sprintf(GunOsd[3],"%c%c%c%c?",223,224,216,193);
-	sprintf(GunOsd[4],"%c%c%c%c?",189,176,216,193);
+	sprintf(GunOsd[0],"%c%c",200,216);// ji qiang
+	sprintf(GunOsd[1],"%c%c",223,224);// sha shang
+	sprintf(GunOsd[2],"%c%c",189,176);//fang bao
+	sprintf(GunOsd[3],"%c%c%c%c?",223,224,216,193);//sha shang qiang guan
+	sprintf(GunOsd[4],"%c%c%c%c?",189,176,216,193);//fang bao qiang guan
 //	sprintf(GunOsd[3],"%c%c?",223,224);//ɱ��?
 //	sprintf(GunOsd[4],"%c%c?",189,176);//����?
 
 
-	sprintf(ShotOsd[0],"%c",188);//�� ��
-	sprintf(ShotOsd[1],"%c",210);//��
+	sprintf(ShotOsd[0],"%c",188);//duan 	liu dan
+	sprintf(ShotOsd[1],"%c",210);//lian
 
-	sprintf(ShotGunOsd[0],"%c",171);//�� ��ǹ
-	sprintf(ShotGunOsd[1],"%c",210);//��
+	sprintf(ShotGunOsd[0],"%c",171);//DAN 	JI QIANG
+	sprintf(ShotGunOsd[1],"%c",210);//LIAN
 	
 	sprintf(FovTypeOsd[0],"%c",187);//big
 	sprintf(FovTypeOsd[1],"%c",241);//little
 	
-	sprintf(SuperOsd[0],"%c%c%c",235,216,236);//��ǹ��
-	sprintf(SuperOsd[1],"%c%c%c",235,218,228);//��ǿ��
-	sprintf(SuperOsd[2],"%c%c%c",235,209,239);//����λ
-	sprintf(SuperOsd[3],"%c%c%c",252,218,208);//��ǿ��
-	sprintf(SuperOsd[4],"%c%c%c",252,218,194);//��ǿ��
-	sprintf(SuperOsd[5],"%c%c%c",158,159,208);//����
-	sprintf(SuperOsd[6],"%c%c%c",158,159,194);//�����
+	sprintf(SuperOsd[0],"%c%c%c",235,216,236);//TIAO QIANG TA
+	sprintf(SuperOsd[1],"%c%c%c",235,218,228);//TIAO QIANG SHENG
+	sprintf(SuperOsd[2],"%c%c%c",235,209,239);//TIAO LING WEI
+	sprintf(SuperOsd[3],"%c%c%c",252,218,208);//TIAO QIANG KAI
+	sprintf(SuperOsd[4],"%c%c%c",252,218,194);//TIAO QIANG GUAN
+	sprintf(SuperOsd[5],"%c%c%c",158,159,208);//WEN XIANG KAI
+	sprintf(SuperOsd[6],"%c%c%c",158,159,194);//WEN XIANG GUAN
 	
 	
-	sprintf(DynamicOsd[0],"%c%c%c%c",221,185,205,229);//��������
-	sprintf(DynamicOsd[1],"%c%c%c%c",209,239,205,229);//��λ����
-	sprintf(DynamicOsd[2],"%c%c%c%c",179,202,245,183);//����쳣
-	sprintf(DynamicOsd[3],"%c%c%c%c",179,231,188,232);//���ٶ�ʱ
-	sprintf(DynamicOsd[4],"%c%c%c%c",235,236,205,229);//��������
-	sprintf(DynamicOsd[5],"%c%c%c%c",179,202,195,248);//����Զ
-	sprintf(DynamicOsd[6],"%c%c%c%c",209,239,203,184);//��λ���
-//	sprintf(DynamicOsd[7],"%c%c%c%c",163,164,166,167);//Ŀ��ʧ��
-	sprintf(DynamicOsd[8],"%c%c%c%c",163,164,165,166);//Ŀ�궪ʧ
+	sprintf(DynamicOsd[0],"%c%c%c%c",221,185,205,229);//QI DONG JIE SUO
+	sprintf(DynamicOsd[1],"%c%c%c%c",209,239,205,229);//LING WEI JIE SUO
+	sprintf(DynamicOsd[2],"%c%c%c%c",179,202,245,183);//CE JU YI CHANG
+	sprintf(DynamicOsd[3],"%c%c%c%c",179,231,188,232);//CE SU DUAN SHI
+	sprintf(DynamicOsd[4],"%c%c%c%c",235,236,205,229);//TIAO TA JIE SUO
+	sprintf(DynamicOsd[5],"%c%c%c%c",179,202,195,248);//CE JU GUO YUAN
+	sprintf(DynamicOsd[6],"%c%c%c%c",209,239,203,184);//LING WEI JIAN CHA
+//	sprintf(DynamicOsd[7],"%c%c%c%c",163,164,166,167);//MU BIAO SHI BAI
+	sprintf(DynamicOsd[8],"%c%c%c%c",163,164,165,166);//MU BIAO DIU SHI
 
 	sprintf(ResultOsd[0],"%c%c",254,183);//zheng chang
 	sprintf(ResultOsd[1],"%c%c",245,183);//yi chang
-	sprintf(OpenCloseOsd[0],"%c",208);//��
-	sprintf(OpenCloseOsd[1],"%c",194);//��
+	sprintf(OpenCloseOsd[0],"%c",208);//OEPN
+	sprintf(OpenCloseOsd[1],"%c",194);//CLOSE
 
-	sprintf(CalibZeroOsd[0],"%c%c-58%c ",197,209,200);//У��-5.8��
-	sprintf(CalibZeroOsd[1],"%c%c-35%c ",197,209,223);//У��-35ɱ
-	sprintf(CalibZeroOsd[2],"%c%c-35%c ",197,209,211);//У��-35��
+	sprintf(CalibZeroOsd[0],"%c%c-58%c ",197,209,200);//JIAO LIN  5.8 JI QIANG
+	sprintf(CalibZeroOsd[1],"%c%c-35%c ",197,209,223);//JIAO LIN  35 SHA
+	sprintf(CalibZeroOsd[2],"%c%c-35%c ",197,209,211);//JIAO LIN  35 LIU
 
-	sprintf(CalibGeneralOsd[0],"%c%c-%c%c ",253,243,200,216);//����-��ǹ
-	sprintf(CalibGeneralOsd[1],"%c%c-35%c ",253,243,223);//����-35ɱ
-	sprintf(CalibGeneralOsd[2],"%c%c-35%c ",253,243,211);//����-35��
+	sprintf(CalibGeneralOsd[0],"%c%c-%c%c ",253,243,200,216);//ZHONG XIU	 JI QIANG
+	sprintf(CalibGeneralOsd[1],"%c%c-35%c ",253,243,223);//ZHOGN XIU 	35 SHA
+	sprintf(CalibGeneralOsd[2],"%c%c-35%c ",253,243,211);//ZHONG XIU  	35 LIU
 
-	sprintf(ErrorOsd[17],"%c%c%c%c",240,196,213,208);//ά���ſ�
-	sprintf(ErrorOsd[18],"%c%c%c%c",214,255,185,194);//��ֹ����
-
+	sprintf(ErrorOsd[17],"%c%c%c%c",240,196,213,208);//WEI HU MEN KAI
+	sprintf(ErrorOsd[18],"%c%c%c%c",214,255,185,194);//PAO ZHI DONG GUAN
+ 
 	sprintf(LaserOsd[0],"%c",145);
 	sprintf(LaserOsd[1],"%c",146);
 	
@@ -545,7 +545,7 @@ static void OSDCTRL_OsdInitial()
 	Posd[eCalibMenu_General] = CalibGeneralOsd[0];
 	Posd[eLaserState] = LaserOsd[0];
 	Posd[eShotType] = ShotOsd[0];
-	Posd[eSaveYesNo] = SaveYesNoOsd[0];
+	Posd[eSaveYesNo] = SaveYesNoOsd[1];
 	Posd[eCorrectionTip] = AngleCorrectOsd[0];
 	Posd[eEnhance] = EnhanceOsd[0];
 	Posd[eMeasureType] = MeasureTypeOsd[0];
@@ -583,6 +583,8 @@ OSDCTRL_Handle OSDCTRL_create()//(MuxPotrTran * pMuxPortTran,HANDLE hAvtDev,HAND
 	}
 	
 	OSDCTRL_OsdInitial();
+	
+	pCtrlObj->uInit=1;
 
 	return pCtrlObj;
 }
@@ -670,7 +672,7 @@ void OSDCTRL_CalibMenuShow()
 
 void OSDCTRL_CalibSaveShow()
 {
-#if 0
+#if 1
 	OSDCTRL_CalibMenuShow();
 	OSDCTRL_ItemShow(eSaveYesNo);
 	OSDCTRL_ItemShine(eSaveYesNo);
@@ -747,7 +749,7 @@ void OSDCTRL_CalibLaserShow()
 }
 void OSDCTRL_CalibWeatherShow()
 {
-#if 0
+#if 1
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibWeather_Tep; i<=eCalibWeather_PreVal4; i++){
@@ -863,9 +865,7 @@ void OSDCTRL_CalibGenPramShow()
 void OSDCTRL_EnterCalibMode()
 {
 	if(isCalibrationMainMenu())
-	{
 		OSDCTRL_CalibMenuShow();
-	}
 	else if(isCalibrationGeneral())
 		OSDCTRL_CalibGeneralShow();
 	else if(isCalibrationWeather())
@@ -934,7 +934,8 @@ void OSDCTRL_CheckResultsShow()
 #if 1
 	int i;
 	OSDCTRL_AllHide();
-	for(i=eSelfCheckState1; i<=eSelfCheckState9; i++){
+	for(i=eSelfCheckState1; i<=eSelfCheckState9; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
 #endif
@@ -942,7 +943,6 @@ void OSDCTRL_CheckResultsShow()
 
 void OSDCTRL_ItemShow(LPARAM lParam)
 {
-	//OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )pOsdCtrlObj;
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
@@ -1034,7 +1034,6 @@ void OSDCTRL_ConnectMenuHide()
 
 void OSDCTRL_ItemHide(LPARAM lParam)
 {
-	//OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )pOsdCtrlObj;
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
@@ -1047,8 +1046,7 @@ void OSDCTRL_ItemHide(LPARAM lParam)
 
 bool OSDCTRL_IsOsdDisplay(LPARAM lParam)
 {
-#if 0
-	OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )pOsdCtrlObj;
+#if 1
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
@@ -1287,6 +1285,7 @@ void OSDCTRL_lpfnTimer(void* cbParam)
  */
 void OSDCTRL_draw(Mat frame,OSDCTRL_Handle pCtrlObj)
 {
+#if 0
 	int i=0;
 	static int gun=0;//,type=0;
 	//volatile FONT_OBJ *pFont = &g_Font;
@@ -1347,6 +1346,7 @@ void OSDCTRL_draw(Mat frame,OSDCTRL_Handle pCtrlObj)
 		//	osd_draw_text(Mat frame, void * prm);
 		}
 	}
+#endif
 }
 
 /*
@@ -1634,10 +1634,10 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%c%+03.0f%c%+03.0f",200,AngleGun,211,AngleGrenade); 	//��Y
 			break;
 		case eCalibWeather_Tep:
-			sprintf(pStr,"%c%c:        %c",219,238,174); 	
+			sprintf(pStr,"%c%c:  %c",219,238,174); 	
 			break;
 		case eCalibWeather_Pre:
-			sprintf(pStr,"%c%c:       KPa",219,247); 	
+			sprintf(pStr,"%c%c:   KPa",219,247); 	
 			break;
 		case eCalibWeather_TepPole:
 			if(Weather[0] > 0)

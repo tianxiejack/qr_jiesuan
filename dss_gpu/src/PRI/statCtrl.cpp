@@ -32,8 +32,7 @@ static double AimOffsetX=0.000,AimOffsetY=0.000;
 static bool gTrackingMode=FALSE;
 //servo control related
 static bool bServoAavailable = FALSE;
-static bool bUnlock = TRUE;
-
+bool bUnlock = TRUE;
 
 bool isBattleMode()
 {
@@ -108,6 +107,11 @@ bool isCalibrationZero()
 	return STATE_CALIBRATION_ZERO == gLevel2CalibrationState;
 }
 
+bool isAtSaveYes()
+{
+	return Posd[eSaveYesNo] == SaveYesNoOsd[0];
+}
+
 bool bJoyStickOK()
 {
 	isJoyStickOK = 1;
@@ -143,6 +147,36 @@ bool bMachineGunServoOK()
 	return isMachineGunServoOK;
 }
 
+void enterLevel3CalculatorIdle()
+{
+	gLevel3CalculatorState = Battle_Idle;
+//	releaseServoContrl();
+}
+
+bool isBootUpSelfCheckFinished()
+{
+	return STATE_BOOT_UP_SELF_CHECK_FINISH == gLevel2BootUpState;
+}
+
+bool isAutoReady()
+{
+	return Auto_Ready == gLevel3CalculatorState;
+}
+
+bool isBattleReady()
+{
+	return Battle_Ready == gLevel3CalculatorState;
+}
+
+bool isStatBattleAuto()
+{
+	return STATE_BATTLE_AUTO == gLevel2BattleState;
+}
+
+bool isValidProjectileType()
+{
+	return (gProjectileType <= PROJECTILE_GRENADE_GAS);
+}
 
 bool Is9stateOK()
 {

@@ -17,6 +17,7 @@
 #define LPARAM long
 
 
+
 class CProcess021 : public CVideoProcess
 {
 	UTC_RECT_float rcTrackBak;

@@ -548,6 +548,7 @@ int getBulletType()
 	int i = BIT6_4(BYTE1(FrameBuf1));
 	return (i > 0)? i:1 ;
 #endif
+	return 1;
 }
 
 void CANSend_cbFxn(void* cbParam)
