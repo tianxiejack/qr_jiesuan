@@ -146,6 +146,7 @@ protected:
         static void processCMD_BUTTON_RIGHT(LPARAM lParam);
         static void processCMD_BUTTON_ENTER(LPARAM lParam);
         static void processCMD_BULLET_SWITCH0(LPARAM lParam);
+	 static void EnterCMD_BULLET_SWITCH1(LPARAM lParam);
         static void processCMD_BULLET_SWITCH1(LPARAM lParam);
         static void processCMD_BULLET_SWITCH2(LPARAM lParam);
         static void processCMD_BULLET_SWITCH3(LPARAM lParam);

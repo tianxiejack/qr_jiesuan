@@ -381,8 +381,7 @@ enum {
 
 
 
-typedef struct _MuxPotrTran MuxPotrTran;
-typedef int(*MuxPortCallBackFun)(BYTE *pData,UINT uLen,int context);
+
 
 struct _MuxPotrTran
 {
@@ -417,12 +416,6 @@ typedef struct _osd_sprit_line{
 	//AVT_SpriteData LineObj;
 }OSDLine_Obj,*OSDLine_Handle;
 
-
-typedef struct _modleCtrl{
-	MuxPotrTran * pMux;
-	int (*pCtrlSend)(BYTE *pData,UINT uLen,int context);
-	int (*pCtrlRecv)(BYTE *pData,UINT uLen,int context);
-}ModleCtrl_t;
 
 
 typedef struct _osd_ctrl_obj{
@@ -525,8 +518,8 @@ void OSDCTRL_CheckResultsShow();
 void OSDCTRL_ItemShine(int Id);
 void OSDCTRL_NoShine();
 void Osd_shinItem(int id);
-
-
+int getCrossX();
+int getCrossY();
 
 
 extern WeatherItem gWeatherTable;

@@ -164,41 +164,74 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 	bool FontFind = 0;
 	int add=0;
 
+	int number=0;
+	char *tmpt;
+	int lenctl=0;
 
 	fontWidth 	= 	OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814;
 	fontHeight 	= 	OSDUTIL_FONT_FLR_DEFAULT_HEIGHT_0814;
 	fontData         =	FONT_LIBRARY_0814;
 	if(fontWidth%8!=0)
-		{
+	{
 			add=1;
-		}
+	}
 	else
-		{
+	{
 			add=0;
-		}
+	}
 	for(i=0; i<fontHeight; i++)
 	{
 		pin = frame.ptr<uchar>(starty+i);
+		lenctl = 0;
+		
 		for(k=0; k<numchar; k++)
 		{
 			index = (UInt32)pString[k];
 			//index=index-' ';
 			//index=128+index;
 			//printf("draw str:%c [%d]\n", pString[k], index);
-		
-					pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
-					for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
+			if(index < 177)
+			{
+				//number ++;
+				lenctl += fontWidth>>1;
+			}	
+			
+					if(1)
 					{
-						offset 	= j-startx-k*fontWidth;
-						data 	= *(pChar + offset/8);
-						data 	<<= (offset%8);
+						pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
+						for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
+						{
+							
 
-						pixcolor		= (data&0x80)?frcolor:bgcolor;
-						*(pin+j*4)		= pixcolor & 0xFF;
-						*(pin+j*4+1)	= (pixcolor >> 8) & 0xFF;
-						*(pin+j*4+2)	= (pixcolor >> 16) & 0xFF;
-						*(pin+j*4+3)	= (pixcolor >> 24) & 0xFF;
+							
+							offset 	= j-startx-k*fontWidth;
+							data 	= *(pChar + offset/8);
+							data 	<<= (offset%8);
+
+							pixcolor		= (data&0x80)?frcolor:bgcolor;
+							*(pin+j*4-lenctl)	= pixcolor & 0xFF;
+							*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
+							*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
+							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
+						}
 					}
+					
+
+					#if 0
+						pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
+						for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
+						{
+							offset 	= j-startx-k*fontWidth;
+							data 	= *(pChar + offset/8);
+							data 	<<= (offset%8);
+
+							pixcolor		= (data&0x80)?frcolor:bgcolor;
+							*(pin+j*4)		= pixcolor & 0xFF;
+							*(pin+j*4+1)	= (pixcolor >> 8) & 0xFF;
+							*(pin+j*4+2)	= (pixcolor >> 16) & 0xFF;
+							*(pin+j*4+3)	= (pixcolor >> 24) & 0xFF;
+						}
+					#endif
 		
 		}
 	}

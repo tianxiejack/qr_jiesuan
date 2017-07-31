@@ -101,7 +101,7 @@ typedef enum _Derection{
 }Derection_Type;
 
 typedef enum {
-	PROJECTILE_BULLET,
+	PROJECTILE_BULLET = 0x00,
 	PROJECTILE_GRENADE_KILL,
 	PROJECTILE_GRENADE_GAS,
 	QUESTION_GRENADE_KILL,
@@ -142,6 +142,12 @@ bool isAutoReady();
 bool isBattleReady();
 void enterLevel3CalculatorIdle();
 bool isAtSaveYes();
+bool isMachineGun();
+bool isGrenadeKill();
+bool isBlackColor();
+bool isStatBattleAlert();
+
+
 
 
 PROJECTILE_TYPE getProjectileType();
@@ -153,7 +159,7 @@ extern DIS_MEASURE_TYPE gMeasureType;
 extern bool isfixingMeasure,isJoyStickOK,isDipAngleSensorOK,isMachineGunSensorOK,isGrenadeSensorOK;	
 extern bool isWeaponCtrlOK,isPositionSensorOK,isGrenadeServoOK,isMachineGunServoOK,isPositionServoOK;
 extern bool bUnlock;
-extern PROJECTILE_TYPE gProjectileType;
+extern PROJECTILE_TYPE gProjectileType,gProjectileTypeBefore;
 
 
 

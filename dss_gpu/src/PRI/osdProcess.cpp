@@ -189,7 +189,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibMenu_Laser,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		275,	0,	{0}},
 	{eCalibMenu_Child,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		205,	0,	{0}},
 	
-	{eCursorX,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,		170,	0,	{0}},
+	{eCursorX,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	190+LOFFSET,		170,	0,	{0}},
 	{eSaveYesNo,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		170,	0,	{0}},
 	{eCalibMenu_SaveOK,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,		65,	0,	{0}},
 	{eSelfCheckResult,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		65,	0,	{0}},
@@ -215,9 +215,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eSelfCheckState8,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		345-24,	0,	{0}},
 	{eSelfCheckState9,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		380-27,	0,	{0}},
 #endif
-	{eCalibZero_D,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	280+LOFFSET,		490,	0,	{0}},
-	{eCalibZero_Fx,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		490,	0,	{0}},
-	{eCalibZero_Fy,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	540+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_D,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	220+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Fx,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Fy,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	550+LOFFSET,		490,	0,	{0}},
 	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		150,	0,	{0}},
 	{eCalibZero_AngleGrenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
 	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
@@ -663,6 +663,10 @@ void OSDCTRL_CalibMenuShow()
 	}
 	
 	Posd[eWorkMode] = WorkOsd[wCalibration];
+	//if(gProjectileType > PROJECTILE_GRENADE_GAS)
+	//	gProjectileType =(PROJECTILE_TYPE)(gProjectileType - 2);
+
+	//OSDCTRL_updateMainMenu((int)gProjectileType);
 	//OSDCTRL_NoShine();
 	//OSDCTRL_AlgSelect();
 	//printf("%s:%d		getProjectileType() = %d\n",__func__,__LINE__,getProjectileType());
@@ -752,7 +756,7 @@ void OSDCTRL_CalibWeatherShow()
 #if 1
 	int i;
 	OSDCTRL_AllHide();
-	for(i=eCalibWeather_Tep; i<=eCalibWeather_PreVal4; i++){
+	for(i=eCalibWeather_Tep; i<=eCalibWeather_PreVal6; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibWeather];
@@ -772,21 +776,25 @@ void OSDCTRL_CalibGeneralShow()
 
 void OSDCTRL_CalibZeroShow()
 {
-#if 0
+#if 1
 	int i;
 	OSDCTRL_AllHide();
-	for(i=eCalibZero_D; i<=eCalibZero_Fy; i++){
+	for(i=eCalibZero_D; i<=eCalibZero_Fy; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibZero];
 	if(isGrenadeKill()/**Posd[eGunType] == GunOsd[2]**/)
 	{
-		for(i=eCalibZero_AngleGun; i<=eCalibZero_Angle; i++){
+		for(i=eCalibZero_AngleGun; i<=eCalibZero_Angle; i++)
+		{
 			OSDCTRL_ItemShow(i);
 		}
-	}else
+	}
+	else
 	{
-		for(i=eCalibZero_AngleGun; i<=eCalibZero_Angle; i++){
+		for(i=eCalibZero_AngleGun; i<=eCalibZero_Angle; i++)
+		{
 			OSDCTRL_ItemHide(i);
 		}
 	}
@@ -864,6 +872,7 @@ void OSDCTRL_CalibGenPramShow()
 
 void OSDCTRL_EnterCalibMode()
 {
+printf("!!!!!!!!!!!!\n");
 	if(isCalibrationMainMenu())
 		OSDCTRL_CalibMenuShow();
 	else if(isCalibrationGeneral())
@@ -946,8 +955,8 @@ void OSDCTRL_ItemShow(LPARAM lParam)
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
-	//if(pCtrlObj->uInit==0)
-	//	return;
+	if(pCtrlObj->uInit==0)
+		return;
 
 	pTextObj[lParam].osdState = eOsd_Disp;
 }
@@ -1610,15 +1619,15 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%c%c%c%c-35%c:			%s",191,246,226,192,211,Posd[eSelfCheckState9]);//); 	//�����ŷ�-35��:��-�쳣
 			break;	
 		case eCalibZero_D:				
-			sprintf(pStr,"D:%04d",500);				//����:500
+			sprintf(pStr,"D:%04d",500);				//ju li:500
 			break;
 		case eCalibZero_Fx:
-			//sprintf(pStr,"Fx:%+05d",getCrossX()); 	//Fx
-			sprintf(pStr,"Fx:%+05d",1.1); 	
+			sprintf(pStr,"Fx:%+05d",getCrossX()); 	//Fx
+			//sprintf(pStr,"Fx:%+05d",1.1); 	
 			break;
 		case eCalibZero_Fy:
-			//sprintf(pStr,"Fy:%+05d",getCrossY()); 	//Fy
-			sprintf(pStr,"Fy:%+05d",1.1);
+			sprintf(pStr,"Fy:%+05d",getCrossY()); 	//Fy
+			//sprintf(pStr,"Fy:%+05d",1.1);
 			break;
 		case eCalibZero_AngleGun:
 			value = getMachGunAngleAbs();
@@ -1637,7 +1646,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%c%c:  %c",219,238,174); 	
 			break;
 		case eCalibWeather_Pre:
-			sprintf(pStr,"%c%c:   KPa",219,247); 	
+			sprintf(pStr,"%c%c:    KPa",219,247); 	
 			break;
 		case eCalibWeather_TepPole:
 			if(Weather[0] > 0)

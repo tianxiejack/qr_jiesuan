@@ -54,6 +54,38 @@ bool isBootUpSelfCheck()
 	return STATE_BOOT_UP_SELF_CHECK == gLevel2BootUpState;
 }
 
+bool isBlackColor()
+{
+	return BLACKCOLOR==BackColor;
+}
+
+bool isStatBattleAuto()
+{
+	return STATE_BATTLE_AUTO == gLevel2BattleState;
+}
+
+bool isStatBattleAlert()
+{
+	return STATE_BATTLE_ALERT == gLevel2BattleState;
+}
+
+bool isGrenadeGas()
+{
+	return PROJECTILE_GRENADE_GAS == getProjectileType();
+}
+
+
+bool isGrenadeKill()
+{
+	return PROJECTILE_GRENADE_KILL == getProjectileType();
+}
+
+
+bool isMachineGun()
+{
+	return PROJECTILE_BULLET == getProjectileType();
+}
+
 bool bWeaponCtrlOK()
 {
 	isWeaponCtrlOK =1 ;
@@ -168,11 +200,6 @@ bool isBattleReady()
 	return Battle_Ready == gLevel3CalculatorState;
 }
 
-bool isStatBattleAuto()
-{
-	return STATE_BATTLE_AUTO == gLevel2BattleState;
-}
-
 bool isValidProjectileType()
 {
 	return (gProjectileType <= PROJECTILE_GRENADE_GAS);
@@ -220,9 +247,6 @@ PROJECTILE_TYPE getProjectileType()
 		return gProjectileType;	
 }
 
-bool isGrenadeGas()
-{
-	return PROJECTILE_GRENADE_GAS == getProjectileType();
-}
+
 
 

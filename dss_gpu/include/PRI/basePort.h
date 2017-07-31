@@ -12,6 +12,50 @@ extern "C"{
 
 #define MAXUARTBUFLEN 512
 
+typedef struct _MuxPotrTran MuxPotrTran;
+typedef int(*MuxPortCallBackFun)(BYTE *pData,UINT uLen,int context);
+typedef struct _modleCtrl{
+	MuxPotrTran * pMux;
+	int (*pCtrlSend)(BYTE *pData,UINT uLen,int context);
+	int (*pCtrlRecv)(BYTE *pData,UINT uLen,int context);
+}ModleCtrl_t;
+
+typedef struct _sdk_rect {
+	unsigned short	left;
+	unsigned short	top;
+	unsigned short	right;
+	unsigned short	bottom;
+} RECT, *PRECT;
+
+typedef struct _brush{
+	int cornerXLen;			// DEFAULT_FOV_XCONERLEN;
+	int cornerYLen;			// DEFAULT_FOV_YCONERLEN;
+	int boresightLen;		// DEFAULT_FOV_BORESIGHTLEN;
+	int midLen;				// DEFAULT_FOV_MIDLEN;
+	int lineBord;			// DEFAULT_WIDTH_PIXLS;
+	int lineColor;
+	RECT rect;
+}CBrush;
+
+
+typedef struct _fov_ctrl
+{
+	ModleCtrl_t		Interface;	
+	unsigned int		segId;
+	unsigned int    	bFovDraw;
+
+	unsigned int		fovScal;
+	unsigned int		fovSens;			/*   *0___*4___1*	*/
+	unsigned int		fovElem;			/*   |	  |	    |	*/	
+
+	unsigned short	fovX;				/*	7*	 =*=  *5	*/
+	unsigned short	fovY;				/*   |	  |	    |	*/
+	unsigned short  	fovW;				/*   *3___*6___2*	*/
+	unsigned short  	fovH;				
+	RECT 			fovRect;						
+	CBrush 			fovBrush;
+}CFOV,FOVCTRL_OBJ,*FOVCTRL_Handle;
+
 
 
 typedef struct _im{
