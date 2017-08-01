@@ -215,11 +215,11 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eSelfCheckState8,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		345-24,	0,	{0}},
 	{eSelfCheckState9,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		380-27,	0,	{0}},
 #endif
-	{eCalibZero_D,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	220+LOFFSET,		490,	0,	{0}},
-	{eCalibZero_Fx,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		490,	0,	{0}},
-	{eCalibZero_Fy,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	550+LOFFSET,		490,	0,	{0}},
-	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		150,	0,	{0}},
-	{eCalibZero_AngleGrenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_D,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	220+LOFFSET,		520,	0,	{0}},
+	{eCalibZero_Fx,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		520,	0,	{0}},
+	{eCalibZero_Fy,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	550+LOFFSET,		520,	0,	{0}},
+	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		250,	0,	{0}},
+	{eCalibZero_AngleGrenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		285,	0,	{0}},
 	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
 
 	{eCalibWeather_Tep,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		100,	0,	{0}},
@@ -784,18 +784,19 @@ void OSDCTRL_CalibZeroShow()
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibZero];
-	if(isGrenadeKill()/**Posd[eGunType] == GunOsd[2]**/)
+	if(isMachineGun())
 	{
 		for(i=eCalibZero_AngleGun; i<=eCalibZero_Angle; i++)
 		{
-			OSDCTRL_ItemShow(i);
+			OSDCTRL_ItemHide(i);
 		}
 	}
 	else
 	{
 		for(i=eCalibZero_AngleGun; i<=eCalibZero_Angle; i++)
 		{
-			OSDCTRL_ItemHide(i);
+
+			OSDCTRL_ItemShow(i);
 		}
 	}
 	OSDCTRL_NoShine();
@@ -872,7 +873,6 @@ void OSDCTRL_CalibGenPramShow()
 
 void OSDCTRL_EnterCalibMode()
 {
-printf("!!!!!!!!!!!!\n");
 	if(isCalibrationMainMenu())
 		OSDCTRL_CalibMenuShow();
 	else if(isCalibrationGeneral())

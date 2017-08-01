@@ -39,8 +39,8 @@
 #define WPARAM UINT
 #define LPARAM long
 #define HANDLE void*
-#define min(a,b) (((a) < (b)) ? (a) : (b))
-#define max(a,b) (((a) > (b)) ? (a) : (b))
+//#define min(a,b) 		(((a) < (b)) ? (a) : (b))
+//#define max(a,b) 		(((a) > (b)) ? (a) : (b))
 
 /** \brief Floor a integer value. */
 #define SDK_VsysUtils_floor(val, align)  (((val) / (align)) * (align))

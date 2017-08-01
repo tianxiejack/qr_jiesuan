@@ -27,8 +27,9 @@ typedef struct _ZeroCorrectionItem{
 
 
 
-
-
+void moveCrossRight();
+void moveCrossLeft();
+void moveCrossDown();
 void moveCrossUp();
 void moveUpXposition();
 void moveDownXPosition();

@@ -32,7 +32,22 @@ int getCrossX()
 
 int getCrossY()
 {
-	return pFovCtrlObj->fovY<<1;
+	//return pFovCtrlObj->fovY<<1;
+	return pFovCtrlObj->fovY;
+}
+
+
+
+void moveCrossDown()
+{
+	CFOV* cthis = pFovCtrlObj;
+	int borX,borY;
+	borX = cthis->fovX;
+	//borY = cthis->fovY<<1;
+	borY = cthis->fovY;
+	borY = (borY + STEPLEN + 576)%576;
+	if(borY < 576)
+		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
 
 
@@ -41,11 +56,35 @@ void moveCrossUp()
 	CFOV* cthis = pFovCtrlObj;
 	int borX,borY;
 	borX = cthis->fovX;
-	borY = cthis->fovY<<1;
-	borY = (borY- STEPLEN + 576)%576;
-
-	FOVCTRL_updateFovRect(cthis,0,0,borX,(borY)>>1);
+	//borY = cthis->fovY<<1;
+	borY = cthis->fovY;
+	borY = (borY - STEPLEN + 576)%576;
+	if(borY > 0)
+		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 	//todo: 移动方位伺服
+}
+
+
+void moveCrossLeft()
+{
+	CFOV* cthis = pFovCtrlObj;
+	int borX,borY;
+	borX = cthis->fovX;
+	borY = cthis->fovY;
+	borX = (borX - STEPLEN + 704)%704;
+	if(borX > 0)
+		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
+}
+
+void moveCrossRight()
+{
+	CFOV* cthis = pFovCtrlObj;
+	int borX,borY;
+	borX = cthis->fovX;
+	borY = cthis->fovY;
+	borX = (borX + STEPLEN + 704)%704;
+	if(borY < 576)
+		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
 
 

@@ -43,7 +43,7 @@ typedef struct _fov_ctrl
 	ModleCtrl_t		Interface;	
 	unsigned int		segId;
 	unsigned int    	bFovDraw;
-
+	
 	unsigned int		fovScal;
 	unsigned int		fovSens;			/*   *0___*4___1*	*/
 	unsigned int		fovElem;			/*   |	  |	    |	*/	
@@ -51,7 +51,12 @@ typedef struct _fov_ctrl
 	unsigned short	fovX;				/*	7*	 =*=  *5	*/
 	unsigned short	fovY;				/*   |	  |	    |	*/
 	unsigned short  	fovW;				/*   *3___*6___2*	*/
-	unsigned short  	fovH;				
+	unsigned short  	fovH;	
+	int 				crosswidth;
+	int 				crossheight;
+	int				theta;
+	int 				frcolor;
+	
 	RECT 			fovRect;						
 	CBrush 			fovBrush;
 }CFOV,FOVCTRL_OBJ,*FOVCTRL_Handle;

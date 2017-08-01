@@ -18,7 +18,7 @@
 #include "app_osdgrp.h"
 using namespace cv;
 
-
+#include "basePort.h"
 
 typedef struct
 {
@@ -27,6 +27,7 @@ typedef struct
 
 }Osd_cvPoint;
 
+void DrawjsCross(Mat frame,CFOV * fovOsdCtrl);
 void process_cvosd(Mat frame,void *pPrm);
 void Drawcvcross(Mat frame,Line_Param_fb *lineparm);
  CvScalar  GetcvColour(int colour);
@@ -34,9 +35,10 @@ void Drawcvcross(Mat frame,Line_Param_fb *lineparm);
  void DrawcvDashliner(Mat frame,int startx,int starty,int endx,int endy,int linelength,int dashlength,int frcolor);
  void drawdashlinepri(Mat frame,int startx,int starty,int endx,int endy,int linelength,int dashlength,int colour);
  void DrawcvLine(Mat frame,Osd_cvPoint *start,Osd_cvPoint *end,int frcolor,int linew);
-void DrawjsCross(Mat frame, Line_Param_fb * lineparm);
 void DrawjsRuler(Mat frame,Line_Param_fb* lineparm);
-void DrawjsCircle(Mat frame,Line_Param_fb* lineparm);
+void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsOblinqueLine(Mat frame,Line_Param_fb* lineparm);
+
+void DrawjsXLine(Mat frame,int value);
 
 #endif /* OSD_CV_H_ */

@@ -1,6 +1,9 @@
 #include "cFov.h"
 #include "statCtrl.h"
+#include "osd_cv.h"
 
+#define xmin(a,b) 		(((a) < (b)) ? (a) : (b))
+#define xmax(a,b) 		(((a) > (b)) ? (a) : (b))
 
 static float g_FovRat[2][3]=
 {
@@ -31,6 +34,11 @@ FOVCTRL_Handle FOVCTRL_create( UINT Sens,UINT fovElem,UINT x,UINT y)
 		pCtrlObj->fovBrush.boresightLen	= DEFAULT_FOV_BORESIGHTLEN;
 		pCtrlObj->fovBrush.midLen		= DEFAULT_FOV_MIDLEN;
 		pCtrlObj->fovBrush.lineBord		= DEFAULT_WIDTH_PIXLS;
+
+		pCtrlObj->crosswidth			=60;
+		pCtrlObj->crossheight			=60;
+		pCtrlObj->frcolor				=2;
+		
 		FOVCTRL_updateFovRect(pCtrlObj,Sens,fovElem,x,y);
 	}
 
@@ -40,6 +48,7 @@ FOVCTRL_Handle FOVCTRL_create( UINT Sens,UINT fovElem,UINT x,UINT y)
 
 void FOVCTRL_updateFovRect(HANDLE hFov,char Sens,char fovElem,short x,short y)
 {
+#if 1
 	CFOV * cthis  = (CFOV * )hFov;
 	PRECT  pRect = NULL;
 	float ftmp =1.0;
@@ -61,15 +70,15 @@ void FOVCTRL_updateFovRect(HANDLE hFov,char Sens,char fovElem,short x,short y)
 	pRect = &cthis->fovRect;
 	
 	pRect->left		= x-(fovWidth>>1);
-	pRect->right	= x+(fovWidth>>1);
+	pRect->right		= x+(fovWidth>>1);
 	pRect->top		= y-(fovHeight>>1);
 	pRect->bottom	= y+(fovHeight>>1);
 
-	cthis->fovBrush.rect.top	= max(1,(int)((y<<1)-fovHeight*ftmp));
-	cthis->fovBrush.rect.bottom = min(575,(int)((y<<1)+fovHeight*ftmp));
-	cthis->fovBrush.rect.left	= max(1,(int)(x-(fovWidth>>1)*ftmp));
-	cthis->fovBrush.rect.right	= min(703,(int)(x+(fovWidth>>1)*ftmp));
-	
+	cthis->fovBrush.rect.top	= xmax(1,(int)((y<<1)-fovHeight*ftmp));
+	cthis->fovBrush.rect.bottom = xmin(575,(int)((y<<1)+fovHeight*ftmp));
+	cthis->fovBrush.rect.left	= xmax(1,(int)(x-(fovWidth>>1)*ftmp));
+	cthis->fovBrush.rect.right	= xmin(703,(int)(x+(fovWidth>>1)*ftmp));
+#endif	
 }
 
 
@@ -93,8 +102,9 @@ void FOVCTRL_updateFovScal(HANDLE hFov,int curScal)
 
 
 
-void FOVCTRL_draw(HANDLE hFov)
+void FOVCTRL_draw(Mat frame,HANDLE hFov)
 {
+#if 1
 	CFOV * cthis = (	CFOV *)hFov;
 	static int shin=0;
 	SDK_ASSERT(cthis!=NULL);
@@ -105,22 +115,39 @@ void FOVCTRL_draw(HANDLE hFov)
 	else
 		cthis->fovBrush.lineColor = WHITECOLOR;
 	
-	//FOVCTRL_drawAngleFrame(hFov,pImg,getGrenadeAngle()-getMachGunAngle());	
-	if(isCalibrationMode())//&&(isCalibrationGeneral()||isCalibrationWeather()))
+#if 0
+	
+	 DrawjsRuler(frame,&lineParam);
+
+#endif
+
+	if(isCalibrationMode() && isBootUpMode())
 	{
-		// no draw
+		//no draw
 	}
-	else if(isBattleMode()&&isStatBattleAlert())
+	else if(isCalibrationMode())//&&(isCalibrationGeneral()||isCalibrationWeather()))
 	{
-		// no draw
+		if(isCalibrationZero())
+		{
+			DrawjsCompass(frame,cthis);
+			DrawjsCross(frame, cthis);
+		}
+	
+	}
+	else if(isBattleMode())//&&isStatBattleAlert())
+	{
+		
+		DrawjsCompass(frame,cthis);
+		DrawjsCross(frame, cthis);
 	}
 	else
 	{
-		//FOVCTRL_drawCompassSLine(hFov,pImg,getTurretTheta());//����
+		
+		//FOVCTRL_drawCompassSLine(hFov,pImg,getTurretTheta());//luo pan
 	}
 		
 	/*	
-	if(isFovShine() && (((shin++)%50)<25) )//Խ���
+	if(isFovShine() && (((shin++)%50)<25) )//yue jie kuang
 	{
 		if(isBeyondDerection(DERECTION_LEFT))
 			FOVCTRL_drawLeftFrame(hFov,pImg);
@@ -132,7 +159,7 @@ void FOVCTRL_draw(HANDLE hFov)
 	
 
 	if(!(isBattleMode()&&isStatBattleAlert())){
-		FOVCTRL_drawRulerFrame(hFov,pImg);//���
+		FOVCTRL_drawRulerFrame(hFov,pImg);//biao chi
 		if(isCalibrationMode()&& isCalibrationZero())
 			FOVCTRL_drawBoresightZero(hFov,pImg);
 		else if((isMeasureManual())||(isBattleMode()&& isStatBattleAuto()&& isDistanceMeasured()))
@@ -145,7 +172,7 @@ void FOVCTRL_draw(HANDLE hFov)
 	//	FOVCTRL_drawGrenadeLoadOK(hFov,pImg);
 	
 #if 0
-	if(isStatBattleAlert() && isAutoCatching())//�Զ���������ʾ�����
+	if(isStatBattleAlert() && isAutoCatching())//\u951f\u7686\u8bb9\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u793a\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?
 	{
 		static int i=0;
 		FOVCTRL_drawAlertFrame(hFov,pImg);
@@ -168,5 +195,6 @@ void FOVCTRL_draw(HANDLE hFov)
 	}
 #endif
 	//FOVSYMBOL_drawTrk(handle,pImg);
+#endif
 }
 

@@ -1,6 +1,8 @@
 #include"osd_cv.h"
 
 
+#define PI 3.1415926
+
  CvScalar  GetcvColour(int colour)
 {
 
@@ -251,15 +253,20 @@ void DrawcvLine(Mat frame,Osd_cvPoint *start,Osd_cvPoint *end,int frcolor,int li
 }
 
 
-void DrawjsCircle(Mat frame,Line_Param_fb* lineparm)
+void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl)
 {
+	CFOV* cthis = NULL;
+	cthis = fovOsdCtrl;
+	
 	int linew = 1;
 	Point center;
 	Point start,end;
+	Osd_cvPoint start1,end1;
+	
 	center.x =650;
-	center.y = 120;
-	int radius = 30;
-	CvScalar color=GetcvColour(lineparm->frcolor);
+	center.y = 150;
+	int radius = 38;
+	CvScalar color=GetcvColour(cthis->frcolor);
 		
 
 	circle(frame,center,radius ,color,1,8,0);
@@ -269,18 +276,131 @@ void DrawjsCircle(Mat frame,Line_Param_fb* lineparm)
 	start.y = center.y - radius;
 	end.x = start.x ;
 	end.y = start.y + 2*radius;
-//	DrawcvLine(frame, &start, &end, 0, linew);
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 0, 5); 	//shu
 	
 	start.x = center.x - radius;
 	start.y = center.y ;
 	end.x = start.x + 2*radius;
-	end.y = start.y ;	
-//	DrawcvLine(frame, &start, &end, 0, linew);
+	end.y = start.y ;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 0, 5);		//heng
 	
+	start.x = center.x - 23;
+	start.y = center.y -40;
+	end.x = center.x + 23;
+	end.y = center.y + 40 ;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 0, 5);		//xie
+	start.x = center.x + 23;
+	start.y = center.y  - 40;
+	end.x  = center.x  - 23;
+	end.y  = center.y + 40 ;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 0, 5);		//xie
+	
+	
+	start.x = center.x - 33;
+	start.y = center.y -20;
+	end.x = center.x + 33;
+	end.y = center.y + 20 ;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 0, 5);		//xie
+	start.x = center.x + 33;
+	start.y = center.y - 20;
+	end.x  = center.x  -  33;
+	end.y  = center.y + 20 ;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 0, 5);		//xie
 
+	//wai mian si tiao xian
+	start.x = center.x - radius;
+	start.y = center.y ;
+	end.x  =  start.x - 20;
+	end.y  =  start.y;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 2, 1);		
 	
+	start.x = center.x + radius;
+	start.y = center.y ;
+	end.x  =  start.x + 20;
+	end.y  =  start.y;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 2, 1);	
+
+	start.x = center.x;
+	start.y = center.y - radius;
+	end.x  =  start.x;
+	end.y  =  start.y - 20;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 2, 1);	
+
+	start.x = center.x;
+	start.y = center.y + radius;
+	end.x  =  start.x ;
+	end.y  =  start.y + 20;
+	start1.x = start.x;
+	start1.y = start.y;
+	end1.x = end.x;
+	end1.y = end.y;
+	DrawcvLine(frame, &start1, &end1, 2, 1);	
+
+	//zhishizhen
+	DrawjsXLine(frame,10);
+
 	return ;
 }
+
+
+void DrawjsXLine(Mat frame,int value)
+{
+	double theta;
+	
+	value %= 360;
+	theta = (value*PI)/180;
+	int len = 60;
+	int linew = 1;
+	Point center,end;
+	center.x =650;
+	center.y = 150;
+
+	end.x = center.x + len*(sin(theta));
+	end.y = center.y - len*(cos(theta));
+
+	 CvScalar colour=GetcvColour(2);
+	 line(frame, center, end, colour, linew, 8, 0 );
+	 
+
+}
+
+
 
 void DrawjsOblinqueLine(Mat frame,Line_Param_fb* lineparm)
 {
@@ -326,17 +446,19 @@ void DrawjsRuler(Mat frame,Line_Param_fb* lineparm)
 
 
 
-void DrawjsCross(Mat frame,Line_Param_fb* lineparm)
+void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 {	
 	int len =	15;
 	int linew = 1;
 	int offlen = 0;
-	if(lineparm == NULL)
+	if(fovOsdCtrl == NULL)
 		return;
-	
+	CFOV * cthis ;
+	cthis = fovOsdCtrl;
 	Osd_cvPoint start;
 	Osd_cvPoint end;
 	int flag = 0 ;  // 0 jiguang    1 ren
+
 	
 	if(flag)
 		offlen = 0;
@@ -345,49 +467,48 @@ void DrawjsCross(Mat frame,Line_Param_fb* lineparm)
 	
 	//ren
 	
-	
-	start.x = lineparm->x;
-	start.y = lineparm->y;
+
+	start.x = cthis->fovX;
+	start.y = cthis->fovY;
 	end.x = start.x;
 	end.y = start.y;
-	DrawcvLine(frame, &start, &end, lineparm->frcolor, 3);
+	DrawcvLine(frame, &start, &end, cthis->frcolor, 3);
 
-	start.x = lineparm->x - lineparm->width/2 - offlen;
-	start.y = lineparm->y;
+	start.x = cthis->fovX - cthis->crosswidth/2 - offlen;
+	start.y = cthis->fovY;
 	end.x = start.x +len + offlen;
 	end.y = start.y;
-	DrawcvLine(frame, &start, &end,lineparm->frcolor, linew);
+	DrawcvLine(frame, &start, &end,cthis->frcolor, linew);
 
-	start.x = lineparm->x + lineparm->width/2 + offlen;
-	start.y = lineparm->y;
+	start.x = cthis->fovX + cthis->crosswidth/2 + offlen;
+	start.y = cthis->fovY;
 	end.x = start.x -len - offlen;
 	end.y = start.y;
-	DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);
 		
-	start.x = lineparm->x;
-	start.y = lineparm->y - lineparm->height/2;
+	start.x = cthis->fovX;
+	start.y = cthis->fovY - cthis->crossheight/2;
 	end.x = start.x;
 	end.y = start.y + len;
-	DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);
 
-	start.x = lineparm ->x;
-	start.y = lineparm ->y + lineparm->height/2;
+	start.x = cthis ->fovX;
+	start.y = cthis ->fovY + cthis->crossheight/2;
 	end.x = start.x;
 	end.y = start.y -len;
-    	DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+    	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);
 	
-	start.x = lineparm->x - lineparm->width/2;
-	start.y = lineparm->y - len/2;
+	start.x = cthis->fovX - cthis->crosswidth/2;
+	start.y = cthis->fovY - len/2;
 	end.x = start.x;
 	end.y = start.y + len;
-	DrawcvLine(frame,&start,&end, lineparm->frcolor,linew);
+	DrawcvLine(frame,&start,&end, cthis->frcolor,linew);
 
-	start.x = lineparm->x + lineparm->width/2;
-	start.y = lineparm->y - len/2;
+	start.x = cthis->fovX + cthis->crosswidth/2;
+	start.y = cthis->fovY - len/2;
 	end.x = start.x;
 	end.y = start.y + len;
-	DrawcvLine(frame,&start,&end, lineparm->frcolor,linew);
-
+	DrawcvLine(frame,&start,&end, cthis->frcolor,linew);
 	
 }
 
@@ -567,7 +688,6 @@ void process_cvosd(Mat frame,void *pPrm)
 	}
 
 }
-
 
 
 

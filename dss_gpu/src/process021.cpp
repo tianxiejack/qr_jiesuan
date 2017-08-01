@@ -231,7 +231,7 @@ void CProcess021::OnCreate()
 	
        //pCtrlObj = OSDCTRL_create();
 	OSDCTRL_create();
-	pFovCtrlObj = FOVCTRL_create(0,0,352,144);  //crossaxis's position initialize
+	pFovCtrlObj = FOVCTRL_create(0,0,360,288);  //crossaxis's position initialize
 	MSGDRIV_create();
 	MSGAPI_initial();
 	//App_dxmain();
@@ -350,21 +350,24 @@ void CProcess021::process_osd(void *pPrm)
 	//beside the text
 	//jiao zhun & ji jian --hide
 
-	FOVCTRL_draw(pFovCtrlObj);
+	FOVCTRL_draw(frame,pFovCtrlObj);
 
+	#if 0
 	
 	if(isCalibrationMode() || isBootUpMode())
 		lineParam.frcolor = 0;
 
 	if(!isBootUpMode())
-		DrawjsCircle(frame,&lineParam);
+		DrawjsCompass(frame,&lineParam);
 	
 	DrawjsRuler(frame,&lineParam);
 
 	if(isCalibrationZero())
 		lineParam.frcolor = 2;
 	DrawjsCross(frame, &lineParam);
+
 	
+	#endif
 	
 
 	sThis->m_display.UpDateOsd(0);
@@ -3703,9 +3706,9 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 		}
 		else if(isCalibrationZero())
 		{
-			if(isGrenadeGas())
-				return ;
-			//moveCrossDown();
+			//if(isGrenadeGas())
+			//	return ;
+			moveCrossDown();
 		}
 		else if(isCalibrationWeather())
 		{
@@ -3775,7 +3778,7 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 		{
 			if(isGrenadeGas())
 				return ;
-			//moveCrossLeft();
+			moveCrossLeft();
 		}
 		else if(isCalibrationWeather())
 		{
@@ -3843,7 +3846,7 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 		{
 			if(isGrenadeGas())
 				return ;
-			//moveCrossRight();
+			moveCrossRight();
 		}
 		else if(isCalibrationWeather())
 		{
@@ -4026,10 +4029,7 @@ void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
 		gProjectileType =(PROJECTILE_TYPE) ((gProjectileType + 1)%3);
 		Posd[eGunType] = GunOsd[gProjectileType];
 
-		OSDCTRL_updateMainMenu(gProjectileType);
-
-
-		
+		OSDCTRL_updateMainMenu(gProjectileType);		
 	}
  	
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH0",__func__,__LINE__);

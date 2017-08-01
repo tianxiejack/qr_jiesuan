@@ -12,7 +12,7 @@ extern "C"{
 //#include "ctimer.h"
 //#include "modleCtrl.h"
 //#include "avtDevice.h"
-#include "osdCdc.h"
+//#include "osdCdc.h"
 #include "WeaponCtrl.h"
 #include "GrenadePort.h"
 #include "LaserPort.h"

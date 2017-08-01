@@ -5,7 +5,7 @@
 extern "C"{
 #endif
 
-#include "basePort.h"
+//#include "basePort.h"
 
 #define FOV_WIDTH		720
 #define FOV_HEIGHT		288
@@ -26,19 +26,19 @@ extern "C"{
 #define DEFAULT_FOV_BORESIGHTLEN	30
 #define DEFAULT_FOV_XCONERLEN		10
 #define DEFAULT_FOV_YCONERLEN		10
-#define DEFAULT_FOV_MIDLEN			10
+#define DEFAULT_FOV_MIDLEN		10
 
 #define HORI_VERT_SCAL  (4/3)
 
 
 
 
-
-void FOVCTRL_destroy(HANDLE hFovCtrl);
 FOVCTRL_Handle FOVCTRL_create(UINT Sens,UINT fovElem,UINT x,UINT y);
+void FOVCTRL_destroy(HANDLE hFovCtrl);
 void FOVCTRL_updateFovRect(HANDLE hFov,char Sens,char fovElem,short x,short y);
 void FOVCTRL_updateFovScal(HANDLE hFov,int curScal);
-void FOVCTRL_draw(HANDLE hFov);
+void FOVCTRL_draw(Mat frame,HANDLE hFov);
+
 
 
 
