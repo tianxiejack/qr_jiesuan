@@ -19,13 +19,18 @@
 //#include "statCtrl.h"
 //#include "byteParser_util.h"
 
+#include "osdProcess.h"
+#include "statCtrl.h"
+#include "msgDriv.h"
 
+#if 0
 #include "WeaponCtrl.h"
 #include "MachGunPort.h"
 #include "GrenadePort.h"
 #include "LaserPort.h"
 #include "statCtrl.h"
 #include "msgDriv.h"
+#endif
 
 #define CAN_ID_PANEL (0x0002)
 #define CAN_ID_TURRET (0x02AC)
@@ -790,7 +795,8 @@ static int WeaponCtrlPORT_recvCfg(UartObj*pUartObj,int iLen)
 #if 0
 	BYTE *pCur = pUartObj->recvBuf;// + pUartObj->recvLen;
 	int ilen = 0, stat, ret = -1;;
-	while(TRUE){
+	while(TRUE)
+	{
 		if(GetDataFromUart(pUartObj->uartId,pCur,1, &stat)!=1)
 		{
 			return ret;
@@ -880,214 +886,196 @@ static int WeaponCtrlPORT_ParseFrame_type0(UartObj*pUartObj)
 	return stat;
 #endif
 }
+
 void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 {
-//case Frame_Type1://Ö¡1ï¿½ï¿½ï¿½ï¿½
-#if 0
-	if(BIT3_2(BYTE1(FrameBuf1)) != BIT3_2(BYTE3(buf))){    //Ð£×¼/ï¿½ï¿½ï¿½ï¿½
+#if 1
+	if(BIT3_2(BYTE1(FrameBuf1)) != BIT3_2(BYTE3(buf)))    //Ð£×¼/¹¤×÷
+	{    
 		if(BIT3_2(BYTE3(buf)) == 0x01) //Ð£×¼
 		{
 			if(isBattleMode())
-			sendCommand(CMD_BUTTON_CALIBRATION);
+				MSGDRIV_send(CMD_BUTTON_CALIBRATION,NULL);
 		}	
-		else //if(buf[3]&0x0A == 0x0)ï¿½ï¿½ï¿½ï¿½
+		else
 		{
 			if(isCalibrationMode())
-			sendCommand(CMD_BUTTON_BATTLE);
+				MSGDRIV_send(CMD_BUTTON_BATTLE,0);
 		}
-
 	}
 
-	if(BIT1_0(BYTE1(FrameBuf1)) != BIT1_0(BYTE3(buf))){     //ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ 
-		if(BIT1_0(BYTE3(buf)) == 0x00)			//ï¿½Ô¶ï¿½×°ï¿½ï¿½
-			sendCommand(CMD_BUTTON_BATTLE_AUTO);
-		else //if(buf[3]&0x03 == 0x01)	//ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½
-			sendCommand(CMD_BUTTON_BATTLE_ALERT);
+	if(BIT1_0(BYTE1(FrameBuf1)) != BIT1_0(BYTE3(buf)))	//¹¤¿öÑ¡Ôñ
+	{     
+		if(BIT1_0(BYTE3(buf)) == 0x00)			//×Ô¶¯×°±í
+			MSGDRIV_send(CMD_BUTTON_BATTLE_AUTO,0);
+		else 	//jing jie yu jing
+			MSGDRIV_send(CMD_BUTTON_BATTLE_ALERT,0);
 	}
 
-	if(BIT7(BYTE1(FrameBuf1)) != BIT7(BYTE3(buf))){     //  Ê¹ï¿½ï¿½/ï¿½ï¿½Ö¹ ï¿½ï¿½ï¿½
+	if(BIT7(BYTE1(FrameBuf1)) != BIT7(BYTE3(buf)))// disable/enable shot
+	{     
 		if(BIT7(BYTE3(buf)) != 0x00) 
-			sendCommand(CMD_FIRING_DISABLE);
+			MSGDRIV_send(CMD_FIRING_DISABLE,0);
 		else
-			sendCommand(CMD_FIRING_ENABLE);
+			MSGDRIV_send(CMD_FIRING_ENABLE,0);
 	}
 	
-	if(BIT6_4(BYTE1(FrameBuf1)) != BIT6_4(BYTE3(buf))){//  ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½
-		switch(BIT6_4(BYTE3(buf))){
+	if(BIT6_4(BYTE1(FrameBuf1)) != BIT6_4(BYTE3(buf)))	//  µ¯ÖÖÇÐ»»
+	{
+		switch(BIT6_4(BYTE3(buf)))
+		{
 			case 0x00:
 			case 0x01:
-				sendCommand(CMD_BULLET_SWITCH1);
-				if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf))){     //ï¿½Ôµï¿½/ï¿½Ô¿ï¿½ Ä¿ï¿½ï¿½
+				MSGDRIV_send(CMD_BULLET_SWITCH1,0);
+				if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf)))	 //¶ÔµØ/¶Ô¿Õ Ä¿±ê 
+				{    
 					if(BIT7_6(BYTE4(buf)) == 0x00)
-						sendCommand(CMD_MODE_AIM_SKY);
+						MSGDRIV_send(CMD_MODE_AIM_SKY,0);
 					else
-						sendCommand(CMD_MODE_AIM_LAND);	
+						MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 				}
 				break;
 			case 0x02:
-				sendCommand(CMD_BULLET_SWITCH2);
-				sendCommand(CMD_MODE_AIM_LAND);	
+				MSGDRIV_send(CMD_BULLET_SWITCH2,0);
+				MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 				break;
 			case 0x03:
-				sendCommand(CMD_BULLET_SWITCH3);
-				sendCommand(CMD_MODE_AIM_LAND);	
+				MSGDRIV_send(CMD_BULLET_SWITCH3,0);
+				MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 				break;
 			default:
 			break;
 		}
-	}else{
-		if(BIT6_4(BYTE1(FrameBuf1)) == 0x01){
-			if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf))){     //ï¿½Ôµï¿½/ï¿½Ô¿ï¿½ Ä¿ï¿½ï¿½
+	}
+	else
+	{
+		if(BIT6_4(BYTE1(FrameBuf1)) == 0x01)
+		{
+			if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf)))
+			{  
 				if(BIT7_6(BYTE4(buf)) == 0x00)
-					sendCommand(CMD_MODE_AIM_SKY);
+					MSGDRIV_send(CMD_MODE_AIM_SKY,0);
 				else
-					sendCommand(CMD_MODE_AIM_LAND);	
+					MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 			}
 		}
 	}
-/*
-	if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf))){     //ï¿½Ôµï¿½/ï¿½Ô¿ï¿½ Ä¿ï¿½ï¿½
-		if(BIT7_6(BYTE4(buf)) == 0x01)			//ï¿½ï¿½
-		{
-			sendCommand(CMD_MODE_AIM_LAND);	
-			if(1)//  ï¿½ï¿½ï¿½Ö»Ö¸ï¿½
-			{	switch(BIT6_4(BYTE3(buf))){
-					case 0x00:
-					case 0x01:
-						sendCommand(CMD_BULLET_SWITCH1);
-						break;
-					case 0x02:
-						sendCommand(CMD_BULLET_SWITCH2);
-						break;
-					case 0x03:
-						sendCommand(CMD_BULLET_SWITCH3);
-						break;
-					default:
-					break;
-				}
-			}
-		}else if(BIT7_6(BYTE4(buf)) == 0x00)	
-		{	//ï¿½ï¿½
-			sendCommand(CMD_MODE_AIM_SKY);
-			sendCommand(CMD_BULLET_SWITCH1);
-		}
 
-	}else
-	{     
-		if(BIT7_6(BYTE4(buf)) == 0x00)//ï¿½Ô¿ï¿½
-		{
-			// do nothing
-		}else
-		{
-			if(BIT6_4(BYTE1(FrameBuf1)) != BIT6_4(BYTE3(buf)))//  ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½
-			{	switch(BIT6_4(BYTE3(buf))){
-					case 0x00:
-					case 0x01:
-						sendCommand(CMD_BULLET_SWITCH1);
-						break;
-					case 0x02:
-						sendCommand(CMD_BULLET_SWITCH2);
-						break;
-					case 0x03:
-						sendCommand(CMD_BULLET_SWITCH3);
-						break;
-					default:
-					break;
-				}
-			}
-		}
-
-		// Send CMD_Bullet_switch((buf[3]>>2)&0x07);
-	}*/
 	
-	if(BIT5_4(BYTE2(FrameBuf1)) != BIT5_4(BYTE4(buf))){     //35ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if(BIT5_4(BYTE2(FrameBuf1)) != BIT5_4(BYTE4(buf)))	//35Áñµ¯Á¬·¢ÉèÖÃ
+	{    
 		if(BIT5_4(BYTE4(buf)) == 0x00)
-			sendCommand(CMD_MODE_ATTACK_SIGLE);
+			MSGDRIV_send(CMD_MODE_ATTACK_SIGLE,0);
 		else if(BIT5_4(BYTE4(buf)) == 0x01)
-			sendCommand(CMD_MODE_ATTACK_MULTI);
-	}
-	if(BIT3_2(BYTE2(FrameBuf1)) != BIT3_2(BYTE4(buf))){     //ï¿½ï¿½Æµï¿½Ó³ï¿½ï¿½ï¿½Ð¡Ñ¡ï¿½ï¿½
-		if(BIT3_2(BYTE4(buf)) == 0x01)
-			sendCommand(CMD_MODE_FOV_SMALL);
-		else //if(buf[4]&0x0C == 0x0)
-			sendCommand(CMD_MODE_FOV_LARGE);
-	}
-	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf))){     //5.8ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
-		if(BIT0(BYTE4(buf)) == 0x00)
-			sendCommand(CMD_MODE_SHOT_SHORT);
-		else if(BIT0(BYTE4(buf)) == 0x01)
-			sendCommand(CMD_MODE_SHOT_LONG);
+			MSGDRIV_send(CMD_MODE_ATTACK_MULTI,0);
 	}
 	
-	if(BIT7(BYTE3(FrameBuf1)) != BIT7(BYTE5(buf))){     //ï¿½Å´ï¿½ï¿½ï¿½Ê¾
-		if(BIT7(BYTE5(buf)) == 0x01)//Ì§ï¿½ï¿½Ê±ï¿½Ð»ï¿½
-			sendCommand(CMD_MODE_SCALE_SWITCH);
-	}
-	if(BIT6(BYTE3(FrameBuf1)) != BIT6(BYTE5(buf))){     //Í¼ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
-		if(BIT6(BYTE5(buf)) == 0x01)//Ì§ï¿½ï¿½Ê±ï¿½Ð»ï¿½
-			sendCommand(CMD_MODE_PIC_COLOR_SWITCH);
-	}
-	if(BIT5(BYTE3(FrameBuf1)) != BIT5(BYTE5(buf))){     //ï¿½ï¿½Ç¿ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
-		if(BIT5(BYTE5(buf)) == 0x01){//Ì§ï¿½ï¿½Ê±ï¿½Ð»ï¿½
-			if(isTimerAlive(eF3_Timer)/*×´Ì¬Öµ*/){
-				killF3Timer();
-				sendCommand(CMD_MODE_ENHANCE_SWITCH);
-			}
-		}else if(BIT5(BYTE5(buf)) == 0x00){
-			startF3_Timer();
-		}
-	}
-	if(BIT4(BYTE3(FrameBuf1)) != BIT4(BYTE5(buf))){     //ï¿½ï¿½à·½Ê½ï¿½ï¿½ï¿½ï¿½
-		if(BIT4(BYTE5(buf)) == 0x01)//Ì§ï¿½ï¿½Ê±ï¿½Ð»ï¿½
-			sendCommand(CMD_MEASURE_DISTANCE_SWITCH);
-	}
-	if(BIT3(BYTE3(FrameBuf1)) != BIT3(BYTE5(buf))){		//F5
-		if(BIT3(BYTE5(buf)) == 0x01){//Ì§ï¿½ï¿½Ê±ï¿½Ð»ï¿½
-			if(isTimerAlive(eF5_Timer)/*×´Ì¬Öµ*/){
-				killF5Timer();
-				sendCommand(CMD_LASERSELECT_SWITCH);
-			}
-		}else if(BIT3(BYTE5(buf)) == 0x00){//ï¿½ï¿½ï¿½ï¿½
-			startF5_Timer();
-		}
-	}
-	if(BIT2(BYTE3(FrameBuf1)) != BIT2(BYTE5(buf))){		//F6
-		if(BIT2(BYTE5(buf)) == 0x01){//Ì§ï¿½ï¿½Ê±ï¿½Ð»ï¿½
-			if(isTimerAlive(eF6_Timer)/*×´Ì¬Öµ*/){
-				killF6Timer();
-				sendCommand(CMD_SENSOR_SWITCH);
-			}
-		}else if(BIT2(BYTE5(buf)) == 0x00){
-			startF6_Timer();
-		}
-	}
-	if(BIT1(BYTE3(FrameBuf1)) != BIT1(BYTE5(buf))){     //ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Å¥×´Ì¬
-		if(BIT1(BYTE5(buf)) == 0x01)
-			sendCommand(CMD_BUTTON_AUTOCATCH);
-	}
-	if(BIT0(BYTE3(FrameBuf1)) != BIT0(BYTE5(buf)))		//ï¿½ï¿½ï¿½ï¿½ï¿½à°´Å¥×´Ì¬
+	if(BIT3_2(BYTE2(FrameBuf1)) != BIT3_2(BYTE4(buf)))  //ÊÓÆµÊÓ³¡´óÐ¡Ñ¡Ôñ
 	{     
-		if(BIT0(BYTE5(buf)) == 0x00)//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-			sendCommand(CMD_MEASURE_VELOCITY);
-		else if(BIT0(BYTE5(buf)) == 0x01)//Ì§ï¿½ï¿½ ï¿½ï¿½ï¿½
+		if(BIT3_2(BYTE4(buf)) == 0x01)
+			MSGDRIV_send(CMD_MODE_FOV_SMALL,0);
+		else
+			MSGDRIV_send(CMD_MODE_FOV_LARGE,0);
+	}
+	
+	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf)))  //5.8»úÇ¹Á¬·¢·½Ê½
+	{   
+		if(BIT0(BYTE4(buf)) == 0x00)
+			MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);
+		else if(BIT0(BYTE4(buf)) == 0x01)
+			MSGDRIV_send(CMD_MODE_SHOT_LONG,0);
+	}
+	
+	if(BIT7(BYTE3(FrameBuf1)) != BIT7(BYTE5(buf)))  //·Å´óÏÔÊ¾
+	{ 
+		if(BIT7(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
+			MSGDRIV_send(CMD_MODE_SCALE_SWITCH,0);
+	}
+	if(BIT6(BYTE3(FrameBuf1)) != BIT6(BYTE5(buf)))  //Í¼²ãÑÕÉ«¿ØÖÆ
+	{    
+		if(BIT6(BYTE5(buf)) == 0x01)	
+			MSGDRIV_send(CMD_MODE_PIC_COLOR_SWITCH,0);
+	}
+	if(BIT5(BYTE3(FrameBuf1)) != BIT5(BYTE5(buf)))	//ÔöÇ¿ÏÔÊ¾¿ØÖÆ
+	{ 
+		if(BIT5(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
+		{
+			//if(isTimerAlive(eF3_Timer)/*×´Ì¬Öµ*/)
+			{
+				//killF3Timer();
+				MSGDRIV_send(CMD_MODE_ENHANCE_SWITCH,0);
+			}
+		}
+		else if(BIT5(BYTE5(buf)) == 0x00)
+		{
+			//startF3_Timer();
+		}
+	}
+	if(BIT4(BYTE3(FrameBuf1)) != BIT4(BYTE5(buf)))	   //²â¾à·½Ê½¿ØÖÆ
+	{   
+		if(BIT4(BYTE5(buf)) == 0x01)
+			MSGDRIV_send(CMD_MEASURE_DISTANCE_SWITCH,0);
+	}
+	if(BIT3(BYTE3(FrameBuf1)) != BIT3(BYTE5(buf)))	//F5
+	{	
+		if(BIT3(BYTE5(buf)) == 0x01)
+		{
+			//if(isTimerAlive(eF5_Timer)/*×´Ì¬Öµ*/)
+			{
+				//killF5Timer();
+				MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
+			}
+		}
+		else if(BIT3(BYTE5(buf)) == 0x00)
+		{//ï¿½ï¿½ï¿½ï¿½
+			//startF5_Timer();
+		}
+	}
+	if(BIT2(BYTE3(FrameBuf1)) != BIT2(BYTE5(buf)))	//F6
+	{		
+		if(BIT2(BYTE5(buf)) == 0x01)
+		{
+			//if(isTimerAlive(eF6_Timer)/*×´Ì¬Öµ*/)
+			{
+				//killF6Timer();
+				MSGDRIV_send(CMD_SENSOR_SWITCH,0);
+			}
+		}
+		else if(BIT2(BYTE5(buf)) == 0x00)
+		{
+			//startF6_Timer();
+		}
+	}
+	if(BIT1(BYTE3(FrameBuf1)) != BIT1(BYTE5(buf)))//×Ô¶¯²¶»ñ°´Å¥×´Ì¬
+	{    
+		if(BIT1(BYTE5(buf)) == 0x01)
+			MSGDRIV_send(CMD_BUTTON_AUTOCATCH,0);
+	}
+	if(BIT0(BYTE3(FrameBuf1)) != BIT0(BYTE5(buf)))//¼¤¹â²â¾à°´Å¥×´Ì¬
+	{     
+		if(BIT0(BYTE5(buf)) == 0x00)//°´ÏÂ ²âËÙ
+			MSGDRIV_send(CMD_MEASURE_VELOCITY,0);
+		else if(BIT0(BYTE5(buf)) == 0x01)//Ì§Æð ²â¾à
 		{
 //			if(!isMeasureManual())
-				sendCommand(CMD_MEASURE_DISTANCE);
+				MSGDRIV_send(CMD_MEASURE_DISTANCE,0);
 		}
 	}
 
-	if(BIT4(BYTE4(FrameBuf1)) != BIT4(BYTE6(buf))){
+	if(BIT4(BYTE4(FrameBuf1)) != BIT4(BYTE6(buf)))
+	{
 		if(BIT4(BYTE6(buf)) == 0x00)
-			sendCommand(CMD_IDENTIFY_KILL);
+			MSGDRIV_send(CMD_IDENTIFY_KILL,0);
 		else
-			sendCommand(CMD_IDENTIFY_GAS);
+			MSGDRIV_send(CMD_IDENTIFY_GAS,0);
 	}
 	
 	memcpy(FrameBuf1,&buf[2],sizeof(FrameBuf1));
 
-//	break;
 #endif
 }
+
+
 static int WeaponCtrlPORT_ParseFrame_type1(UartObj*pUartObj)
 {
 #if 0
@@ -1104,34 +1092,33 @@ static int WeaponCtrlPORT_ParseFrame_type1(UartObj*pUartObj)
 }
 void WeaponCtrlPORT_ParseFrameByte_type2(unsigned char* buf)
 {
-//		case Frame_Type2://Ö¡2ï¿½ï¿½ï¿½ï¿½                    ---Ê¹ï¿½ï¿½PostMessage ?
-#if 0	
+#if 1
 	switch (BIT3_0(BYTE3(buf)))
 	{
 		case Button_Left:
-			sendCommand(CMD_BUTTON_LEFT);
+			MSGDRIV_send(CMD_BUTTON_LEFT,0);
 			break;
 		case Button_Right:
-			sendCommand(CMD_BUTTON_RIGHT);
+			MSGDRIV_send(CMD_BUTTON_RIGHT,0);
 			break;
 		case Button_UP:
-			sendCommand(CMD_BUTTON_UP);
+			MSGDRIV_send(CMD_BUTTON_UP,0);
 			break;
 		case Button_Down:
-			sendCommand(CMD_BUTTON_DOWN);
+			MSGDRIV_send(CMD_BUTTON_DOWN,0);
 			break;
 		case Button_Enter:
-			sendCommand(CMD_BUTTON_ENTER);
+			MSGDRIV_send(CMD_BUTTON_ENTER,0);
 			break;
 		case Button_Esc:
-			sendCommand(CMD_BUTTON_QUIT);
+			MSGDRIV_send(CMD_BUTTON_QUIT,0);
 			break;
 		case Button_Unlock:
-			sendCommand(CMD_BUTTON_UNLOCK);
+			MSGDRIV_send(CMD_BUTTON_UNLOCK,0);
 			break;
 		case Button_AutoCheck:
 			if(isBootUpSelfCheckFinished())
-			sendCommand(CMD_BUTTON_AUTOCHECK);
+				MSGDRIV_send(CMD_BUTTON_AUTOCHECK,0);
 			break;
 		case Button_Base:
 			break;
@@ -1455,14 +1442,14 @@ static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 }
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 {
-#if 0
-	if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
-		sendCommand(CMD_WEAPONCTRL_OK);
+#if 1
+	//if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
+		//sendCommand(CMD_WEAPONCTRL_OK);
 
 	switch(buf[2])
 	{
 	case Frame_Type0:
-		WeaponCtrlPORT_ParseFrameByte_type0(buf);
+		//WeaponCtrlPORT_ParseFrameByte_type0(buf);
 		break;
 	case Frame_Type1:
 		WeaponCtrlPORT_ParseFrameByte_type1(buf);
@@ -1471,31 +1458,31 @@ void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 		WeaponCtrlPORT_ParseFrameByte_type2(buf);
 		break;
 	case Frame_Type3:
-		WeaponCtrlPORT_ParseFrameByte_type3(buf);
+		//WeaponCtrlPORT_ParseFrameByte_type3(buf);
 		break;
 	case Frame_Type4:
-		WeaponCtrlPORT_ParseFrameByte_type4(buf);
+		//WeaponCtrlPORT_ParseFrameByte_type4(buf);
 		break;
 	case Frame_TEST:
-		WeaponCtrlPORT_ParseFrameByte_test(buf);
+		//WeaponCtrlPORT_ParseFrameByte_test(buf);
 		break;
 	case 0xAC:
-		if(!bPositionServoOK())
-			sendCommand(CMD_POSITION_SERVO_OK);
-		killSelfCheckPosServoTimer();
-		startSelfCheckPosServo_Timer();
+		//if(!bPositionServoOK())
+			//sendCommand(CMD_POSITION_SERVO_OK);
+		//killSelfCheckPosServoTimer();
+		//startSelfCheckPosServo_Timer();
 		break;
 	case 0xB7:
-		if(!bMachineGunServoOK())
-			sendCommand(CMD_MACHINEGUN_SERVO_OK);
-		killSelfCheckMachGunServoTimer();
-		startSelfCheckMachGunServo_Timer();
+		//if(!bMachineGunServoOK())
+			//sendCommand(CMD_MACHINEGUN_SERVO_OK);
+		//killSelfCheckMachGunServoTimer();
+		//startSelfCheckMachGunServo_Timer();
 		break;
 	case 0xC2:
-		if(!bGrenadeServoOK())
-			sendCommand(CMD_GENERADE_SERVO_OK);
-		killSelfCheckGrenadeServoTimer();
-		startSelfCheckGrenadeServo_Timer();
+		//if(!bGrenadeServoOK())
+			//sendCommand(CMD_GENERADE_SERVO_OK);
+		//killSelfCheckGrenadeServoTimer();
+		//startSelfCheckGrenadeServo_Timer();
 		break;
 	default:
 		break;
@@ -1581,12 +1568,9 @@ void* WeaponCtrlPORT_recvTask(void* prm)
 	//while (!pSysCtrlObj->tskArry[TSK_RECVTRACEMSG]) 
 	while (1) 
 	{	
-		//OSA_printf("WeaponCtrlPORT_recvTask\n");
-		//OSA_waitMsecs(5000);
-//		memset(buf,0,16);
 		WeaponCtrlObj.UartPort.recvLen = 0;	
 
-		//stat = WeaponCtrlPORT_recvCfg(pUartObj,2);
+		stat = WeaponCtrlPORT_recvCfg(pUartObj,2);
 
 		if(stat < 0)
 			continue;

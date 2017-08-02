@@ -23,6 +23,8 @@ extern "C" {
 
 
 
+
+
 int uartMessage(void) ;
 void MSGAPI_AckSnd(int CmdType);
 void* recv_pth(unsigned char *RS422,int len);
@@ -34,6 +36,19 @@ void* fdTest_open(void* prm);
 void processMessage(char* pData);
 char valueToHexCh(const int value);
 int strToHex(char* ch,char* hex);
+
+
+
+
+
+void* tcpTestFunc(void* prm);
+void chartohex(char* buf,char *recvhex,int recvlen);
+void compundHex(unsigned char* recv,unsigned char* get,int len);
+
+int NetPort_ParseByte(unsigned char* buf);
+
+
+
 
 
 

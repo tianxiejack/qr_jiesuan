@@ -168,8 +168,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,	10,	0,	{0}},
 	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,	470,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		460,	0,	{0}},
-	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,	505,	0,	{0}},
-	{eWeather2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,	540,	0,	{0}},
+	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	460+LOFFSET,	505,	0,	{0}},
+	{eWeather2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	460+LOFFSET,	540,	0,	{0}},
 	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		500,	0,	{0}},
 	{eAngleV,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		540,	0,	{0}},
 	{eDynamicZone,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,	520,	0,	{0}},
@@ -242,16 +242,16 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibGeneral_DisValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	477+LOFFSET,		150,	0,	{0}},
 	{eCalibGeneral_DisValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	488+LOFFSET,		150,	0,	{0}},
 	{eCalibGeneral_DisValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	499+LOFFSET,		150,	0,	{0}},
-	{eCalibGeneral_XPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	466+LOFFSET,		185,	0,	{0}},
-	{eCalibGeneral_XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	477+LOFFSET,		185,	0,	{0}},
-	{eCalibGeneral_XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	488+LOFFSET,		185,	0,	{0}},
-	{eCalibGeneral_XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	499+LOFFSET,		185,	0,	{0}},
-	{eCalibGeneral_XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	510+LOFFSET,		185,	0,	{0}},
-	{eCalibGeneral_YPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	466+LOFFSET,		220,	0,	{0}},
-	{eCalibGeneral_YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	477+LOFFSET,		220,	0,	{0}},
-	{eCalibGeneral_YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	488+LOFFSET,		220,	0,	{0}},
-	{eCalibGeneral_YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	499+LOFFSET,		220,	0,	{0}},
-	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	510+LOFFSET,		220,	0,	{0}},
+	{eCalibGeneral_XPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	488+LOFFSET,		185,	0,	{0}},
+	{eCalibGeneral_XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	499+LOFFSET,		185,	0,	{0}},
+	{eCalibGeneral_XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	510+LOFFSET,		185,	0,	{0}},
+	{eCalibGeneral_XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	521+LOFFSET,		185,	0,	{0}},
+	{eCalibGeneral_XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	532+LOFFSET,		185,	0,	{0}},
+	{eCalibGeneral_YPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	488+LOFFSET,		220,	0,	{0}},
+	{eCalibGeneral_YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	499+LOFFSET,		220,	0,	{0}},
+	{eCalibGeneral_YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	510+LOFFSET,		220,	0,	{0}},
+	{eCalibGeneral_YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	521+LOFFSET,		220,	0,	{0}},
+	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	532+LOFFSET,		220,	0,	{0}},
 
 	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		490,	0,	{0}},
 	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		490,	0,	{0}},
@@ -635,16 +635,22 @@ void OSDCTRL_ItemShine(int Id)
 
 void OSDCTRL_BattleShow()
 {
+	static int num = 0;
 	int i;
 	OSDCTRL_AllHide();
-	OSDCTRL_ItemShow(eSuperOrder);
-	for(i=eWeather1; i<=eAngleV; i++){
+	if(!num)
+		OSDCTRL_ItemShow(eDynamicZone);
+	for(i=eWeather1; i<=eAngleV; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wAuto];
 	//OSDCTRL_updateAreaN();
 	//OSDCTRL_NoShine();
 	//OSDCTRL_AlgSelect();
+	
+	
+	num = 1;
 }
 
 
@@ -751,27 +757,28 @@ void OSDCTRL_CalibLaserShow()
 	Posd[eWorkMode] = WorkOsd[wCalibLaser];
 #endif
 }
+
+
 void OSDCTRL_CalibWeatherShow()
 {
-#if 1
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibWeather_Tep; i<=eCalibWeather_PreVal6; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibWeather];
-#endif
 }
+
+
 void OSDCTRL_CalibGeneralShow()
 {
-#if 0
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibGeneral_Dis; i<=eCalibGeneral_Ry; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibGeneral];
-#endif
+
 }
 
 void OSDCTRL_CalibZeroShow()
@@ -835,13 +842,11 @@ void OSDCTRL_BattleTrackShow()
 
 void OSDCTRL_EnterBattleMode()
 {
-	//if(isStatBattleAuto())
-	if(1)
+	if(isStatBattleAuto())
 		OSDCTRL_BattleShow();
-	//else if(isStatBattleAlert())
-	//{
-	//  OSDCTRL_BattleAlertShow();
-	//}
+	else if(isStatBattleAlert())
+	 	 OSDCTRL_BattleAlertShow();
+
 	else 
 	{
 		assert(FALSE);
@@ -1415,7 +1420,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				if (1)
 				{
 					//sprintf(pStr,"%s:%d",Posd[eMeasureType],Distance); //laser
-					sprintf(pStr,"%s:",Posd[eMeasureType]); //laser
+					sprintf(pStr,"%s",Posd[eMeasureType]); //laser
 					OSDCTRL_ItemShow(eMeasureDis);
 				}
 				else
@@ -1439,14 +1444,10 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			//sprintf(pStr,"%c%c%c%c",230,215,245,183); 	//��Ƶ�쳣
 			break;
 		case eShotType:
-			//if(isMachineGun())
-			if(1)
-				Posd[eShotType] = ShotOsd[0];//ShotOsd[getGunShotType()];
-				//Posd[eShotType] = tmparray;
+			if(isMachineGun())
+				Posd[eShotType] = ShotOsd[getGunShotType()];
 			else
-				//Posd[eShotType] = ShotGunOsd[getShotType()];
-				Posd[eShotType] = tmparray;
-			
+				Posd[eShotType] = ShotGunOsd[getShotType()];		
 			sprintf(pStr,"%s",Posd[eShotType]);
 			break;
 		case eFovType:

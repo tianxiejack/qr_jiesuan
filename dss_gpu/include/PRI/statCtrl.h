@@ -108,6 +108,8 @@ typedef enum {
 	QUESTION_GRENADE_GAS
 }PROJECTILE_TYPE;
 
+SHOT_TYPE getGunShotType();
+SHOT_TYPE getShotType();
 
 bool isMeasureManual();
 bool isCalibrationSave();
@@ -146,10 +148,15 @@ bool isMachineGun();
 bool isGrenadeKill();
 bool isBlackColor();
 bool isStatBattleAlert();
+bool isBattleLoadFiringTable();
+bool isAutoLoadFiringTable();
+bool isFovMachineGun();
+bool isFovGrenadeGas();
+bool isFovGrenadeKill();
+bool isFovSmall();
 
 
-
-
+PROJECTILE_TYPE getFovProjectileType();
 PROJECTILE_TYPE getProjectileType();
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;

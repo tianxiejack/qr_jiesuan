@@ -130,7 +130,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		if(isCalibrationZero())
 		{
 			DrawjsCompass(frame,cthis);
-			DrawjsCross(frame, cthis);
+			DrawjsCross(frame, cthis);		
 		}
 	
 	}
@@ -139,6 +139,10 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		
 		DrawjsCompass(frame,cthis);
 		DrawjsCross(frame, cthis);
+		Drawjs_leftFrame(frame,cthis);
+		Drawjs_rightFrame(frame, cthis);
+		Drawjs_bottomFrame(frame, cthis);
+		DrawjsRuler(frame,cthis);
 	}
 	else
 	{

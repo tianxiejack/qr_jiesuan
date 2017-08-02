@@ -1710,7 +1710,7 @@ printf("!!!!!!!key = %d\n",key);
 	if (key == 'I')
 	{
 		
-		//MSGDRIV_send(CMD_BUTTON_ENTER, NULL);
+		MSGDRIV_send(CMD_BUTTON_UNLOCK, NULL);
 	}
 		
 	if (key == 'j')
@@ -3218,7 +3218,7 @@ void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
 	//update OSD elements.
 
 	if(isBattleMode())
-	{
+	{	
 		OSDCTRL_EnterBattleMode();
 	}
 	else if(isCalibrationMode())
@@ -3263,7 +3263,7 @@ void CProcess021::processCMD_BUTTON_CALIBRATION(LPARAM lParam)
 	//OSDCTRL_updateMainMenu(gProjectileType);
 			
 	OSDCTRL_EnterCalibMode();
- 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_CALIBRATION",__func__,__LINE__);
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_CALIBRATION",__func__,__LINE__);
 	return ;
  }
 
@@ -3554,6 +3554,7 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 	{
 		if(isCalibrationMainMenu())
 		{
+			
 			return;
 		}
 		else if(isCalibrationZero()||isCalibrationWeather()||isCalibrationGeneral()||isCalibrationGenPram()||isCalibrationHorizen()||isCalibrationLaser())
@@ -3618,14 +3619,48 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 		OSDCTRL_BattleShow();
 	}
 
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_QUIT",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_QUIT",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_UNLOCK",__func__,__LINE__);
+	if(isBootUpMode()&& isBootUpSelfCheckFinished())
+	{
+		processCMD_EXIT_SELF_CHECK(0);
+	}
+	else if(isCalibrationMode())
+	{
+		if(isCalibrationZero()||isCalibrationWeather()||isCalibrationGeneral())
+		{
+			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+			// update OSDdisplay
+			OSDCTRL_CalibMenuShow();
+		}
+		else if(isCalibrationSave())
+		{
+			//todo: read flash to mem
+		}
+		OSDCTRL_NoShine();
+	}
+	else if(isBattleMode())//&& isStatBattleAuto()&&(isBattleReady()||isBattleLoadFiringTable()))
+	{
+		OSDCTRL_ItemHide(eDynamicZone);
+		
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&&(isAutoReady()||isAutoLoadFiringTable()))
+	{
+		//gLevel3CalculatorState = Auto_Idle;
+	}
+	else if(isBattleMode()&& isStatBattleAuto())//&&isBattleIdle()
+	{
+		if(OSDCTRL_IsOsdDisplay(eDynamicZone))
+			OSDCTRL_ItemHide(eDynamicZone);
+	}
+
+ 
+ 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_UNLOCK",__func__,__LINE__);
 	return ;
  }
 
@@ -4021,16 +4056,19 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
  {
-	if(isCalibrationMode())
+	if(isCalibrationMode()||isBattleMode())
 	{
 		if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 			gProjectileTypeBefore = gProjectileType;
 		
 		gProjectileType =(PROJECTILE_TYPE) ((gProjectileType + 1)%3);
 		Posd[eGunType] = GunOsd[gProjectileType];
-
+	
 		OSDCTRL_updateMainMenu(gProjectileType);		
+		
 	}
+
+	
  	
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH0",__func__,__LINE__);
 	return ;
@@ -4044,7 +4082,7 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 
 	gProjectileType = PROJECTILE_BULLET;
 	Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
-	//EnterCMD_BULLET_SWITCH1();
+	EnterCMD_BULLET_SWITCH1(0);
 
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH1",__func__,__LINE__);
 	return ;
@@ -4052,7 +4090,7 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 
 void CProcess021::EnterCMD_BULLET_SWITCH1(LPARAM lParam)
 {
-	if(isCalibrationMode()&& isCalibrationMainMenu())
+	if(isCalibrationMode() && isCalibrationMainMenu())
 	{
 		//check XPosition before  udateMenuItem_Zero_General()
 		//udateMenuItem_Zero_General(PROJECTILE_BULLET);
@@ -4060,7 +4098,7 @@ void CProcess021::EnterCMD_BULLET_SWITCH1(LPARAM lParam)
 	}
 	else
 	{
-		if(isCalibrationMode()&&isCalibrationZero())
+		if(isCalibrationMode() && isCalibrationZero())
 		{
 			//saveLastAndGetNewZeroParam(PROJECTILE_BULLET);
 		}
@@ -4223,7 +4261,6 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENERAL(LPARAM lParam)
  {
 	if(isCalibrationMode())
 	{
-	printf("@@@@@@@@@aaaaaaaa\n");
 		gLevel2CalibrationState = STATE_CALIBRATION_GENERAL;
 		//update OSDdisplay
 		initilGeneralParam();

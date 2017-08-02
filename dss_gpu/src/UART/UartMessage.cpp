@@ -8,6 +8,7 @@
 #include"dx_config.h"
 #include"dx.h"
 #include"app_ctrl.h"
+#include "osdProcess.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -16,7 +17,23 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+
+
+
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+
+
 #define SIZE		1024
+
+#define CAN_ID_PANEL 		(0x0002)
+#define CAN_ID_TURRET 		(0x02AC)
+#define CAN_ID_MACHGUN 	(0x02B7)
+#define CAN_ID_GRENADE		(0x2C2)
+#define CODE_MACHGUN 		(0x37)
+#define CODE_GRENADE 		(0x42)
+#define CODE_TURRET   		(0x2C)
 
 
 
@@ -2389,5 +2406,194 @@ void processMessage(char* pData)
 	
 	return ;
 }
+
+
+void chartohex(char* buf,unsigned char *recv,int recvlen)
+{
+	unsigned char * recvhex = recv;
+	char* tmp = NULL;
+ 	tmp = buf;
+	int i=0;
+	int len = recvlen;
+	int no = 0;
+	unsigned char gethex[48];
+	memset(gethex,0,sizeof(gethex));
+	for(i=0;i<len;i++)
+	{
+		if(buf[i] >= '0' && buf[i] <= '9')
+		{
+			recvhex[no] = (buf[i] - 48);
+			//if(i != len-2)
+			//	recvhex = recvhex<<4;
+			no++;
+		}
+		else if(buf[i] >= 'A' && buf[i] <= 'F')
+		{
+			recvhex[no] = (buf[i] - 55);
+			//if(i != len-2)
+			//	recvhex = recvhex<<4;
+			no++;
+		}	
+		else if(buf[i] >= 'a' && buf[i] <= 'f')
+		{	
+			recvhex[no] = (buf[i] - 87);
+			//if(i != len-2)
+			//recvhex = recvhex<<4;
+			no++;
+		}
+		else
+			continue;
+	}		
+
+
+	compundHex(recvhex,gethex,no);
+	memcpy(recv,gethex,no/2+1);
+	
+	//for(i = 0;i<no/2;i++)
+	//	printf("recvhex = %x\n",recv[i]);
+
+	
+	return ;
+}
+
+
+void compundHex(unsigned char* recv,unsigned char* get,int len)
+{
+	unsigned char* tmp = recv;
+	unsigned char* out = get;
+	int i =0;
+	int num =0;
+	for(i=0;i<len;i+= 2)
+	{
+		out[num++] = tmp[i] <<4 | tmp[i+1];
+	}
+
+	//for(i = 0;i<len;i++)
+		//printf("recvhex = %d\n",out[i]);
+	
+	return ;
+}
+
+void* tcpTestFunc(void* prm)
+{
+	int sockfd,connfd;
+
+	sockfd = socket(AF_INET,SOCK_STREAM,0);
+	if(sockfd == -1)
+	{
+
+	}
+
+	struct sockaddr_in seraddr,cliaddr;
+
+	seraddr.sin_family = AF_INET;
+	seraddr.sin_port = htons(8001);
+	seraddr.sin_addr.s_addr = inet_addr("192.168.1.199");
+
+	if(bind(sockfd,(struct sockaddr *)&seraddr,sizeof(seraddr)) == -1)
+	{
+		perror("bind");
+		return NULL;
+	}
+
+	if(listen(sockfd,5) == -1)
+	{
+
+	}
+
+
+	printf("first\n");
+	//int clilen = sizeof(cliaddr);
+	socklen_t clilen = sizeof(cliaddr);
+	int count = 0;
+	while(1)
+	{
+		connfd = accept(sockfd,(struct sockaddr *)&cliaddr,&clilen);
+		printf("second\n");
+
+		if(connfd == -1)
+		{
+			perror("accept");
+			return NULL;
+		}
+
+		int recvlen;
+		char buf[128];
+		unsigned char recvhex[48];
+		
+		memset(buf,0,sizeof(buf));
+		memset(recvhex,0,sizeof(recvhex));
+		while(1)
+		{
+			
+			recvlen = recv(connfd,buf,sizeof(buf),0);
+
+			//printf("recvlen = %d\n",recvlen);
+			if(recvlen == -1)
+			{
+				perror("recv");
+				return NULL;
+			}
+
+			if(recvlen == 0)
+			{
+				//printf("let me go !!!\n");
+				close(connfd);
+				break;
+			}
+
+			//printf("%s\n",buf);
+			
+			chartohex(buf,recvhex,recvlen);
+			NetPort_ParseByte(recvhex);
+			
+		}
+		count ++;
+		printf("count = %d\n",count);
+	}
+	return NULL;
+}
+
+
+
+/**********************************jie xi ******************************************/
+
+int NetPort_ParseByte(unsigned char* buf)
+{	
+	switch(stoh2(buf))
+	{
+		case CAN_ID_PANEL:
+			WeaponCtrlPORT_ParseBytePanel(buf);
+			break;
+		case CAN_ID_TURRET:
+			//WeaponCtrlPORT_ParseByteTurret(buf);
+			break;
+		case CAN_ID_MACHGUN:
+		//	WeaponCtrlPORT_ParseByteMachGun(buf);
+			break;
+		case CAN_ID_GRENADE:
+			//WeaponCtrlPORT_ParseByteGrenade(buf);
+			break;
+		default:
+			break;
+	}
+	
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

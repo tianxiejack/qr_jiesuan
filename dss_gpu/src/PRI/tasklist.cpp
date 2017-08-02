@@ -82,7 +82,7 @@ static OSA_ThrHndl TurretPosPORTHndl;
 static OSA_ThrHndl WeaponPORTHndl;
 static OSA_ThrHndl MachGunPORTHndl;
 static OSA_ThrHndl TestHndl;
-
+static OSA_ThrHndl NetHandl;
 
 
 
@@ -105,6 +105,7 @@ void *testOsd(void* prm)
 int taskCreate(void)
 {
 	int status = -1;
+	char tmp[] = "8001";
 
 	status = OSA_thrCreate(
 				&GrenadePORTHndl,
@@ -160,6 +161,7 @@ int taskCreate(void)
 			);
 	OSA_assert(status==OSA_SOK);
 
+
 	status = OSA_thrCreate(
 				&TestHndl,
 				fdTest_open,
@@ -169,6 +171,16 @@ int taskCreate(void)
 				0
 			);
 	OSA_assert(status==OSA_SOK);
+
+	status = OSA_thrCreate(
+				&NetHandl,
+				tcpTestFunc,
+				0,
+				0,
+				0
+			);
+	OSA_assert(status==OSA_SOK);
+	
 	
 	return 0;
 }
@@ -212,6 +224,7 @@ int GetDataFromUart(int uartHandle, Uint8 *pData, int iLen, int *pStat)
 #endif
 	return 0;
 }
+
 
 
 

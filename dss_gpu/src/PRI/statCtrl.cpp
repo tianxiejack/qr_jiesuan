@@ -34,6 +34,19 @@ static bool gTrackingMode=FALSE;
 static bool bServoAavailable = FALSE;
 bool bUnlock = TRUE;
 
+
+SHOT_TYPE getGunShotType()
+{
+	return gGunShotType;
+}
+
+SHOT_TYPE getShotType()
+{
+	return gShotType;
+}
+
+
+
 bool isBattleMode()
 {
 	return MODE_BATTLE == gLevel1Mode;
@@ -73,6 +86,18 @@ bool isGrenadeGas()
 {
 	return PROJECTILE_GRENADE_GAS == getProjectileType();
 }
+
+bool isAutoLoadFiringTable()
+{
+	return Auto_LoadFiringTable == gLevel3CalculatorState;
+}
+
+
+bool isBattleLoadFiringTable()
+{
+	return Battle_LoadFiringTable == gLevel3CalculatorState; 
+}
+
 
 
 bool isGrenadeKill()
@@ -205,6 +230,11 @@ bool isValidProjectileType()
 	return (gProjectileType <= PROJECTILE_GRENADE_GAS);
 }
 
+bool isFovMachineGun()
+{
+	return PROJECTILE_BULLET == getFovProjectileType();
+}
+
 bool Is9stateOK()
 {
 	bool ret = isWeaponCtrlOK &&isJoyStickOK &&isPositionSensorOK &&isPositionServoOK \
@@ -234,8 +264,32 @@ bool bMachineGunSensorOK()
 	return isMachineGunSensorOK;
 }
 
+bool isFovGrenadeGas()
+{
+	return PROJECTILE_GRENADE_GAS == getFovProjectileType();
+}
+
+bool isFovGrenadeKill()
+{
+	return PROJECTILE_GRENADE_KILL == getFovProjectileType();
+}
+
+bool isFovSmall()
+{
+	return (Posd[eFovType] == FovTypeOsd[1]);
+}
 
 
+
+PROJECTILE_TYPE getFovProjectileType()
+{
+	if(gProjectileType > PROJECTILE_GRENADE_GAS)
+	{
+		return gProjectileTypeBefore;
+	}else
+		return gProjectileType;
+	
+}
 
 PROJECTILE_TYPE getProjectileType()
 {

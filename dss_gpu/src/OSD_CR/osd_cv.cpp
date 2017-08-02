@@ -1,5 +1,5 @@
 #include"osd_cv.h"
-
+#include "statCtrl.h"
 
 #define PI 3.1415926
 
@@ -264,8 +264,8 @@ void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl)
 	Osd_cvPoint start1,end1;
 	
 	center.x =650;
-	center.y = 150;
-	int radius = 38;
+	center.y = 130;
+	int radius = 28;
 	CvScalar color=GetcvColour(cthis->frcolor);
 		
 
@@ -385,11 +385,11 @@ void DrawjsXLine(Mat frame,int value)
 	
 	value %= 360;
 	theta = (value*PI)/180;
-	int len = 60;
+	int len = 50;
 	int linew = 1;
 	Point center,end;
 	center.x =650;
-	center.y = 150;
+	center.y = 130;
 
 	end.x = center.x + len*(sin(theta));
 	end.y = center.y - len*(cos(theta));
@@ -410,35 +410,47 @@ void DrawjsOblinqueLine(Mat frame,Line_Param_fb* lineparm)
 }
 
 
-void DrawjsRuler(Mat frame,Line_Param_fb* lineparm)
+void DrawjsRuler(Mat frame,CFOV * fovOsdCtrl)
 {
-
-	int llen = 50,slen = 25;
-	int interval = 60;
+	CFOV* cthis = fovOsdCtrl;
+	
 	Osd_cvPoint start;
 	Osd_cvPoint end;
 	int linew = 1;
 	int i;
 
-	int basx = 360,basy = 250;
+	int CenterX=cthis->fovX;
+	int CenterY=cthis->fovY-50;
+	int Len=15;
+	
+	int StepGap=50;
+
+	if(isFovMachineGun())
+		StepGap = 30;
+	else if(isFovGrenadeGas())
+		StepGap = 20;
+	else if(isFovGrenadeKill())
+		StepGap = 25;
+	if(isFovSmall())
+		StepGap *= 1.2;
 
 
 	for(i = -3;i<=3;i++)
 	{
-		start.x = basx + i*interval ;
-		start.y = basy;
+		start.x = CenterX + i*StepGap ;
+		start.y = CenterY;
 		end.x = start.x ;
-		end.y = start.y -llen;
-		DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+		end.y = start.y -2*Len;
+		DrawcvLine(frame, &start, &end, cthis->frcolor, linew);
 	}
 
 	for(i = -3;i<=2;i++)
 	{
-		start.x = basx + i*interval + interval/2;
-		start.y = basy;
+		start.x = CenterX + i*StepGap + StepGap/2;
+		start.y = CenterY;
 		end.x = start.x ;
-		end.y = start.y -slen;
-		DrawcvLine(frame, &start, &end, lineparm->frcolor, linew);
+		end.y = start.y -Len;
+		DrawcvLine(frame, &start, &end, cthis->frcolor, linew);
 	}
 
 	return ;
@@ -509,6 +521,146 @@ void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 	end.x = start.x;
 	end.y = start.y + len;
 	DrawcvLine(frame,&start,&end, cthis->frcolor,linew);
+	
+}
+
+
+void Drawjs_leftFrame(Mat frame,CFOV * fovOsdCtrl)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+
+	for(i=0;i<10;i++)
+	{
+		start.x = 10 ;
+		start.y = 220 + i*len;
+		end.x = start.x;
+		end.y = start.y +len/2;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	{
+		start.x = 10 ;
+		start.y = 410;
+		end.x = start.x + 6;
+		end.y = start.y;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	{
+		start.x = 20;
+		start.y = 220;
+		end.x = start.x -6;
+		end.y = start.y;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	for(i=0;i<10;i++)
+	{
+		start.x = 20 ;
+		start.y = 220 + i*len;
+		end.x = start.x;
+		end.y = start.y +len/2;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	
+}
+
+
+void Drawjs_rightFrame(Mat frame,CFOV * fovOsdCtrl)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+
+	for(i=0;i<10;i++)
+	{
+		start.x = 690 ;
+		start.y = 220 + i*len;
+		end.x = start.x;
+		end.y = start.y +len/2;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	{
+		start.x = 690 ;
+		start.y = 410;
+		end.x = start.x + 6;
+		end.y = start.y;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	{
+		start.x = 700;
+		start.y = 220;
+		end.x = start.x -6;
+		end.y = start.y;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	for(i=0;i<10;i++)
+	{
+		start.x = 700 ;
+		start.y = 220 + i*len;
+		end.x = start.x;
+		end.y = start.y +len/2;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	
+}
+
+
+
+
+void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+
+	for(i=0;i<10;i++)
+	{
+		start.x = 230 + i*len;
+		start.y = 555 ;
+		end.x = start.x + len/2;
+		end.y = start.y ;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	{
+		start.x = 230 ;
+		start.y = 555;
+		end.x = start.x ;
+		end.y = start.y + 6;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	{
+		start.x = 420;
+		start.y = 565;
+		end.x = start.x ;
+		end.y = start.y -6;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
+	for(i=0;i<10;i++)
+	{
+		start.x = 230 + i*len;
+		start.y = 565 ;
+		end.x = start.x + len/2;
+		end.y = start.y ;
+		DrawcvLine(frame,&start,&end, 2,linew);
+	}
+
 	
 }
 

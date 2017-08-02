@@ -43,7 +43,6 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov);
 
 
 
-
 #ifdef __cplusplus
 }
 #endif

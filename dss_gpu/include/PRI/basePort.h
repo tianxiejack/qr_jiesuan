@@ -149,12 +149,7 @@ typedef struct _PortInter {
 }PortInter_t;
 
 #if 0
-typedef struct {
-   	UARTHW_Baud 	baud;		
-	UARTHW_WordLen	datasize;	
-	UARTHW_StopBits  stop;
-	UARTHW_Parity 	parity;
-}UARTPARAM;
+
 
 typedef enum {
     UARTHW_BAUD_9600           = 195,//163,//326,//160,//192,

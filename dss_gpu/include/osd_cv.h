@@ -20,6 +20,7 @@ using namespace cv;
 
 #include "basePort.h"
 
+
 typedef struct
 {
 	int x;
@@ -35,10 +36,13 @@ void Drawcvcross(Mat frame,Line_Param_fb *lineparm);
  void DrawcvDashliner(Mat frame,int startx,int starty,int endx,int endy,int linelength,int dashlength,int frcolor);
  void drawdashlinepri(Mat frame,int startx,int starty,int endx,int endy,int linelength,int dashlength,int colour);
  void DrawcvLine(Mat frame,Osd_cvPoint *start,Osd_cvPoint *end,int frcolor,int linew);
-void DrawjsRuler(Mat frame,Line_Param_fb* lineparm);
+void DrawjsRuler(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsOblinqueLine(Mat frame,Line_Param_fb* lineparm);
 
 void DrawjsXLine(Mat frame,int value);
+void Drawjs_leftFrame(Mat frame,CFOV * fovOsdCtrl);
+void Drawjs_rightFrame(Mat frame,CFOV * fovOsdCtrl);
+void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl);
 
 #endif /* OSD_CV_H_ */
