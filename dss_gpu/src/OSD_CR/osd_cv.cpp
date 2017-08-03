@@ -399,7 +399,7 @@ void DrawjsXLine(Mat frame,CFOV * fovOsdCtrl)
 	end.x = center.x + len*(sin(theta));
 	end.y = center.y - len*(cos(theta));
 
-	 CvScalar colour=GetcvColour(2);
+	 CvScalar colour=GetcvColour(cthis->frcolor);
 	 line(frame, center, end, colour, linew, 8, 0 );
 	 
 

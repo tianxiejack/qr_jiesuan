@@ -102,13 +102,13 @@ void FOVCTRL_updateFovScal(HANDLE hFov,int curScal)
 
 
 void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
-{
+{	
 	CFOV * cthis = (	CFOV *)hFov;
 	if(cthis->bFovDraw==FALSE)
 		return;
 
 	cthis->frcolor = 0;
-	
+
 	DrawjsCompass(frame,cthis);
 	DrawjsCross(frame,cthis);
 	DrawjsRuler(frame,cthis);

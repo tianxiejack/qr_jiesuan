@@ -239,5 +239,8 @@ Int32 Dx_update_field( Int32 blkId, Int32 fieldno, Bool notify );
 
 Int32 Dx_initparam( );
 
+
+void button_to_save();
+
 #endif /* CR_DX_DRIVER_DXD_H */
 /************************************** The End Of File **************************************/

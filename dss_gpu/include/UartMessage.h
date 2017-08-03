@@ -51,7 +51,6 @@ int NetPort_ParseByte(unsigned char* buf);
 
 
 
-
 #ifdef __cplusplus
 }
 #endif

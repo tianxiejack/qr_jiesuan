@@ -51,12 +51,17 @@ void saveWeatherParam();
 void initilGeneralParam();
 void increaseMeasureDis();
 void decreaseMeasureDis();
-
-
-
+void saveZeroParam();
 
 
 extern FOVCTRL_Handle pFovCtrlObj;
+extern GeneralCorrectionItem gMachineGun_GCParam;
+extern GeneralCorrectionItem gGrenadeKill_GCParam;
+extern GeneralCorrectionItem gGrenadeGas_GCParam;
+
+extern ZeroCorrectionItem gMachineGun_ZCTable;
+extern ZeroCorrectionItem gGrenadeKill_ZCTable;
+extern WeatherItem gWeatherTable;
 
 #endif
 

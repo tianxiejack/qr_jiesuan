@@ -353,95 +353,18 @@ void CProcess021::process_osd(void *pPrm)
 
 	//beside the text
 	//jiao zhun & ji jian --hide
-	
 	if(flag)
+	{
 		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);
+	}
 	FOVCTRL_draw(frame,pFovCtrlObj);
 	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
 	
-	#if 0
-	if(!flag)
-	{
-		if(isCalibrationZero())
-			lineParam.frcolor = 2;
-	
-		
-		start.x = 300;
-		start.y = 200;
-		end.x = start.x+100;
-		end.y = start.y;
-		DrawcvLine(frame, &start, &end, 2, 3);
-	
-	}
-
-	if(isCalibrationZero())
-			lineParam.frcolor = 2;
-	
-		
-		start.x = 300;
-		start.y = 300;
-		end.x = start.x+100;
-		end.y = start.y;
-		DrawcvLine(frame, &start, &end, 2, 3);
-		
-	
-	#endif
-	
+	flag = 1;
 
 	sThis->m_display.UpDateOsd(0);
-	flag = 1;
+	
 	return ;
-
-#if 0
-	#if 0
-	static int iFrameCnt=0;
-	iFrameCnt++;
-	OSA_printf(" %d:%s devId %d iFrameCnt %d\n",OSA_getCurTimeInMsec(),__func__,
-		devId, iFrameCnt);
-	#endif
-
-	//OSA_printf(" %d:%s devId %d grplevel %d grpcolor %d\n",OSA_getCurTimeInMsec(),__func__,
-	//	devId, pIStuts->DispGrp[devId], pIStuts->DispColor[devId]);
-	if(sThis->m_display.m_bOsd == false)
-		return ;
-	//memcpy(frame.d);
-//	OSA_printf(" %d:%s devId %d iFrameCnt %d\n",OSA_getCurTimeInMsec(),__func__,
-//		devId, grpxChWinPrms.chParam[devId].numWindows);
-	for(winId = 0; winId < grpxChWinPrms.chParam[devId].numWindows; winId++)
-	{
-		textParam = &grpxChWinPrms.chParam[devId].winPrms[winId];
-		textParampri = &grpxChWinPrms.chParam[devId].winPrms_pri[winId];
-		lineParam = (Line_Param_fb *)&grpxChWinPrms.chParam[devId].winPrms[winId];
-		lineParampri = (Line_Param_fb *)&grpxChWinPrms.chParam[devId].winPrms_pri[winId];
-		if(onece<ALG_LINK_GRPX_MAX_WINDOWS)
-		{
-			memcpy(textParampri,textParam,sizeof(Text_Param_fb));
-			onece++;
-		}
-		
-		//if(textParampri->enableWin)
-		//	{
-				
-		//	}
-
-		if(winId==WINID_TV_FOV_CHOOSE_1/2)
-		{
-			//printf("textParam->enableWin=%d  objType=%d valid=%d\n",textParam->enableWin,textParam->objType,textParam->text_valid);
-		}
-		//printf("textParam->enableWin=%d  objType=%d valid=%d\n",textParam->enableWin,textParam->objType,textParam->text_valid);
-		if(!textParam->enableWin)
-			continue;
-		
-		
-	//	EraseDraw_graph_osd(frame,textParam,textParampri);
-	//	Draw_graph_osd(frame,textParam,lineParam);
-		
-		//sThis->updata_osd[0]=true;
-		sThis->m_display.UpDateOsd(0);
-		memcpy(textParampri,textParam,sizeof(Text_Param_fb));
-
-	}
-	#endif
 }
 
 
@@ -1636,7 +1559,7 @@ void CProcess021::OnMouseRightUp(int x, int y){};
 void CProcess021::OnKeyDwn(unsigned char key)
 {
 	CMD_EXT *pIStuts = &extInCtrl;
-printf("!!!!!!!key = %d\n",key);
+
 	if(key == 'a' || key == 'A')
 	{
 		pIStuts->SensorStat = (pIStuts->SensorStat + 1)%3;
@@ -1780,6 +1703,11 @@ printf("!!!!!!!key = %d\n",key);
 	if (key == 'w')
 	{
 		MSGDRIV_send(CMD_BUTTON_QUIT, NULL);
+	}
+
+	if (key == 'x'|| key == 'X')
+	{
+		button_to_save();
 	}
 	
 	if (key == 'z'|| key == 'Z')
@@ -3991,7 +3919,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 		{
 			if(isCalibrationZero())
 			{
-				//saveZeroParam();
+				saveZeroParam();
 				//udateMenuItem_Zero_General(getProjectileType());
 			}
 			else if(isCalibrationGeneral())
@@ -4183,7 +4111,7 @@ void CProcess021::processCMD_BUTTON_AUTOCATCH(LPARAM lParam)
 		//	AVTCTRL_setAquire();
 		//	AVTCTRL_regCancelMTT(pAvtCtrlObj);
 		}
-	}else if(isBattleMode()&&isStatBattleAuto()){	//×Ô¶¯²¶»ñÇÐ»»´Ó×Ô¶¯×°±íµ½×Ô¶¯¸ú×Ù
+	}else if(isBattleMode()&&isStatBattleAuto()){	//ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½×°ï¿½?ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(isBattleIdle()){
 			gLevel3CalculatorState = Auto_Idle;
 			OSDCTRL_BattleShow();

@@ -20,7 +20,7 @@ GeneralCorrectionItem gGrenadeGas_GCParam	={0,		{0,0}};
 
 ZeroCorrectionItem gMachineGun_ZCTable = {500,	{352,288}};
 ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};
-//WeatherItem gWeatherTable={15,101325};
+WeatherItem gWeatherTable={15,101325};
 
 static int DISLEN=10;
 
@@ -418,6 +418,23 @@ void decreaseMeasureDis()
 		if(DistanceManual <= 0)
 			DistanceManual = 0;
 	}
+}
+
+
+void saveZeroParam()
+{
+	if(isMachineGun())
+	{	
+		gMachineGun_ZCTable.data.deltaX = getCrossX();
+		gMachineGun_ZCTable.data.deltaY = getCrossY();
+	}
+	else if(isGrenadeKill())
+	{
+		gGrenadeKill_ZCTable.data.deltaX = getCrossX();
+		gGrenadeKill_ZCTable.data.deltaY = getCrossY();
+	}
+		gMachineGun_ZCTable.Angle	     = getMachGunAngleAbs();
+		gGrenadeKill_ZCTable.Angle	     = getGrenadeAngleAbs();
 }
 
 

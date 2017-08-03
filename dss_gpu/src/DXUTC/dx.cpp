@@ -42,6 +42,7 @@
 #include <data_port.h>
 #include "ipc_port.h"
 #include "app_user.h"
+#include "osdPort.h"
 
 #define DX_TSK_PRI          2
 #define DX_TSK_STACK_SIZE   ( 0 )
@@ -94,6 +95,52 @@ static Int32 Dx_updateCfgDownloadData( Int32 blkId, Int32 feildId );
 static Int32 Dx_updateCfgUploadData( Int32 blkId, Int32 feildId );
 static Int32 config_default_set( void );
 
+
+GeneralCorrectionItem gGrenadeKill_GCTable[]=
+{
+	{0,		{0,0}},
+	{100, 	{0,0}},
+	{200, 	{0,0}},
+	{300, 	{0,0}},
+	{400, 	{0,0}},
+	{500, 	{0,0}},
+	{600, 	{0,0}},
+	{700, 	{0,0}},
+	{800, 	{0,0}},
+	{900, 	{0,0}},
+	{1000, 	{0,0}},
+	{1100, 	{0,0}},
+	{1200, 	{0,0}},
+	{1300, 	{0,0}},
+	{1400, 	{0,0}},
+	{1500, 	{0,0}},
+	{1600, 	{0,0}},
+	{1700, 	{0,0}},
+	{1791,	{0,0}}
+};
+
+GeneralCorrectionItem gGrenadeGas_GCTable[]=
+{
+		{0,	{0,0}},
+		{25, {0,0}},
+		{50, {0,0}},
+		{75, {0,0}},
+		{100, {0,0}},
+		{125, {0,0}},
+		{150, {0,0}},
+		{175, {0,0}},
+		{200, {0,0}},
+		{225, {0,0}},
+		{250, {0,0}},
+		{275, {0,0}},
+		{300, {0,0}},
+		{325, {0,0}},
+		{350, {0,0}},
+		{364, {0,0}}
+};
+//ZeroCorrectionItem gMachineGun_ZCTable = {500,	{352,288}};
+//ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};
+//WeatherItem gWeatherTable={15,101325};
 
 /**
  * @Fun:		Dx_update_field
@@ -182,12 +229,12 @@ static Int32 Dx_syscfgSaveConfig026( Int32 blkId, Int32 feildId )
     if( FIELD_ITEM_SYS(CFGID_SYS_SAVE_CONFIG_AS) == 1 )
     {
         FIELD_ITEM_SYS(CFGID_SYS_SAVE_CONFIG_AS) = 0;
-        iRet = syscfg_save( SYSCONFIG_FILE1, gDXD_infoSave.sysConfig, 128 * 16 * 4 ); 
+        iRet = syscfg_save( SYSCONFIG_FILE1, gDXD_infoSave.sysConfig, 128*2* 16 * 4 ); 
     }
     else
     {
         FIELD_ITEM_SYS(CFGID_SYS_SAVE_CONFIG_AS) = 0;
-        iRet = syscfg_save( SYSCONFIG_FILE2, gDXD_infoSave.sysConfig, 128 * 16 * 4 );
+        iRet = syscfg_save( SYSCONFIG_FILE2, gDXD_infoSave.sysConfig, 128 *2* 16 * 4 );
     }
 
 
@@ -560,7 +607,7 @@ Int32 Dx_run( )
 
     if( FIELD_ITEM_SYS(CFGID_SYS_SEL_STARTUP) == 1 )
     {
-        syscfg_load( SYSCONFIG_FILE1, gDXD_info.sysConfig, 128 * 16 * 4 );
+        syscfg_load( SYSCONFIG_FILE1, gDXD_info.sysConfig, 256 * 16 * 4 );
 	printf("*************************************%s  loadsysconfig\n",__func__);
 
     }
@@ -1471,5 +1518,42 @@ Int32 Dx_killTimer( UInt32 timerId )
 
     return OSA_SOK;
 }
+
+void button_to_save()
+{
+	  dxCfg[0].configId=CFGID_SYS_SAVE_CONFIG_AS;
+	  dxCfg[0].value=0;
+
+
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_ZC_distance,   		(int)(gMachineGun_ZCTable.distance*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_ZC_deltaX,      		(int)(gMachineGun_ZCTable.data.deltaX*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_ZC_deltaY,       		(int)(gMachineGun_ZCTable.data.deltaY));
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_ZC_Angle,        		(int)(gMachineGun_ZCTable.Angle*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Kill_ZC_distance,     		(int)(gGrenadeKill_ZCTable.distance*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Kill_ZC_deltaX,        		(int)(gGrenadeKill_ZCTable.data.deltaX*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Kill_ZC_deltaY,        		(int)(gGrenadeKill_ZCTable.data.deltaY*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Kill_ZC_Angle,         		(int)(gGrenadeKill_ZCTable.Angle*100));
+
+	CFGID_CONFIG_SETSAVE(CFGID_Weather_Temparature,   		gWeatherTable.Temparature);
+	CFGID_CONFIG_SETSAVE(CFGID_Weather_Pressure, 	     		gWeatherTable.Pressure);
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_distance,     	(int)(gMachineGun_GCParam.distance*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_deltaX,        	(int)(gMachineGun_GCParam.data.deltaX*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_deltaY,       	 	(int)(gMachineGun_GCParam.data.deltaY*100));
+
+	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_distance,     	(int)(gGrenadeGas_GCParam.distance*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_deltaX,        	(int)(gGrenadeGas_GCParam.data.deltaX*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_deltaY,        	(int)(gGrenadeGas_GCParam.data.deltaY*100));
+
+	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_distance,     		(int)(gGrenadeKill_GCParam.distance*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_deltaX,        		(int)(gGrenadeKill_GCParam.data.deltaX*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_deltaY,        		(int)(gGrenadeKill_GCParam.data.deltaY*100));
+
+
+	 
+	
+	 Dx_sendCfgMsg(NULL,DX_MSGID_SET_CFG,&dxCfg[0],FALSE);
+	 return ;
+}
+
 
 /************************************** The End Of File **************************************/

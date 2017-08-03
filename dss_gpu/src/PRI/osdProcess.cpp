@@ -24,7 +24,7 @@
 #include "osdProcess.h"
 #include "Tasklist.h"
 #include "statCtrl.h"
-
+#include "osdPort.h"
 
 #define ARGSCALE	 0.0054931640625
 #define ARGSPEEDSCAL 0.00274658203125
@@ -149,7 +149,7 @@ bool SHINE=FALSE;
 
 extern PROJECTILE_TYPE gProjectileType;
 extern PROJECTILE_TYPE gProjectileTypeBefore;
-WeatherItem gWeatherTable={15,101325};
+//extern WeatherItem gWeatherTable;
 SEM_ID osdSem;
 
 

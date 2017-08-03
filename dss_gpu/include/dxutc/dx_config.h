@@ -571,7 +571,39 @@
 #define CFGID_CODEC_EncInfo(chId)          CFGID_BUILD( BLKID_BASE_CODEC+chId, 13)
 
 
-//#define BLKID_BASE_CODEC                   (150)
+
+#define BLKID_DATA1_SAVE			(150)
+//gMachineGun_ZCTable
+#define CFGID_Gun_ZC_distance 			CFGID_BUILD(BLKID_DATA1_SAVE, 0)
+#define CFGID_Gun_ZC_deltaX				CFGID_BUILD(BLKID_DATA1_SAVE, 1)
+#define CFGID_Gun_ZC_deltaY				CFGID_BUILD(BLKID_DATA1_SAVE, 2)
+#define CFGID_Gun_ZC_Angle 				CFGID_BUILD(BLKID_DATA1_SAVE, 3)
+//gGrenadeKill_ZCTable
+#define CFGID_Kill_ZC_distance 			CFGID_BUILD(BLKID_DATA1_SAVE, 4)
+#define CFGID_Kill_ZC_deltaX				CFGID_BUILD(BLKID_DATA1_SAVE, 5)
+#define CFGID_Kill_ZC_deltaY				CFGID_BUILD(BLKID_DATA1_SAVE, 6)
+#define CFGID_Kill_ZC_Angle 				CFGID_BUILD(BLKID_DATA1_SAVE, 7)
+//gWeatherTable
+#define CFGID_Weather_Temparature 		CFGID_BUILD(BLKID_DATA1_SAVE, 8)
+#define CFGID_Weather_Pressure			CFGID_BUILD(BLKID_DATA1_SAVE, 9)
+
+
+
+#define BLKID_DATA2_SAVE			(160)
+//gMachineGun_GCParam
+#define CFGID_Gun_GC_distance			CFGID_BUILD(BLKID_DATA2_SAVE, 0)
+#define CFGID_Gun_GC_deltaX				CFGID_BUILD(BLKID_DATA2_SAVE, 1)
+#define CFGID_Gun_GC_deltaY				CFGID_BUILD(BLKID_DATA2_SAVE, 2)
+//gGrenadeGas_GCParam
+#define CFGID_Gas_GC_distance			CFGID_BUILD(BLKID_DATA2_SAVE, 3)
+#define CFGID_Gas_GC_deltaX				CFGID_BUILD(BLKID_DATA2_SAVE, 4)
+#define CFGID_Gas_GC_deltaY				CFGID_BUILD(BLKID_DATA2_SAVE, 5)
+//gGrenadeKill_GCParam
+#define CFGID_Kill_GC_distance			CFGID_BUILD(BLKID_DATA2_SAVE, 6)
+#define CFGID_Kill_GC_deltaX				CFGID_BUILD(BLKID_DATA2_SAVE, 7)
+#define CFGID_Kill_GC_deltaY				CFGID_BUILD(BLKID_DATA2_SAVE, 8)
+
+
 
 #endif
 /***********************************END**************************************/
