@@ -102,6 +102,7 @@ int WeaponCtrlPort_ParseByte(BYTE* buf);
 
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf);
 
+
 #ifdef __cplusplus
 }
 #endif

@@ -266,11 +266,12 @@ void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl)
 	center.x =650;
 	center.y = 130;
 	int radius = 28;
+	int lcolor = 0;
 	CvScalar color=GetcvColour(cthis->frcolor);
 		
-
 	circle(frame,center,radius ,color,1,8,0);
-
+	lcolor = cthis->frcolor;
+	
 	//draw the interval
 	start.x = center.x ;
 	start.y = center.y - radius;
@@ -340,7 +341,7 @@ void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl)
 	start1.y = start.y;
 	end1.x = end.x;
 	end1.y = end.y;
-	DrawcvLine(frame, &start1, &end1, 2, 1);		
+	DrawcvLine(frame, &start1, &end1, lcolor, 1);		
 	
 	start.x = center.x + radius;
 	start.y = center.y ;
@@ -350,7 +351,7 @@ void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl)
 	start1.y = start.y;
 	end1.x = end.x;
 	end1.y = end.y;
-	DrawcvLine(frame, &start1, &end1, 2, 1);	
+	DrawcvLine(frame, &start1, &end1, lcolor, 1);	
 
 	start.x = center.x;
 	start.y = center.y - radius;
@@ -360,7 +361,7 @@ void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl)
 	start1.y = start.y;
 	end1.x = end.x;
 	end1.y = end.y;
-	DrawcvLine(frame, &start1, &end1, 2, 1);	
+	DrawcvLine(frame, &start1, &end1, lcolor, 1);	
 
 	start.x = center.x;
 	start.y = center.y + radius;
@@ -370,18 +371,22 @@ void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl)
 	start1.y = start.y;
 	end1.x = end.x;
 	end1.y = end.y;
-	DrawcvLine(frame, &start1, &end1, 2, 1);	
+	DrawcvLine(frame, &start1, &end1, lcolor, 1);	
 
 	//zhishizhen
-	DrawjsXLine(frame,10);
+	DrawjsXLine(frame,cthis);
 
 	return ;
 }
 
 
-void DrawjsXLine(Mat frame,int value)
+void DrawjsXLine(Mat frame,CFOV * fovOsdCtrl)
 {
 	double theta;
+	int value= 0;
+	CFOV * cthis = NULL;
+	cthis = fovOsdCtrl;
+	value = cthis->theta;
 	
 	value %= 360;
 	theta = (value*PI)/180;
@@ -469,8 +474,10 @@ void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 	cthis = fovOsdCtrl;
 	Osd_cvPoint start;
 	Osd_cvPoint end;
-	int flag = 0 ;  // 0 jiguang    1 ren
-
+	int flag = gMeasureType ;  // 0 jiguang    1 ren
+	
+	if(isFovSmall())
+		len *= 1.2;
 	
 	if(flag)
 		offlen = 0;
@@ -478,7 +485,6 @@ void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 		offlen = 20;
 	
 	//ren
-	
 
 	start.x = cthis->fovX;
 	start.y = cthis->fovY;

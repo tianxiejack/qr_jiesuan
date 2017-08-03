@@ -71,8 +71,8 @@ typedef struct _systctrl{
 }SYSCTRL_OBJ,*SYSCTRL_Handle;
 
 
-int mainCtrl(void);
-int taskCreate(void);
+int mainCtrl(void* prm);
+int taskCreate(void * prm);
 int taskDestroy(void);
 
 

@@ -24,7 +24,8 @@ using namespace cv;
 
 int main(int argc, char **argv)
 {
-
+	if(argc < 2)
+		return 0;
 	CProcess021 proc;
 
 	App_dxmain();
@@ -35,7 +36,7 @@ int main(int argc, char **argv)
 	proc.init();
 
 	proc.run();
-	mainCtrl();
+	mainCtrl((void *)argv[1]);
 	//Hard_Init();
 	
 	glutMainLoop();

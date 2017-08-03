@@ -69,6 +69,8 @@ static BYTE CANSendFrame2[10]={0x01,0x04,0xB2,0x00,};
 static char WeaponCtrl[16]={0};
 static 	unsigned short panoAngleV=0,panoAngleH=0;
 
+
+
 void absPosRequest(BYTE code)
 {
 #if 0
@@ -1027,7 +1029,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			}
 		}
 		else if(BIT3(BYTE5(buf)) == 0x00)
-		{//����
+		{
 			//startF5_Timer();
 		}
 	}

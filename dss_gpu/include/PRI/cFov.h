@@ -32,7 +32,7 @@ extern "C"{
 
 
 
-
+void FOVCTRL_erase_draw(Mat frame,HANDLE hFov);
 FOVCTRL_Handle FOVCTRL_create(UINT Sens,UINT fovElem,UINT x,UINT y);
 void FOVCTRL_destroy(HANDLE hFovCtrl);
 void FOVCTRL_updateFovRect(HANDLE hFov,char Sens,char fovElem,short x,short y);

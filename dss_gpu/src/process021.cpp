@@ -33,6 +33,7 @@ using namespace cv;
 
 extern OSDCTRL_Handle pCtrlObj;
 OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
+FOVCTRL_Handle  pFovCtrlBeforObj = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ));	
 
 int n=0,ShinId=eCalibGeneral_XPole;
 
@@ -322,9 +323,12 @@ void CProcess021::process_osd(void *pPrm)
 	lineParam.width = 60;
 	lineParam.height = 60;
 	lineParam.frcolor = 2;
+
+
+	Osd_cvPoint start,end;
 	//erase
-	if(!flag)
-		memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
+	//if(!flag)
+		//memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 	
 
 	if(SHINE)
@@ -349,23 +353,37 @@ void CProcess021::process_osd(void *pPrm)
 
 	//beside the text
 	//jiao zhun & ji jian --hide
-
+	
+	if(flag)
+		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);
 	FOVCTRL_draw(frame,pFovCtrlObj);
-
+	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
+	
 	#if 0
+	if(!flag)
+	{
+		if(isCalibrationZero())
+			lineParam.frcolor = 2;
 	
-	if(isCalibrationMode() || isBootUpMode())
-		lineParam.frcolor = 0;
-
-	if(!isBootUpMode())
-		DrawjsCompass(frame,&lineParam);
+		
+		start.x = 300;
+		start.y = 200;
+		end.x = start.x+100;
+		end.y = start.y;
+		DrawcvLine(frame, &start, &end, 2, 3);
 	
-	DrawjsRuler(frame,&lineParam);
+	}
 
 	if(isCalibrationZero())
-		lineParam.frcolor = 2;
-	DrawjsCross(frame, &lineParam);
-
+			lineParam.frcolor = 2;
+	
+		
+		start.x = 300;
+		start.y = 300;
+		end.x = start.x+100;
+		end.y = start.y;
+		DrawcvLine(frame, &start, &end, 2, 3);
+		
 	
 	#endif
 	
@@ -3542,6 +3560,7 @@ void CProcess021::processCMD_BUTTON_BATTLE(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
  {
+ 
 	if(isBootUpMode()&& isBootUpSelfCheckFinished())
 	{
 		processCMD_EXIT_SELF_CHECK(0);
@@ -3721,7 +3740,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 	{
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
-			//increaseMeasureDis();
+			increaseMeasureDis();
 			//loadFiringTable_Enter();
 		}
 	}
@@ -4148,7 +4167,31 @@ void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_AUTOCATCH(LPARAM lParam)
  {
-
+	if(isBattleMode()&&isStatBattleAlert())
+	{
+		AUTOCATCH = !AUTOCATCH;
+		if(AUTOCATCH)
+		{
+		//	AVTCTRL_setAquire();
+		//	AVTCTRL_selectMTD(pAvtCtrlObj);
+//		//	AVTCTRL_setAtuoTack();
+		//	AVTCTRL_regMTT(pAvtCtrlObj);
+		}
+		else
+		{
+		//	OSDCTRL_AlgSelect();
+		//	AVTCTRL_setAquire();
+		//	AVTCTRL_regCancelMTT(pAvtCtrlObj);
+		}
+	}else if(isBattleMode()&&isStatBattleAuto()){	//自动捕获切换从自动装表到自动跟踪
+		if(isBattleIdle()){
+			gLevel3CalculatorState = Auto_Idle;
+			OSDCTRL_BattleShow();
+		}else if(isAutoIdle()){
+			gLevel3CalculatorState = Battle_Idle;
+			OSDCTRL_BattleTrackShow();
+		}
+	}
 
 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCATCH",__func__,__LINE__);
 	return ;
@@ -4157,14 +4200,29 @@ void CProcess021::processCMD_BUTTON_AUTOCATCH(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_BATTLE_AUTO(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE_AUTO",__func__,__LINE__);
+ 	if(isBattleMode())
+	{
+		gLevel2BattleState = STATE_BATTLE_AUTO;
+		gLevel3CalculatorState = Auto_Idle;
+		OSDCTRL_EnterBattleMode();
+		Posd[eDynamicZone] = DynamicOsd[0];
+		OSDCTRL_ItemShow(eDynamicZone);
+	}
+	
+ 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE_AUTO",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_BUTTON_BATTLE_ALERT(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE_ALERT",__func__,__LINE__);
+	if(isBattleMode())
+	{
+		gLevel2BattleState = STATE_BATTLE_ALERT;
+		OSDCTRL_EnterBattleMode();
+	}
+
+	//OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE_ALERT",__func__,__LINE__);
 	return ;
  }
 
@@ -4207,7 +4265,24 @@ void CProcess021::processCMD_MAINTPORT_UNLOCK(LPARAM lParam)
 
 void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE_SWITCH",__func__,__LINE__);
+	if(isBattleMode()&&isStatBattleAuto())
+	{
+		gMeasureType =(DIS_MEASURE_TYPE)(MEASURETYPE_MANUAL - gMeasureType);
+		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
+		if(MEASURETYPE_MANUAL == gMeasureType)
+		{
+			OSDCTRL_ItemShine(eMeasureDis);
+			isfixingMeasure = TRUE;
+		}
+		else
+		{
+			SHINE = FALSE;
+			ShinId = 0;
+			isfixingMeasure = FALSE;
+		}
+	}
+ 	
+ 	//OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE_SWITCH",__func__,__LINE__);
 	return ;
  }
 
@@ -4373,14 +4448,20 @@ void CProcess021::processCMD_MODE_ATTACK_MULTI(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
+	Posd[eFovType] = FovTypeOsd[1];
+	pFovCtrlObj->fovElem=eFov_SmlFov_Stat;
+
+	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_MODE_FOV_LARGE(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);
+ 	Posd[eFovType] = FovTypeOsd[0];
+	pFovCtrlObj->fovElem=eFov_LarFov_Stat;
+	
+ 	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);
 	return ;
  }
 
@@ -4408,14 +4489,24 @@ void CProcess021::processCMD_MODE_ENHANCE_SWITCH(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_SHOT_SHORT(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_SHOT_SHORT",__func__,__LINE__);
+ 	if(isMachineGun())
+	{
+		gGunShotType = SHOTTYPE_SHORT;
+	}
+	
+ 	//OSA_printf("%s,line:%d ... processCMD_MODE_SHOT_SHORT",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_MODE_SHOT_LONG(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_SHOT_LONG",__func__,__LINE__);
+ 	if(isMachineGun())
+	{
+		gGunShotType = SHOTTYPE_LONG;
+	}
+	
+ 	//OSA_printf("%s,line:%d ... processCMD_MODE_SHOT_LONG",__func__,__LINE__);
 	return ;
  }
 

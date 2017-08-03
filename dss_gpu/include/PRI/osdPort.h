@@ -49,6 +49,10 @@ void decreaseDigitOrSymbolGeneral();
 void increaseDigitOrSymbolGeneral();
 void saveWeatherParam();
 void initilGeneralParam();
+void increaseMeasureDis();
+void decreaseMeasureDis();
+
+
 
 
 

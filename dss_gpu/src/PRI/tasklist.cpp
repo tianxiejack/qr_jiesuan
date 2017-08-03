@@ -87,9 +87,9 @@ static OSA_ThrHndl NetHandl;
 
 
 
-int mainCtrl(void)
+int mainCtrl(void* prm)
 {
-	taskCreate();
+	taskCreate(prm);
 	glutMainLoop();
 
 	taskDestroy();
@@ -102,11 +102,10 @@ void *testOsd(void* prm)
 }
 
 
-int taskCreate(void)
+int taskCreate(void * prm)
 {
 	int status = -1;
-	char tmp[] = "8001";
-
+	
 	status = OSA_thrCreate(
 				&GrenadePORTHndl,
 				GrenadePORT_recvTask,
@@ -177,7 +176,7 @@ int taskCreate(void)
 				tcpTestFunc,
 				0,
 				0,
-				0
+				prm
 			);
 	OSA_assert(status==OSA_SOK);
 	

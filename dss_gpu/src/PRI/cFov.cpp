@@ -101,6 +101,21 @@ void FOVCTRL_updateFovScal(HANDLE hFov,int curScal)
 }
 
 
+void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
+{
+	CFOV * cthis = (	CFOV *)hFov;
+	if(cthis->bFovDraw==FALSE)
+		return;
+
+	cthis->frcolor = 0;
+	
+	DrawjsCompass(frame,cthis);
+	DrawjsCross(frame,cthis);
+	DrawjsRuler(frame,cthis);
+
+	return ;
+}
+
 
 void FOVCTRL_draw(Mat frame,HANDLE hFov)
 {
@@ -110,10 +125,6 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	SDK_ASSERT(cthis!=NULL);
 	if(cthis->bFovDraw==FALSE)
 		return;
-	if(isBlackColor())
-		cthis->fovBrush.lineColor = BLACKCOLOR;
-	else
-		cthis->fovBrush.lineColor = WHITECOLOR;
 	
 #if 0
 	
@@ -136,18 +147,25 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	}
 	else if(isBattleMode())//&&isStatBattleAlert())
 	{
+		if(isStatBattleAuto())
+		{
+			DrawjsCompass(frame,cthis);
+			DrawjsCross(frame, cthis);
+			DrawjsRuler(frame,cthis);
+		}
+		else if(isStatBattleAlert())
+		{
+			
+		}
 		
-		DrawjsCompass(frame,cthis);
-		DrawjsCross(frame, cthis);
-		Drawjs_leftFrame(frame,cthis);
-		Drawjs_rightFrame(frame, cthis);
-		Drawjs_bottomFrame(frame, cthis);
-		DrawjsRuler(frame,cthis);
+		//Drawjs_leftFrame(frame,cthis);
+		//Drawjs_rightFrame(frame, cthis);
+		//Drawjs_bottomFrame(frame, cthis);
 	}
 	else
 	{
 		
-		//FOVCTRL_drawCompassSLine(hFov,pImg,getTurretTheta());//luo pan
+		
 	}
 		
 	/*	

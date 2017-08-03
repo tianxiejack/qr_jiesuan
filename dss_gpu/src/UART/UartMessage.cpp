@@ -18,8 +18,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-
-
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -2486,8 +2484,11 @@ void* tcpTestFunc(void* prm)
 
 	struct sockaddr_in seraddr,cliaddr;
 
+	int portnum = atoi((char *)prm);
+	//printf("portnum = %d\n",portnum);
+
 	seraddr.sin_family = AF_INET;
-	seraddr.sin_port = htons(8001);
+	seraddr.sin_port = htons(portnum);
 	seraddr.sin_addr.s_addr = inet_addr("192.168.1.199");
 
 	if(bind(sockfd,(struct sockaddr *)&seraddr,sizeof(seraddr)) == -1)

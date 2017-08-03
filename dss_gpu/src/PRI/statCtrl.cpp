@@ -13,7 +13,7 @@ PROJECTILE_TYPE gProjectileType=PROJECTILE_BULLET;
 PROJECTILE_TYPE gProjectileTypeBefore=PROJECTILE_BULLET;
 int BackColor=WHITECOLOR;
 DIS_MEASURE_TYPE gMeasureType=MEASURETYPE_LASER;
-static SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_SHORT;
+SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_SHORT;
 bool isWeaponCtrlOK=FALSE,isPositionSensorOK=FALSE, isPositionServoOK=FALSE;
 bool isJoyStickOK=FALSE,isDipAngleSensorOK=FALSE,isMachineGunSensorOK=FALSE;
 bool isGrenadeSensorOK=FALSE,isGrenadeServoOK=FALSE,isMachineGunServoOK=FALSE;
@@ -33,7 +33,7 @@ static bool gTrackingMode=FALSE;
 //servo control related
 static bool bServoAavailable = FALSE;
 bool bUnlock = TRUE;
-
+bool AUTOCATCH = FALSE;
 
 SHOT_TYPE getGunShotType()
 {
@@ -45,6 +45,21 @@ SHOT_TYPE getShotType()
 	return gShotType;
 }
 
+bool isBattleIdle()
+{
+	return Battle_Idle == gLevel3CalculatorState;
+}
+
+bool isAutoIdle()
+{
+	return Auto_Idle == gLevel3CalculatorState;
+}
+
+
+bool isMeasureOsdNormal()
+{
+	return (Posd[eMeasureType]==MeasureTypeOsd[0])||(Posd[eMeasureType]==MeasureTypeOsd[1]);
+}
 
 
 bool isBattleMode()

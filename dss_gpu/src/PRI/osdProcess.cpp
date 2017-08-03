@@ -462,8 +462,8 @@ static void OSDCTRL_OsdInitial()
 	sprintf(AimOsd[1],"%c",206);//ï¿½ï¿½
 
 	//sprintf(MeasureTypeOsd[0],"");//ï¿½ï¿½
-	sprintf(MeasureTypeOsd[0],"%c:    ",222);//laser
-	sprintf(MeasureTypeOsd[1],"%c:    ",201);//manual
+	sprintf(MeasureTypeOsd[0],"%c",201);//laser
+	sprintf(MeasureTypeOsd[1],"%c",222);//manual
 	sprintf(MeasureTypeOsd[2],"LSBG");//LSBG
 	sprintf(MeasureTypeOsd[3],"TMOV");//TMOV
 	sprintf(MeasureTypeOsd[4],"ECNL");//ECNL
@@ -812,10 +812,11 @@ void OSDCTRL_CalibZeroShow()
 
 void OSDCTRL_BattleAlertShow()
 {
-#if 0
+#if 1
 	int i;
 	OSDCTRL_AllHide();
-	for(i=eWeather1; i<=eAngleV; i++){
+	for(i=eWeather1; i<=eAngleV; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
 	OSDCTRL_ItemHide(eDynamicZone);
@@ -1408,40 +1409,37 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				sprintf(pStr,"%s",Posd[eMeasureType]); //manual
 			}
 			else
-			{
-				Posd[eMeasureType] = MeasureTypeOsd[1];
+			{	
 				int Distance = getLaserDistance();
-//				Distance = (Distance < 0)? 0:(Distance);
+				//Distance = (Distance < 0)? 0:(Distance);
 				if(Distance>1700)
 					printf("Distance = %d\n",Distance);
 				Distance = (Distance>1700)?0:(Distance);
-				Distance = 0x100;
-				//if(isMeasureOsdNormal())
-				if (1)
+				//Distance = 100;
+				if(isMeasureOsdNormal())
 				{
-					//sprintf(pStr,"%s:%d",Posd[eMeasureType],Distance); //laser
-					sprintf(pStr,"%s",Posd[eMeasureType]); //laser
-					OSDCTRL_ItemShow(eMeasureDis);
+					sprintf(pStr,"%s:%d",Posd[eMeasureType],Distance); //laser
+					//OSDCTRL_ItemShow(eMeasureDis);
 				}
 				else
-					sprintf(pStr,"%s:%s",Posd[eMeasureType],Posd[eMeasureType]); //shou  mo
-//					sprintf(pStr,"%s",Posd[eMeasureType]); //laser
-				//OSDCTRL_ItemHide(eMeasureDis);
+					//sprintf(pStr,"%s:%s",Posd[eMeasureType],Posd[eMeasureType]); //shou  mo
+					sprintf(pStr,"%s",Posd[eMeasureType]); //laser
+				   	OSDCTRL_ItemHide(eMeasureDis);
 				
 			}
 			break;
 		case eMeasureDis:
 			if(isMultiChanged())
-				//sprintf(pStr,"x%03d",getDisLen()); //ï¿½ï¿½ï¿½ï¿½
+				//sprintf(pStr,"x%03d",getDisLen()); //±¶Êý
 				sprintf(pStr,"x%03d",333);
 			else
 				sprintf(pStr,"%04d",DistanceManual);
 			break;
 		case eLaserState:
-			sprintf(pStr,"%s",Posd[eLaserState]); 	//ï¿½ï¿½Ä©Ñ¡Í¨
+			sprintf(pStr,"%s",Posd[eLaserState]); 	//Ê×Ä©Ñ¡Í¨
 			break;
 		case eVideoErr:
-			//sprintf(pStr,"%c%c%c%c",230,215,245,183); 	//ï¿½ï¿½Æµï¿½ì³£
+			//sprintf(pStr,"%c%c%c%c",230,215,245,183); 	//ÊÓÆµÒì³£
 			break;
 		case eShotType:
 			if(isMachineGun())

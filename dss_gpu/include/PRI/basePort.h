@@ -12,6 +12,7 @@ extern "C"{
 
 #define MAXUARTBUFLEN 512
 
+
 typedef struct _MuxPotrTran MuxPotrTran;
 typedef int(*MuxPortCallBackFun)(BYTE *pData,UINT uLen,int context);
 typedef struct _modleCtrl{
@@ -56,7 +57,7 @@ typedef struct _fov_ctrl
 	int 				crossheight;
 	int				theta;
 	int 				frcolor;
-	
+
 	RECT 			fovRect;						
 	CBrush 			fovBrush;
 }CFOV,FOVCTRL_OBJ,*FOVCTRL_Handle;

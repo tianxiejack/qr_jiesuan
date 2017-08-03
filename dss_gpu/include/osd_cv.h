@@ -40,7 +40,7 @@ void DrawjsRuler(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsCompass(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsOblinqueLine(Mat frame,Line_Param_fb* lineparm);
 
-void DrawjsXLine(Mat frame,int value);
+void DrawjsXLine(Mat frame,CFOV * fovOsdCtrl);
 void Drawjs_leftFrame(Mat frame,CFOV * fovOsdCtrl);
 void Drawjs_rightFrame(Mat frame,CFOV * fovOsdCtrl);
 void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl);

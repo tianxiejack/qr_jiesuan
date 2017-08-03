@@ -30,7 +30,7 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	char *ptr;
 	UInt32 frcolor,bgcolor;
 
-	//OSDCTRL_ItemHide(eMeasureType);
+	//OSDCTRL_ItemHide(eMeasureDis);
 	
 	for(i=eModeId;i<eBoreSightLinId;i++)
 	{

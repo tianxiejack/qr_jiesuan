@@ -22,7 +22,7 @@ ZeroCorrectionItem gMachineGun_ZCTable = {500,	{352,288}};
 ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};
 //WeatherItem gWeatherTable={15,101325};
 
-
+static int DISLEN=10;
 
 int getCrossX()
 {
@@ -376,6 +376,49 @@ void moveFocusLeftGeneral()
 	ShinId = eCalibGeneral_DisValue1 + (ShinId - eCalibGeneral_DisValue1+ 13)%14;
 }
 
+
+void increaseMeasureDis()
+{
+	int i = ShinId;
+
+	if(!SHINE)
+		return;
+
+	if(eMeasureDis == i)
+	{
+		DistanceManual+= DISLEN;
+		if(isMachineGun())
+		{
+			if(DistanceManual >= 1500)
+				DistanceManual = 1500;
+		}
+		else if(isGrenadeKill())
+		{
+			if(DistanceManual >= 1700)
+				DistanceManual = 1700;
+		}
+		else if(isGrenadeGas())
+		{
+			if(DistanceManual >= 360)
+				DistanceManual = 360;
+		}
+	}
+}
+
+
+void decreaseMeasureDis()
+{
+	int i = ShinId;	
+
+	if(!SHINE)
+		return;
+
+	if(eMeasureDis == i){
+		DistanceManual -= DISLEN;
+		if(DistanceManual <= 0)
+			DistanceManual = 0;
+	}
+}
 
 
 

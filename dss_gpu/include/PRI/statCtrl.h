@@ -83,7 +83,7 @@ typedef enum Level_four_state{
 
 
 typedef enum{
-	MEASURETYPE_LASER,
+	MEASURETYPE_LASER = 0x00,
 	MEASURETYPE_MANUAL
 }DIS_MEASURE_TYPE;
 
@@ -108,9 +108,19 @@ typedef enum {
 	QUESTION_GRENADE_GAS
 }PROJECTILE_TYPE;
 
+typedef enum Dram_FovStat{
+	eFov_LarFov_Stat	=0x00,
+	eFov_MidFov_Stat	=0x01,
+	eFov_SmlFov_Stat	=0x02,
+	eFov_ZomFov_Stat	=0x03
+}eFovStat;
+
+
+
 SHOT_TYPE getGunShotType();
 SHOT_TYPE getShotType();
 
+bool isMeasureOsdNormal();
 bool isMeasureManual();
 bool isCalibrationSave();
 bool isCalibrationMainMenu();
@@ -154,20 +164,23 @@ bool isFovMachineGun();
 bool isFovGrenadeGas();
 bool isFovGrenadeKill();
 bool isFovSmall();
+bool isBattleIdle();
+bool isAutoIdle();
 
 
 PROJECTILE_TYPE getFovProjectileType();
 PROJECTILE_TYPE getProjectileType();
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
-extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState;
+extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;
 extern Level_three_state gLevel3CalibrationState,gLevel3CalculatorState;
 extern DIS_MEASURE_TYPE gMeasureType;
 extern bool isfixingMeasure,isJoyStickOK,isDipAngleSensorOK,isMachineGunSensorOK,isGrenadeSensorOK;	
 extern bool isWeaponCtrlOK,isPositionSensorOK,isGrenadeServoOK,isMachineGunServoOK,isPositionServoOK;
 extern bool bUnlock;
 extern PROJECTILE_TYPE gProjectileType,gProjectileTypeBefore;
-
+extern SHOT_TYPE gGunShotType;//gShotType
+extern bool AUTOCATCH;
 
 
 #ifdef __cplusplus
