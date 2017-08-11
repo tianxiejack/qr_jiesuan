@@ -22,6 +22,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
+#include  "spiH.h"
 
 #define SIZE		1024
 
@@ -55,6 +56,149 @@ char menuid[33] = {0x00,0xC0,0xC3,0x4A,0x60,0x6C,0x20,0x21,0x6A,0x10,0x70,0x74,0
     0x78,0x88,0x38,0x08,0x0A,0x09,0x13,0x0C,0x02,0x1A,0x0E,0x18,0x19,0x0F,0x11,0x03,0x04,
     0x05,0x06,0x07};
 unsigned int MtdAlg_stat;
+
+
+static OSA_ThrHndl spi1ThrHandl;
+static OSA_ThrHndl spi2ThrHandl;
+static OSA_ThrHndl spi3ThrHandl;
+
+struct RS422_data RS422_ROTER_buff;  //0
+struct RS422_data RS422_DECODE_buff; //1
+struct RS422_data RS422_BAK2_buff;    //2
+struct RS422_data RS422_MIRROR_buff;  //3
+struct RS422_data RS422_VCODE_buff;   //4
+struct RS422_data RS422_BAK1_buff;    //5
+struct RS422_data RS422_TEST_buff;    //6
+struct RS422_data RS422_HCODE_buff;   //7
+
+//spi１设备的线程
+void* spi1InteruptHandle(void* args)
+{
+		interuptHandleSpi1(&RS422_ROTER_buff, &RS422_DECODE_buff, &RS422_BAK2_buff);
+		return NULL;
+}
+
+//spi２设备的线程
+void* spi2InteruptHandle(void* args)
+{
+		interuptHandleSpi2(&RS422_MIRROR_buff, &RS422_VCODE_buff, &RS422_BAK1_buff);
+		return NULL;
+}
+
+//spi３设备的线程
+void* spi3InteruptHandle(void* args)
+{
+		interuptHandleSpi3(&RS422_TEST_buff, &RS422_HCODE_buff);
+		return NULL;
+}
+
+//初始化spi设备
+int  InitDevice_spi()
+{
+		int status = -1;
+		int ret = -1;
+
+		memset(RS422_ROTER_buff.receiveData,0,2048);
+		RS422_ROTER_buff.length=0;
+		pthread_mutex_init(&RS422_ROTER_buff.mutex,NULL);
+
+		memset(RS422_DECODE_buff.receiveData,0,2048);
+		RS422_DECODE_buff.length=0;
+		pthread_mutex_init(&RS422_DECODE_buff.mutex,NULL);
+
+		memset(RS422_BAK2_buff.receiveData,0,2048);
+		RS422_BAK2_buff.length=0;
+		pthread_mutex_init(&RS422_BAK2_buff.mutex,NULL);
+
+		memset(RS422_MIRROR_buff.receiveData,0,2048);
+		RS422_MIRROR_buff.length=0;
+		pthread_mutex_init(&RS422_MIRROR_buff.mutex,NULL);
+
+		memset(RS422_VCODE_buff.receiveData,0,2048);
+		RS422_VCODE_buff.length=0;
+		pthread_mutex_init(&RS422_VCODE_buff.mutex,NULL);
+
+		memset(RS422_BAK1_buff.receiveData,0,2048);
+		RS422_BAK1_buff.length=0;
+		pthread_mutex_init(&RS422_BAK1_buff.mutex,NULL);
+
+		memset(RS422_TEST_buff.receiveData,0,2048);
+		RS422_TEST_buff.length=0;
+		pthread_mutex_init(&RS422_TEST_buff.mutex,NULL);
+
+		memset(RS422_HCODE_buff.receiveData,0,2048);
+		RS422_HCODE_buff.length=0;
+		pthread_mutex_init(&RS422_HCODE_buff.mutex,NULL);
+
+
+		ret=open_device();   //open three spi
+
+
+		switch(ret)
+		{
+			case 0:
+					printf("all spi open success\n");
+					break;
+			case 1:
+					printf("spi3.0 open failed\n");
+					break;
+			case 2:
+					printf("spi0.0 open failed\n");
+					break;
+			case 3:
+					printf("spi3.0 and spi 0.0 open failed\n");
+					break;
+			case 4:
+					printf("spi1.0 open failed\n");
+					break;
+			case 5:
+					printf("spi3.0 and spi 1.0 open failed\n");
+					break;
+			case 6:
+					printf("spi0.0 and spi 1.0 open failed\n");
+					break;
+			case 7:
+					printf("all spi open failed\n");
+					return 1;
+			default:
+					printf("error return");
+					return 1;
+		}
+
+		transfer_init_all(20,115200);//set all uart property
+		// transfer_init(RS422_ROTER,20,115200); //set one uart property
+
+		status = OSA_thrCreate(
+					&spi1ThrHandl,
+					spi1InteruptHandle,
+					0,
+					0,
+					0
+				);
+		OSA_assert(status==OSA_SOK);
+
+		status = OSA_thrCreate(
+					&spi2ThrHandl,
+					spi2InteruptHandle,
+					0,
+					0,
+					0
+				);
+		OSA_assert(status==OSA_SOK);
+
+		status = OSA_thrCreate(
+					&spi3ThrHandl,
+					spi3InteruptHandle,
+					0,
+					0,
+					0
+				);
+		OSA_assert(status==OSA_SOK);
+
+
+		return 0;
+}
+
 
 
 int  Piexlx2Windows(int x,int channel)
@@ -2583,7 +2727,83 @@ int NetPort_ParseByte(unsigned char* buf)
 }
 
 
+/**********************************  test spi ******************************************/
 
+void * SPI_CAN_process(void * prm)
+{
+
+	//CanPort_parseByte();
+
+	  InitDevice_spi();
+
+		while(1)
+		{
+
+			sleep(1);
+		}
+
+
+		return NULL;
+}
+
+//can 头的解析 判断头是否是对的
+int canPort_recvFlg(RS422_obj * obj, int iLen)
+{
+	char * pCur = obj->buf;
+
+	//５个字节
+	if(5 >= obj->length)
+		return -1;
+
+	while(TRUE)
+	{
+		if(0x0002 == stoh2(obj->buf))　　//判断开头标志
+			break;
+		else{
+			memcpy(pCur, pCur+1, 1);
+			obj->length--;
+		}
+
+		if(5 > obj->length)
+			return -1;
+	}
+
+	return 0;
+}
+
+
+// can　通信解析
+int CanPort_parseByte(unsigned char* buf )
+{
+	switch(stoh2(buf))
+	{
+		case CAN_ID_PANEL:
+			WeaponCtrlPORT_ParseBytePanel(buf);
+			break;
+		case CAN_ID_TURRET:
+			//WeaponCtrlPORT_ParseByteTurret(buf);
+			break;
+		case CAN_ID_MACHGUN:
+			//	WeaponCtrlPORT_ParseByteMachGun(buf);
+			break;
+		case CAN_ID_GRENADE:
+			//WeaponCtrlPORT_ParseByteGrenade(buf);
+			break;
+		default:
+			break;
+	}
+	return 0;
+}
+
+
+// bak2　spi3，com3 解析
+int BAK2Port_parseByte(unsigned char * buf)
+{
+
+
+
+		return 0;
+}
 
 
 

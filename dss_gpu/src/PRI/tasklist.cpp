@@ -83,7 +83,7 @@ static OSA_ThrHndl WeaponPORTHndl;
 static OSA_ThrHndl MachGunPORTHndl;
 static OSA_ThrHndl TestHndl;
 static OSA_ThrHndl NetHandl;
-
+static OSA_ThrHndl testCanHandl;
 
 
 
@@ -160,7 +160,7 @@ int taskCreate(void * prm)
 			);
 	OSA_assert(status==OSA_SOK);
 
-
+/*
 	status = OSA_thrCreate(
 				&TestHndl,
 				fdTest_open,
@@ -170,7 +170,10 @@ int taskCreate(void * prm)
 				0
 			);
 	OSA_assert(status==OSA_SOK);
+*/
 
+
+/*
 	status = OSA_thrCreate(
 				&NetHandl,
 				tcpTestFunc,
@@ -179,8 +182,17 @@ int taskCreate(void * prm)
 				prm
 			);
 	OSA_assert(status==OSA_SOK);
-	
-	
+*/
+
+	status = OSA_thrCreate(
+				&testCanHandl,
+				SPI_CAN_process,
+				0,
+				0,
+				prm
+			);
+	OSA_assert(status==OSA_SOK);
+
 	return 0;
 }
 

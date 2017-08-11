@@ -46,6 +46,8 @@ void chartohex(char* buf,char *recvhex,int recvlen);
 void compundHex(unsigned char* recv,unsigned char* get,int len);
 
 int NetPort_ParseByte(unsigned char* buf);
+void * SPI_CAN_process(void * prm);
+int CanPort_parseByte(unsigned char* buf );
 
 
 
