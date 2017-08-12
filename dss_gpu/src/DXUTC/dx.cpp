@@ -418,8 +418,11 @@ Int32 Dx_openMport( void )
         mUdpOpenParams.interfaceIp = 0;
         mIpcOpenParams.msgKey      = 0x82345;
 
-#ifdef MAIN_PORT1_ENABLE
 
+
+
+#if 0
+        //#ifdef MAIN_PORT1_ENABLE
         status = port_create( PORT_UART, &gDxObj.mainPort[0] );
         OSA_assert( status == OSA_SOK );
         OSA_assert( gDxObj.mainPort[0] != NULL );

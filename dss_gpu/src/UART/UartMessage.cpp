@@ -24,6 +24,9 @@
 
 #include  "spiH.h"
 
+#include "UartCanMessage.h"
+
+
 #define SIZE		1024
 
 #define CAN_ID_PANEL 		(0x0002)
@@ -2728,44 +2731,28 @@ int NetPort_ParseByte(unsigned char* buf)
 
 
 /**********************************  test spi ******************************************/
-
-void * SPI_CAN_process(void * prm)
+//can 头的解析
+int CanPort_recvFlg(char * buf, int iLen, int * index)
 {
+	char * pCur = buf;
+	int length = iLen;
 
-	//CanPort_parseByte();
-
-	  InitDevice_spi();
-
-		while(1)
-		{
-
-			sleep(1);
-		}
-
-
-		return NULL;
-}
-
-//can 头的解析 判断头是否是对的
-int canPort_recvFlg(RS422_obj * obj, int iLen)
-{
-	char * pCur = obj->buf;
-
-	//５个字节
-	if(5 >= obj->length)
-		return -1;
-
-	while(TRUE)
-	{
-		if(0x0002 == stoh2(obj->buf))　　//判断开头标志
-			break;
-		else{
-			memcpy(pCur, pCur+1, 1);
-			obj->length--;
-		}
-
-		if(5 > obj->length)
+	//小于２个字节
+	if(length<2)
 			return -1;
+	int i=0;
+	while(1)
+	{
+			if( 0x0002 == stoh2(pCur) )		//判断开头标志
+					break;
+			else{
+					printf("move one data..%d\n",i++);
+					memcpy(pCur, pCur+1, length-1);
+					length--;
+					(*index) +=1 ;
+					if(length<2)
+						return -1;
+			}
 	}
 
 	return 0;
@@ -2794,6 +2781,138 @@ int CanPort_parseByte(unsigned char* buf )
 	}
 	return 0;
 }
+void * SPI_CAN_process(void * prm)
+{
+		//CanPort_parseByte();
+
+		char buf[2048] = {0};
+		char tempBuf[2048] = {0};
+		int bufLen=2048;
+
+		int length=0;
+		int nread=0;
+		int ret=0;
+		int index=0;
+		int dataLength=0;
+		int i =0;
+		fd_set readfds;
+		int canfd = 0;
+		int haveData=0;
+
+		OpenCANDevice();
+
+		canfd = GetCanfd();
+
+		while(1)
+		{
+				FD_ZERO(&readfds);
+				FD_SET(canfd,&readfds);
+				select(canfd+1,&readfds,NULL,NULL,NULL);
+				if(FD_ISSET(canfd,&readfds))
+				{
+							//数据没有拿走，数组满
+							if(bufLen < length )
+							{
+									printf("bufLen < length, length=0");
+									length = 0;
+							}
+							//读数据
+							nread = 0;
+							nread =  ReadCANBuf(buf+length, bufLen-length);
+
+						   printf(" before parse --- length=%d  nread=%d...\n", length, nread);
+
+							if(nread > 0)
+							{
+									//		CanPort_parseByte((unsigned char*)buf);
+									//		continue;
+
+									length += nread;  //读到新数据，更新数据长度
+									haveData = 1;
+
+									while(haveData)  //一次来很多数据
+									{
+											//判断是否有can数据头，
+											printf("have data length=%d ...\n",  length);
+											for(i=0; i<length; i++)
+											{
+												printf("%02x ", buf[i]);
+											}
+											printf("\n");
+											index=0;
+											ret = CanPort_recvFlg(buf, length, &index);
+											length -= index;//解析之后，实际数据长度更新
+
+											if(ret != 0)
+											{
+												haveData=0;
+												continue;
+											}
+
+											//判断要解析数据的长度
+											dataLength =0;
+
+											switch(buf[2])
+											{
+													case 0xA0 :
+																dataLength=9;  break;
+													case 0xA1 :
+																dataLength=7;  break;
+													case 0xA2 :
+																dataLength=4;  break;
+													case 0xA3 :
+																dataLength=7;  break;
+													case 0xA4 :
+																dataLength=4; break;
+													default :
+																dataLength =0;
+																haveData=0;
+																break;
+											}
+
+
+											//解析之后,更新数据长度
+											if(dataLength > 0)
+											{
+													//打印要解析的数据
+													for(i=0; i<dataLength; i++)
+													{
+														printf("%02x ", buf[i]);
+													}
+
+													printf("length=%d, dataLength=%d\n", length, dataLength);
+
+													if(length<dataLength)
+													{
+														printf(" length<dataLength ...\n");
+														memset(buf+length, 0, sizeof(buf)-length);
+														haveData=0;
+													}else{
+
+														//解析数据
+														CanPort_parseByte((unsigned char*)buf);
+
+														memcpy(buf, buf+dataLength, length-dataLength);
+														memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
+														length -= dataLength;
+													}
+											}
+
+											usleep(10*1000);
+									}
+							}
+				}
+
+		}
+
+		CloseCANDevice();
+		return NULL;
+}
+
+
+
+
+
 
 
 // bak2　spi3，com3 解析
