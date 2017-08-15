@@ -16,7 +16,7 @@ typedef enum _FrameType{
 	Frame_Type0 = 0xA0,
 	Frame_Type1 = 0xA1,
 	Frame_Type2 = 0xA2,
-	Frame_Type3       ,	//0xA3,
+	Frame_Type3  =0xA3,
 	Frame_Type4 = 0xA4,
 	Frame_TEST
 }FrameType;

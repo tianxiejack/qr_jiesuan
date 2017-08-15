@@ -61,6 +61,8 @@ char menuid[33] = {0x00,0xC0,0xC3,0x4A,0x60,0x6C,0x20,0x21,0x6A,0x10,0x70,0x74,0
 unsigned int MtdAlg_stat;
 
 
+//与spi对应串口的数据结构
+
 static OSA_ThrHndl spi1ThrHandl;
 static OSA_ThrHndl spi2ThrHandl;
 static OSA_ThrHndl spi3ThrHandl;
@@ -217,7 +219,6 @@ int  Piexlx2Windows(int x,int channel)
 			ret=vdisWH[0][0];
 	 	}
 
-
 	  return ret;
 }
 
@@ -237,8 +238,6 @@ int  Piexly2Windows(int y,int channel)
 	 	}
 	return  ret;
 }
-
-
 
 
 int  WindowstoPiexlx(int x,int channel)
@@ -274,6 +273,7 @@ int  WindowstoPiexly(int y,int channel)
 	 	}
 	return  ret;
 }
+
 void TempUserMtdContrl(unsigned char SetCmd)
 {
     int i;
@@ -841,8 +841,6 @@ int  EXTCTRL_sndTarPalAck(int TargetPalId,BYTE *pData)
 }
 //******************************************************************************************************
 
-
-
 int  EXTCTRL_sndEnhanceAck(CMD_EXT pIStuts,BYTE *pData)
 {
     if(pData== NULL)
@@ -866,7 +864,6 @@ int  EXTCTRL_sndEnhanceAck(CMD_EXT pIStuts,BYTE *pData)
         
 }
 
-
 int  EXTCTRL_sndPicpAck(CMD_EXT pIStuts,BYTE *pData)
 {
     if(pData== NULL)
@@ -886,6 +883,7 @@ int  EXTCTRL_sndPicpAck(CMD_EXT pIStuts,BYTE *pData)
     return ack_data->PckLen;
         
 }
+
 int EXTCTRL_platformSend(BYTE *pData, UINT uLen, int context/*MPORT_Obj*/)
 {
 
@@ -1071,9 +1069,7 @@ int Uart_set(int fd)
 	tcsetattr(fd,TCSANOW,&options);
 	return 0;
 
-			
 }
-
 
 int Uart_init(int fd)
 {
@@ -1102,7 +1098,6 @@ int Uart_recv(int fd,unsigned char *rcv_buf,int data_len)
 	else
 		return -1;
 }
-
 
 int Uart_send(int fd,unsigned char* send_buf,int data_len)
 {
@@ -2739,19 +2734,26 @@ int CanPort_recvFlg(char * buf, int iLen, int * index)
 
 	//小于２个字节
 	if(length<2)
-			return -1;
+	{
+		//printf(" length<2 \n");
+		return -1;
+	}
 	int i=0;
 	while(1)
 	{
 			if( 0x0002 == stoh2(pCur) )		//判断开头标志
 					break;
 			else{
-					printf("move one data..%d\n",i++);
+					//printf("move one data..%d\n",i++);
 					memcpy(pCur, pCur+1, length-1);
 					length--;
 					(*index) +=1 ;
+
 					if(length<2)
+					{
+						//printf(" length<2 \n");
 						return -1;
+					}
 			}
 	}
 
@@ -2811,13 +2813,14 @@ void * SPI_CAN_process(void * prm)
 				if(FD_ISSET(canfd,&readfds))
 				{
 							//数据没有拿走，数组满
-							if(bufLen < length )
+							if(bufLen < length || length >sizeof(buf))
 							{
 									printf("bufLen < length, length=0");
 									length = 0;
 							}
 							//读数据
 							nread = 0;
+							length= 0;
 							nread =  ReadCANBuf(buf+length, bufLen-length);
 
 						   printf(" before parse --- length=%d  nread=%d...\n", length, nread);
@@ -2861,10 +2864,12 @@ void * SPI_CAN_process(void * prm)
 													case 0xA2 :
 																dataLength=4;  break;
 													case 0xA3 :
-																dataLength=7;  break;
+																dataLength=6;  break;
 													case 0xA4 :
 																dataLength=4; break;
 													default :
+																memcpy(buf, buf+2, length-2);
+																memset(buf+length-2, 0, sizeof(buf)-(length-2)  );
 																dataLength =0;
 																haveData=0;
 																break;
@@ -2898,7 +2903,7 @@ void * SPI_CAN_process(void * prm)
 													}
 											}
 
-											usleep(10*1000);
+											//usleep(10*1000);
 									}
 							}
 				}

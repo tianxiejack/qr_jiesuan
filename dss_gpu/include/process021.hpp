@@ -212,6 +212,26 @@ protected:
  	 static void processCMD_MODE_AIM_SKY(LPARAM lParam);
         static void processCMD_MODE_AIM_LAND(LPARAM lParam);
 	 
+        static void processCMD_LIHEQI_CLOSE(LPARAM lParam);
+        static void processCMD_LIHEQI_OPEN(LPARAM lParam);
+        static void processCMD_GRENADE_ERR(LPARAM lParam);
+        static void processCMD_GRENADE_OK(LPARAM lParam);
+        static void processCMD_FIREBUTTON_ERR(long lParam );
+        static void processCMD_FIREBUTTON_OK(long lParam );
+        static void processCMD_FULSCREENCAN_ERR(long lParam );
+        static void processCMD_FULSCREENCAN_OK(long lParam );
+        static void processCMD_DISCONTRLCAN0_ERR(long lParam );
+        static void processCMD_DISCONTRLCAN0_OK(long lParam );
+        static void processCMD_DISCONTRLCAN1_ERR(long lParam );
+        static void processCMD_DISCONTRLCAN1_OK(long lParam );
+        static void processCMD_DIANCITIE_ERR(long lParam );
+        static void processCMD_DIANCITIE_OK(long lParam );
+        static void processCMD_POSMOTOR_ERR(long lParam );
+        static void processCMD_POSMOTOR_OK(long lParam );
+        static void processCMD_MACHGUNMOTOR_ERR(long lParam );
+        static void processCMD_MACHGUNMOTOR_OK(long lParam );
+        static void processCMD_GRENADEMOTOR_ERR(long lParam );
+        static void processCMD_GRENADEMOTOR_OK(long lParam );
 
 private:
 	ACK_EXT extOutAck;
