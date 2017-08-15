@@ -4,13 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/UART/UartMessage.cpp 
+../src/UART/UartCanMessage.cpp \
+../src/UART/UartMessage.cpp \
+../src/UART/spiH.cpp 
 
 OBJS += \
-./src/UART/UartMessage.o 
+./src/UART/UartCanMessage.o \
+./src/UART/UartMessage.o \
+./src/UART/spiH.o 
 
 CPP_DEPS += \
-./src/UART/UartMessage.d 
+./src/UART/UartCanMessage.d \
+./src/UART/UartMessage.d \
+./src/UART/spiH.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
