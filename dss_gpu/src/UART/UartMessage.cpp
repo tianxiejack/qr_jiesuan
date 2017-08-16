@@ -2801,6 +2801,8 @@ void * SPI_CAN_process(void * prm)
 		int canfd = 0;
 		int haveData=0;
 
+		 InitDevice_spi();
+
 		OpenCANDevice();
 
 		canfd = GetCanfd();
