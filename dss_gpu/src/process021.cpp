@@ -1087,6 +1087,16 @@ void CProcess021::DrawdashCross(int x,int y,int fcolour ,bool bShow /*= true*/)
 
 bool CProcess021::OnProcess(int chId, Mat &frame)
 {
+
+
+
+
+
+
+
+
+
+	
 	//track
 	int frcolor=extInCtrl.DispColor[extInCtrl.SensorStat];
 	int startx=0;
@@ -1095,88 +1105,27 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 	int endy=0;
 	int crossshiftx=cvRound(vdisWH[0][0]/3);
 	int crossshifty=cvRound(vdisWH[0][1]/3);
-	return 0;
-	CvScalar colour=GetcvColour(frcolor);
+	
+	CvScalar colour=GetcvColour(2);
 //putText(frame,"heolo",Point(200,200),CV_FONT_HERSHEY_COMPLEX,1.0,Scalar(0,0,255),3,8);
 	osdindex=0;
-		//picp cross
-	{
-
-			startx=crosspicpBak.x;//PiexltoWindowsx(crossBak.x,extInCtrl.SensorStat);
-	 		starty=crosspicpBak.y;//PiexltoWindowsy(crossBak.y,extInCtrl.SensorStat);
-	 		if(Osdflag[osdindex]==1)
- 			{
-				DrawCross(startx,starty,frcolor,false);
-				Osdflag[osdindex]=0;
- 			}
-			startx=PiexltoWindowsx(extInCtrl.SensorStat?extInCtrl.AvtPosXTv:extInCtrl.AvtPosXFir,1-extInCtrl.SensorStat);
-	 		starty=PiexltoWindowsy(extInCtrl.SensorStat?extInCtrl.AvtPosYTv:extInCtrl.AvtPosYFir,1-extInCtrl.SensorStat);
-			//printf("pri the startx=%d  starty=%d\n ",startx,starty);
-			switch(extInCtrl.PicpPosStat)
-			{
-				case 0:
-					startx+=crossshiftx;
-					starty-=crossshifty;
-					break;
-				case 1:
-					startx+=crossshiftx;
-					starty+=crossshifty;
-					break;
-				case 2:
-					startx-=crossshiftx;
-					starty+=crossshifty;
-					break;
-				case 3:
-					startx-=crossshiftx;
-					starty-=crossshifty;
-					break;
-
-				default:
-					break;
-			}
-		
-			if(startx<0)
-			{
-				startx=0;
-			}
-			else if(startx>vdisWH[0][0])
-			{
-				startx=0;
-			}
-			if(starty<0)
-			{
-				starty=0;
-			}
-			else if(starty>vdisWH[0][0])
-			{
-				starty=0;
-			}
-			if(((extInCtrl.PicpSensorStat==1)||(extInCtrl.PicpSensorStat==0))&&(extInCtrl.FrCollimation!=1))
-			{
-				DrawCross(startx,starty,frcolor,true);
-				//printf("picp***********lat the startx=%d  starty=%d\n ",startx,starty);
-				Osdflag[osdindex]=1;
-			}
-			crosspicpBak.x=startx;
-			crosspicpBak.y=starty;
-
-	}
+	
 osdindex++;
 	{
 		 UTC_RECT_float rcResult = m_rcTrack;
 		 int aimw= trkWinWH[extInCtrl.SensorStat][extInCtrl.AvtTrkAimSize][0];
 		 int aimh= trkWinWH[extInCtrl.SensorStat][extInCtrl.AvtTrkAimSize][1];
-		 #if 0
+		 #if 1
 		 startx=rcTrackBak.x;//PiexltoWindowsx(rcTrackBak.x,extInCtrl.SensorStat);
 		 starty=rcTrackBak.y;//PiexltoWindowsy(rcTrackBak.y,extInCtrl.SensorStat);
 		 endx=rcTrackBak.x+rcTrackBak.width;//PiexltoWindowsx(rcTrackBak.x+rcTrackBak.width,extInCtrl.SensorStat);
 		 endy=rcTrackBak.y+rcTrackBak.height;//PiexltoWindowsy(rcTrackBak.y+rcTrackBak.height,extInCtrl.SensorStat);
-		rectangle( m_dccv,
+		rectangle( m_dc,
 			Point( startx, starty ),
 			Point( endx, endy),
 			cvScalar(0,0,0, 0), 1, 8 );
 		
-		 if((m_bTrack)&&(extInCtrl.TrkBomenCtrl==1))
+		 if(m_bTrack)
 		 {
 			 startx=PiexltoWindowsx(rcResult.x,extInCtrl.SensorStat);
 			 starty=PiexltoWindowsy(rcResult.y,extInCtrl.SensorStat);
@@ -1186,12 +1135,12 @@ osdindex++;
 			// printf("the x=%d y=%d w=%f h=%f\n",startx,starty,rcResult.width,rcResult.height);
 		 	
 			if( m_iTrackStat == 1)
-				rectangle( m_dccv,
+				rectangle( m_dc,
 					Point( startx, starty ),
 					Point( endx, endy),
 					colour, 1, 8 );
 			else
-				rectangle( m_dccv,
+				rectangle( m_dc,
 				Point( startx, starty ),
 				Point( endx, endy),
 				cvScalar(0,255,0, 255), 1, 8 );
@@ -1203,50 +1152,7 @@ osdindex++;
 			extInCtrl.unitAimX=rcResult.x+rcResult.width/2;
 			extInCtrl.unitAimY=rcResult.y+rcResult.height/2;
 		 }
-		  if(m_bTrack)
-		 	{
-		 	extInCtrl.unitTrkStat=m_iTrackStat;
-			if(m_iTrackStat == 1)
-				{
-					rememflag=false;
-				}
-			else if(m_iTrackStat == 2)
-				{
-					if(!rememflag)
-						{
-							rememflag=true;
-							rememtime=OSA_getCurTimeInMsec();
-						}
-					
-					if((OSA_getCurTimeInMsec()-rememtime)>5000)
-						{							
-							extInCtrl.unitTrkStat=3;
-						}
-					else
-						{
-
-							extInCtrl.unitTrkStat=2;
-						}
-				}
-		 	 if((extInCtrl.unitTrkStat == 1)||(extInCtrl.unitTrkStat == 2))
-		 	 	{
-		 	 		//rememflag=false;
-					extInCtrl.trkerrx=extInCtrl.unitTrkX =rcResult.x+rcResult.width/2;
-					extInCtrl.trkerry=extInCtrl.unitTrkY = rcResult.y+rcResult.height/2;
-					MSGAPI_AckSnd( AckTrkErr);
-		 	 	}
-		if(extInCtrl.unitTrkStat!=extInCtrl.unitTrkStatpri)
-		{
-			extInCtrl.unitTrkStatpri=extInCtrl.unitTrkStat;
-			MSGAPI_AckSnd( AckTrkType);
-		}
-
-		 	}
-		 else
-		 	{
-				rememflag=false;
-
-		 	}
+		 
 		 
 		// printf("rcResult.x =%f rcResult.y=%f w=%f h=%f\n",rcResult.x,rcResult.y,rcResult.width,rcResult.height);
 		 #else
@@ -1345,7 +1251,7 @@ osdindex++;
 	}
 
 
-	
+	return 0;
 	//mtd
 osdindex++;
 	{
@@ -2000,8 +1906,8 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
 					}
 				
-				OSA_printf(" %d:%s set track to x =%f y=%f  mtdx=%d mtdy=%d  w=%d  h=%d\n", OSA_getCurTimeInMsec(), __func__,
-						pIStuts->unitAimX,pIStuts->unitAimY, pIStuts->unitMtdPixelX,pIStuts->unitMtdPixelY,pIStuts->unitAimW/2,pIStuts->unitAimH/2);
+		//		OSA_printf(" %d:%s set track to x =%f y=%f  mtdx=%d mtdy=%d  w=%d  h=%d\n", OSA_getCurTimeInMsec(), __func__,
+		//				pIStuts->unitAimX,pIStuts->unitAimY, pIStuts->unitMtdPixelX,pIStuts->unitMtdPixelY,pIStuts->unitAimW/2,pIStuts->unitAimH/2);
 			}
 			else
 			{
@@ -2591,7 +2497,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
    
  void CProcess021::MSGAPI_inputtrack(long lParam )
 {
-	#if 0
+	#if 1
 	printf("%s^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",__func__);
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		//if(pIStuts->AvtTrkStat)
