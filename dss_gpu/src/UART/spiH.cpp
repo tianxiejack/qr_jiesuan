@@ -25,6 +25,375 @@ static uint32_t speed = 20000000;
 static uint16_t delay = 0;
 
 
+/****************************************************************************/
+//decode 倾斜角头的解析
+int SPI_decode_recvFlg(char * buf, int iLen, int * index)
+{
+		char * pCur = buf;
+		int length = iLen;
+		int i = 0;
+
+		//小于1个字节
+		if(length<1)
+			return -1;
+
+		while(1){
+
+				if( 0xAA == pCur[0] )	{	//判断开头标志
+						break;
+				}else{
+						memcpy(pCur, pCur+1, length-1);
+						length--;
+						(*index) +=1 ;
+
+						if(length<1)
+							return -1;
+				}
+		}
+
+	return 0;
+}
+
+int process_decode(struct RS422_data * pRS422_data)
+{
+		int ret = 0;
+		int index = 0;
+		int have_data = 1;
+		int parse_length = 0;
+
+		int16_t  x_angle=0;
+		int16_t y_angle=0;
+		int16_t weather=0;
+		int16_t sum_xor=0;
+		int i=0;
+
+		int length = pRS422_data->length;
+		char * buf = (char*)pRS422_data->receiveData;
+
+		if(length <=0)
+			return -1;
+
+		while(have_data){
+
+			ret = SPI_decode_recvFlg(buf, length, &index);
+			length -= index;
+
+			if(ret != 0){
+				have_data=0;
+				continue;
+			}
+
+			parse_length = 8;
+
+			if(length<parse_length){
+
+				printf(" length<dataLength ...\n");
+				memset(buf+length, 0, sizeof(buf)-length);
+				have_data=0;
+
+			}else{
+
+				//解析数据
+				sum_xor=0;
+				for(i=0; i<parse_length-1; i++){
+					sum_xor ^= buf[i];
+				}
+
+				if( sum_xor ==  buf[parse_length-1] ){
+					x_angle = buf[1]<<8|buf[2];
+					y_angle =  buf[3]<<8|buf[4];
+					weather =  buf[5]<<8|buf[6];
+					printf(" x_angle=%d y_angle=%d weather=%d \n", x_angle, y_angle, weather);
+
+				}else{
+					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+				}
+
+				memcpy(buf, buf+parse_length, length-parse_length);
+				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+				length -= parse_length;
+			}
+
+		}
+		pRS422_data->length = length ;
+		return 0;
+}
+
+/****************************************************************************/
+//mirror　瞄准镜　头的解析
+int SPI_mirror_recvFlg(char * buf, int iLen, int * index)
+{
+		char * pCur = buf;
+		int length = iLen;
+		int i = 0;
+
+		//小于1个字节
+		if(length<1)
+			return -1;
+
+		while(1){
+
+				if( 0xCC == pCur[0] )	{	//判断开头标志
+						break;
+				}else{
+						memcpy(pCur, pCur+1, length-1);
+						length--;
+						(*index) +=1 ;
+
+						if(length<1)
+							return -1;
+				}
+		}
+
+	return 0;
+}
+
+int Process_mirror(struct RS422_data * pRS422_data)
+{
+		int ret = 0;
+		int index = 0;
+		int have_data = 1;
+		int parse_length = 0;
+
+		int16_t  laser_dis=0;
+		int16_t sum_xor=0;
+		int i=0;
+
+		int length = pRS422_data->length;
+		char * buf = (char*)pRS422_data->receiveData;
+
+		if(length <=0)
+			return -1;
+
+		while(have_data){
+
+			ret = SPI_mirror_recvFlg(buf, length, &index);
+			length -= index;
+
+			if(ret != 0){
+				have_data=0;
+				continue;
+			}
+
+			parse_length = 5;
+
+			if(length<parse_length){
+
+				printf(" length<dataLength ...\n");
+				memset(buf+length, 0, sizeof(buf)-length);
+				have_data=0;
+
+			}else{
+
+				//解析数据
+				sum_xor=0;
+				for(i=0; i<parse_length-1; i++){
+					sum_xor ^= buf[i];
+				}
+
+				if( sum_xor ==  buf[parse_length-1] ){
+					laser_dis = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。
+					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
+				}else{
+					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+				}
+
+				memcpy(buf, buf+parse_length, length-parse_length);
+				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+				length -= parse_length;
+			}
+
+		}
+		pRS422_data->length = length ;
+		return 0;
+}
+
+/****************************************************************************/
+//vcode　耳轴　头的解析
+int SPI_vcode_recvFlg(char * buf, int iLen, int * index)
+{
+		char * pCur = buf;
+		int length = iLen;
+		int i = 0;
+
+		//小于1个字节
+		if(length<1)
+			return -1;
+
+		while(1){
+
+				if( 0x5FF5 == (pCur[0]<<8)|(pCur[1]) )	{	//判断开头标志
+						break;
+				}else{
+						memcpy(pCur, pCur+1, length-1);
+						length--;
+						(*index) +=1 ;
+
+						if(length<1)
+							return -1;
+				}
+		}
+
+	return 0;
+}
+
+int Process_vcode(struct RS422_data * pRS422_data)
+{
+		int ret = 0;
+		int index = 0;
+		int have_data = 1;
+		int parse_length = 0;
+
+		int  angle=0;
+		int positive=1;
+		int sum_xor =0;
+		int i=0;
+
+		int length = pRS422_data->length;
+		char * buf = (char*)pRS422_data->receiveData;
+
+		if(length <=0)
+			return -1;
+
+		while(have_data){
+
+			ret = SPI_vcode_recvFlg(buf, length, &index);
+			length -= index;
+
+			if(ret != 0){
+				have_data=0;
+				continue;
+			}
+
+			parse_length = 5;
+
+			if(length<parse_length){
+
+				printf(" length<dataLength ...\n");
+				memset(buf+length, 0, sizeof(buf)-length);
+				have_data=0;
+
+			}else{
+
+				//解析数据
+				sum_xor=0;
+				for(i=0; i<parse_length-1; i++){
+					sum_xor ^= buf[i];
+				}
+
+				positive=1;
+				if( sum_xor ==  buf[parse_length-1] ){
+					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
+					positive = buf[4] ==0 ? 1: -1;
+					printf(" positive=%d angle=%d  \n", positive, angle);
+				}else{
+					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+				}
+
+				memcpy(buf, buf+parse_length, length-parse_length);
+				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+				length -= parse_length;
+			}
+
+		}
+		pRS422_data->length = length ;
+		return 0;
+}
+
+/****************************************************************************/
+//hcode　炮塔方位　头的解析
+int SPI_hcode_recvFlg(char * buf, int iLen, int * index)
+{
+		char * pCur = buf;
+		int length = iLen;
+		int i = 0;
+
+		//小于1个字节
+		if(length<1)
+			return -1;
+
+		while(1){
+
+				if( 0x8FF8 == (pCur[0]<<8)|(pCur[1]) )	{	//判断开头标志
+						break;
+				}else{
+						memcpy(pCur, pCur+1, length-1);
+						length--;
+						(*index) +=1 ;
+
+						if(length<1)
+							return -1;
+				}
+		}
+
+	return 0;
+}
+
+int Process_hcode(struct RS422_data * pRS422_data)
+{
+		int ret = 0;
+		int index = 0;
+		int have_data = 1;
+		int parse_length = 0;
+
+		int  angle=0;
+		int positive=1;
+		int sum_xor =0;
+		int i=0;
+
+		int length = pRS422_data->length;
+		char * buf = (char*)pRS422_data->receiveData;
+
+		if(length <=0)
+			return -1;
+
+		while(have_data){
+
+			ret = SPI_vcode_recvFlg(buf, length, &index);
+			length -= index;
+
+			if(ret != 0){
+				have_data=0;
+				continue;
+			}
+
+			parse_length = 5;
+
+			if(length<parse_length){
+
+				printf(" length<dataLength ...\n");
+				memset(buf+length, 0, sizeof(buf)-length);
+				have_data=0;
+
+			}else{
+
+				//解析数据
+				sum_xor=0;
+				for(i=0; i<parse_length-1; i++){
+					sum_xor ^= buf[i];
+				}
+
+				positive=1;
+				if( sum_xor ==  buf[parse_length-1] ){
+					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
+					positive = buf[4] ==0 ? 1: -1;
+					printf(" positive=%d angle=%d  \n", positive, angle);
+				}else{
+					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+				}
+
+				memcpy(buf, buf+parse_length, length-parse_length);
+				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+				length -= parse_length;
+			}
+
+		}
+		pRS422_data->length = length ;
+		return 0;
+}
+
+/****************************************************************************/
+
 static void pabort(const char *s)
 {
 	perror(s);
@@ -122,7 +491,7 @@ int open_device()
 int openCanDevice()
 {
 
-
+	return 0;
 }
 
 
@@ -242,30 +611,38 @@ int transfer_init( uint8_t comNum, uint8_t interuptThreshold,int Baudrate)
 int transfer_init_all(uint8_t interuptThreshold,int Baudrate)
 {
 	int ret;
+#if 0
 	ret=transfer_init(0,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
+#endif
 	ret=transfer_init(1,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
+#if 0
 	ret=transfer_init(2,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
+#endif
 	ret=transfer_init(3,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
 	ret=transfer_init(4,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
+#if 0
 	ret=transfer_init(5,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
 	ret=transfer_init(6,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
+#endif
+
 	ret=transfer_init(7,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
+
 	return 0;
 }
 
@@ -543,6 +920,7 @@ void interuptHandleDataSpi3(int interuptNum,struct RS422_data* RS422_TEST_buff,s
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_HCODE: ");
+					Process_hcode(RS422_HCODE_buff);
 					break;
 				case 192:
 					transfer_ban(fd2,com0);
@@ -565,6 +943,7 @@ void interuptHandleDataSpi3(int interuptNum,struct RS422_data* RS422_TEST_buff,s
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_HCODE: ");
+					Process_hcode(RS422_HCODE_buff);
 					break;
 				default:
 					fdtmp=-1;
@@ -590,6 +969,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_MIRROR: ");
+					Process_mirror(RS422_MIRROR_buff);
 					break;
 				case 16:
 					transfer_ban(fd1,com1);
@@ -601,6 +981,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_VCODE: ");
+					Process_vcode(RS422_VCODE_buff);
 					break;
 				case 32:
 					transfer_ban(fd1,com2);
@@ -623,7 +1004,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_MIRROR: ");
-
+					Process_mirror(RS422_MIRROR_buff);
 
 					transfer_ban(fd1,com1);
 					readCount=transfer_readDataCount(fd1,com1);
@@ -634,6 +1015,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_VCODE: ");
+					Process_vcode(RS422_VCODE_buff);
 					break;
 				case 40:
 					transfer_ban(fd1,com2);
@@ -656,6 +1038,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_MIRROR: ");
+					Process_mirror(RS422_MIRROR_buff);
 					break;
 				case 48:
 					transfer_ban(fd1,com1);
@@ -667,6 +1050,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_VCODE: ");
+					Process_vcode(RS422_VCODE_buff);
 
 					transfer_ban(fd1,com2);
 					readCount=transfer_readDataCount(fd1,com2);
@@ -688,6 +1072,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 				printf("from RS422_VCODE: ");
+				Process_vcode(RS422_VCODE_buff);
 
 					transfer_ban(fd1,com2);
 					readCount=transfer_readDataCount(fd1,com2);
@@ -708,6 +1093,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_MIRROR: ");
+					Process_mirror(RS422_MIRROR_buff);
 					break;
 				default:
 					fdtmp=-1;
@@ -761,7 +1147,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length",RS422_DECODE_buff->length);
-					//printf_read_data(receiveData,readCount);
+						process_decode(RS422_DECODE_buff);
 					break;
 				case 3:	
 					transfer_ban(fd0,com0);
@@ -785,6 +1171,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length",RS422_DECODE_buff->length);
+						process_decode(RS422_DECODE_buff);
 
 					break;	
 				case 4:
@@ -842,6 +1229,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length\n",RS422_DECODE_buff->length);
+						process_decode(RS422_DECODE_buff);
 					break;
 				case 7:
 					transfer_ban(fd0,com0);
@@ -865,7 +1253,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 					printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length\n",RS422_DECODE_buff->length);
- 
+						process_decode(RS422_DECODE_buff);
 
 					transfer_ban(fd0,com2);
 					readCount=transfer_readDataCount(fd0,com2);
