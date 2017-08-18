@@ -903,14 +903,15 @@ void OSDCTRL_EnterCalibMode()
 
 void OSDCTRL_updateAreaN()
 {
-#if 0
+#if 1
 	int i=0;
 	BOOL noErr = FALSE;
 	if(!Is9stateOK())
 	{
 		i = getErrCodeId();
 		Posd[eErrorZone] = ErrorOsd[i];
-	}else if(bDetendClose())
+	}
+	else if(bDetendClose())
 		Posd[eErrorZone] = ErrorOsd[18];
 	else if(bMaintPortOpen())
 		Posd[eErrorZone] = ErrorOsd[17];
@@ -923,7 +924,7 @@ void OSDCTRL_updateAreaN()
 		OSDCTRL_ItemHide(eErrorZone);	
 	}else{
 		OSDCTRL_ItemShow(eErrorZone);
-		startDynamicTimer();
+		//startDynamicTimer();
 	}
 #endif
 }

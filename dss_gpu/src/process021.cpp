@@ -3074,7 +3074,7 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
 	return ;
  }
 
-
+ 
 void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
  {
 	gLevel1Mode = gLevel1LastMode;
@@ -3173,7 +3173,20 @@ void CProcess021::onDisplayOK(LPARAM lParam)
 
 void CProcess021::onJoyStickOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onJoyStickOK",__func__,__LINE__);
+	isJoyStickOK = TRUE;
+	setJoyStickStat(isJoyStickOK);
+	if(isBootUpMode()&&isBootUpSelfCheck())
+	{
+		if(Is9stateOK())
+   		{
+   	   		sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);
+   		}
+		return;
+	}
+	// update area N 
+	OSDCTRL_updateAreaN();
+	
+	//OSA_printf("%s,line:%d ... onJoyStickOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3181,13 +3194,13 @@ void CProcess021::onJoyStickOK(LPARAM lParam)
 void CProcess021::onJoyStickErr(LPARAM lParam)
  {	
 	isJoyStickOK = FALSE;
-	//setJoyStickStat(isJoyStickOK);
+	setJoyStickStat(isJoyStickOK);
 	if(isBootUpMode()&&isBootUpSelfCheck())
 	{
 		return;
 	}
 	// update area N 
-	//OSDCTRL_updateAreaN();
+	OSDCTRL_updateAreaN();
 
  	//OSA_printf("%s,line:%d ... onJoyStickErr",__func__,__LINE__);
 	return ;

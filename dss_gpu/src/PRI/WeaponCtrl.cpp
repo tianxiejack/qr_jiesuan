@@ -535,19 +535,21 @@ void setSysWorkMode()
 {
 //	BYTE1(FrameBuf1) &= ~0x0C;
 }
-void setJoyStickStat(BOOL stat)
+
+void setJoyStickStat(bool stat)
 {
-#if 0
+#if 1
 	if(stat)
 		FrameBuf3[1] = FrameBuf3[1]|0x10 ;
 	else
 		FrameBuf3[1] = FrameBuf3[1]&0xEF ;
 #endif
 }
+
 void  updateBulletType(int type)
 {
-//	BYTE1(FrameBuf1) &= 0x8F;
-//	BYTE1(FrameBuf1) |= ((type&0x03) + 1)<<4;
+	//BYTE1(FrameBuf1) &= 0x8F;
+	//BYTE1(FrameBuf1) |= ((type&0x03) + 1)<<4;
 }
 int getBulletType()
 {
@@ -1131,34 +1133,37 @@ void WeaponCtrlPORT_ParseFrameByte_type2(unsigned char* buf)
 //			break;
 #endif
 }
+
+
 static int WeaponCtrlPORT_ParseFrame_type2(UartObj*pUartObj)
 {
-#if 0
-	unsigned char *buf = pUartObj->recvBuf; 
-	int stat;
-	stat = WeaponCtrlPORT_recv(pUartObj,1);
-	if(stat!=1)
-		return -1;
-	
-	WeaponCtrlPORT_ParseFrameByte_type2(buf);
-//	WeaponCtrlPORT_send(buf, 4);
-#endif
-	return 0;
+	#if 1
+		unsigned char *buf = pUartObj->recvBuf; 
+		int stat;
+		stat = WeaponCtrlPORT_recv(pUartObj,1);
+		if(stat!=1)
+			return -1;
+		
+		WeaponCtrlPORT_ParseFrameByte_type2(buf);
+		//WeaponCtrlPORT_send(buf, 4);
+	#endif
+		return 0;
 }
+ 
+
 void WeaponCtrlPORT_ParseFrameByte_type3(unsigned char* buf)
 {
-//		case Frame_Type3://֡3����                   ---δ����
-#if 0
+	//case Frame_Type3://֡3����                   ---δ����
+#if 1
 	if(BIT4(BYTE1(FrameBuf3)) != BIT4(BYTE3(buf)))
 	{
-		if(BIT4(BYTE3(buf)) == 0x01)//�ֱ���
+		if(BIT4(BYTE3(buf)) == 0x01)//handle normal
 		{
-			//sendCommand(CMD_JOYSTICK_OK);
-			MSGDRIV_send(CMD_BUTTON_AUTOCHECK,0);
-		}else if(BIT4(BYTE3(buf)) == 0x00)
+			sendCommand(CMD_JOYSTICK_OK);
+		}
+		else if(BIT4(BYTE3(buf)) == 0x00)
 		{
-			//sendCommand(CMD_JOYSTICK_ERR);
-			MSGDRIV_send(CMD_JOYSTICK_ERR,0);
+			sendCommand(CMD_JOYSTICK_ERR);
 		}
 	}
 	

@@ -36,7 +36,7 @@ extern "C"{
 
 #define MAX_PORT_NUM 12 //4
 
-#define sendCommand(MSG_ID) PostMessage(MSG_ID)
+#define sendCommand(MSG_ID) MSGDRIV_send(MSG_ID,0)//PostMessage(MSG_ID)
 
 #define stoh2(buf) ((buf[0]<<8)|(buf[1]))
 #define STOH2 stoh2
