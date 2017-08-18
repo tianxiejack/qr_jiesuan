@@ -105,13 +105,14 @@ int process_decode(struct RS422_data * pRS422_data)
 					weather =  buf[5]<<8|buf[6];
 					printf(" x_angle=%d y_angle=%d weather=%d \n", x_angle, y_angle, weather);
 
+					memcpy(buf, buf+parse_length, length-parse_length);
+					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+					length -= parse_length;
 				}else{
 					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+					memcpy(buf, buf+1, length-1);
+					length--;
 				}
-
-				memcpy(buf, buf+parse_length, length-parse_length);
-				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
-				length -= parse_length;
 			}
 
 		}
@@ -194,13 +195,15 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				if( sum_xor ==  buf[parse_length-1] ){
 					laser_dis = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。
 					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
-				}else{
-					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
-				}
 
 				memcpy(buf, buf+parse_length, length-parse_length);
 				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 				length -= parse_length;
+				}else{
+					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+					memcpy(buf, buf+1, length-1);
+					length--;
+				}
 			}
 
 		}
@@ -208,6 +211,16 @@ int Process_mirror(struct RS422_data * pRS422_data)
 		return 0;
 }
 
+int SPI_mirror_send_requst()  //发送测距请求
+{
+	unsigned char buf[4] = { 0xcc, 0x01, 0x01  };
+
+	buf[3] = ( buf[0]^buf[1]^buf[2] );
+
+	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
+
+	 return 0;
+}
 /****************************************************************************/
 //vcode　耳轴　头的解析
 int SPI_vcode_recvFlg(char * buf, int iLen, int * index)
@@ -286,13 +299,111 @@ int Process_vcode(struct RS422_data * pRS422_data)
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
 					printf(" positive=%d angle=%d  \n", positive, angle);
+					memcpy(buf, buf+parse_length, length-parse_length);
+					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+					length -= parse_length;
 				}else{
 					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+					memcpy(buf, buf+1, length-1);
+					length--;
 				}
 
-				memcpy(buf, buf+parse_length, length-parse_length);
-				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
-				length -= parse_length;
+
+			}
+
+		}
+		pRS422_data->length = length ;
+		return 0;
+}
+
+/****************************************************************************/
+//Grenade　榴弹耳轴　头的解析
+int SPI_grenade_recvFlg(char * buf, int iLen, int * index)
+{
+		char * pCur = buf;
+		int length = iLen;
+		int i = 0;
+
+		//小于1个字节
+		if(length<1)
+			return -1;
+
+		while(1){
+
+				if( 0x5FF5 == (pCur[0]<<8)|(pCur[1]) )	{	//判断开头标志
+						break;
+				}else{
+						memcpy(pCur, pCur+1, length-1);
+						length--;
+						(*index) +=1 ;
+
+						if(length<1)
+							return -1;
+				}
+		}
+
+	return 0;
+}
+
+int Process_grenade(struct RS422_data * pRS422_data)
+{
+		int ret = 0;
+		int index = 0;
+		int have_data = 1;
+		int parse_length = 0;
+
+		int  angle=0;
+		int positive=1;
+		int sum_xor =0;
+		int i=0;
+
+		int length = pRS422_data->length;
+		char * buf = (char*)pRS422_data->receiveData;
+
+		if(length <=0)
+			return -1;
+
+		while(have_data){
+
+			ret = SPI_vcode_recvFlg(buf, length, &index);
+			length -= index;
+
+			if(ret != 0){
+				have_data=0;
+				continue;
+			}
+
+			parse_length = 5;
+
+			if(length<parse_length){
+
+				printf(" length<dataLength ...\n");
+				memset(buf+length, 0, sizeof(buf)-length);
+				have_data=0;
+
+			}else{
+
+				//解析数据
+				sum_xor=0;
+				for(i=0; i<parse_length-1; i++){
+					sum_xor ^= buf[i];
+				}
+
+				positive=1;
+				if( sum_xor ==  buf[parse_length-1] ){
+					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
+					positive = buf[4] ==0 ? 1: -1;
+					printf(" positive=%d angle=%d  \n", positive, angle);
+					memcpy(buf, buf+parse_length, length-parse_length);
+					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+					length -= parse_length;
+				}else{
+					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+					memcpy(buf, buf+1, length-1);
+					length--;
+				}
+
+
 			}
 
 		}
@@ -378,13 +489,14 @@ int Process_hcode(struct RS422_data * pRS422_data)
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
 					printf(" positive=%d angle=%d  \n", positive, angle);
+					memcpy(buf, buf+parse_length, length-parse_length);
+					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+					length -= parse_length;
 				}else{
-					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+					printf("[%s] sum of xor=%02x  buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
+					memcpy(buf, buf+1, length-1);
+					length--;
 				}
-
-				memcpy(buf, buf+parse_length, length-parse_length);
-				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
-				length -= parse_length;
 			}
 
 		}
@@ -611,7 +723,7 @@ int transfer_init( uint8_t comNum, uint8_t interuptThreshold,int Baudrate)
 int transfer_init_all(uint8_t interuptThreshold,int Baudrate)
 {
 	int ret;
-#if 0
+#if 1
 	ret=transfer_init(0,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
@@ -619,7 +731,7 @@ int transfer_init_all(uint8_t interuptThreshold,int Baudrate)
 	ret=transfer_init(1,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
-#if 0
+#if 1
 	ret=transfer_init(2,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
@@ -630,7 +742,7 @@ int transfer_init_all(uint8_t interuptThreshold,int Baudrate)
 	ret=transfer_init(4,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
-#if 0
+#if 1
 	ret=transfer_init(5,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
@@ -783,6 +895,7 @@ int transfer_readOneData(int comNum)
             pabort("can't send spi message");
 	return rx[2];
 }
+
 int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 {
 	uint8_t* receiveDataTmp;
