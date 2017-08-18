@@ -199,6 +199,10 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				memcpy(buf, buf+parse_length, length-parse_length);
 				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 				length -= parse_length;
+
+					SPI_mirror_send_requst() ;
+					SPI_mirror_send_ack();
+
 				}else{
 					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
 					memcpy(buf, buf+1, length-1);
@@ -220,6 +224,18 @@ int SPI_mirror_send_requst()  //发送测距请求
 	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
 
 	 return 0;
+}
+
+int SPI_mirror_send_ack()  //激光数据确认
+{
+
+	unsigned char buf[4] = { 0xcc, 0x01, 0x02  };
+
+	buf[3] = ( buf[0]^buf[1]^buf[2] );
+
+	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
+
+	return 0;
 }
 /****************************************************************************/
 //vcode　耳轴　头的解析
