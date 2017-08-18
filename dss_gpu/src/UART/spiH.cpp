@@ -944,6 +944,12 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 	pthread_mutex_lock(&RS422_data_buff->mutex);
 	lengthTmp=RS422_data_buff->length;
 	RS422_data_buff->length=lengthTmp+length;
+
+	if( RS422_data_buff->length >= sizeof(RS422_data_buff->receiveData)-1 ){
+		RS422_data_buff->length = 0 ;
+		lengthTmp=RS422_data_buff->length;
+	}
+
 	for(int i=0;i<length;i++)
 	{
 		RS422_data_buff->receiveData[lengthTmp+i]=transfer_readOneData(comNum);
