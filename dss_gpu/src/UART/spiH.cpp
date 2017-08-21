@@ -149,6 +149,25 @@ int SPI_mirror_recvFlg(char * buf, int iLen, int * index)
 	return 0;
 }
 
+//解析激光数据。
+int SPI_mirror_parse(char * pRecv)
+{
+		int value;
+
+		value = pRecv[2]<<8 | pRecv[3];
+		if(9999 == value){
+			//LaserDistance = -1;
+			//SendMessage(CMD_LASER_FAIL,LASERERR_NOECHO);
+		}else if(0 == value){
+			//LaserDistance = -1;
+			//SendMessage(CMD_LASER_FAIL,LASERERR_NOSAMPLE);//无取样
+		}else{
+			//LaserDistance = value;
+			//SendMessage(CMD_LASER_OK,value);//保存测距值
+		}
+		return 0;
+}
+
 int Process_mirror(struct RS422_data * pRS422_data)
 {
 		int ret = 0;
