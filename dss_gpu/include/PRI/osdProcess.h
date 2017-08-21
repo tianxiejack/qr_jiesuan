@@ -80,7 +80,7 @@ typedef struct _weather_table{
 
 
 typedef enum _eOsdTypeId{
-	eModeId			=	0x00,
+	eModeId		=	0x00,
 	eWorkMode		=	0x01,
 	eAimType		=	0x02,
 	eGunType		=	0x03,
@@ -278,7 +278,7 @@ typedef enum _eOsdTypeId{
 	eCalcNum_Posion,
 
 	eStateMaintD,//ά����
-	eStateDetend,//����ֹ����
+	eStateDetend = 0xC5,//,//����ֹ����
 	eStateClutch,//�����
 	eStateGrenad,//35������
 	eStateFirer,//����
@@ -359,7 +359,7 @@ typedef enum _osd_state{
 }eOsdDisplayStat;
 
 typedef enum _osd_up_state{
-	eOsd_UnUpdate	=0x00,
+	eOsd_UnUpdate		=0x00,
 	eOsd_Update		=0x01
 }eOsdUpdate;
 
@@ -521,7 +521,7 @@ void Osd_shinItem(int id);
 int getCrossX();
 int getCrossY();
 
-
+extern volatile char globalShoweErrorZone;
 extern WeatherItem gWeatherTable;
  
 #ifdef __cplusplus

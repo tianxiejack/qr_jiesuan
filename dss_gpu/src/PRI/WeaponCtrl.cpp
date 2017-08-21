@@ -1153,7 +1153,7 @@ static int WeaponCtrlPORT_ParseFrame_type2(UartObj*pUartObj)
 
 void WeaponCtrlPORT_ParseFrameByte_type3(unsigned char* buf)
 {
-	//case Frame_Type3://֡3����                   ---δ����
+	
 #if 1
 	if(BIT4(BYTE1(FrameBuf3)) != BIT4(BYTE3(buf)))
 	{
@@ -1169,7 +1169,7 @@ void WeaponCtrlPORT_ParseFrameByte_type3(unsigned char* buf)
 	
 	if(BIT2(BYTE1(FrameBuf3)) != BIT2(BYTE3(buf)))
 	{
-		if(BIT2(BYTE3(buf)) == 0x01)//ֹ��������״̬
+		if(BIT2(BYTE3(buf)) == 0x01)//zhi dong qi jin suo zhuang tai
 		{
 			MSGDRIV_send(CMD_DETEND_LOCK,0);	//止动关
 		}else if(BIT2(BYTE3(buf)) == 0x00)

@@ -39,6 +39,7 @@
 OSDCTRL_OBJ * pCtrlObj = NULL;
 
 char tmparray[12] = "abcdef";
+
 #if 1
 const char ModeOsd[9][8]=
 {
@@ -144,6 +145,8 @@ float ServoX[15]={30.0, 3.59, 2.69, 2.0, 0.8, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 float ServoY[10]={30.0,3.4, 2.6, 2.0, 0.7, 0.4, 0.0, 0.0, 0.0, 0.0};
 bool SHINE=FALSE;
 
+volatile globalShoweErrorZone = 0 ;
+
 //extern PROJECTILE_TYPE gProjectileType;
 //extern WeatherItem gWeatherTable;
 
@@ -167,7 +170,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eMeasureDis,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	10,	0,	{0}},
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,	10,	0,	{0}},
 	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,	470,	0,	{0}},
-	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		460,	0,	{0}},
+	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,	460,	0,	{0}},
 	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	460+LOFFSET,	505,	0,	{0}},
 	{eWeather2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	460+LOFFSET,	540,	0,	{0}},
 	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		500,	0,	{0}},
@@ -905,14 +908,17 @@ void OSDCTRL_updateAreaN()
 {
 #if 1
 	int i=0;
-	BOOL noErr = FALSE;
+	bool noErr = FALSE;
+	
 	if(!Is9stateOK())
 	{
 		i = getErrCodeId();
 		Posd[eErrorZone] = ErrorOsd[i];
 	}
 	else if(bDetendClose())
+	{
 		Posd[eErrorZone] = ErrorOsd[18];
+	}
 	else if(bMaintPortOpen())
 		Posd[eErrorZone] = ErrorOsd[17];
 	else
@@ -920,14 +926,21 @@ void OSDCTRL_updateAreaN()
 		noErr = TRUE;
 	}
 	
-	if(noErr){
+	if(noErr)
+	{
 		OSDCTRL_ItemHide(eErrorZone);	
-	}else{
-		OSDCTRL_ItemShow(eErrorZone);
-		//startDynamicTimer();
+	}
+	else
+	{
+		globalShoweErrorZone = 1;
+		//OSDCTRL_ItemShow(eErrorZone);
+		//OSDCTRL_ItemShow(eStateDetend);	
+		//OSDCTRL_ItemShow(eSuperOrder);
 	}
 #endif
 }
+
+
 void OSDCTRL_updateMainMenu(int i)
 {
 	Posd[eCalibMenu_Zero] = CalibZeroOsd[i];
@@ -1431,16 +1444,16 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		case eMeasureDis:
 			if(isMultiChanged())
-				//sprintf(pStr,"x%03d",getDisLen()); //±¶Êý
+				//sprintf(pStr,"x%03d",getDisLen()); //ï¿½ï¿½ï¿½ï¿½
 				sprintf(pStr,"x%03d",333);
 			else
 				sprintf(pStr,"%04d",DistanceManual);
 			break;
 		case eLaserState:
-			sprintf(pStr,"%s",Posd[eLaserState]); 	//Ê×Ä©Ñ¡Í¨
+			sprintf(pStr,"%s",Posd[eLaserState]); 	//ï¿½ï¿½Ä©Ñ¡Í¨
 			break;
 		case eVideoErr:
-			//sprintf(pStr,"%c%c%c%c",230,215,245,183); 	//ÊÓÆµÒì³£
+			//sprintf(pStr,"%c%c%c%c",230,215,245,183); 	//ï¿½ï¿½Æµï¿½ì³£
 			break;
 		case eShotType:
 			if(isMachineGun())
@@ -1548,8 +1561,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%c%c%s",181,182,ResultOsd[0]);					//ï¿½æ´¢ï¿½ï¿½
 			break;
 		case eSelfCheckResult:
-			//if(Is9stateOK())
-			if(1)
+			if(Is9stateOK())
 				Posd[eSelfCheckResult] = ResultOsd[0];
 			else
 				Posd[eSelfCheckResult] = ResultOsd[1];

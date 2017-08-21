@@ -263,9 +263,9 @@ private:
 	int draw_circle_display(Mat frame);
 
 
+
 	
 };
-
 
 
 #endif /* PROCESS021_HPP_ */

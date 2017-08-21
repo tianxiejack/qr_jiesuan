@@ -347,9 +347,13 @@ void CProcess021::process_osd(void *pPrm)
 	{
 		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
 	}
+	//OSDCTRL_ItemShow(eErrorZone);
+
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
+	if()
+		OSDCTRL_ItemShow(eErrorZone);
 
 	//beside the text
 	//jiao zhun & ji jian --hide
@@ -3175,8 +3179,9 @@ void CProcess021::onJoyStickOK(LPARAM lParam)
  {
 	isJoyStickOK = TRUE;
 	setJoyStickStat(isJoyStickOK);
+	
 	if(isBootUpMode()&&isBootUpSelfCheck())
-	{
+	{	
 		if(Is9stateOK())
    		{
    	   		sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);
@@ -3185,7 +3190,6 @@ void CProcess021::onJoyStickOK(LPARAM lParam)
 	}
 	// update area N 
 	OSDCTRL_updateAreaN();
-	
 	//OSA_printf("%s,line:%d ... onJoyStickOK",__func__,__LINE__);
 	return ;
  }
@@ -4674,6 +4678,7 @@ void CProcess021::processCMD_LIHEQI_OPEN(long lParam )
   	OSA_printf("%s,line:%d ... processCMD_GRENADEMOTOR_OK",__func__,__LINE__);
   	return ;
   }
+
 
  #endif
 
