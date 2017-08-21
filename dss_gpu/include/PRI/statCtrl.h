@@ -166,6 +166,9 @@ bool isFovGrenadeKill();
 bool isFovSmall();
 bool isBattleIdle();
 bool isAutoIdle();
+bool bDetendClose();
+bool bMaintPortOpen();
+int getErrCodeId();
 
 
 PROJECTILE_TYPE getFovProjectileType();

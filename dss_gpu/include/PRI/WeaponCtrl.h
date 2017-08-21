@@ -84,7 +84,7 @@ char* getFulScrA0();
 float getpanoAngleV();
 float getpanoAngleH();
 
-void setJoyStickStat(BOOL stat);
+void setJoyStickStat(bool stat);
 void setGrenadeInPositonFlag(void);
 void resetGrenadeInPositionFlag(void);
 

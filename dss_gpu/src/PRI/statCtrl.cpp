@@ -28,6 +28,8 @@ extern void setPicEnhance(BOOL context);
 extern WeatherItem gWeatherTable;
 //extern PIF_servo_control pServoControlObj;
 extern volatile  int vpstatus;
+extern void setJoyStickStat(bool stat);
+
 static double AimOffsetX=0.000,AimOffsetY=0.000;
 static bool gTrackingMode=FALSE;
 //servo control related
@@ -186,7 +188,6 @@ bool isAtSaveYes()
 
 bool bJoyStickOK()
 {
-	isJoyStickOK = 1;
 	return isJoyStickOK;
 }
 
@@ -211,6 +212,16 @@ bool bGrenadeServoOK()
 {
 	isGrenadeServoOK = 1;
 	return isGrenadeServoOK;
+}
+
+bool bDetendClose()
+{
+	return isDetendClose;
+}
+
+bool bMaintPortOpen()
+{
+	return isMaintPortOpen;
 }
 
 bool bMachineGunServoOK()
@@ -314,6 +325,44 @@ PROJECTILE_TYPE getProjectileType()
 	}
 	else
 		return gProjectileType;	
+}
+
+
+int getErrCodeId()
+{
+	//isWeaponCtrlOK = isCapStatOK();
+	if((!isWeaponCtrlOK)&&(!isJoyStickOK)&&(!isAllSensorOK())&&(!isAllServoOK()))
+		return 14;
+	else if((!isJoyStickOK)&&(!isAllSensorOK())&&(!isAllServoOK()))
+		return 13;
+	else if((!isWeaponCtrlOK)&&(!isAllSensorOK())&&(!isAllServoOK()))
+		return 12;
+	else if((!isWeaponCtrlOK)&&(!isJoyStickOK)&&(!isAllServoOK()))
+		return 11;
+	else if((!isWeaponCtrlOK)&&(!isJoyStickOK)&&(!isAllSensorOK()))
+		return 10;
+	else if((!isAllSensorOK())&&(!isAllServoOK()))
+		return 9;
+	else if((!isJoyStickOK)&&(!isAllServoOK()))
+		return 8;
+	else if((!isJoyStickOK)&&(!isAllSensorOK()))
+		return 7;
+	else if((!isWeaponCtrlOK)&&(!isAllServoOK()))
+		return 6;
+	else if((!isWeaponCtrlOK)&&(!isAllSensorOK()))
+		return 5;
+	else if((!isWeaponCtrlOK)&&(!isJoyStickOK))
+		return 4;
+	else if(!isAllServoOK())
+		return 3;
+	else if(!isAllSensorOK())
+		return 2;
+	else if(!isJoyStickOK)
+		return 1;
+	else if(!isWeaponCtrlOK)
+		return 0;
+	else
+		return 15;
 }
 
 

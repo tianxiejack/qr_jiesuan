@@ -208,7 +208,13 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 							data 	= *(pChar + offset/8);
 							data 	<<= (offset%8);
 
-							pixcolor		= (data&0x80)?frcolor:bgcolor;
+							if(frcolor == 0)
+								pixcolor 		= (data&0x80)?frcolor:bgcolor;
+							else						
+								pixcolor		= (data&0x80)?frcolor:0xff000000;
+							
+							
+							//pixcolor		= (data&0x80)?frcolor:bgcolor;
 							*(pin+j*4-lenctl)	= pixcolor & 0xFF;
 							*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
 							*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
