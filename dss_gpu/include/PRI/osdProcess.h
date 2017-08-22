@@ -22,8 +22,8 @@ extern "C"{
 //#include <opencv2/opencv.hpp>
 //#include <opencv2/core/core.hpp>
 //#include <opencv2/legacy/compat.hpp>
-
-
+#include "permanentStorage.h"
+#include "msgDriv.h"
 
 
 //#define OSD_TEXT_SIZE		150 //18
@@ -72,12 +72,12 @@ extern "C"{
 
 
 
-
+#if 0
 typedef struct _weather_table{
 	int Temparature;
 	int Pressure;
 }WeatherItem;
-
+#endif
 
 typedef enum _eOsdTypeId{
 	eModeId		=	0x00,

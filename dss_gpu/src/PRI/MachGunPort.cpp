@@ -97,6 +97,7 @@ double getMachGunAngle()
 	//return MachGunAngle.theta - gMachineGun_ZCTable.Angle;
 	return MachGunAngle.theta;
 }
+
 // calculate the avarage velo in the last 2 seconds
 int getAverageDipVelocity(double* value)
 {

@@ -3,30 +3,9 @@
 
 #include "osdProcess.h"
 #include "basePort.h"
+#include "permanentStorage.h"
 
-
-
-typedef struct _ThetaDeltas 
-{
-	double deltaX; //��λ
-	double deltaY; //��λ
-} GeneralCorrection, TankTheta;
-
-
-typedef struct _GeneralCorrectionItem{
-	int distance;
-	GeneralCorrection data;
-}GeneralCorrectionItem;
-
-
-typedef struct _ZeroCorrectionItem{
-	double distance;
-	GeneralCorrection data;
-	double Angle;
-} ZeroCorrectionItem;
-
-
-
+void moveCrossCenter(int x, int y);
 void moveCrossRight();
 void moveCrossLeft();
 void moveCrossDown();
@@ -55,13 +34,16 @@ void saveZeroParam();
 
 
 extern FOVCTRL_Handle pFovCtrlObj;
-extern GeneralCorrectionItem gMachineGun_GCParam;
-extern GeneralCorrectionItem gGrenadeKill_GCParam;
-extern GeneralCorrectionItem gGrenadeGas_GCParam;
 
-extern ZeroCorrectionItem gMachineGun_ZCTable;
-extern ZeroCorrectionItem gGrenadeKill_ZCTable;
-extern WeatherItem gWeatherTable;
+#if 0
+	extern GeneralCorrectionItem gMachineGun_GCParam;
+	extern GeneralCorrectionItem gGrenadeKill_GCParam;
+	extern GeneralCorrectionItem gGrenadeGas_GCParam;
+
+	extern ZeroCorrectionItem gMachineGun_ZCTable;
+	extern ZeroCorrectionItem gGrenadeKill_ZCTable;
+	extern WeatherItem gWeatherTable;
+#endif
 
 #endif
 

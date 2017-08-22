@@ -5,6 +5,7 @@
 #include "statCtrl.h"
 #include "cFov.h"
 
+
 #define abs(a) (((a)>0)?(a):(0-(a)))
 #define STEPLEN 1
 
@@ -13,7 +14,7 @@ extern OSDCTRL_OBJ * pCtrlObj;
 
 FOVCTRL_Handle	 pFovCtrlObj = NULL;	
 	
-
+#if 0
 GeneralCorrectionItem gMachineGun_GCParam 	={0,		{0,0}};
 GeneralCorrectionItem gGrenadeKill_GCParam		={0,		{0,0}};
 GeneralCorrectionItem gGrenadeGas_GCParam	={0,		{0,0}};
@@ -21,8 +22,24 @@ GeneralCorrectionItem gGrenadeGas_GCParam	={0,		{0,0}};
 ZeroCorrectionItem gMachineGun_ZCTable = {500,	{352,288}};
 ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};
 WeatherItem gWeatherTable={15,101325};
+#endif
 
 static int DISLEN=10;
+
+void moveCrossCenter(int x, int y)
+{
+	CFOV* cthis = pFovCtrlObj;
+	int borX,borY;
+	if(isMachineGun()){
+		borX = gMachineGun_ZCTable.data.deltaX+x;
+		borY = gMachineGun_ZCTable.data.deltaY+(y>>1);
+	}else{
+		borX = gGrenadeKill_ZCTable.data.deltaX+x;
+		borY = gGrenadeKill_ZCTable.data.deltaY;
+	}
+	FOVCTRL_updateFovRect(cthis,0,0,borX,(borY>>1));
+}
+
 
 int getCrossX()
 {

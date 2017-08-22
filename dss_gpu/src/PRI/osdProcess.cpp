@@ -145,10 +145,7 @@ float ServoX[15]={30.0, 3.59, 2.69, 2.0, 0.8, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 float ServoY[10]={30.0,3.4, 2.6, 2.0, 0.7, 0.4, 0.0, 0.0, 0.0, 0.0};
 bool SHINE=FALSE;
 
-volatile globalShoweErrorZone = 0 ;
-
-//extern PROJECTILE_TYPE gProjectileType;
-//extern WeatherItem gWeatherTable;
+volatile char globalShoweErrorZone = 0 ;
 
 extern PROJECTILE_TYPE gProjectileType;
 extern PROJECTILE_TYPE gProjectileTypeBefore;
@@ -909,7 +906,7 @@ void OSDCTRL_updateAreaN()
 #if 1
 	int i=0;
 	bool noErr = FALSE;
-	
+   #if 1	
 	if(!Is9stateOK())
 	{
 		i = getErrCodeId();
@@ -925,15 +922,15 @@ void OSDCTRL_updateAreaN()
 	{
 		noErr = TRUE;
 	}
-	
+   #endif	 
 	if(noErr)
 	{
 		OSDCTRL_ItemHide(eErrorZone);	
 	}
 	else
 	{
-		globalShoweErrorZone = 1;
-		//OSDCTRL_ItemShow(eErrorZone);
+		//globalShoweErrorZone = 1;
+		OSDCTRL_ItemShow(eErrorZone);
 		//OSDCTRL_ItemShow(eStateDetend);	
 		//OSDCTRL_ItemShow(eSuperOrder);
 	}

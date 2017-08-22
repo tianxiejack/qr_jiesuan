@@ -20,6 +20,7 @@ typedef enum _FrameType{
 	Frame_Type4 = 0xA4,
 	Frame_TEST
 }FrameType;
+
 typedef enum _Button_Type{
 	Button_Base   = 0x0,	//无效
 	Button_Right  = 0x1,	//方向-右
@@ -31,6 +32,7 @@ typedef enum _Button_Type{
 	Button_Unlock = 0x7,	//锟斤拷锟斤拷
 	Button_AutoCheck  = 0x8//自检
 }Button_Type;
+
 typedef enum _Fire_Type{
 	Fire_Base     = 0x00,
 	Fire_Gun      = 0x01,
@@ -38,6 +40,7 @@ typedef enum _Fire_Type{
 	Fire_Shot     = 0x03,
 	Fire_Reset    = 0x04
 }Fire_Type;
+
 typedef enum _Fov_Type{
 	FOV_SMALL,
 	FOV_LARGE

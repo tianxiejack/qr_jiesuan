@@ -95,7 +95,7 @@ static Int32 Dx_updateCfgDownloadData( Int32 blkId, Int32 feildId );
 static Int32 Dx_updateCfgUploadData( Int32 blkId, Int32 feildId );
 static Int32 config_default_set( void );
 
-
+#if 0
 GeneralCorrectionItem gGrenadeKill_GCTable[]=
 {
 	{0,		{0,0}},
@@ -138,6 +138,7 @@ GeneralCorrectionItem gGrenadeGas_GCTable[]=
 		{350, {0,0}},
 		{364, {0,0}}
 };
+#endif
 //ZeroCorrectionItem gMachineGun_ZCTable = {500,	{352,288}};
 //ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};
 //WeatherItem gWeatherTable={15,101325};
@@ -1537,8 +1538,8 @@ void button_to_save()
 	CFGID_CONFIG_SETSAVE(CFGID_Kill_ZC_deltaY,        		(int)(gGrenadeKill_ZCTable.data.deltaY*100));
 	CFGID_CONFIG_SETSAVE(CFGID_Kill_ZC_Angle,         		(int)(gGrenadeKill_ZCTable.Angle*100));
 
-	CFGID_CONFIG_SETSAVE(CFGID_Weather_Temparature,   		gWeatherTable.Temparature);
-	CFGID_CONFIG_SETSAVE(CFGID_Weather_Pressure, 	     		gWeatherTable.Pressure);
+	CFGID_CONFIG_SETSAVE(CFGID_Weather_Temparature,   	gWeatherTable.Temparature);
+	CFGID_CONFIG_SETSAVE(CFGID_Weather_Pressure, 	     	gWeatherTable.Pressure);
 	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_distance,     	(int)(gMachineGun_GCParam.distance*100));
 	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_deltaX,        	(int)(gMachineGun_GCParam.data.deltaX*100));
 	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_deltaY,       	 	(int)(gMachineGun_GCParam.data.deltaY*100));

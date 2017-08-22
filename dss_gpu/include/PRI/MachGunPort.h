@@ -31,7 +31,7 @@ double getMachGunAngleAbs();
 
 int MachGunPORT_PhraseBye(unsigned char *buf);
 
-
+int getAverageDipVelocity(double* value);
 
 
 
