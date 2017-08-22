@@ -2322,6 +2322,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_QUIT,				processCMD_BUTTON_QUIT,	0); //tui chu an jian
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,			processCMD_BUTTON_UNLOCK,	0); // �����?    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UP,					processCMD_BUTTON_UP,	0); // ���ϰ���
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_DOWN,				processCMD_BUTTON_DOWN,	0); // ���°���
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UP,					processCMD_BUTTON_UP,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_LEFT,				processCMD_BUTTON_LEFT,	0); // ���󰴼�
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_RIGHT,				processCMD_BUTTON_RIGHT,	0); // ���Ұ���
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_ENTER,				processCMD_BUTTON_ENTER,	0); // ȷ�ϰ���
@@ -3547,7 +3548,7 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
  {
 	if(isCalibrationMode())
-	{
+	{printf("111111111111111111111111111111111111\n");
 		if(isCalibrationMainMenu())
 		{
 			moveUpXposition();
@@ -4271,7 +4272,7 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 		if(isTrackingOK())
 		{
 			gLevel3CalculatorState = Battle_LoadFiringTable;
-			//loadFiringTable();
+			loadFiringTable();
 		}
 		else if(isWaitforFeedback())
 		{
@@ -4288,7 +4289,7 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 	else if(isBattleMode()&& isStatBattleAuto()&& isAutoPreparation())
 	{
 		gLevel3CalculatorState = Auto_LoadFiringTable;
-		//loadFiringTable_Enter();
+		loadFiringTable_Enter();
 	}
 
 

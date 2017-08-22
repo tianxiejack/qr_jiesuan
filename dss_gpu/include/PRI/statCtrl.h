@@ -176,8 +176,10 @@ bool isWaitforFeedback();
 bool isTrackingOK();
 bool isBattlePreparation();
 bool isAutoPreparation();
+void loadFiringTable_Enter();
+void loadFiringTable();
 
-
+	
 PROJECTILE_TYPE getFovProjectileType();
 PROJECTILE_TYPE getProjectileType();
 

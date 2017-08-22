@@ -276,7 +276,6 @@ void decreaseDigitOrSymbolGeneral()
 void moveUpXposition()
 {
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
-
 	int i;
 	SDK_ASSERT(pCtrlObj!=NULL);
 	

@@ -400,7 +400,7 @@ int getErrCodeId()
 }
 
 
-static void loadFiringTable_Enter()
+void loadFiringTable_Enter()
 {
 	int ret;
 	FiringInputs input;
@@ -514,6 +514,125 @@ static void loadFiringTable_Enter()
 
 		return;
 	}else if( CALC_INVALID_PARAM == ret || CALC_UNDER_DISTANCE == ret)
+	{
+		SDK_ASSERT(FALSE);
+	}
+	
+}
+
+void loadFiringTable()
+{
+	int ret;
+	FiringInputs input;
+	FiringOutputs output;
+	memset(&input,0,sizeof(input));
+	memset(&output,0,sizeof(output));
+	input.AirPressure = Pressure;
+//	input.DipAngle = 
+	input.GrenadeYTheta = DEGREE2MIL(getGrenadeAngle());
+	input.MachineGunYTheta = DEGREE2MIL(getMachGunAngle());
+	input.PlatformXTheta = DEGREE2MIL(getPlatformPositionX());
+	input.PlatformYTheta = DEGREE2MIL(getPlatformPositionY());
+	input.ProjectileType = getProjectileType();
+	if(!isMeasureManual()) //todo \u540e\u671f\u9700\u5220\u9664
+	{
+		ret = getAverageVelocity(&input.TargetAngularVelocityX);
+		if(ret < 0)
+			input.TargetAngularVelocityX = 0.0;
+		//assert(FALSE);
+		ret = getAverageDipVelocity(&input.TargetAngularVelocityY);
+		if(ret < 0)
+			input.TargetAngularVelocityY = 0.0;
+		//assert(FALSE);
+		input.TargetDistance = getLaserDistance();
+	}else
+	{
+		input.TargetAngularVelocityX = 0.0;
+		input.TargetAngularVelocityY = 0.0;
+		input.TargetDistance = DistanceManual;
+	}
+//	input.TargetAngularVelocityY = 0;
+	assert(input.TargetDistance >= 0);
+
+	if(0 == input.TargetDistance)
+		input.TargetDistance = 1;
+	
+	input.Temperature = Temparature;
+	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
+	
+	ret = FiringCtrl( &input, &output);
+//	sendCommand(CMD_SEND_MIDPARAMS);
+	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
+	{
+		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
+	}
+	AimOffsetX = (double)output.AimOffsetX;
+	AimOffsetY = (double)output.AimOffsetY;
+	//startAVTtimer();
+	if(CALC_OK == ret)
+	{
+		int borX=0,borY=0;
+		//startRGQtimer();
+		//todo ValidateOutput(&output);//check offset overflow. 5.6x4.2 16x12
+		if(isMachineGun()){
+			borX = gMachineGun_ZCTable.data.deltaX;
+			borY = gMachineGun_ZCTable.data.deltaY;
+		}
+		else
+		{
+			borX = gGrenadeKill_ZCTable.data.deltaX;
+			borY = gGrenadeKill_ZCTable.data.deltaY;
+		}
+		if(isFovSmall()){
+			FOVSIZE_V = FOVDEGREE_VSMALL*(704-borX)/352; 
+			FOVSIZE_H = FOVDEGREE_VSMALL*(576-borY)/288; 
+		}
+		else
+		{
+			FOVSIZE_V = FOVDEGREE_VLARGE*(704-borX)/352;
+			FOVSIZE_H = FOVDEGREE_HLARGE*(576-borY)/288;
+		}
+
+		if(-FOVSIZE_V >  MIL2DEGREE(output.AimOffsetThetaX))
+		{
+			SHINE_DERECTION = DERECTION_LEFT;
+		}
+		else if(FOVSIZE_V < MIL2DEGREE(output.AimOffsetThetaX))
+		{
+			SHINE_DERECTION = DERECTION_RIGHT;
+		}
+		else if((FOVSIZE_H < MIL2DEGREE(output.AimOffsetThetaY))&&isMachineGun())
+		{
+			SHINE_DERECTION = DERECTION_DOWN;
+		}
+		else
+		{
+			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
+
+			//AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
+			if(isMachineGun())
+				;//AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);
+			
+			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
+			sendCommand(CMD_FIRING_TABLE_LOAD_OK);
+			return ;
+		}
+		FOVSHINE = TRUE;
+		//startDynamicTimer();
+		sendCommand(CMD_QUIT_AVT_TRACKING);
+
+	}
+	else if(CALC_OVER_DISTANCE == ret )
+	{
+		Posd[eDynamicZone] = DynamicOsd[5];
+		OSDCTRL_ItemShow(eDynamicZone);
+		//startDynamicTimer();
+		sendCommand(CMD_FIRING_TABLE_FAILURE);
+		sendCommand(CMD_QUIT_AVT_TRACKING);
+
+		return;
+	}
+	else if( CALC_INVALID_PARAM == ret || CALC_UNDER_DISTANCE == ret)
 	{
 		SDK_ASSERT(FALSE);
 	}
