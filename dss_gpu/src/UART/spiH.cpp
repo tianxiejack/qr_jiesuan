@@ -74,7 +74,7 @@ int process_decode(struct RS422_data * pRS422_data)
 			return -1;
 
 		while(have_data){
-
+			index=0;
 			ret = SPI_decode_recvFlg(buf, length, &index);
 			length -= index;
 
@@ -186,7 +186,7 @@ int Process_mirror(struct RS422_data * pRS422_data)
 			return -1;
 
 		while(have_data){
-
+			index=0;
 			ret = SPI_mirror_recvFlg(buf, length, &index);
 			length -= index;
 
@@ -304,7 +304,7 @@ int Process_vcode(struct RS422_data * pRS422_data)
 			return -1;
 
 		while(have_data){
-
+			index=0;
 			ret = SPI_vcode_recvFlg(buf, length, &index);
 			length -= index;
 
@@ -399,7 +399,7 @@ int Process_grenade(struct RS422_data * pRS422_data)
 			return -1;
 
 		while(have_data){
-
+			index=0;
 			ret = SPI_vcode_recvFlg(buf, length, &index);
 			length -= index;
 
@@ -494,7 +494,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 			return -1;
 
 		while(have_data){
-
+			index=0;
 			ret = SPI_vcode_recvFlg(buf, length, &index);
 			length -= index;
 
@@ -977,7 +977,13 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 			return -1;
 	}	
 	pthread_mutex_lock(&RS422_data_buff->mutex);
-	lengthTmp=RS422_data_buff->length;
+
+	if(RS422_data_buff->length<0){
+		lengthTmp=0;
+	}else{
+		lengthTmp=RS422_data_buff->length;
+	}
+
 	RS422_data_buff->length=lengthTmp+length;
 
 	if( RS422_data_buff->length >= sizeof(RS422_data_buff->receiveData)-1 ){
