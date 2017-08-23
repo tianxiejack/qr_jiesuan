@@ -352,8 +352,6 @@ void CProcess021::process_osd(void *pPrm)
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
-	if()
-		OSDCTRL_ItemShow(eErrorZone);
 
 	//beside the text
 	//jiao zhun & ji jian --hide
