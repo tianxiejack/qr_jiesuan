@@ -145,7 +145,7 @@ float ServoX[15]={30.0, 3.59, 2.69, 2.0, 0.8, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 float ServoY[10]={30.0,3.4, 2.6, 2.0, 0.7, 0.4, 0.0, 0.0, 0.0, 0.0};
 bool SHINE=FALSE;
 
-volatile globalShoweErrorZone = 0 ;
+volatile int globalShoweErrorZone = 0 ;
 
 //extern PROJECTILE_TYPE gProjectileType;
 //extern WeatherItem gWeatherTable;
