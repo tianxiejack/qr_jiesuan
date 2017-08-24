@@ -11,6 +11,7 @@
 #include "PositionPort.h"
 
 #include "osdPort.h"
+#include "servo_control_obj.h"
 
 
 float FOVSIZE_V=FOVDEGREE_VLARGE, FOVSIZE_H=FOVDEGREE_HLARGE;
@@ -402,6 +403,7 @@ int getErrCodeId()
 
 void loadFiringTable_Enter()
 {
+	
 	int ret;
 	FiringInputs input;
 	FiringOutputs output;
@@ -440,7 +442,7 @@ void loadFiringTable_Enter()
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
 	
 	ret = FiringCtrl( &input, &output);
-//	sendCommand(CMD_SEND_MIDPARAMS);
+
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
 		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
@@ -464,26 +466,28 @@ void loadFiringTable_Enter()
 		if(isFovSmall()){
 			FOVSIZE_V = FOVDEGREE_VSMALL*(704-borX)/352; 
 			FOVSIZE_H = FOVDEGREE_VSMALL*(576-borY)/288; 
-		}else{
+		}
+		else{
 			FOVSIZE_V = FOVDEGREE_VLARGE*(704-borX)/352;
 			FOVSIZE_H = FOVDEGREE_HLARGE*(576-borY)/288;
 		}
 		
 		if(-FOVSIZE_V >  MIL2DEGREE(output.AimOffsetThetaX))
 		{
-			
+			//zuo ce chao chu
 			SHINE_DERECTION = DERECTION_LEFT;
 		}
 		else if(FOVSIZE_V < MIL2DEGREE(output.AimOffsetThetaX))
 		{
-			
+			//you ce chao chu
 			SHINE_DERECTION = DERECTION_RIGHT;
 		}
 		else if(isMachineGun()&&(FOVSIZE_H < MIL2DEGREE(output.AimOffsetThetaY)))
 		{
-			
+			//xia ce chao chu	
 			SHINE_DERECTION = DERECTION_DOWN;
-		}else
+		}
+		else
 		{
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 			//: input PID aimoffset
@@ -491,20 +495,29 @@ void loadFiringTable_Enter()
 			if(isMachineGun())
 				AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);*/
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-
+ 			
 			if(isMachineGun())
-				;//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
+			{
+				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
+				cmd_machservo_moveoffset_tmp = output.AimOffsetY-DEGREE2MIL(getGrenadeAngle());
+				MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, 0);	
+			}
 			else
-				;//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
-			
-			sendCommand(CMD_FIRING_TABLE_LOAD_OK);
+			{
+				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
+				cmd_grenadeservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
+				MSGDRIV_send(CMD_GRENADESERVO_MOVEOFFSET, 0);
+				sendCommand(CMD_FIRING_TABLE_LOAD_OK);
+			}
+				
 			return ;
 		}
 		FOVSHINE = TRUE;
 		//startDynamicTimer();
 //		sendCommand(CMD_QUIT_AVT_TRACKING);
 
-	}else if(CALC_OVER_DISTANCE == ret )
+	}
+	else if(CALC_OVER_DISTANCE == ret )
 	{
 		Posd[eDynamicZone] = DynamicOsd[5];
 		OSDCTRL_ItemShow(eDynamicZone);

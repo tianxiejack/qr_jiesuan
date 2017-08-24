@@ -54,6 +54,10 @@
 #define ALG_TRACK_TIMER                    (0x05)
 #define ALG_TRACK_TIMER_TICKS		    (40) //ms
 
+#define BOARD_waitusec_TIMER		 	(0x06)
+#define BOARD_waitusec_TIMER_TICKS		 (10) //ms
+
+
 char APP_getChar( );
 int cltrl_dis_user(int value,int id);
 unsigned char APP_getint( );

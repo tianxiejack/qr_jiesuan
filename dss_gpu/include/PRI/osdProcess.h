@@ -521,6 +521,8 @@ void Osd_shinItem(int id);
 int getCrossX();
 int getCrossY();
 
+void resetTickNum();
+
 extern volatile char globalShoweErrorZone;
 extern WeatherItem gWeatherTable;
  

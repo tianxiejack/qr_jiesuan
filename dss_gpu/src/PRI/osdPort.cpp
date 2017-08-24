@@ -290,7 +290,6 @@ void moveUpXposition()
 }
 
 
-
 void moveDownXPosition()
 {
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
@@ -392,6 +391,25 @@ void moveFocusLeftGeneral()
 	ShinId = eCalibGeneral_DisValue1 + (ShinId - eCalibGeneral_DisValue1+ 13)%14;
 }
 
+void increaseMeasureMul()
+{
+	if(!SHINE)
+		return;
+	if(DISLEN<100)
+		DISLEN *= 10;
+	
+	resetTickNum();
+}
+
+void decreaseMeasureMul()
+{
+	if(!SHINE)
+		return;
+	if(DISLEN>1)
+		DISLEN /= 10;
+	
+	resetTickNum();
+}
 
 void increaseMeasureDis()
 {

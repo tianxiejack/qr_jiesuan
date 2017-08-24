@@ -61,7 +61,8 @@ int OSA_msgqSend(OSA_MsgqHndl *hndl, OSA_MsgHndl *msg, Uint32 timeout)
 
   pthread_mutex_lock(&hndl->lock);
 
-  while(1) {
+  while(1)
+  {
     if( hndl->count < hndl->len ) {
       hndl->queue[hndl->curWr] = msg;
       hndl->curWr = (hndl->curWr+1)%hndl->len;
@@ -69,7 +70,9 @@ int OSA_msgqSend(OSA_MsgqHndl *hndl, OSA_MsgHndl *msg, Uint32 timeout)
       status = OSA_SOK;
       pthread_cond_signal(&hndl->condRd);
       break;
-    } else {
+  } 
+  else 
+  {
       if(timeout == OSA_TIMEOUT_NONE)
         break;
 

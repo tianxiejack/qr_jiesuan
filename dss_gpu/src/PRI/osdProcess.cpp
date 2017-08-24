@@ -445,6 +445,7 @@ BOOL isMultiChanged()
 		tick--;
 	return (tick != 0);
 }
+
 static void OSDCTRL_OsdInitial()
 {
 	sprintf(WorkOsd[0],"%c%c",249,185);//zi dong

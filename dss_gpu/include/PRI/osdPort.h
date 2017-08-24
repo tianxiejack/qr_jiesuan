@@ -5,6 +5,8 @@
 #include "basePort.h"
 #include "permanentStorage.h"
 
+void increaseMeasureMul();
+void decreaseMeasureMul();
 void moveCrossCenter(int x, int y);
 void moveCrossRight();
 void moveCrossLeft();

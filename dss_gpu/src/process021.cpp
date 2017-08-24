@@ -21,6 +21,8 @@
 #include "statCtrl.h"
 #include "cFov.h"
 
+#include "servo_control_obj.h"
+#include "app_user.h"
 //extern Level_one_state gLevel1Mode;
 //extern Level_one_state gLevel1LastMode;
 
@@ -3548,7 +3550,7 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
  {
 	if(isCalibrationMode())
-	{printf("111111111111111111111111111111111111\n");
+	{
 		if(isCalibrationMainMenu())
 		{
 			moveUpXposition();
@@ -3602,7 +3604,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
 			increaseMeasureDis();
-			//loadFiringTable_Enter();
+			loadFiringTable_Enter();
 		}
 	}
 
@@ -3621,8 +3623,8 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 		}
 		else if(isCalibrationZero())
 		{
-			//if(isGrenadeGas())
-			//	return ;
+			if(isGrenadeGas())
+				return ;
 			moveCrossDown();
 		}
 		else if(isCalibrationWeather())
@@ -3667,8 +3669,8 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 	{
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
-			//decreaseMeasureDis();
-			//loadFiringTable_Enter();
+			decreaseMeasureDis();
+			loadFiringTable_Enter();
 		}
 	}
 
@@ -3732,7 +3734,7 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 	{
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
-			//increaseMeasureMul();
+			increaseMeasureMul();
 		}
 	}
 
@@ -3800,7 +3802,7 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 	{
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
-			//decreaseMeasureMul();
+			decreaseMeasureMul();
 		}
 	}
 
@@ -4557,16 +4559,7 @@ void CProcess021::processCMD_MACHSERVO_STOP(LPARAM lParam)
  	OSA_printf("%s,line:%d ... processCMD_MACHSERVO_STOP",__func__,__LINE__);
 	return ;
  }
-void CProcess021::processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_MACHSERVO_MOVEOFFSET",__func__,__LINE__);
-	return ;
- }
-void CProcess021::processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_GRENADESERVO_MOVEOFFSET",__func__,__LINE__);
-	return ;
- }
+ 
 
 void CProcess021::processCMD_MODE_AIM_LAND(LPARAM lParam)
  {

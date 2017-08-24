@@ -207,8 +207,6 @@ protected:
         static void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam);
         static void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam);
         static void processCMD_MACHSERVO_STOP(LPARAM lParam);
-        static void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam);
-        static void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam);
  	 static void processCMD_MODE_AIM_SKY(LPARAM lParam);
         static void processCMD_MODE_AIM_LAND(LPARAM lParam);
 	 
