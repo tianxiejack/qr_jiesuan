@@ -1597,6 +1597,13 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		MSGDRIV_send(MSGID_EXT_INPUT_PICPCROP,NULL);
 	}
 
+	if(key == 'Q' || key == 'q')
+	{
+		gLevel3CalculatorState = Auto_LoadFiringTable;
+		loadFiringTable_Enter();
+	}
+	
+
 		
 	if (key == 't' || key == 'T')
 	{
@@ -1649,6 +1656,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	{
 		MSGDRIV_send(CMD_BUTTON_RIGHT, NULL);
 	}
+
 	
 }
 

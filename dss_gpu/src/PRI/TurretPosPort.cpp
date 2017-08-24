@@ -34,11 +34,9 @@ static int ibInit=0;
 static double g_measure_dist_time = 0;
 extern int turretTimer;
 
-typedef struct CurrentTheta {
-	double theta;
-	int msecond;
-}C_Thetas;
-static C_Thetas gTurretTheta= {0.0,0};
+
+C_Thetas gTurretTheta= {0.0,0};
+
 static double gTurretVelocity[COUNT_TURRET_VELO]={0};
 static int counter=-1;
 static BOOL TurretPosPORT_open();
@@ -107,7 +105,6 @@ void computeMeanVar( double *src, double *mean, double *var, int size )
 double getTurretTheta()
 {
 	return gTurretTheta.theta;
-	return 0.0;
 }
 
 BOOL isTurretVelocityValid()

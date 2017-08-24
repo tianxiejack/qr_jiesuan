@@ -403,7 +403,6 @@ int getErrCodeId()
 
 void loadFiringTable_Enter()
 {
-	
 	int ret;
 	FiringInputs input;
 	FiringOutputs output;
@@ -439,6 +438,7 @@ void loadFiringTable_Enter()
 		input.TargetDistance = 1;
 	
 	input.Temperature = gWeatherTable.Temparature;
+	
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
 	
 	ret = FiringCtrl( &input, &output);
@@ -489,6 +489,7 @@ void loadFiringTable_Enter()
 		}
 		else
 		{
+		printf("!!!\nmoveCrossCentermoveCrossCentermoveCrossCentermoveCrossCentermoveCrossCenter");
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 			//: input PID aimoffset
 /*			AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);

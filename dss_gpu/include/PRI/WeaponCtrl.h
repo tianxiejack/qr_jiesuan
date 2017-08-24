@@ -104,6 +104,7 @@ void setTraceModeSwitch(BOOL context);
 int WeaponCtrlPort_ParseByte(BYTE* buf);
 
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf);
+void startServoServer(BYTE code);
 
 
 #ifdef __cplusplus

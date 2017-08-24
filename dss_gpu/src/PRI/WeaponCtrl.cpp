@@ -1459,13 +1459,13 @@ static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 {
 #if 1
-	//if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
-		//sendCommand(CMD_WEAPONCTRL_OK);
+	if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
+		sendCommand(CMD_WEAPONCTRL_OK);
 
 	switch(buf[2])
 	{
 	case Frame_Type0:
-		//WeaponCtrlPORT_ParseFrameByte_type0(buf);
+		WeaponCtrlPORT_ParseFrameByte_type0(buf);
 		break;
 	case Frame_Type1:
 		WeaponCtrlPORT_ParseFrameByte_type1(buf);

@@ -7,9 +7,6 @@ extern "C" {
 
 #include "basePort.h"
 
-
-
-
 typedef struct _TurretPosPort
 {
 	PortInter_t pInter;
@@ -39,7 +36,7 @@ void TurretPosPORT_PhraseBye(unsigned char *pRecv);
 
 
 
-
+extern C_Thetas gTurretTheta;
 
 
 

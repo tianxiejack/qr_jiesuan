@@ -8,7 +8,6 @@ extern "C" {
 #include "basePort.h"
 
 
-
 typedef struct _MachGunPort
 {
 	PortInter_t pInter;
@@ -33,7 +32,7 @@ int MachGunPORT_PhraseBye(unsigned char *buf);
 
 int getAverageDipVelocity(double* value);
 
-
+extern C_Thetas MachGunAngle;
 
 #ifdef __cplusplus
 }

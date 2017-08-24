@@ -12,6 +12,10 @@ extern "C"{
 
 #define MAXUARTBUFLEN 512
 
+typedef struct CurrentTheta {
+	double theta;
+	int msecond;
+}C_Thetas;
 
 typedef struct _MuxPotrTran MuxPotrTran;
 typedef int(*MuxPortCallBackFun)(BYTE *pData,UINT uLen,int context);

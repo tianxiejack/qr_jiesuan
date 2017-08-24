@@ -19,22 +19,20 @@
 //#include "main.h"
 //#include "PVEMsgfunsTab.h"
 //#include "byteParser_util.h"
-//#include "permanentStorage.h"
 
-
+#include "permanentStorage.h"
 #include "MachGunPort.h"
 #include "msgDriv.h"
 
 
+
+
 #if 1
 #define COUNT_DIP_VELO 200
-typedef struct CurrentTheta {
-	double theta;
-	int msecond;
-}C_Thetas;
 
 
-static C_Thetas MachGunAngle={0.0,0};
+
+C_Thetas MachGunAngle={0.0,0};
 static double gDipVelocity[COUNT_DIP_VELO]={0};
 static int counter=-1;
 static double g_measure_dist_time = 0;
@@ -94,8 +92,7 @@ double getMachGunAngleAbs()
 
 double getMachGunAngle()
 {
-	//return MachGunAngle.theta - gMachineGun_ZCTable.Angle;
-	return MachGunAngle.theta;
+	return MachGunAngle.theta - gMachineGun_ZCTable.Angle;
 }
 
 // calculate the avarage velo in the last 2 seconds

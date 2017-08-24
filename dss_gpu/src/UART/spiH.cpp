@@ -13,6 +13,8 @@
 #include <pthread.h>
 
 #include "UartMessage.h"
+#include "TurretPosPort.h"
+#include "MachGunPort.h"
 
 static int fd0;
 static int fd1;
@@ -337,7 +339,9 @@ int Process_vcode(struct RS422_data * pRS422_data)
 				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				positive=1;
-				if( sum_xor ==  buf[parse_length-1] ){
+				//if( sum_xor ==  buf[parse_length-1] )
+				if(1)
+				{
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
 					printf(" positive=%d angle=%d  \n", positive, angle);
@@ -531,10 +535,15 @@ int Process_hcode(struct RS422_data * pRS422_data)
 			//printf( "%02x \n" ,buf[parse_length-1]);
 
 				positive=1;
-				if( sum_xor ==  buf[parse_length-1] ){
+				//if( sum_xor ==  buf[parse_length-1] )
+				if(1)
+				{
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
-					positive = buf[4] ==0 ? 1: -1;
+					positive = buf[4] ==0 ? 1: -1;	
 					printf(" positive=%d angle=%d  \n", positive, angle);
+
+					MachGunAngle.theta = (positive)*angle/100.00;
+					
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
