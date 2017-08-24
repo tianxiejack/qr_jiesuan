@@ -2076,7 +2076,6 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 
 		case ePlatFormX:
 			//sprintf(pStr,"Px:%+06.2f,Py:%+06.2f,Spx:%+03d,Spy:%+03d",getPlatFormX(),getPlatFormY(),getLastSpeed(),getLastSpeedY()); 		//PlatFormX:+xxxx 
-			sprintf(pStr,"Px:%+06.2f,Py:%+06.2f,Spx:%+03d,Spy:%+03d",1.1,2.2,3.3,4.4); 
 			break;
 		case eCalcNum_Visual:
 			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",172,173,getSumCalibX(),172,173,getSumCalibY()); //��Ԫ:���� ��

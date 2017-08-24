@@ -33,6 +33,11 @@
 
 static int fd_can;
 
+//发送数据给伺服的ＩＤ号。　机枪	榴弹	炮台
+#define CODE_SERVO_MACHGUN   (0x2C)
+#define CODE_SERVO_GRENADE	(0x37)
+#define CODE_SERVO_TURRET     (0x42)
+
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -304,7 +309,11 @@ int OpenCANDevice()
 	if(Uart_set_com_config(fd_can,115200,8,'N',1)<0)
 	{
 		printf("Uart Set Error\n");
+		return -1;
 	}
+
+	Servo_start_init();
+
 	return fd_can;
 }
 
@@ -335,16 +344,152 @@ int ReadCANBuf(char *buf, int length)
 
 int SendCANBuf(char *buf, int length)
 {
-	int nread = 0 ;
-	nread = write(fd_can, buf, length);
+	int nwrite= 0 ;
+	nwrite = write(fd_can, buf, length);
+	return nwrite;
+}
 
-	return nread;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//获取绝对位置
+void ServoAbsPosRequest( char code)
+{
+	 char servoPos[6]={ 0x03, 0x00, 0x50, 0x58, 0x00, 0x00  };
+	servoPos[1] = code;
+	SendCANBuf(servoPos,  sizeof(servoPos));
+}
+
+//开始运行
+void ServoStart( char code)
+{
+	 char start[6] = {0x03, 0x00, 0x42, 0x47, 0x00, 0x00 };
+	start[1] = code;
+	SendCANBuf(start, sizeof(start));
+}
+
+//引用startServoServer()函数
+//初始化伺服设备
+int InitServo(  char code )
+{
+	 char buf[4] = {0x00, 0x00, 0x01, 0x00};
+	 char MOTOR0[10] = { 0x03, 0x00, 0x4d, 0x4f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	 char MOTOR1[10] = { 0x03, 0x00, 0x4d, 0x4f, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00};
+	 char MODE[10] 	 =  { 0x03, 0x00, 0x55, 0x4d, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00 };
+
+	SendCANBuf(buf,  sizeof(buf));  //启动can网络
+
+	MOTOR0[1] = code;
+	SendCANBuf(MOTOR0,  sizeof(MOTOR0));	//电机使能为０
+	MODE[1] = code;
+	SendCANBuf(MODE, sizeof(MODE)); 	//速度选择模式为５
+	MOTOR1[1] = code;
+	SendCANBuf(MOTOR1, sizeof(MOTOR1)); //电机使能为１
+	ServoAbsPosRequest(code); //请求绝对位置
+	ServoStart(code); //电机运动
+
+	return 0;
+}
+
+///////////////////////////////////////////////////
+
+//调整机枪速度
+void Mach_servo_move_speed(float xSpeed, float ySpeed)
+{
+
+
+
+}
+
+//改变机枪的位置
+void Mach_servo_move_offset(float xOffset, float yOffset)
+{
+
+
+
+}
+
+//机枪停止运动
+void Mach_servo_stop()
+{
+
+	char mach_stop_buff[10] 	 =  { 0x03, CODE_SERVO_MACHGUN, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+	char turret_stop_buff[10] 	 =  { 0x03, CODE_SERVO_TURRET, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+	SendCANBuf(mach_stop_buff,  sizeof(mach_stop_buff));
+	usleep(10*1000);
+	SendCANBuf(turret_stop_buff,  sizeof(turret_stop_buff));
+	usleep(10*1000);
+
+}
+
+///////////////////////////////////////////////////
+
+//榴弹伺服速度
+void Grenade_servo_move_speed(float xSpeed, float ySpeed)
+{
+
+
+
+}
+
+//榴弹位置偏移
+void Grenade_servo_move_offset(float xOffset, float yOffset)
+{
+
+
+
+}
+
+//榴弹伺服停止运动
+void Grenade_servo_stop()
+{
+		char grenade_stop_buff[10] 	 =  { 0x03, CODE_SERVO_GRENADE, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+		char turret_stop_buff[10] 			 =  { 0x03, CODE_SERVO_TURRET, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+		SendCANBuf(grenade_stop_buff,  sizeof(grenade_stop_buff));
+		usleep(10*1000);
+		SendCANBuf(turret_stop_buff,  sizeof(turret_stop_buff));
+		usleep(10*1000);
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+//炮台伺服速度
+void Turret_servo_move_speed(float xSpeed, float ySpeed)
+{
+
+
+
+}
+
+//炮台伺服位置偏移
+void Turret_servo_move_offset(float xOffset, float yOffset)
+{
+
+
+}
+
+//炮台伺服停止运动
+void Turret_servo_stop()
+{
+	char turret_stop_buff[10] 			 =  { 0x03, CODE_SERVO_TURRET, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+	SendCANBuf(turret_stop_buff,  sizeof(turret_stop_buff));
+	usleep(10*1000);
+
 }
 
 
-
-
-
+void Servo_start_init()
+{
+	InitServo( CODE_SERVO_MACHGUN );
+	usleep(10*1000);
+	InitServo( CODE_SERVO_GRENADE );
+	usleep(10*1000);
+	InitServo( CODE_SERVO_TURRET );
+	usleep(10*1000);
+}
 
 
 

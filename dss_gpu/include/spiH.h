@@ -42,7 +42,7 @@
 
 struct RS422_data
 {
-	uint8_t receiveData[2048];
+	uint8_t receiveData[1024];
 	int length;
 	pthread_mutex_t mutex;
 };
@@ -81,7 +81,8 @@ void interuptHandleDataSpi3(int interuptNum,struct RS422_data* RS422_TEST_buff,s
 int sendDataToSpi(int comNum,uint8_t* buff,int length);//把整包数据发到spi上
 int writeOneData(int comNum,uint8_t data);  //写单个字节
 
-
+int SPI_mirror_send_requst();  //发送测距请求
+int SPI_mirror_send_ack();  //激光数据确认
 
 
 
