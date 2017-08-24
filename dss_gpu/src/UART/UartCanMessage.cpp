@@ -34,9 +34,9 @@
 static int fd_can;
 
 //发送数据给伺服的ＩＤ号。　机枪	榴弹	炮台
-#define CODE_SERVO_MACHGUN (0x37)
-#define CODE_SERVO_GRENADE (0x42)
-#define CODE_SERVO_TURRET   (0x2C)
+#define CODE_SERVO_MACHGUN   (0x2C)
+#define CODE_SERVO_GRENADE	(0x37)
+#define CODE_SERVO_TURRET     (0x42)
 
 
 /* ========================================================================== */
@@ -346,7 +346,6 @@ int SendCANBuf(char *buf, int length)
 {
 	int nwrite= 0 ;
 	nwrite = write(fd_can, buf, length);
-	usleep(10*1000);
 	return nwrite;
 }
 
@@ -413,6 +412,13 @@ void Mach_servo_move_offset(float xOffset, float yOffset)
 void Mach_servo_stop()
 {
 
+	char mach_stop_buff[10] 	 =  { 0x03, CODE_SERVO_MACHGUN, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+	char turret_stop_buff[10] 	 =  { 0x03, CODE_SERVO_TURRET, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+	SendCANBuf(mach_stop_buff,  sizeof(mach_stop_buff));
+	usleep(10*1000);
+	SendCANBuf(turret_stop_buff,  sizeof(turret_stop_buff));
+	usleep(10*1000);
 
 }
 
@@ -437,7 +443,13 @@ void Grenade_servo_move_offset(float xOffset, float yOffset)
 //榴弹伺服停止运动
 void Grenade_servo_stop()
 {
+		char grenade_stop_buff[10] 	 =  { 0x03, CODE_SERVO_GRENADE, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+		char turret_stop_buff[10] 			 =  { 0x03, CODE_SERVO_TURRET, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
+		SendCANBuf(grenade_stop_buff,  sizeof(grenade_stop_buff));
+		usleep(10*1000);
+		SendCANBuf(turret_stop_buff,  sizeof(turret_stop_buff));
+		usleep(10*1000);
 
 }
 
@@ -461,7 +473,10 @@ void Turret_servo_move_offset(float xOffset, float yOffset)
 //炮台伺服停止运动
 void Turret_servo_stop()
 {
+	char turret_stop_buff[10] 			 =  { 0x03, CODE_SERVO_TURRET, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
+	SendCANBuf(turret_stop_buff,  sizeof(turret_stop_buff));
+	usleep(10*1000);
 
 }
 
@@ -469,8 +484,11 @@ void Turret_servo_stop()
 void Servo_start_init()
 {
 	InitServo( CODE_SERVO_MACHGUN );
+	usleep(10*1000);
 	InitServo( CODE_SERVO_GRENADE );
+	usleep(10*1000);
 	InitServo( CODE_SERVO_TURRET );
+	usleep(10*1000);
 }
 
 

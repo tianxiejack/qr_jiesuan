@@ -12,7 +12,6 @@
 #include <string.h>
 #include <pthread.h>
 
-
 #include "UartMessage.h"
 
 static int fd0;
@@ -61,7 +60,7 @@ int process_decode(struct RS422_data * pRS422_data)
 		int have_data = 1;
 		int parse_length = 0;
 
-		int16_t  x_angle=0;
+		int16_t x_angle=0;
 		int16_t y_angle=0;
 		int16_t weather=0;
 		int16_t sum_xor=0;
@@ -97,7 +96,9 @@ int process_decode(struct RS422_data * pRS422_data)
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
+					//printf( "%02x " ,buf[i]);
 				}
+				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				if( sum_xor ==  buf[parse_length-1] ){
 					x_angle = buf[1]<<8|buf[2];
@@ -121,6 +122,7 @@ int process_decode(struct RS422_data * pRS422_data)
 }
 
 /****************************************************************************/
+
 //mirror　瞄准镜　头的解析
 int SPI_mirror_recvFlg(char * buf, int iLen, int * index)
 {
@@ -209,15 +211,17 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
+					//printf( "%02x " ,buf[i]);
 				}
+				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				if( sum_xor ==  buf[parse_length-1] ){
 					laser_dis = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。
 					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
 
-				memcpy(buf, buf+parse_length, length-parse_length);
-				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
-				length -= parse_length;
+					memcpy(buf, buf+parse_length, length-parse_length);
+					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+					length -= parse_length;
 
 					SPI_mirror_send_requst() ;
 					SPI_mirror_send_ack();
@@ -256,8 +260,9 @@ int SPI_mirror_send_ack()  //激光数据确认
 
 	return 0;
 }
+
 /****************************************************************************/
-//vcode　耳轴　头的解析
+//vcode　机枪耳轴　头的解析
 int SPI_vcode_recvFlg(char * buf, int iLen, int * index)
 {
 		char * pCur = buf;
@@ -327,7 +332,9 @@ int Process_vcode(struct RS422_data * pRS422_data)
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
+					//printf( "%02x " ,buf[i]);
 				}
+				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				positive=1;
 				if( sum_xor ==  buf[parse_length-1] ){
@@ -422,7 +429,9 @@ int Process_grenade(struct RS422_data * pRS422_data)
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
-				}
+					//printf( "%02x " ,buf[i]);
+					}
+				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				positive=1;
 				if( sum_xor ==  buf[parse_length-1] ){
@@ -517,7 +526,9 @@ int Process_hcode(struct RS422_data * pRS422_data)
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
+					//printf( "%02x " ,buf[i]);
 				}
+			//printf( "%02x \n" ,buf[parse_length-1]);
 
 				positive=1;
 				if( sum_xor ==  buf[parse_length-1] ){
@@ -546,6 +557,7 @@ static void pabort(const char *s)
 	perror(s);
 	abort();
 }
+
 
 /***open all device*****/
 int open_device()
@@ -634,14 +646,11 @@ int open_device()
 		return returnValue;
 }
 
-
 int openCanDevice()
 {
 
 	return 0;
 }
-
-
 
 
 /****串口初始化*****
@@ -763,20 +772,24 @@ int transfer_init_all(uint8_t interuptThreshold,int Baudrate)
 	if(ret)
 		return 1;
 #endif
+
 	ret=transfer_init(1,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
+
 #if 1
 	ret=transfer_init(2,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
 #endif
+
 	ret=transfer_init(3,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
 	ret=transfer_init(4,interuptThreshold,Baudrate);
 	if(ret)
 		return 1;
+
 #if 1
 	ret=transfer_init(5,interuptThreshold,Baudrate);
 	if(ret)
@@ -816,8 +829,8 @@ int transfer_ban(int fd,int comAddr)
         if (ret < 1)
               pabort("can't send spi message");
 	return 0;
-
 }
+
 int transfer_open(int fd,int comAddr)
 {
 	int ret;
@@ -841,7 +854,7 @@ int transfer_open(int fd,int comAddr)
         ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
         if (ret < 1)
               pabort("can't send spi message");
-	return 0;
+		return 0;
 }
 
 int transfer_readDataCount(int fd,int comAddr)
@@ -862,7 +875,7 @@ int transfer_readDataCount(int fd,int comAddr)
 					.bits_per_word = bits,
 			};
       */
-        struct spi_ioc_transfer tr = {(unsigned long)tx,  (unsigned long)rx, ARRAY_SIZE(tx), delay, speed,bits, };
+        struct spi_ioc_transfer tr = {(unsigned long)tx,  (unsigned long)rx, ARRAY_SIZE(tx), delay, speed, bits, };
         ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
         if (ret < 1)
             pabort("can't send spi message");
@@ -926,8 +939,9 @@ int transfer_readOneData(int comNum)
 
     struct spi_ioc_transfer tr = {(unsigned long)tx,  (unsigned long)rx, ARRAY_SIZE(tx), delay, speed,bits, };
 	ret = ioctl(fdTmp, SPI_IOC_MESSAGE(1), &tr);
-        if (ret < 1)
-            pabort("can't send spi message");
+	if (ret < 1)
+		pabort("can't send spi message");
+
 	return rx[2];
 }
 
@@ -984,7 +998,7 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 		lengthTmp=RS422_data_buff->length;
 	}
 
-	RS422_data_buff->length=lengthTmp+length;
+	RS422_data_buff->length = lengthTmp+length;
 
 	if( RS422_data_buff->length >= sizeof(RS422_data_buff->receiveData)-1 ){
 		RS422_data_buff->length = 0 ;
@@ -994,7 +1008,9 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 	for(int i=0;i<length;i++)
 	{
 		RS422_data_buff->receiveData[lengthTmp+i]=transfer_readOneData(comNum);
+		printf(" %02x  ",RS422_data_buff->receiveData[lengthTmp+i]);
 	}
+	printf("\n");
 	pthread_mutex_unlock(&RS422_data_buff->mutex);
 	return 0;
 }
@@ -1016,6 +1032,7 @@ void interuptHandleSpi1(struct RS422_data* RS422_ROTER_buff,struct RS422_data* R
         	}
 	 }
 }
+
 void interuptHandleSpi2(struct RS422_data* RS422_MIRROR_buff,struct RS422_data* RS422_VCODE_buff,struct RS422_data* RS422_BAK1_buff)
 {
 	int ret = 0,interuptNum=0;
@@ -1033,6 +1050,7 @@ void interuptHandleSpi2(struct RS422_data* RS422_MIRROR_buff,struct RS422_data* 
         	}
 	 }
 }
+
 void interuptHandleSpi3(struct RS422_data* RS422_TEST_buff,struct RS422_data* RS422_HCODE_buff)
 {
 	int ret = 0,interuptNum=0;
@@ -1112,7 +1130,7 @@ void interuptHandleDataSpi3(int interuptNum,struct RS422_data* RS422_TEST_buff,s
 	}
 }
 			
-void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff,struct RS422_data* RS422_VCODE_buff,struct RS422_data* RS422_BAK1_buff)
+void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff, struct RS422_data* RS422_VCODE_buff, struct RS422_data* RS422_BAK1_buff)
 {
 	int fdtmp,comtmp,readCount,interuptNumTmp;
 	if(interuptNum!=0)
@@ -1271,172 +1289,168 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 	{	
              // printf("interuptNum==%d\n",interuptNum);
 
-		switch(interuptNum)
-		{
-				case 1:
-					transfer_ban(fd0,com0);
-					readCount=transfer_readDataCount(fd0,com0);
-					fdtmp=fd0;
-					comtmp=com0;
+			switch(interuptNum)
+			{
+					case 1:
+						transfer_ban(fd0,com0);
+						readCount=transfer_readDataCount(fd0,com0);
+						fdtmp=fd0;
+						comtmp=com0;
 
-					transfer_readData(0,readCount,RS422_ROTER_buff);  //0
-					interuptNumTmp=0;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
+						transfer_readData(0,readCount,RS422_ROTER_buff);  //0
+						interuptNumTmp=0;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
 
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
 						//CanPort_parseByte(RS422_ROTER_buff->receiveData);
-					/*
-					for(i=0; i<RS422_ROTER_buff->length; i++)
-					{
-						printf("%02x ",RS422_ROTER_buff->receiveData[i]);
-					}
-					printf("\n");
-					*/
-					RS422_ROTER_buff->length=0;
+						/*
+						for(i=0; i<RS422_ROTER_buff->length; i++)
+						{
+							printf("%02x ",RS422_ROTER_buff->receiveData[i]);
+						}
+						printf("\n");
+						*/
+						RS422_ROTER_buff->length=0;
 
-					//printf_read_data(receiveData,readCount);
-					break;
-				case 2:
-					transfer_ban(fd0,com1);
-					readCount=transfer_readDataCount(fd0,com1);
-					fdtmp=fd0;
-					comtmp=com1;
-					transfer_readData(1,readCount,RS422_DECODE_buff);  //1
-					interuptNumTmp=1;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
-					printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length",RS422_DECODE_buff->length);
+						//printf_read_data(receiveData,readCount);
+						break;
+					case 2:
+						transfer_ban(fd0,com1);
+						readCount=transfer_readDataCount(fd0,com1);
+						fdtmp=fd0;
+						comtmp=com1;
+						transfer_readData(1,readCount,RS422_DECODE_buff);  //1
+						interuptNumTmp=1;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
+						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length",RS422_DECODE_buff->length);
 						process_decode(RS422_DECODE_buff);
-					break;
-				case 3:	
-					transfer_ban(fd0,com0);
-					transfer_ban(fd0,com1);
-					readCount=transfer_readDataCount(fd0,com0);
-					fdtmp=fd0;
-					comtmp=com0;
-					transfer_readData(0,readCount,RS422_ROTER_buff);  //0
-					interuptNumTmp=0;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
+						break;
+
+					case 3:
+						transfer_ban(fd0,com0);
+						transfer_ban(fd0,com1);
+						readCount=transfer_readDataCount(fd0,com0);
+						fdtmp=fd0;
+						comtmp=com0;
+						transfer_readData(0,readCount,RS422_ROTER_buff);  //0
+						interuptNumTmp=0;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length",RS422_ROTER_buff->length);
 
 
 
-					readCount=transfer_readDataCount(fd0,com1);
-					fdtmp=fd0;
-					comtmp=com1;
-					transfer_readData(1,readCount,RS422_DECODE_buff);  //1
-					interuptNumTmp=1;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
+						readCount=transfer_readDataCount(fd0,com1);
+						fdtmp=fd0;
+						comtmp=com1;
+						transfer_readData(1,readCount,RS422_DECODE_buff);  //1
+						interuptNumTmp=1;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
 						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length",RS422_DECODE_buff->length);
 						process_decode(RS422_DECODE_buff);
 
-					break;	
-				case 4:
-					transfer_ban(fd0,com2);
-					readCount=transfer_readDataCount(fd0,com2);
-					fdtmp=fd0;
-					comtmp=com2;
-					transfer_readData(2,readCount,RS422_BAK2_buff); //2
-					interuptNumTmp=2;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
+						break;
+					case 4:
+						transfer_ban(fd0,com2);
+						readCount=transfer_readDataCount(fd0,com2);
+						fdtmp=fd0;
+						comtmp=com2;
+						transfer_readData(2,readCount,RS422_BAK2_buff); //2
+						interuptNumTmp=2;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
 
-					break;
-				case 5:
-					transfer_ban(fd0,com2);
-					readCount=transfer_readDataCount(fd0,com2);
-					fdtmp=fd0;
-					comtmp=com2;
-					transfer_readData(2,readCount,RS422_BAK2_buff); //2
-					interuptNumTmp=2;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
+						break;
+					case 5:
+						transfer_ban(fd0,com2);
+						readCount=transfer_readDataCount(fd0,com2);
+						fdtmp=fd0;
+						comtmp=com2;
+						transfer_readData(2,readCount,RS422_BAK2_buff); //2
+						interuptNumTmp=2;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
 
 
 
-					transfer_ban(fd0,com0);
-					readCount=transfer_readDataCount(fd0,com0);
-					fdtmp=fd0;
-					comtmp=com0;
-					transfer_readData(0,readCount,RS422_ROTER_buff);  //0
-					interuptNumTmp=0;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
+						transfer_ban(fd0,com0);
+						readCount=transfer_readDataCount(fd0,com0);
+						fdtmp=fd0;
+						comtmp=com0;
+						transfer_readData(0,readCount,RS422_ROTER_buff);  //0
+						interuptNumTmp=0;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
-					break;
-				case 6:
-					transfer_ban(fd0,com2);
-					readCount=transfer_readDataCount(fd0,com2);
-					fdtmp=fd0;
-					comtmp=com2;
-					transfer_readData(2,readCount,RS422_BAK2_buff); //2
-					interuptNumTmp=2;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
-					printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+						break;
 
-					transfer_ban(fd0,com1);
-					readCount=transfer_readDataCount(fd0,com1);
-					fdtmp=fd0;
-					comtmp=com1;
-					transfer_readData(1,readCount,RS422_DECODE_buff);  //1
-					interuptNumTmp=1;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
-					printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length\n",RS422_DECODE_buff->length);
+					case 6:
+						transfer_ban(fd0,com2);
+						readCount=transfer_readDataCount(fd0,com2);
+						fdtmp=fd0;
+						comtmp=com2;
+						transfer_readData(2,readCount,RS422_BAK2_buff); //2
+						interuptNumTmp=2;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
+						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+
+						transfer_ban(fd0,com1);
+						readCount=transfer_readDataCount(fd0,com1);
+						fdtmp=fd0;
+						comtmp=com1;
+						transfer_readData(1,readCount,RS422_DECODE_buff);  //1
+						interuptNumTmp=1;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
+						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length\n",RS422_DECODE_buff->length);
 						process_decode(RS422_DECODE_buff);
-					break;
-				case 7:
-					transfer_ban(fd0,com0);
-					readCount=transfer_readDataCount(fd0,com0);
-					fdtmp=fd0;
-					comtmp=com0;
-					transfer_readData(0,readCount,RS422_ROTER_buff);  //0
-					interuptNumTmp=0;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
-					printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
+						break;
 
-       
+					case 7:
+						transfer_ban(fd0,com0);
+						readCount=transfer_readDataCount(fd0,com0);
+						fdtmp=fd0;
+						comtmp=com0;
+						transfer_readData(0,readCount,RS422_ROTER_buff);  //0
+						interuptNumTmp=0;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
+						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
 
-					transfer_ban(fd0,com1);
-					readCount=transfer_readDataCount(fd0,com1);
-					fdtmp=fd0;
-					comtmp=com1;
-					transfer_readData(1,readCount,RS422_DECODE_buff);  //1
-					interuptNumTmp=1;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
-					printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length\n",RS422_DECODE_buff->length);
+						transfer_ban(fd0,com1);
+						readCount=transfer_readDataCount(fd0,com1);
+						fdtmp=fd0;
+						comtmp=com1;
+						transfer_readData(1,readCount,RS422_DECODE_buff);  //1
+						interuptNumTmp=1;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
+						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length\n",RS422_DECODE_buff->length);
 						process_decode(RS422_DECODE_buff);
 
-					transfer_ban(fd0,com2);
-					readCount=transfer_readDataCount(fd0,com2);
-					fdtmp=fd0;
-					comtmp=com2;
-					transfer_readData(2,readCount,RS422_BAK2_buff); //2
-					interuptNumTmp=2;
-					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
-					transfer_open(fdtmp,comtmp);
+						transfer_ban(fd0,com2);
+						readCount=transfer_readDataCount(fd0,com2);
+						fdtmp=fd0;
+						comtmp=com2;
+						transfer_readData(2,readCount,RS422_BAK2_buff); //2
+						interuptNumTmp=2;
+						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
+						transfer_open(fdtmp,comtmp);
 				printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
-					break;	
-				default:
-					fdtmp=-1;
-					break;			
-				
-					
-		}
-
+						break;
+					default:
+						fdtmp=-1;
+						break;
+			}
 	}
 }
 	
-
-
 
 /*
 int interuptHandleTest()
@@ -2032,7 +2046,7 @@ int writeOneData(int comNum,uint8_t data)
       */
 
       struct spi_ioc_transfer tr = {(unsigned long)tx,  (unsigned long)rx, ARRAY_SIZE(tx), delay, speed,bits, };
-	ret = ioctl(fdTmp, SPI_IOC_MESSAGE(1), &tr);
+      ret = ioctl(fdTmp, SPI_IOC_MESSAGE(1), &tr);
         if (ret < 1)
             pabort("can't send spi message");
 	return 0;
@@ -2063,27 +2077,7 @@ void printf_read_data(uint8_t* receiveData,int readCountTmp)
 	    printf("%.2X ", receiveData[i]);
 	}
 	printf("  receive data over\n");
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
