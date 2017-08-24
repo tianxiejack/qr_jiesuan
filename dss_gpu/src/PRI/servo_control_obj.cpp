@@ -475,7 +475,7 @@ static void GrenadeServoStop()
 static void initServo(unsigned char *pBuf)
 {	
 //disable Motor;
-	FILLBUFFENABLE(pBuf ,0x000);
+	FILLBUFFENABLE(pBuf ,0x0);
 	WeaponCtrlPORT_send(pBuf, CAN_CMD_SIZE_LONG);
 	//MYBOARD_waitusec(WAITTIME);
 	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);

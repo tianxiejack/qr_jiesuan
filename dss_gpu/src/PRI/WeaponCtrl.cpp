@@ -19,12 +19,12 @@
 //#include "statCtrl.h"
 //#include "byteParser_util.h"
 
+#include "WeaponCtrl.h"
 #include "osdProcess.h"
 #include "statCtrl.h"
 #include "msgDriv.h"
-
+#include "UartCanMessage.h"
 #if 0
-#include "WeaponCtrl.h"
 #include "MachGunPort.h"
 #include "GrenadePort.h"
 #include "LaserPort.h"
@@ -32,14 +32,18 @@
 #include "msgDriv.h"
 #endif
 
-#define CAN_ID_PANEL (0x0002)
-#define CAN_ID_TURRET (0x02AC)
+#define CAN_ID_PANEL 	(0x0002)
+#define CAN_ID_TURRET	(0x02AC)
 #define CAN_ID_MACHGUN (0x02B7)
 #define CAN_ID_GRENADE	(0x2C2)
-#define CODE_MACHGUN (0x37)
-#define CODE_GRENADE (0x42)
-#define CODE_TURRET   (0x2C)
+#define CODE_MACHGUN 	(0x37)
+#define CODE_GRENADE 	(0x42)
+#define CODE_TURRET   	(0x2C)
+#define WAIT_DELAY		20*5000
+
 extern int turretTimer;
+
+
 
 enum {
 	CAN_DEVIC_PANEL,
@@ -73,42 +77,43 @@ static 	unsigned short panoAngleV=0,panoAngleH=0;
 
 void absPosRequest(BYTE code)
 {
-#if 0
-	BYTE SERVOPOS[6]   ={0x03,0x00,0x50,0x58,0x00,0x00};
+#if 1
+	char SERVOPOS[6]   ={0x03,0x00,0x50,0x58,0x00,0x00};
 	SERVOPOS[1] = code;
-	WeaponCtrlPORT_send(SERVOPOS, sizeof(SERVOPOS));
-	MYBOARD_waitusec(500);
+	SendCANBuf(SERVOPOS, sizeof(SERVOPOS));
+	usleep(500);
 #endif
 }
 
 void startServo(BYTE code)
 {
-//	BYTE start[6] = {0x03,0x00,0x42,0x47,0x00,0x00};
-//	start[1] = code;
-//	WeaponCtrlPORT_send(start, sizeof(start));
+	char start[6] = {0x03,0x00,0x42,0x47,0x00,0x00};
+	start[1] = code;
+	SendCANBuf(start, sizeof(start));
 }
+
 void startServoServer(BYTE code)
 {
-#if 0
-	BYTE buf[4] = {0x00,0x00,0x01,0x00};
-	BYTE MOTOR0[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x00,0x00,0x00,0x00};
-	BYTE MOTOR1[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x01,0x00,0x00,0x00};
-	BYTE MODE[10]	={0x03,0x00,0x55,0x4D,0x00,0x00,0x05,0x00,0x00,0x00};
-	WeaponCtrlPORT_send(buf, sizeof(buf));
-	MYBOARD_waitusec(20*5000);
+#if 1
+	char buf[4] = {0x00,0x00,0x01,0x00};
+	char MOTOR0[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x00,0x00,0x00,0x00};
+	char MOTOR1[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x01,0x00,0x00,0x00};
+	char MODE[10]	={0x03,0x00,0x55,0x4D,0x00,0x00,0x05,0x00,0x00,0x00};
+	SendCANBuf(buf, sizeof(buf));
+	usleep(WAIT_DELAY);
 	MOTOR0[1] = code;
-	WeaponCtrlPORT_send(MOTOR0, sizeof(MOTOR0));
-	MYBOARD_waitusec(20*5000);
+	SendCANBuf(MOTOR0, sizeof(MOTOR0));
+	usleep(WAIT_DELAY);
 	MODE[1] = code;
-	WeaponCtrlPORT_send(MODE, sizeof(MODE));
-	MYBOARD_waitusec(20*5000);
+	SendCANBuf(MODE, sizeof(MODE));
+	usleep(WAIT_DELAY);
 	MOTOR1[1] = code;
-	WeaponCtrlPORT_send(MOTOR1, sizeof(MOTOR1));
-	MYBOARD_waitusec(20*5000);
+	SendCANBuf(MOTOR1, sizeof(MOTOR1));
+	usleep(WAIT_DELAY);
 	absPosRequest(code);
-	MYBOARD_waitusec(20*5000);
+	usleep(WAIT_DELAY);
 	startServo(code);
-	MYBOARD_waitusec(20*5000);
+	usleep(WAIT_DELAY);
 #endif
 }
 

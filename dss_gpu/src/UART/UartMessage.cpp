@@ -2894,7 +2894,9 @@ void * SPI_CAN_process(void * prm)
 														printf(" length<dataLength ...\n");
 														memset(buf+length, 0, sizeof(buf)-length);
 														haveData=0;
-													}else{
+													}
+													else
+													{
 
 														//½âÎöÊý¾Ý
 														CanPort_parseByte((unsigned char*)buf);

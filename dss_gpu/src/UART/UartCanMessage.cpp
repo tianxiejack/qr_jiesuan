@@ -30,13 +30,14 @@
 
 
 #include "UartCanMessage.h"
+#include "WeaponCtrl.h"
 
 static int fd_can;
 
 //发送数据给伺服的ＩＤ号。　机枪	榴弹	炮台
-#define CODE_SERVO_MACHGUN   (0x2C)
+#define CODE_SERVO_MACHGUN   	(0x2C)
 #define CODE_SERVO_GRENADE	(0x37)
-#define CODE_SERVO_TURRET     (0x42)
+#define CODE_SERVO_TURRET     	(0x42)
 
 
 /* ========================================================================== */
@@ -483,11 +484,11 @@ void Turret_servo_stop()
 
 void Servo_start_init()
 {
-	InitServo( CODE_SERVO_MACHGUN );
+	startServoServer( CODE_SERVO_MACHGUN );
 	usleep(10*1000);
-	InitServo( CODE_SERVO_GRENADE );
+	startServoServer( CODE_SERVO_GRENADE );
 	usleep(10*1000);
-	InitServo( CODE_SERVO_TURRET );
+	startServoServer( CODE_SERVO_TURRET );
 	usleep(10*1000);
 }
 
