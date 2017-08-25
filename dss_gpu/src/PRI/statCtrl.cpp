@@ -400,6 +400,36 @@ int getErrCodeId()
 		return 15;
 }
 
+void output_prm_print(FiringInputs input,FiringOutputs output)
+{	
+	printf("-----------------------------input--------------------------------------\n");
+	putchar(10);
+	printf("PlatformXTheta = %f\n",input.PlatformXTheta);
+	printf("PlatformYTheta = %f\n",input.PlatformYTheta);
+	printf("MachineGunYTheta = %f\n",input.MachineGunYTheta);
+	printf("GrenadeYTheta = %f\n",input.GrenadeYTheta);
+	printf("TurretDirectionTheta = %f\n",input.TurretDirectionTheta);
+	printf("TargetAngularVelocityX = %f\n",input.TargetAngularVelocityX);
+	printf("TargetAngularVelocityY = %f\n",input.TargetAngularVelocityY);
+	printf("TargetDistance = %f\n",input.TargetDistance);
+	printf("Temperature = %f\n",input.Temperature);
+	printf("AirPressure = %f\n",input.AirPressure);
+	printf("DipAngle = %f\n",input.DipAngle);
+	putchar(10);
+	putchar(10);
+	printf("-----------------------------output--------------------------------------\n");
+	printf("AimElevationAngle = %f\n",output.AimElevationAngle);
+	printf("BiasAngle = %f\n",output.BiasAngle);
+	printf("AimOffsetThetaX = %f\n",output.AimOffsetThetaX);
+	printf("AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
+	printf("AimOffsetX = %f\n",output.AimOffsetX);
+	printf("AimOffsetY = %f\n",output.AimOffsetY);
+	printf("correctionData.deltaX = %f\n",output.correctionData.deltaX);
+	printf("correctionData.deltaY = %f\n",output.correctionData.deltaY);	
+	putchar(10);
+	printf("------------------------------------------------------------------------\n");
+}
+
 
 void loadFiringTable_Enter()
 {
@@ -437,11 +467,15 @@ void loadFiringTable_Enter()
 	if(0 == input.TargetDistance)
 		input.TargetDistance = 1;
 	
+//test 0825
+	input.TargetDistance = 860;	
+//end
 	input.Temperature = gWeatherTable.Temparature;
 	
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
-	
-	ret = FiringCtrl( &input, &output);
+
+	ret = FiringCtrl(&input, &output);
+	output_prm_print(input, output);
 
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
@@ -489,12 +523,12 @@ void loadFiringTable_Enter()
 		}
 		else
 		{
-		printf("!!!\nmoveCrossCentermoveCrossCentermoveCrossCentermoveCrossCentermoveCrossCenter");
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 			//: input PID aimoffset
 /*			AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
 			if(isMachineGun())
 				AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);*/
+			printf("%s:%d		output.AimOffsetX = %f,output.AimOffsetY=%f\n",__func__,__LINE__,output.AimOffsetX,output.AimOffsetY);
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
  			
 			if(isMachineGun())

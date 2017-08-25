@@ -1600,7 +1600,16 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	if(key == 'Q' || key == 'q')
 	{
 		gLevel3CalculatorState = Auto_LoadFiringTable;
+		if(MachGunAngle.theta>75)
+			MachGunAngle.theta = 0;
+		MachGunAngle.theta += 18;
 		loadFiringTable_Enter();
+	}
+
+	if(key == 'R' || key == 'r')
+	{
+		gLevel3CalculatorState = Auto_LoadFiringTable;
+		loadFiringTable();
 	}
 	
 

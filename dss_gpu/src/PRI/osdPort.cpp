@@ -30,14 +30,21 @@ void moveCrossCenter(int x, int y)
 {
 	CFOV* cthis = pFovCtrlObj;
 	int borX,borY;
-	if(isMachineGun()){
+	if(isMachineGun())
+	{
 		borX = gMachineGun_ZCTable.data.deltaX+x;
-		borY = gMachineGun_ZCTable.data.deltaY+(y>>1);
-	}else{
+		//borY = gMachineGun_ZCTable.data.deltaY+(y>>1);
+		borY = gMachineGun_ZCTable.data.deltaY+(y);
+	}
+	else
+	{
 		borX = gGrenadeKill_ZCTable.data.deltaX+x;
 		borY = gGrenadeKill_ZCTable.data.deltaY;
 	}
-	FOVCTRL_updateFovRect(cthis,0,0,borX,(borY>>1));
+	
+	//FOVCTRL_updateFovRect(cthis,0,0,borX,(borY>>1));
+	if(borX > 0 && borX < 704 && borY >0 && borY < 576)
+		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
 
 
@@ -100,7 +107,7 @@ void moveCrossRight()
 	borX = cthis->fovX;
 	borY = cthis->fovY;
 	borX = (borX + STEPLEN + 704)%704;
-	if(borY < 576)
+	if(borX < 704)
 		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
 

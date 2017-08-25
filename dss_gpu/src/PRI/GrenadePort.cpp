@@ -21,8 +21,8 @@
 //#include "main.h"
 //#include "PVEMsgfunsTab.h"
 //#include "byteParser_util.h"
-//#include "permanentStorage.h"
 
+#include "permanentStorage.h"
 #include "app_global.h"
 #include "GrenadePort.h"
 #include "msgDriv.h"
@@ -67,8 +67,7 @@ double getGrenadeAngleAbs()
 }
 double getGrenadeAngle()
 {
-	return 1.0;
-//	return GrenadeAngle - gGrenadeKill_ZCTable.Angle;
+	return GrenadeAngle - gGrenadeKill_ZCTable.Angle;
 }//DFU_Handle pDUFObj=NULL;
 /*
  *  ======== GrenadePORT_initial========
