@@ -2205,14 +2205,33 @@ void OSDCTRL_sendSem(OSDCTRL_OBJ * pCtrlObj)
 {
 
 }
-/*
- *  ======== TskDrawOsd========
- *
- *  This function is used to
- */
-void TskDrawOsd()
-{
 
+
+void increaseFireViewPram()
+{
+	int i = ShinId-eCalibGenPram_VFLDOXValue0;	
+	if(!SHINE)
+		return;
+
+	CalibGenPram_VFLD[i] = (CalibGenPram_VFLD[i] + 1)%10;
 }
 
+void increaseFireCtrlPram()
+{
+	int i = ShinId-eCalibGenPram_TimeValue0;	
+	if(!SHINE)
+		return;
+
+	TimeValue[i] = (TimeValue[i] + 1)%10;
+}
+
+void increaseServoXPram()
+{
+	codeX = (codeX+1)%15;
+}
+
+void increaseServoYPram()
+{
+	codeY = (codeY+1)%10;
+}
 

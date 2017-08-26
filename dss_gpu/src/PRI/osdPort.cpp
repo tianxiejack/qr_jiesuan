@@ -6,6 +6,7 @@
 #include "cFov.h"
 
 
+
 #define abs(a) (((a)>0)?(a):(0-(a)))
 #define STEPLEN 1
 
@@ -31,10 +32,14 @@ void moveCrossCenter(int x, int y)
 	CFOV* cthis = pFovCtrlObj;
 	int borX,borY;
 	if(isMachineGun())
-	{
+	{printf("gun gun gun gun gun   \n");
 		borX = gMachineGun_ZCTable.data.deltaX+x;
 		//borY = gMachineGun_ZCTable.data.deltaY+(y>>1);
 		borY = gMachineGun_ZCTable.data.deltaY+(y);
+		printf("x = %d \n",x);
+		printf("y = %d \n",y);
+		printf(" borX = %d\n",borX);
+		printf(" borY = %d\n",borY);
 	}
 	else
 	{
@@ -44,7 +49,10 @@ void moveCrossCenter(int x, int y)
 	
 	//FOVCTRL_updateFovRect(cthis,0,0,borX,(borY>>1));
 	if(borX > 0 && borX < 704 && borY >0 && borY < 576)
+	{
+		printf("move move move move\n");
 		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
+	}
 }
 
 

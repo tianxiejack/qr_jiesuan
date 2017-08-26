@@ -15,6 +15,11 @@
 #include "UartMessage.h"
 #include "TurretPosPort.h"
 #include "MachGunPort.h"
+#include "msgDriv.h"
+#include "PositionPort.h"
+#include "statCtrl.h"
+#include "GrenadePort.h"
+
 
 static int fd0;
 static int fd1;
@@ -62,10 +67,9 @@ int process_decode(struct RS422_data * pRS422_data)
 		int have_data = 1;
 		int parse_length = 0;
 
-		int16_t x_angle=0;
-		int16_t y_angle=0;
-		int16_t weather=0;
-		int16_t sum_xor=0;
+		short PlatformThetaX,PlatformThetaY,Temperature;
+		
+		short sum_xor=0;
 		int i=0;
 
 		int length = pRS422_data->length;
@@ -103,11 +107,22 @@ int process_decode(struct RS422_data * pRS422_data)
 				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				if( sum_xor ==  buf[parse_length-1] ){
-					x_angle = buf[1]<<8|buf[2];
-					y_angle =  buf[3]<<8|buf[4];
-					weather =  buf[5]<<8|buf[6];
-					printf(" x_angle=%d y_angle=%d weather=%d \n", x_angle, y_angle, weather);
+					PlatformThetaX = buf[1]<<8|buf[2];
+					PlatformThetaY =  buf[3]<<8|buf[4];
+					Temperature =  buf[5]<<8|buf[6];
+					printf(" PlatformThetaX=%d PlatformThetaY=%d weather=%d \n", PlatformThetaX, PlatformThetaY, Temperature);
 
+				if((abs(PlatformThetaX) > 30000)||(abs(PlatformThetaY) >30000))
+				{
+					// do nothing
+				}
+				else
+				{
+					hPositionX = PlatformThetaX*0.001;		
+					hPositionY = PlatformThetaY*0.001;
+					Tempre = Temperature*0.01; 
+				}
+				
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
@@ -421,7 +436,7 @@ int Process_grenade(struct RS422_data * pRS422_data)
 
 		while(have_data){
 			index=0;
-			ret = SPI_vcode_recvFlg(buf, length, &index);
+			ret = SPI_grenade_recvFlg(buf, length, &index);
 			length -= index;
 
 			if(ret != 0){
@@ -452,6 +467,15 @@ int Process_grenade(struct RS422_data * pRS422_data)
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
 					printf(" positive=%d angle=%d  \n", positive, angle);
+
+					if(!bGrenadeSensorOK())
+					{
+						MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
+					}
+					
+					if(angle >= -5 && angle <= 75)
+						GrenadeAngle = positive*angle*0.01;
+					
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
@@ -518,7 +542,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 
 		while(have_data){
 			index=0;
-			ret = SPI_vcode_recvFlg(buf, length, &index);
+			ret = SPI_hcode_recvFlg(buf, length, &index);
 			length -= index;
 
 			if(ret != 0){
@@ -1398,6 +1422,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+						Process_grenade(RS422_BAK2_buff);
 
 
 
@@ -1422,6 +1447,8 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+						Process_grenade(RS422_BAK2_buff);
+						
 
 						transfer_ban(fd0,com1);
 						readCount=transfer_readDataCount(fd0,com1);
@@ -1465,7 +1492,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=2;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
-				printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+						Process_grenade(RS422_BAK2_buff);
+						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+						
 						break;
 					default:
 						fdtmp=-1;

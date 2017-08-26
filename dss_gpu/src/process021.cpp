@@ -1603,12 +1603,23 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		if(MachGunAngle.theta>75)
 			MachGunAngle.theta = 0;
 		MachGunAngle.theta += 18;
+
+		hPositionX+= 50;
+		hPositionY+= 60;
+		
 		loadFiringTable_Enter();
 	}
 
 	if(key == 'R' || key == 'r')
 	{
 		gLevel3CalculatorState = Auto_LoadFiringTable;
+		if(MachGunAngle.theta>75)
+			MachGunAngle.theta = 0;
+		MachGunAngle.theta += 18;
+
+		hPositionX+= 50;
+		hPositionY+= 60;
+		DistanceManual += 10;
 		loadFiringTable();
 	}
 	
@@ -3574,8 +3585,8 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		}
 		else if(isCalibrationZero())
 		{
-			//if(isGrenadeGas())
-			//	return ;
+			if(isGrenadeGas())
+				return ;
 			moveCrossUp();  //move the axis up
 		}
 		else if(isCalibrationWeather())
@@ -3591,16 +3602,16 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		//	increaseGenPram();
 			switch(gLevel3CalibrationState){
 				case Menu_FireView:
-				//	increaseFireViewPram();
+					increaseFireViewPram();
 					break;
 				case Menu_FireCtrl:
-				//	increaseFireCtrlPram();
+					increaseFireCtrlPram();
 					break;
 				case Menu_ServoX:
-				//	increaseServoXPram();
+					increaseServoXPram();
 					break;
 				case Menu_ServoY:
-				//	increaseServoYPram();
+					increaseServoYPram();
 					break;
 				default:
 					break;

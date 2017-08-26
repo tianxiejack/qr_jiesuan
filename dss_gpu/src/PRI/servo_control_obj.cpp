@@ -224,11 +224,11 @@ void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
 	//5.send CAN packet Y to Mach gun servo
 	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_LONG);
 	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
+	//Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
 	FILLBUFFBGIN(Grenadebuf);
 	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_SHORT);	
 	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
+	//Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
 #elif 1
 	FILLBUFFOFFST(Turretbuf, ymils);//水平角度伺服转动
 
@@ -239,6 +239,7 @@ void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
 	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);	
 	MYBOARD_waitusec(WAITTIME);
 #endif
+	return ;
 }
 static void MachServoMoveSpeed(float xSpeed, float ySpeed)
 {

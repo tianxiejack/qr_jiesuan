@@ -98,7 +98,7 @@ double getMachGunAngle()
 // calculate the avarage velo in the last 2 seconds
 int getAverageDipVelocity(double* value)
 {
-#if 0	
+#if 01
 	int i, dataCount = 0, count = 0;
 	double mean, var;
 	*value = 0;

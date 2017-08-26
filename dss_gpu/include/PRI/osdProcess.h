@@ -464,6 +464,8 @@ extern char LaserOsd[2][8];
 extern char GenPramMenu[4][12];
 extern char WorkOsd[10][8];	//工作模式
 
+
+
 void OSDCTRL_AlgSelect();
 void OSDCTRL_AllHide();
 void OSDCTRL_BattleShow();
@@ -522,6 +524,10 @@ int getCrossX();
 int getCrossY();
 
 void resetTickNum();
+void increaseFireViewPram();
+void increaseFireCtrlPram();
+void increaseServoXPram();
+void increaseServoYPram();
 
 extern volatile char globalShoweErrorZone;
 extern WeatherItem gWeatherTable;

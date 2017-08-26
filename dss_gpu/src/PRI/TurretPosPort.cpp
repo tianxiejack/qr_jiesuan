@@ -85,7 +85,7 @@ void computeMeanVar( double *src, double *mean, double *var, int size )
 	double vsquared;
 	int i;
 	double *psrc = src;
-#if 0	
+#if 1
 	vsquared = 0.0;
 	*mean = 0.0;
 	for ( i = 0; i < size; i++ )
@@ -125,7 +125,7 @@ int getAverageVelocity(double* value)
 	int i, dataCount = 0, count = 0;
 	double mean, var;
 	*value = 0;
-#if 0
+#if 1
 	if(counter <= 0)
 		return -1;
 	dataCount = counter> COUNT_TURRET_VELO ? COUNT_TURRET_VELO : counter;

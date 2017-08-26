@@ -194,7 +194,7 @@ extern bool bUnlock;
 extern PROJECTILE_TYPE gProjectileType,gProjectileTypeBefore;
 extern SHOT_TYPE gGunShotType;
 extern bool AUTOCATCH;
-
+extern WeatherItem gWeatherTable;
 
 #ifdef __cplusplus
 	}

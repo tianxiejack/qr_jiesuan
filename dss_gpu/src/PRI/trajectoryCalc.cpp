@@ -2,6 +2,7 @@
 #include "trajectoryCalc.h"
 #include "firingTable.h"
 #include "assert.h"
+#include "stdio.h"
 
 #define NULL 0
 /*
@@ -96,15 +97,18 @@ int trajectoryCalc( FiringInputs *input, FiringOutputs* output)
 	firingTable = getFiringTable(input->ProjectileType);
 	if( firingTable == NULL )
 	{
+		printf("ERROR  return CALC_INVALID_PARAM \n");
 		return CALC_INVALID_PARAM; //非法参数
 	}
 
 	if(input->TargetDistance > firingTable->table[firingTable->count - 1].distance)
 	{
+		printf("ERROR  return CALC_OVER_DISTANCE \n");
 		return CALC_OVER_DISTANCE;//超出射击距离
 	}
 	else if (input->TargetDistance < firingTable->table[0].distance)
 	{
+		printf("ERROR  return CALC_UNDER_DISTANCE \n");
 		return CALC_UNDER_DISTANCE;//小于最低射击距离,
 	}
 

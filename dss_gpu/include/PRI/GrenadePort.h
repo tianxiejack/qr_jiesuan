@@ -30,7 +30,7 @@ int GrenadePORT_PhraseByte(BYTE* pRecv);
 
 
 
-
+extern double GrenadeAngle ;
 
 
 #ifdef __cplusplus

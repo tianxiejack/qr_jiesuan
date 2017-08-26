@@ -326,27 +326,27 @@ void startSelfCheckGrenadeServo_Timer()
 
 BOOL isMachGunUpLocked()
 {
-//	return BIT1(BYTE6(FrameBuf0));
+	return BIT1(BYTE6(FrameBuf0));
 }
 BOOL isMachGunDownLocked()
 {
-//	return BIT0(BYTE6(FrameBuf0));
+	return BIT0(BYTE6(FrameBuf0));
 }
 BOOL isGrenadeUpLocked()
 {
-//	return BIT5(BYTE6(FrameBuf0));
+	return BIT5(BYTE6(FrameBuf0));
 }
 BOOL isGrenadeDownLocked()
 {
-//	return BIT4(BYTE6(FrameBuf0));
+	return BIT4(BYTE6(FrameBuf0));
 }
 BOOL isMachGunPosLocked()
 {
-//	return BIT3(BYTE6(FrameBuf0));
+	return BIT3(BYTE6(FrameBuf0));
 }
 BOOL isGrenadePosLocked()
 {
-//	return BIT7(BYTE6(FrameBuf0));
+	return BIT7(BYTE6(FrameBuf0));
 }
 
 BYTE getFrameA3Byte1()
@@ -363,11 +363,11 @@ BYTE getFrameA3Byte3()
 }
 BOOL isGunIdentify()
 {
-//	return BIT5(BYTE4(FrameBuf1));
+	return BIT5(BYTE4(FrameBuf1));
 }
 BOOL isIdentifyGas()
 {
-//	return BIT4(BYTE4(FrameBuf1));
+	return BIT4(BYTE4(FrameBuf1));
 }
 
 char* getWeaponCtrlA1()
@@ -405,7 +405,7 @@ void setTraceModeSwitch(BOOL context)
 
 void requstServoContrl()
 {
-//	CANSendbuf[3] = (CANSendbuf[3]&0xF0) |0x05 ;
+	CANSendbuf[3] = (CANSendbuf[3]&0xF0) |0x05 ;
 }
 
 void releaseServoContrl(void)
@@ -417,12 +417,12 @@ void releaseServoContrl(void)
 
 void setGrenadeInPositonFlag(void)
 {
-//	CANSendbuf[3] = (CANSendbuf[3]&0x0F) |0x30 ;
+	CANSendbuf[3] = (CANSendbuf[3]&0x0F) |0x30 ;
 }
 
 void resetGrenadeInPositionFlag(void)
 {
-//	CANSendbuf[3] = (CANSendbuf[3]&0x0F);
+	CANSendbuf[3] = (CANSendbuf[3]&0x0F);
 }
 void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 {
@@ -534,11 +534,11 @@ void processCMD_SERVO_INIT(LPARAM lParam)
 }
 Fov_Type getFovState()
 {
-//	return (BIT3_2(BYTE2(FrameBuf1)))?(FOV_SMALL):(FOV_LARGE);
+	return (BIT3_2(BYTE2(FrameBuf1)))?(FOV_SMALL):(FOV_LARGE);
 }
 void setSysWorkMode()
 {
-//	BYTE1(FrameBuf1) &= ~0x0C;
+	BYTE1(FrameBuf1) &= ~0x0C;
 }
 
 void setJoyStickStat(bool stat)
@@ -553,12 +553,12 @@ void setJoyStickStat(bool stat)
 
 void  updateBulletType(int type)
 {
-	//BYTE1(FrameBuf1) &= 0x8F;
-	//BYTE1(FrameBuf1) |= ((type&0x03) + 1)<<4;
+	BYTE1(FrameBuf1) &= 0x8F;
+	BYTE1(FrameBuf1) |= ((type&0x03) + 1)<<4;
 }
 int getBulletType()
 {
-#if 0
+#if 1
 	int i = BIT6_4(BYTE1(FrameBuf1));
 	return (i > 0)? i:1 ;
 #endif

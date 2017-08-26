@@ -432,7 +432,7 @@ void output_prm_print(FiringInputs input,FiringOutputs output)
 
 
 void loadFiringTable_Enter()
-{
+{printf("!!!!!!11111111111111111111111111111@@@@@@@@@@@@@\n");
 	int ret;
 	FiringInputs input;
 	FiringOutputs output;
@@ -448,6 +448,7 @@ void loadFiringTable_Enter()
 	ret = getAverageVelocity(&input.TargetAngularVelocityX);
 	if(ret < 0)
 		input.TargetAngularVelocityX = 0.0;
+printf("TargetAngularVelocityX = %f \n",input.TargetAngularVelocityX);
 	ret = getAverageDipVelocity(&input.TargetAngularVelocityY);
 	if(ret < 0)
 		input.TargetAngularVelocityY = 0.0;
@@ -457,8 +458,11 @@ void loadFiringTable_Enter()
 		if(!isMeasureManual())
 			input.TargetDistance = getLaserDistance();
 		else
+		{
+			//printf("!!!!!!!!!!!!!!!!input.TargetDistance = DistanceManual\n");
 			input.TargetDistance = DistanceManual;
-	}
+		}
+	}	
 	assert(input.TargetDistance >= 0);
 /*	if(0 == input.TargetDistance){
 		sendCommand(CMD_FIRING_TABLE_FAILURE);
@@ -468,7 +472,7 @@ void loadFiringTable_Enter()
 		input.TargetDistance = 1;
 	
 //test 0825
-	input.TargetDistance = 860;	
+	//input.TargetDistance = 860;	
 //end
 	input.Temperature = gWeatherTable.Temparature;
 	
@@ -490,18 +494,23 @@ void loadFiringTable_Enter()
 		//startRGQtimer();
 		//todo ValidateOutput(&output);//check offset overflow. 5.6x4.2 16x12
 
-		if(isMachineGun()){
+		if(isMachineGun())
+		{
 			borX = gMachineGun_ZCTable.data.deltaX;
 			borY = gMachineGun_ZCTable.data.deltaY;
-		}else{
+		}
+		else
+		{
 			borX = gGrenadeKill_ZCTable.data.deltaX;
 			borY = gGrenadeKill_ZCTable.data.deltaY;
 		}
-		if(isFovSmall()){
+		if(isFovSmall())
+		{
 			FOVSIZE_V = FOVDEGREE_VSMALL*(704-borX)/352; 
 			FOVSIZE_H = FOVDEGREE_VSMALL*(576-borY)/288; 
 		}
-		else{
+		else
+		{
 			FOVSIZE_V = FOVDEGREE_VLARGE*(704-borX)/352;
 			FOVSIZE_H = FOVDEGREE_HLARGE*(576-borY)/288;
 		}
@@ -528,15 +537,16 @@ void loadFiringTable_Enter()
 /*			AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
 			if(isMachineGun())
 				AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);*/
-			printf("%s:%d		output.AimOffsetX = %f,output.AimOffsetY=%f\n",__func__,__LINE__,output.AimOffsetX,output.AimOffsetY);
+		//	printf("%s:%d		output.AimOffsetX = %d,output.AimOffsetY=%d\n",__func__,__LINE__,output.AimOffsetX,output.AimOffsetY);
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
- 			
+			
 			if(isMachineGun())
 			{
 				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
 				cmd_machservo_moveoffset_tmp = output.AimOffsetY-DEGREE2MIL(getGrenadeAngle());
-				MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, 0);	
-			}
+				//MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, 0);	
+				processCMD_MACHSERVO_MOVEOFFSET(0)
+;			}
 			else
 			{
 				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
@@ -549,7 +559,7 @@ void loadFiringTable_Enter()
 		}
 		FOVSHINE = TRUE;
 		//startDynamicTimer();
-//		sendCommand(CMD_QUIT_AVT_TRACKING);
+		//sendCommand(CMD_QUIT_AVT_TRACKING);
 
 	}
 	else if(CALC_OVER_DISTANCE == ret )
@@ -561,11 +571,12 @@ void loadFiringTable_Enter()
 //		sendCommand(CMD_QUIT_AVT_TRACKING);
 
 		return;
-	}else if( CALC_INVALID_PARAM == ret || CALC_UNDER_DISTANCE == ret)
+	}
+	else if( CALC_INVALID_PARAM == ret || CALC_UNDER_DISTANCE == ret)
 	{
 		SDK_ASSERT(FALSE);
 	}
-	
+	return ;
 }
 
 void loadFiringTable()
@@ -609,6 +620,8 @@ void loadFiringTable()
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
 	
 	ret = FiringCtrl( &input, &output);
+	output_prm_print(input, output);
+		
 //	sendCommand(CMD_SEND_MIDPARAMS);
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{

@@ -29,7 +29,7 @@
 
 static GrenadePort_t GrenadeObj;
 static int ibInit=0;
-static double GrenadeAngle=0.0;
+double GrenadeAngle=0.0;
 
 static BOOL GrenadePORT_open();
 static void GrenadePORT_close();
@@ -252,7 +252,6 @@ int GrenadePORT_PhraseByte(BYTE* pRecv)
 
 	double value;
 	//if(!bGrenadeSensorOK())
-	if(1)
 	{
 		MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
 	}

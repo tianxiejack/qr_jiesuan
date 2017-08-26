@@ -403,7 +403,8 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 		
 	}
 //计算提前量
-	if(Use_interPolation)
+	//if(Use_interPolation)
+	if(1)
 		ret = trajectoryCalc( input, output);//计算射击诸元，得出飞行时间、提前量等
 	else
 	 	;//ret = polynomialCalc(input, output);

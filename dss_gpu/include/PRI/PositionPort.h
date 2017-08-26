@@ -29,8 +29,7 @@ int PositionPORT_PhraseBye(BYTE* pRecv);
 
 
 
-
-
+extern double hPositionX,hPositionY,Tempre;
 
 
 #ifdef __cplusplus
