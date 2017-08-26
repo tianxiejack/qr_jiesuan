@@ -463,7 +463,9 @@ int Process_grenade(struct RS422_data * pRS422_data)
 				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				positive=1;
-				if( sum_xor ==  buf[parse_length-1] ){
+				//if( sum_xor ==  buf[parse_length-1] )
+				if(1)
+				{
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
 					printf(" positive=%d angle=%d  \n", positive, angle);
@@ -479,7 +481,8 @@ int Process_grenade(struct RS422_data * pRS422_data)
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
-				}else{
+				}
+				else{
 					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
 					memcpy(buf, buf+1, length-1);
 					length--;
@@ -1410,7 +1413,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
-
+						Process_grenade(RS422_BAK2_buff);
 						break;
 					case 5:
 						transfer_ban(fd0,com2);
