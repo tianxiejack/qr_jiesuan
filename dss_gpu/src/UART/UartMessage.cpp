@@ -2825,12 +2825,15 @@ void * SPI_CAN_process(void * prm)
 							length= 0;
 							nread =  ReadCANBuf(buf+length, bufLen-length);
 
-						   printf(" before parse --- length=%d  nread=%d...\n", length, nread);
+							//if(uart_open_close_flag)
+								//nread = -1;
+
+						   	printf(" before parse --- length=%d  nread=%d...\n", length, nread);
 
 							if(nread > 0)
 							{
-									//		CanPort_parseByte((unsigned char*)buf);
-									//		continue;
+									//CanPort_parseByte((unsigned char*)buf);
+									//continue;
 
 									length += nread;  //读到新数据，更新数据长度
 									haveData = 1;

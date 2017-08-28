@@ -18,6 +18,7 @@
 //#include "PVEMsgfunsTab.h"
 //#include "statCtrl.h"
 //#include "byteParser_util.h"
+#include "spiH.h"
 
 #include "WeaponCtrl.h"
 #include "osdProcess.h"
@@ -410,9 +411,9 @@ void requstServoContrl()
 
 void releaseServoContrl(void)
 {
-//	setServoAvailable(FALSE);
+	setServoAvailable(FALSE);
 	
-//	CANSendbuf[3] = (CANSendbuf[3]&0xF0);
+	CANSendbuf[3] = (CANSendbuf[3]&0xF0);
 }
 
 void setGrenadeInPositonFlag(void)
@@ -934,7 +935,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		switch(BIT6_4(BYTE3(buf)))
 		{
 			case 0x00:
-			case 0x01:
+			case 0x01:	//5.8
 				MSGDRIV_send(CMD_BULLET_SWITCH1,0);
 				if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf)))	 //Ե/Կ Ŀ 
 				{    
@@ -944,7 +945,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 						MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 				}
 				break;
-			case 0x02:
+			case 0x02:	//
 				MSGDRIV_send(CMD_BULLET_SWITCH2,0);
 				MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 				break;
@@ -1062,12 +1063,12 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT0(BYTE3(FrameBuf1)) != BIT0(BYTE5(buf)))//ఴť״̬
 	{     
-		if(BIT0(BYTE5(buf)) == 0x00)// 
+		if(BIT0(BYTE5(buf)) == 0x00)// down button to test the velocity
 			MSGDRIV_send(CMD_MEASURE_VELOCITY,0);
-		else if(BIT0(BYTE5(buf)) == 0x01)//̧ 
+		else if(BIT0(BYTE5(buf)) == 0x01)//up button to test the distance
 		{
-//			if(!isMeasureManual())
-				MSGDRIV_send(CMD_MEASURE_DISTANCE,0);
+			//if(!isMeasureManual())
+			MSGDRIV_send(CMD_MEASURE_DISTANCE,0);
 		}
 	}
 
@@ -1465,12 +1466,18 @@ void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 	switch(buf[2])
 	{
 	case Frame_Type0:
+		if(uart_open_close_flag)
+			return ;
 		WeaponCtrlPORT_ParseFrameByte_type0(buf);
 		break;
 	case Frame_Type1:
+		if(uart_open_close_flag)
+			return ;
 		WeaponCtrlPORT_ParseFrameByte_type1(buf);
 		break;
 	case Frame_Type2:
+		if(uart_open_close_flag)
+			return ;
 		WeaponCtrlPORT_ParseFrameByte_type2(buf);
 		break;
 	case Frame_Type3:

@@ -948,7 +948,7 @@ void OSDCTRL_updateMainMenu(int i)
 
 void OSDCTRL_updateDistanceValue()
 {
-#if 0
+#if 1
 	if(isMeasureManual())
 		OSDCTRL_ItemShow(eMeasureDis);
 	else

@@ -531,6 +531,97 @@ void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 }
 
 
+void DrawjsGrenadeLoadOK(Mat frame,CFOV * fovOsdCtrl)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+
+
+	start.x = 367 ;
+	start.y = 298 ;
+	end.x = start.x;
+	end.y = start.y + 5;
+	DrawcvLine(frame,&start,&end, 2,linew);
+	
+	start.x = 372 ;
+	start.y = 298 ;
+	end.x = start.x;
+	end.y = start.y + 5;
+	DrawcvLine(frame,&start,&end, 2,linew);
+
+	start.x = 367 ;
+	start.y = 298 ;
+	end.x = start.x+5;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end, 2,linew);
+
+	start.x = 367 ;
+	start.y = 303 ;
+	end.x = start.x+5;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end, 2,linew);
+	
+	return ;
+}
+
+
+void DrawjsAngleFrame(Mat frame,CFOV * fovOsdCtrl,double angle)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+
+	start.x = 665 ;
+	start.y = 285 ;
+	end.x = start.x+30;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end, 2,linew);
+
+	if(isFovSmall()){
+		angle = angle/FOVDEGREE_HSMALL*200;
+		angle = (angle<200)?angle:200;
+		angle = (angle>-200)?angle:-200;
+	}
+	else
+	{
+		angle = angle/FOVDEGREE_HLARGE*200;
+		angle = (angle<200)?angle:200;
+		angle = (angle>-200)?angle:-200;
+	}
+
+	start.x = 670 ;
+	start.y = 285-angle + 5 ;
+	end.x = start.x+25;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end, 2,linew);
+
+	start.x = 670 ;
+	start.y = 285-angle - 5 ;
+	end.x = start.x+25;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end, 2,linew);
+
+	start.x = 670 ;
+	start.y = 285-angle - 5 ;
+	end.x = start.x;
+	end.y = start.y +10;
+	DrawcvLine(frame,&start,&end, 2,linew);
+
+	start.x = 670 +25 ;
+	start.y = 285-angle - 5 ;
+	end.x = start.x;
+	end.y = start.y +10;
+	DrawcvLine(frame,&start,&end, 2,linew);
+
+	return;
+}
+
+
 void Drawjs_leftFrame(Mat frame,CFOV * fovOsdCtrl)
 {
 	Osd_cvPoint start;
@@ -621,8 +712,6 @@ void Drawjs_rightFrame(Mat frame,CFOV * fovOsdCtrl)
 
 	
 }
-
-
 
 
 void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl)

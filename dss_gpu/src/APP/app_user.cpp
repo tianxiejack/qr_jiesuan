@@ -524,6 +524,8 @@ static Int32 APP_onTimer( Int32 timerId )
 
     if( timerId == GPIO_INSPECT_TIMER)
     {
+    	
+	printf("OSA_getCurTimeInMsec() = %d \n",OSA_getCurTimeInMsec());
 
 		//APP_getvideostatus();
     }

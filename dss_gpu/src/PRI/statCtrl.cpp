@@ -12,7 +12,7 @@
 
 #include "osdPort.h"
 #include "servo_control_obj.h"
-
+#include "spiH.h"
 
 float FOVSIZE_V=FOVDEGREE_VLARGE, FOVSIZE_H=FOVDEGREE_HLARGE;
 Level_one_state gLevel1Mode = MODE_BOOT_UP,gLevel1LastMode = MODE_BATTLE;
@@ -129,6 +129,11 @@ bool isGrenadeGas()
 	return PROJECTILE_GRENADE_GAS == getProjectileType();
 }
 
+bool isLaserOK()
+{
+	return Laser_OK == gLevel4subCalculatorState;
+}
+
 bool isAutoLoadFiringTable()
 {
 	return Auto_LoadFiringTable == gLevel3CalculatorState;
@@ -140,7 +145,15 @@ bool isBattleLoadFiringTable()
 	return Battle_LoadFiringTable == gLevel3CalculatorState; 
 }
 
+bool isBattleTriggerMeasureVelocity()
+{
+	return Battle_TriggerMeasureVelocity == gLevel3CalculatorState;
+}
 
+bool isAutoTriggerMeasureVelocity()
+{
+	return Auto_TriggerMeasureVelocity == gLevel3CalculatorState;
+}
 
 bool isGrenadeKill()
 {
@@ -271,6 +284,17 @@ void enterLevel3CalculatorIdle()
 //	releaseServoContrl();
 }
 
+void setServoAvailable(bool avail)
+{
+	bServoAavailable = avail;
+	if(avail){
+	Posd[eDynamicZone] = DynamicOsd[4];
+	OSDCTRL_ItemShow(eDynamicZone);
+	}else{
+	OSDCTRL_ItemHide(eDynamicZone);
+	}
+}
+
 bool isBootUpSelfCheckFinished()
 {
 	return STATE_BOOT_UP_SELF_CHECK_FINISH == gLevel2BootUpState;
@@ -302,6 +326,11 @@ bool Is9stateOK()
 			&&isDipAngleSensorOK &&isMachineGunSensorOK &&isGrenadeSensorOK \
 			&&isGrenadeServoOK &&isMachineGunServoOK;
 
+	if(ret)
+		uart_open_close_flag = 0;
+	else
+		uart_open_close_flag = 1;
+	
 	return ret;
 }
 

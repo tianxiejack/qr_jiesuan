@@ -11,6 +11,9 @@
 //#include "grpFont.h"
 #include <string.h>
 
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "dx_main.h"
 #include "UartMessage.h"
@@ -2380,7 +2383,8 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_FAIL,						processCMD_TRACKING_FAIL,	0); // �Զ�����ʧ��
     MSGDRIV_attachMsgFun(handle,	CMD_VELOCITY_FAIL,						processCMD_VELOCITY_FAIL,	0); // ����ʧ��
     MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_VELOCITY,					processCMD_MEASURE_VELOCITY,0); // ����ָ��
-    MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_DISTANCE,					processCMD_MEASURE_DISTANCE,0); // ���ָ��?    MSGDRIV_attachMsgFun(handle,	CMD_LASER_OK,							processCMD_LASER_OK,		0); // ��������
+    MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_DISTANCE,					processCMD_MEASURE_DISTANCE,0); // ���ָ��?    
+    MSGDRIV_attachMsgFun(handle,	CMD_LASER_OK,							processCMD_LASER_OK,		0); // ��������
     MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_OK,						processCMD_TRACKING_OK,			0); // ������
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_LOAD_OK,				processCMD_FIRING_TABLE_LOAD_OK,		0); // �����Ԫװ����?    MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // �����Ԫװ��ʧ��?    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				      		processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_SKY,						processCMD_MODE_AIM_SKY,		0); // �л��Կ�Ŀ��
@@ -4036,7 +4040,7 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
 	Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_KILL+2];//PROJECTILE_GRENADE_KILL;
- 
+
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH2",__func__,__LINE__);
 	return ;
  }
@@ -4262,6 +4266,27 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_LASER(LPARAM lParam)
 
 void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
  {
+	if(isBattleMode()&&isStatBattleAuto()&&(isBattlePreparation()))
+	{
+		//enterLevel3CalculatorIdle();
+		gLevel3CalculatorState = Battle_Idle;
+		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
+		OSDCTRL_ItemShow(eDynamicZone);
+		Posd[eDynamicZone] = DynamicOsd[2];
+		//startDynamicTimer();
+
+		sendCommand(CMD_QUIT_AVT_TRACKING);
+	}
+	else if(isBattleMode()&&isStatBattleAuto()&&isAutoPreparation())
+	{
+		gLevel3CalculatorState = Auto_Idle;
+		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
+		OSDCTRL_ItemShow(eDynamicZone);
+		Posd[eDynamicZone] = DynamicOsd[2];
+		//startDynamicTimer();
+	}
+
+ 	
  	OSA_printf("%s,line:%d ... processCMD_LASER_FAIL",__func__,__LINE__);
 	return ;
  }
@@ -4269,28 +4294,88 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 
 void CProcess021::processCMD_TRACKING_FAIL(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_TRACKING_FAIL",__func__,__LINE__);
+ 	if(isBattleMode()&&isStatBattleAuto())
+	{
+		enterLevel3CalculatorIdle();
+		releaseServoContrl();
+	}
+ 	//OSA_printf("%s,line:%d ... processCMD_TRACKING_FAIL",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_VELOCITY_FAIL",__func__,__LINE__);
+ 	if(isBattleMode()&&isStatBattleAuto())
+	{
+		//enterLevel3CalculatorIdle();
+		Posd[eDynamicZone]=DynamicOsd[3];
+		OSDCTRL_ItemShow(eDynamicZone);
+		//startDynamicTimer();
+	}
+ 	//OSA_printf("%s,line:%d ... processCMD_VELOCITY_FAIL",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MEASURE_VELOCITY",__func__,__LINE__);
+	if(isBattleMode()&& isStatBattleAuto()&& isBattleIdle())
+	{
+		//trigger get Velocity
+		gLevel3CalculatorState = Battle_TriggerMeasureVelocity;
+		resetTurretVelocityCounter();
+		markMeasure_dist_Time();
+		resetDipVelocityCounter();
+		//markMeasure_dip_Time();
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoIdle())
+	{
+		gLevel3CalculatorState = Auto_TriggerMeasureVelocity;
+		resetTurretVelocityCounter();
+		markMeasure_dist_Time();
+		resetDipVelocityCounter();
+	}
+ 
+ 	//OSA_printf("%s,line:%d ... processCMD_MEASURE_VELOCITY",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE",__func__,__LINE__);
+	if(isBattleMode()&& isStatBattleAuto()&& isBattleTriggerMeasureVelocity())
+	{
+		if(1||isMeasureManual())   
+		{
+			if(!isTurretVelocityValid())
+				sendCommand(CMD_VELOCITY_FAIL);
+			
+			Posd[eMeasureType] = MeasureTypeOsd[2];
+			//todo: trigger Laser and AVT
+			gLevel3CalculatorState = Battle_Preparation;
+			gLevel4subCalculatorState = WaitForFeedBack;
+			if(isMeasureManual())
+				sendCommand(CMD_LASER_OK);
+			else
+				LaserPORT_requst();
+			sendCommand(CMD_TRIGGER_AVT);
+		}
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoTriggerMeasureVelocity())
+	{
+		if(1)//(!isTurretVelocityValid())
+			sendCommand(CMD_VELOCITY_FAIL);
+		
+		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG
+		//todo: trigger Laser and AVT
+		gLevel3CalculatorState = Auto_Preparation;
+		if(isMeasureManual())
+			sendCommand(CMD_LASER_OK);
+		else
+			LaserPORT_requst();
+ 
+ 	//OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE",__func__,__LINE__);
 	return ;
  }
 
@@ -4306,12 +4391,12 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 		}
 		else if(isWaitforFeedback())
 		{
-
 			//killLaserTimer();
 			gLevel4subCalculatorState = Laser_OK;			
 			//sendCommand(CMD_TRACKING_OK);
-
-		}else
+			processCMD_TRACKING_OK(0);
+		}
+		else
 		{
 			gLevel3CalculatorState = Battle_Idle;
 		}
@@ -4322,8 +4407,6 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 		loadFiringTable_Enter();
 	}
 
-
-
 	//OSA_printf("%s,line:%d ... processCMD_LASER_OK",__func__,__LINE__);
 	return ;
  }
@@ -4331,6 +4414,19 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 
 void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
  {
+	if(isBattleMode()&& isStatBattleAuto()&&isBattlePreparation())
+	{
+		if(isLaserOK())
+		{
+			gLevel3CalculatorState = Battle_LoadFiringTable;
+			//\u89e3\u7b97
+			loadFiringTable();
+		}else if(isWaitforFeedback())
+		{
+			gLevel4subCalculatorState = TrackingOK;
+		}
+	}
+	
  	OSA_printf("%s,line:%d ... processCMD_TRACKING_OK",__func__,__LINE__);
 	return ;
  }
@@ -4600,6 +4696,7 @@ void CProcess021::processCMD_MODE_AIM_LAND(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_AIM_SKY(LPARAM lParam)
  {
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_AIM_SKY",__func__,__LINE__);
  	Posd[eAimType] = AimOsd[1];
 	return ;
  }

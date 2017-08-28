@@ -45,7 +45,7 @@
 //#define ALG_TRACK_TIMER			    (0x03)
 //#define ALG_TRACK_TIMER_TICKS			(40)//ms
 #define GPIO_INSPECT_TIMER                    (0x06)
-#define GPIO_INSPECT_TICKS		    (300) //ms
+#define GPIO_INSPECT_TICKS		    2000//(300) //ms
 
 
 #define GRPX_SHOW_TIMER                    (0x04)

@@ -30,7 +30,7 @@ void killLaserTimer();
 int LaserPORT_PhraseBye(BYTE* pRecv);
 
 
-
+extern int LaserDistance;
 
 
 

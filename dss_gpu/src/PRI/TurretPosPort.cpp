@@ -78,8 +78,9 @@ void markMeasure_dist_Time()
 
 static double Measure_dist_time_delta()
 {
-//	return turretTimer - g_measure_dist_time;
+	//return turretTimer - g_measure_dist_time;
 }
+
 void computeMeanVar( double *src, double *mean, double *var, int size )
 {
 	double vsquared;
@@ -109,8 +110,7 @@ double getTurretTheta()
 
 BOOL isTurretVelocityValid()
 {
-//	return (Measure_dist_time_delta() >= 2000) && (counter>0);
-	return 1;
+	return (Measure_dist_time_delta() >= 2000) && (counter>0);
 }
 
 void resetTurretVelocityCounter()

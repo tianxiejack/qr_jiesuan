@@ -20,6 +20,7 @@
 #include "statCtrl.h"
 #include "GrenadePort.h"
 #include "osdPort.h"
+#include "LaserPort.h"
 
 
 static int fd0;
@@ -31,6 +32,9 @@ static uint8_t bits = 32;
 static uint32_t speed = 20000000;
 static uint16_t delay = 0;
 
+//long msg_tmp;
+
+bool uart_open_close_flag = 0;
 
 /****************************************************************************/
 //decode 倾斜角头的解析
@@ -202,7 +206,7 @@ int Process_mirror(struct RS422_data * pRS422_data)
 		int length = pRS422_data->length;
 		char * buf = (char*)pRS422_data->receiveData;
 
-		if(length <=0)
+		if(length <=0 )
 			return -1;
 
 		while(have_data){
@@ -223,8 +227,9 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
-			}else{
-
+			}
+			else
+			{
 				//解析数据
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
@@ -233,10 +238,33 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				}
 				//printf( "%02x \n" ,buf[parse_length-1]);
 
-				if( sum_xor ==  buf[parse_length-1] ){
+				//if( sum_xor ==  buf[parse_length-1] )
+				if(1)
+				{
 					laser_dis = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。
 					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
 
+					if(9999 == laser_dis)
+					{
+						LaserDistance = -1;
+						//msg_tmp = LASERERR_NOECHO;
+						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOECHO);
+					}
+					else if(0 == laser_dis)
+					{
+						LaserDistance = -1;	
+						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOSAMPLE);
+					}
+					else
+					{
+						LaserDistance = laser_dis;
+						//SendMessage(CMD_LASER_OK,value);
+						MSGDRIV_send(CMD_LASER_OK,0);
+					}
+					
+					//LaserPORT_Ack();   send out the distance
+
+					
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
@@ -244,7 +272,9 @@ int Process_mirror(struct RS422_data * pRS422_data)
 					SPI_mirror_send_requst() ;
 					SPI_mirror_send_ack();
 
-				}else{
+				}
+				else
+				{
 					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
 					memcpy(buf, buf+1, length-1);
 					length--;
@@ -324,10 +354,11 @@ int Process_vcode(struct RS422_data * pRS422_data)
 		int length = pRS422_data->length;
 		char * buf = (char*)pRS422_data->receiveData;
 
-		if(length <=0)
+		if(length <=0 )
 			return -1;
 
-		while(have_data){
+		while(have_data)
+		{
 			index=0;
 			ret = SPI_vcode_recvFlg(buf, length, &index);
 			length -= index;
@@ -440,10 +471,11 @@ int Process_grenade(struct RS422_data * pRS422_data)
 		int length = pRS422_data->length;
 		char * buf = (char*)pRS422_data->receiveData;
 
-		if(length <=0)
+		if(length <=0 )
 			return -1;
 
-		while(have_data){
+		while(have_data)
+		{
 			index=0;
 			ret = SPI_grenade_recvFlg(buf, length, &index);
 			length -= index;
@@ -477,7 +509,7 @@ int Process_grenade(struct RS422_data * pRS422_data)
 				{
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
-					printf(" about the GrenadeAngle  !!!!!! positive=%d angle=%d  \n", positive, angle);
+					//printf(" about the GrenadeAngle  !!!!!! positive=%d angle=%d  \n", positive, angle);
 					tmp = angle*0.01;
 					if(!bGrenadeSensorOK())
 					{
@@ -549,15 +581,17 @@ int Process_hcode(struct RS422_data * pRS422_data)
 		int length = pRS422_data->length;
 		char * buf = (char*)pRS422_data->receiveData;
 
-		if(length <=0)
+		if(length <=0 )
 			return -1;
 
-		while(have_data){
+		while(have_data)
+		{
 			index=0;
 			ret = SPI_hcode_recvFlg(buf, length, &index);
 			length -= index;
 
-			if(ret != 0){
+			if(ret != 0)
+			{
 				have_data=0;
 				continue;
 			}
@@ -1085,7 +1119,7 @@ void interuptHandleSpi1(struct RS422_data* RS422_ROTER_buff,struct RS422_data* R
 	fd_set readfds;	
 	while(1)
 	{
-			printf("%s\n",__func__);
+		printf("%s\n",__func__);
         	FD_ZERO(&readfds);
         	FD_SET(fd0,&readfds);
         	select(fd0+1,&readfds,NULL,NULL,NULL);
@@ -1103,7 +1137,7 @@ void interuptHandleSpi2(struct RS422_data* RS422_MIRROR_buff,struct RS422_data* 
 	fd_set readfds;	
 	while(1)
 	{
-			printf("%s\n",__func__);
+		printf("%s\n",__func__);
         	FD_ZERO(&readfds);
         	FD_SET(fd1,&readfds);
         	select(fd1+1,&readfds,NULL,NULL,NULL);

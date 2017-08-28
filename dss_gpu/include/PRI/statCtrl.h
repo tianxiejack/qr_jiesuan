@@ -178,6 +178,10 @@ bool isBattlePreparation();
 bool isAutoPreparation();
 void loadFiringTable_Enter();
 void loadFiringTable();
+bool isLaserOK();
+bool isBattleTriggerMeasureVelocity();
+bool isAutoTriggerMeasureVelocity();
+void setServoAvailable(bool avail);
 
 	
 PROJECTILE_TYPE getFovProjectileType();

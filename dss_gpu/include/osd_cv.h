@@ -45,4 +45,7 @@ void Drawjs_leftFrame(Mat frame,CFOV * fovOsdCtrl);
 void Drawjs_rightFrame(Mat frame,CFOV * fovOsdCtrl);
 void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl);
 
+void DrawjsGrenadeLoadOK(Mat frame,CFOV * fovOsdCtrl);
+void DrawjsAngleFrame(Mat frame,CFOV * fovOsdCtrl,double angle);
+
 #endif /* OSD_CV_H_ */

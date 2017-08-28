@@ -108,7 +108,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		return;
 
 	cthis->frcolor = 0;
-
+	
 	DrawjsCompass(frame,cthis);
 	DrawjsCross(frame,cthis);
 	DrawjsRuler(frame,cthis);
@@ -126,12 +126,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	if(cthis->bFovDraw==FALSE)
 		return;
 	
-#if 0
-	
-	 DrawjsRuler(frame,&lineParam);
-
-#endif
-
+	DrawjsAngleFrame(frame,cthis,getGrenadeAngle()-getMachGunAngle());
 	if(isCalibrationMode() && isBootUpMode())
 	{
 		//no draw
@@ -191,7 +186,8 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	}
 	*/
 	//if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
-	//	FOVCTRL_drawGrenadeLoadOK(hFov,pImg);
+	  if( isGrenadeGas()||isGrenadeKill())
+		DrawjsGrenadeLoadOK(frame,cthis);
 	
 #if 0
 	if(isStatBattleAlert() && isAutoCatching())//\u951f\u7686\u8bb9\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u793a\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?

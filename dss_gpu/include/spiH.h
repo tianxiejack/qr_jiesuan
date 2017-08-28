@@ -94,6 +94,8 @@ void printf_read_data(uint8_t* receiveData,int readCountTmp);
 #endif
 
 
+extern bool uart_open_close_flag;
+
 #endif
 
 
