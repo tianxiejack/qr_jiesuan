@@ -218,7 +218,7 @@ int Process_mirror(struct RS422_data * pRS422_data)
 
 			if(length<parse_length){
 
-				printf(" length<dataLength ...\n");
+				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
@@ -338,17 +338,21 @@ int Process_vcode(struct RS422_data * pRS422_data)
 
 			parse_length = 5;
 
-			if(length<parse_length){
+			if(length<parse_length)
+			{
 
-				printf(" length<dataLength ...\n");
+				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
-			}else{
+			}
+			else
+			{
 
 				//解析数据
 				sum_xor=0;
-				for(i=0; i<parse_length-1; i++){
+				for(i=0; i<parse_length-1; i++)
+				{
 					sum_xor ^= buf[i];
 					//printf( "%02x " ,buf[i]);
 				}
@@ -366,7 +370,7 @@ int Process_vcode(struct RS422_data * pRS422_data)
 					if(tmp>= -5 && tmp<=75)
 							MachGunAngle.theta = tmp;
 		
-					printf(" positive=%d angle=%d  \n", positive, angle);
+					//printf(" positive=%d angle=%d  \n", positive, angle);
 				
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
@@ -468,7 +472,7 @@ int Process_grenade(struct RS422_data * pRS422_data)
 				{
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
-					printf(" positive=%d angle=%d  \n", positive, angle);
+					//printf(" positive=%d angle=%d  \n", positive, angle);
 
 					if(!bGrenadeSensorOK())
 					{
@@ -557,19 +561,22 @@ int Process_hcode(struct RS422_data * pRS422_data)
 
 			if(length<parse_length){
 
-				printf(" length<dataLength ...\n");
+				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
-			}else{
+			}
+			else
+			{
 
 				//解析数据
 				sum_xor=0;
-				for(i=0; i<parse_length-1; i++){
+				for(i=0; i<parse_length-1; i++)
+				{
 					sum_xor ^= buf[i];
 					//printf( "%02x " ,buf[i]);
 				}
-			//printf( "%02x \n" ,buf[parse_length-1]);
+				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				positive=1;
 				//if( sum_xor ==  buf[parse_length-1] )
@@ -577,7 +584,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 				{
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;	
-					printf(" positive=%d angle=%d  \n", positive, angle);
+					//printf(" positive=%d angle=%d  \n", positive, angle);
 					
 					tmp = (positive)*angle/100.00;
 					if(tmp>= -5 && tmp<=75)
@@ -1107,7 +1114,7 @@ void interuptHandleSpi3(struct RS422_data* RS422_TEST_buff,struct RS422_data* RS
 	fd_set readfds;	
 	while(1)
 	{
-			printf("%s\n",__func__);
+		printf("%s\n",__func__);
         	FD_ZERO(&readfds);
         	FD_SET(fd2,&readfds);
         	select(fd2+1,&readfds,NULL,NULL,NULL);
