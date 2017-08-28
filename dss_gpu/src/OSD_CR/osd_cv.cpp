@@ -393,7 +393,7 @@ void DrawjsXLine(Mat frame,CFOV * fovOsdCtrl)
 	int len = 50;
 	int linew = 1;
 	Point center,end;
-	center.x =650;
+	center.x = 650;
 	center.y = 130;
 
 	end.x = center.x + len*(sin(theta));

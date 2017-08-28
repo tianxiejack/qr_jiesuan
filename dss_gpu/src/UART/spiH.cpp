@@ -19,6 +19,7 @@
 #include "PositionPort.h"
 #include "statCtrl.h"
 #include "GrenadePort.h"
+#include "osdPort.h"
 
 
 static int fd0;
@@ -588,7 +589,9 @@ int Process_hcode(struct RS422_data * pRS422_data)
 					
 					tmp = (positive)*angle/100.00;
 					if(tmp>= -5 && tmp<=75)
-							gTurretTheta.theta = tmp;
+						gTurretTheta.theta = tmp;
+					
+					pFovCtrlObj->theta = (int)tmp;
 					
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
