@@ -369,8 +369,11 @@ int Process_vcode(struct RS422_data * pRS422_data)
 
 					tmp = (positive)*angle/100.00;
 					if(tmp>= -5 && tmp<=75)
-							MachGunAngle.theta = tmp;
-		
+					{
+						printf("********************************\n");
+						printf("tmp = %f\n",tmp);
+						MachGunAngle.theta = tmp;
+					}
 					//printf(" positive=%d angle=%d  \n", positive, angle);
 				
 					memcpy(buf, buf+parse_length, length-parse_length);
@@ -433,6 +436,7 @@ int Process_grenade(struct RS422_data * pRS422_data)
 		int sum_xor =0;
 		int i=0;
 
+		double tmp;
 		int length = pRS422_data->length;
 		char * buf = (char*)pRS422_data->receiveData;
 
@@ -473,15 +477,15 @@ int Process_grenade(struct RS422_data * pRS422_data)
 				{
 					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
-					//printf(" positive=%d angle=%d  \n", positive, angle);
-
+					printf(" about the GrenadeAngle  !!!!!! positive=%d angle=%d  \n", positive, angle);
+					tmp = angle*0.01;
 					if(!bGrenadeSensorOK())
 					{
 						MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
 					}
 					
-					if(angle >= -5 && angle <= 75)
-						GrenadeAngle = positive*angle*0.01;
+					if(tmp >= -5 && tmp <= 75)
+						GrenadeAngle = positive*tmp;
 					
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );

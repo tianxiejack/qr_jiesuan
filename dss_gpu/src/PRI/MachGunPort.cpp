@@ -87,6 +87,8 @@ void resetDipVelocityCounter()
 }
 double getMachGunAngleAbs()
 {
+	//printf("********************************************\n");
+	//printf("MachGunAngle.theta = %f\n",MachGunAngle.theta);
 	return MachGunAngle.theta;
 }
 
