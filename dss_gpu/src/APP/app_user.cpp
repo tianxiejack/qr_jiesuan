@@ -40,8 +40,9 @@
 #include "dx_config.h"
 #include "app_user.h"
 #include "app_global.h"
-#include"osd_graph.h"
+#include "osd_graph.h"
 #include "app_hardctrl.h"
+#include "statCtrl.h"
 
 
 static Int32 APP_loadDefCfg( int item);
@@ -84,6 +85,8 @@ void initgdxd_info()
         gDXD_info .OnTimer       = APP_onTimer;
 
 }
+
+
 
 /********************************************************************************
  * @brief:      APP_getChar: receive char from terminal
@@ -412,6 +415,8 @@ static Int32 APP_start( int nType )
 
     APP_setPrms(nType);
 
+    CTIMERCTRL_initTimerCtrl();
+
     //start usercase
     if ( gAPP_Started )
     {
@@ -438,6 +443,11 @@ static Int32 APP_start( int nType )
 	Dx_setTimer(ALG_TRACK_TIMER,ALG_TRACK_TIMER_TICKS);
 	Dx_setTimer(GPIO_INSPECT_TIMER,GPIO_INSPECT_TICKS);
 	Dx_sendMsg( NULL, DX_MSGID_CTRL, (void*)( DX_CTL_ALG_LINK_INIT ), sizeof( Int32 ), FALSE );
+
+
+
+	
+	
 
 	OSA_printf("%s:exit", __func__);
 

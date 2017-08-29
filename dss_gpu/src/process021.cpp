@@ -272,6 +272,10 @@ void CProcess021::OnCreate()
 	//pIStuts->PicpPosStat=0;
 	#endif
 
+
+
+	//startSelfCheckTimer();
+
 };
 
 void CProcess021::OnDestroy(){};

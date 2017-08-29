@@ -120,6 +120,88 @@ typedef enum Dram_FovStat{
 
 
 
+
+/*************************TIMER*****************************/
+typedef enum _time_id
+{
+	eOSD_Timer = 0x10,
+	eCap_Timer ,
+	eTrk_Timer ,
+	eCST_Timer ,
+	eBootUp_Timer,
+	eLaser_Timer,
+	eRGQ_Timer,
+	eAVT_Timer,
+	eCAN_Timer,
+	eDynamic_Timer,
+	eSchedule_Timer,
+	eF6_Timer,
+	eF5_Timer,
+	eF3_Timer,
+	eDipAngle_Timer,
+	ePosAngle_Timer,
+	eMachGunAngle_Timer,
+	eGrenadeAngle_Timer,
+	ePosServo_Timer,
+	eMachGunServo_Timer,
+	eGrenadeServo_Timer,
+	eServoCheck_Timer,
+	MAX_TIMER_NUM
+}eTimerId;
+
+
+#define 	FILR_TIMEOUT 			2000
+#define 	SELCAP_TIMER 			250
+#define 	PICP_TIMER   			9
+#define 	TRACK_TIMER  			200
+#define 	TRACK_REFINE_TIMER 	2000
+#define 	BOOTUP_TIMER 			10000
+#define 	LASER_TIMER 			6000
+#define 	RGQ_TIMER 				3000
+#define 	CAN_TIMER 				500
+#define 	DYNAMIC_TIMER 			6000
+#define 	AVT_TIMER 				2000
+#define 	SCHEDULE_TIMER 		500
+#define 	FN_TIMER 				2000
+#define 	SELFCHECK_TIMER 		1000
+#define 	SERVOCHECK_TIMER 		500
+
+typedef enum timer_stat
+{
+	eTimer_Stat_Stop 	= 0x00,
+	eTimer_Stat_Run	= 0x01
+}eTimerStat;
+
+
+typedef struct 
+{
+	volatile unsigned int nIDEvent;
+	volatile unsigned int nElapse;
+	volatile unsigned int nStat;
+	volatile unsigned int nClockCout;
+	void * pParam;
+	void (* lpfnTimer)(void *);
+}CTime;
+
+typedef struct 
+{
+	CTime pTimeArray[MAX_TIMER_NUM];
+	unsigned int timNum;
+
+	int  (*InitTimerCtrl)();
+	void (*DestroyTimerCtrl)();
+	int (*SetTimer)( unsigned int timerId, unsigned int nMs );
+	int (*KillTimer)( unsigned int  timerId );
+	void (*RunTimer)();
+	int  (*GetTimerStat)(unsigned int  nIDEvent);
+	void (*ReSetTimer)(unsigned int  nIDEvent);
+}CTimerCtrl;
+
+
+/**************************************END************************************/
+
+
+
 SHOT_TYPE getGunShotType();
 SHOT_TYPE getShotType();
 
@@ -196,6 +278,16 @@ PROJECTILE_TYPE getFovProjectileType();
 PROJECTILE_TYPE getProjectileType();
 DIS_MEASURE_TYPE getMeasureType();
 
+
+int  CTIMERCTRL_initTimerCtrl();
+
+
+
+
+
+
+
+
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;
 extern Level_three_state gLevel3CalibrationState,gLevel3CalculatorState;
@@ -209,7 +301,7 @@ extern SHOT_TYPE gGunShotType;
 extern bool AUTOCATCH;
 extern WeatherItem gWeatherTable;
 extern bool isDetendClose;
-
+extern CTimerCtrl * pTimer;
 
 
 #ifdef __cplusplus

@@ -13,6 +13,7 @@
 #include "osdPort.h"
 #include "servo_control_obj.h"
 #include "spiH.h"
+#include "dx.h"
 
 float FOVSIZE_V=FOVDEGREE_VLARGE, FOVSIZE_H=FOVDEGREE_HLARGE;
 Level_one_state gLevel1Mode = MODE_BOOT_UP,gLevel1LastMode = MODE_BATTLE;
@@ -48,7 +49,7 @@ static bool bServoAavailable = FALSE;
 bool bUnlock = TRUE;
 bool AUTOCATCH = FALSE;
 
-
+CTimerCtrl * pTimerObj = (CTimerCtrl*)OSA_memAlloc(sizeof(CTimerCtrl));
 
 DIS_MEASURE_TYPE getMeasureType()
 {
@@ -864,6 +865,26 @@ void EnterCMD_BULLET_SWITCH3( )
 }
 
 
+
+/********************************TIMER**********************************/
+int  CTIMERCTRL_initTimerCtrl()
+{
+	CTimerCtrl * pCtrlObj= pTimerObj;
+	SDK_ASSERT(pTimerObj!=NULL);
+	
+	memset(pCtrlObj->pTimeArray,0,sizeof(CTime)*MAX_TIMER_NUM);	
+	pCtrlObj->timNum =0;
+
+	pCtrlObj->SetTimer= Dx_setTimer;
+	pCtrlObj->KillTimer = Dx_killTimer;
+	pCtrlObj->RunTimer= NULL;
+	pCtrlObj->GetTimerStat = NULL;
+	pCtrlObj->DestroyTimerCtrl = NULL;
+	pCtrlObj->InitTimerCtrl = NULL;
+	pCtrlObj->ReSetTimer = NULL;
+	
+	return 0;
+}
 
 
 

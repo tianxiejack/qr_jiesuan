@@ -55,7 +55,8 @@
 #define ALG_TRACK_TIMER_TICKS		    (40) //ms
 
 #define BOARD_waitusec_TIMER		 	(0x06)
-#define BOARD_waitusec_TIMER_TICKS		 (10) //ms
+#define BOARD_waitusec_TIMER_TICKS		 (21) //ms
+
 
 
 char APP_getChar( );
