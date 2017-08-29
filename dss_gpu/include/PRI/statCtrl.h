@@ -186,7 +186,9 @@ bool isBeyondDistance();
 bool isMachineGunBefore();
 bool isGrenadeKillBefore();
 bool isGrenadeGasBefore();
-
+void EnterCMD_BULLET_SWITCH1();
+void EnterCMD_BULLET_SWITCH2();
+void EnterCMD_BULLET_SWITCH3();
 	
 PROJECTILE_TYPE getFovProjectileType();
 PROJECTILE_TYPE getProjectileType();

@@ -48,6 +48,8 @@ static bool bServoAavailable = FALSE;
 bool bUnlock = TRUE;
 bool AUTOCATCH = FALSE;
 
+
+
 DIS_MEASURE_TYPE getMeasureType()
 {
 	return gMeasureType;
@@ -612,8 +614,8 @@ printf("TargetAngularVelocityX = %f \n",input.TargetAngularVelocityX);
 				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
 				cmd_machservo_moveoffset_tmp = output.AimOffsetY-DEGREE2MIL(getGrenadeAngle());
 				//MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, 0);	
-				processCMD_MACHSERVO_MOVEOFFSET(0)
-;			}
+				processCMD_MACHSERVO_MOVEOFFSET(0);			
+			}
 			else
 			{
 				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
@@ -766,4 +768,97 @@ void loadFiringTable()
 	}
 	
 }
+
+
+void EnterCMD_BULLET_SWITCH1()
+{
+	if(isCalibrationMode() && isCalibrationMainMenu())
+	{
+		OSDCTRL_updateMainMenu(PROJECTILE_BULLET);
+	}
+	else
+	{
+		if(isCalibrationMode() && isCalibrationZero())
+		{
+			saveLastAndGetNewZeroParam(PROJECTILE_BULLET);
+		}
+		else if(isCalibrationMode()&&isCalibrationGeneral())
+		{
+			saveLastAndGetNewGeneralParam(PROJECTILE_BULLET);
+			updateBulletType(PROJECTILE_BULLET);
+		}
+		else if(isBattleMode()&&isMeasureManual()&&isBeyondDistance())
+		{
+			Posd[eDynamicZone] = DynamicOsd[5];
+			OSDCTRL_ItemShow(eDynamicZone);
+		}
+	}
+	UpdataBoreSight();
+	setServoControlObj();
+
+}
+
+
+void EnterCMD_BULLET_SWITCH2( )
+{
+	if(isCalibrationMode()&& isCalibrationMainMenu())
+	{
+		OSDCTRL_updateMainMenu(PROJECTILE_GRENADE_KILL);
+	}
+	else 
+	{
+		if(isCalibrationMode()&&isCalibrationZero())
+		{
+			saveLastAndGetNewZeroParam(PROJECTILE_GRENADE_KILL);
+		}
+		else if(isCalibrationMode()&&isCalibrationGeneral())
+		{
+			saveLastAndGetNewGeneralParam(PROJECTILE_GRENADE_KILL);
+			updateBulletType(PROJECTILE_GRENADE_KILL);
+		}
+		else if(isBattleMode()&&isMeasureManual()&&isBeyondDistance())
+		{
+			Posd[eDynamicZone] = DynamicOsd[5];
+			OSDCTRL_ItemShow(eDynamicZone);
+			//startDynamicTimer();
+		}
+	}
+	//gProjectileType=PROJECTILE_GRENADE_KILL;
+	UpdataBoreSight();
+	setServoControlObj();
+}
+
+
+void EnterCMD_BULLET_SWITCH3( )
+{
+	if(isCalibrationMode()&& isCalibrationMainMenu())
+	{
+		OSDCTRL_updateMainMenu(PROJECTILE_GRENADE_GAS);
+	}
+	else 
+	{
+		if(isCalibrationMode()&&isCalibrationZero())
+		{
+			saveLastAndGetNewZeroParam(PROJECTILE_GRENADE_GAS);
+		}
+		else if(isCalibrationMode()&&isCalibrationGeneral())
+		{
+			saveLastAndGetNewGeneralParam(PROJECTILE_GRENADE_GAS);
+			updateBulletType(PROJECTILE_GRENADE_GAS);
+		}
+		else if(isBattleMode()&&isMeasureManual()&&isBeyondDistance())
+		{
+			Posd[eDynamicZone] = DynamicOsd[5];
+			OSDCTRL_ItemShow(eDynamicZone);
+			//startDynamicTimer();
+		}
+	}
+	gProjectileType=PROJECTILE_GRENADE_GAS;
+	UpdataBoreSight();
+	setServoControlObj();
+}
+
+
+
+
 

@@ -22,6 +22,7 @@ static IF_servo_control gMachServoControlObj = {
 	MachServoMoveSpeed,
 	MachServoStop
 };
+
 static IF_servo_control gGrenadeServoControlObj = {
 	GrenadeServoMoveOffset,
 	GrenadeServoMoveSpeed,

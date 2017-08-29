@@ -3843,11 +3843,12 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
  }
 
 
+
 void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 {
 
-	//if(!ValidateGunType())
-		//return;
+	if(!ValidateGunType())
+		return;
 
 	if(isCalibrationMode())
 	{
@@ -3996,39 +3997,12 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 
 	gProjectileType = PROJECTILE_BULLET;
 	Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
-	EnterCMD_BULLET_SWITCH1(0);
+	EnterCMD_BULLET_SWITCH1();
 
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH1",__func__,__LINE__);
 	return ;
  }
 
-void CProcess021::EnterCMD_BULLET_SWITCH1(LPARAM lParam)
-{
-	if(isCalibrationMode() && isCalibrationMainMenu())
-	{
-		OSDCTRL_updateMainMenu(PROJECTILE_BULLET);
-	}
-	else
-	{
-		if(isCalibrationMode() && isCalibrationZero())
-		{
-			saveLastAndGetNewZeroParam(PROJECTILE_BULLET);
-		}
-		else if(isCalibrationMode()&&isCalibrationGeneral())
-		{
-			saveLastAndGetNewGeneralParam(PROJECTILE_BULLET);
-			updateBulletType(PROJECTILE_BULLET);
-		}
-		else if(isBattleMode()&&isMeasureManual()&&isBeyondDistance())
-		{
-			Posd[eDynamicZone] = DynamicOsd[5];
-			OSDCTRL_ItemShow(eDynamicZone);
-		}
-	}
-	UpdataBoreSight();
-	setServoControlObj();
-
-}
 
 void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
  {
@@ -4036,7 +4010,7 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 		gProjectileTypeBefore = gProjectileType;
 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
-	Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_KILL+2];//PROJECTILE_GRENADE_KILL;
+	Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_KILL+2];
 
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH2",__func__,__LINE__);
 	return ;
@@ -4049,7 +4023,7 @@ void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
 		gProjectileTypeBefore = gProjectileType;
 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_GAS+2);
-	Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_GAS+2];//PROJECTILE_GRENADE_GAS
+	Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_GAS+2];
 	
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH3",__func__,__LINE__);
 	return ;
@@ -4817,6 +4791,37 @@ void CProcess021::processCMD_LIHEQI_OPEN(long lParam )
   	OSA_printf("%s,line:%d ... processCMD_GRENADEMOTOR_OK",__func__,__LINE__);
   	return ;
   }
+  
+
+void CProcess021::updateCMD_BUTTON_SWITCH(int param)
+{
+	if(PROJECTILE_BULLET == param)
+	{
+		EnterCMD_BULLET_SWITCH1();
+	}else if(PROJECTILE_GRENADE_KILL== param)
+	{
+		EnterCMD_BULLET_SWITCH2();
+	}else if(PROJECTILE_GRENADE_GAS== param)
+	{
+		EnterCMD_BULLET_SWITCH3();
+	}
+}
+
+bool CProcess021::ValidateGunType()
+{
+	if(gProjectileType > PROJECTILE_GRENADE_GAS)
+	{
+		if(gProjectileType == QUESTION_GRENADE_KILL)
+			gProjectileType = PROJECTILE_GRENADE_KILL;
+		else if(gProjectileType == QUESTION_GRENADE_GAS)
+			gProjectileType = PROJECTILE_GRENADE_GAS;
+		//gProjectileType -=2;
+		Posd[eGunType] = GunOsd[gProjectileType];
+		updateCMD_BUTTON_SWITCH(gProjectileType);
+		return FALSE;
+	}
+	return TRUE;
+}
 
  #endif
 

@@ -59,6 +59,7 @@ public:
 	static void process_osd(void *pPrm);
 	void process_osd_test(void *pPrm);
 
+
 protected:
 	void msgdriv_event(MSG_PROC_ID msgId, void *prm);
 	void osd_mtd_show(TARGET tg[], bool bShow = true);
@@ -146,7 +147,6 @@ protected:
         static void processCMD_BUTTON_RIGHT(LPARAM lParam);
         static void processCMD_BUTTON_ENTER(LPARAM lParam);
         static void processCMD_BULLET_SWITCH0(LPARAM lParam);
-	 static void EnterCMD_BULLET_SWITCH1(LPARAM lParam);
         static void processCMD_BULLET_SWITCH1(LPARAM lParam);
         static void processCMD_BULLET_SWITCH2(LPARAM lParam);
         static void processCMD_BULLET_SWITCH3(LPARAM lParam);
@@ -230,6 +230,8 @@ protected:
         static void processCMD_MACHGUNMOTOR_OK(long lParam );
         static void processCMD_GRENADEMOTOR_ERR(long lParam );
         static void processCMD_GRENADEMOTOR_OK(long lParam );
+	 static void updateCMD_BUTTON_SWITCH(int param);	
+	 static bool ValidateGunType();
 
 private:
 	ACK_EXT extOutAck;
