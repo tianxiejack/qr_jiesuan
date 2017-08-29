@@ -241,6 +241,16 @@ bool bPositionServoOK()
 	return isPositionServoOK;
 }
 
+bool isGrenadeKillBefore()
+{
+	return PROJECTILE_GRENADE_KILL == gProjectileTypeBefore;
+}
+
+bool isMachineGunBefore()
+{
+	return PROJECTILE_BULLET == gProjectileTypeBefore;
+}
+
 bool bPositionSensorOK()
 {
 	return isPositionSensorOK ;
@@ -315,10 +325,18 @@ bool isValidProjectileType()
 	return (gProjectileType <= PROJECTILE_GRENADE_GAS);
 }
 
+
 bool isFovMachineGun()
 {
 	return PROJECTILE_BULLET == getFovProjectileType();
 }
+
+
+bool isGrenadeGasBefore()
+{
+	return PROJECTILE_GRENADE_GAS == gProjectileTypeBefore;
+}
+
 
 bool Is9stateOK()
 {
@@ -391,6 +409,26 @@ PROJECTILE_TYPE getProjectileType()
 		return gProjectileType;	
 }
 
+bool isBeyondDistance()
+{
+	if(isMachineGun())
+	{
+		if(DistanceManual>1500)
+			return TRUE;
+	}
+	else if(isGrenadeKill())
+	{
+		if(DistanceManual>1700)
+			return TRUE;
+	}
+	else if(isGrenadeGas())
+	{
+		if(DistanceManual>360)
+			return TRUE;
+	}
+	
+	return FALSE;
+}
 
 int getErrCodeId()
 {

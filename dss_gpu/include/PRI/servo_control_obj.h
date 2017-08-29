@@ -17,7 +17,7 @@ void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam);
 void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam);
 
 void initAllServos();
-
+void setServoControlObj();
 extern long cmd_machservo_moveoffset_tmp;
 extern long cmd_grenadeservo_moveoffset_tmp;
 #endif

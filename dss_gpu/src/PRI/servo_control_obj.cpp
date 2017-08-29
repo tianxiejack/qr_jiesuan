@@ -5,6 +5,7 @@
 #include "dx.h"
 #include "app_user.h"
 #include "GrenadePort.h"
+#include "statCtrl.h"
 #include "firingCtrl.h"
 //#include "dramMsgDef.h"
 //#include "main.h"
@@ -28,6 +29,19 @@ static IF_servo_control gGrenadeServoControlObj = {
 };
 
 #define sendCommand(MSG_ID) MSGDRIV_send(MSG_ID,0)
+
+static void PseudoMoveOffsetFunc(float x, float y){}
+static void PseudoMoveSpeedFunc(float x, float y){}
+static void PseudoStopFunc(){}
+static IF_servo_control gPseudoServoControlObj={
+	PseudoMoveOffsetFunc,
+	PseudoMoveSpeedFunc,
+	PseudoStopFunc,
+};
+
+
+PIF_servo_control pServoControlObj = &gPseudoServoControlObj;
+
 
 PIF_servo_control getMachGunServoContrlObj()
 {
@@ -507,3 +521,11 @@ void initAllServos()
 
 }
 
+
+void setServoControlObj()
+{
+	if(isMachineGun())
+		pServoControlObj=getMachGunServoContrlObj();
+	else
+		pServoControlObj=getGrenadeServoContrlObj();
+}

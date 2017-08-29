@@ -557,6 +557,7 @@ void  updateBulletType(int type)
 	BYTE1(FrameBuf1) &= 0x8F;
 	BYTE1(FrameBuf1) |= ((type&0x03) + 1)<<4;
 }
+
 int getBulletType()
 {
 #if 1

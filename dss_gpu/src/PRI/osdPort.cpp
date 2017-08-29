@@ -27,19 +27,132 @@ WeatherItem gWeatherTable={15,101325};
 
 static int DISLEN=10;
 
+
+void saveLastAndGetNewZeroParam(int type)
+{
+	if(isMachineGunBefore()){
+//		gMachineGun_ZCTable.distance = DistanceManual;
+		gMachineGun_ZCTable.data.deltaX = getCrossX();
+		gMachineGun_ZCTable.data.deltaY = getCrossY();
+		//AVTCTRL_UpdateFOV(1,gMachineGun_ZCTable.data.deltaX,gMachineGun_ZCTable.data.deltaY);
+		gMachineGun_ZCTable.Angle		= getMachGunAngleAbs();
+		gGrenadeKill_ZCTable.Angle	 	= getGrenadeAngleAbs();
+
+	}
+	else if(isGrenadeKillBefore()){
+//		gGrenadeKill_ZCTable.distance = DistanceManual;
+		gGrenadeKill_ZCTable.data.deltaX = getCrossX();
+		gGrenadeKill_ZCTable.data.deltaY = getCrossY();
+		//AVTCTRL_UpdateFOV(2,gGrenadeKill_ZCTable.data.deltaX,gGrenadeKill_ZCTable.data.deltaY);
+		gMachineGun_ZCTable.Angle		= getMachGunAngleAbs();
+		gGrenadeKill_ZCTable.Angle		 = getGrenadeAngleAbs();
+	}
+
+	if(PROJECTILE_BULLET == type /*isMachineGun()*/)
+	{
+		setNextZeroData(&gMachineGun_ZCTable);
+	}
+	else if(PROJECTILE_GRENADE_KILL == type/*isGrenadeGas()*/)
+	{
+		setNextZeroData(&gGrenadeKill_ZCTable);
+	}
+}
+
+
+
+void saveLastAndGetNewGeneralParam(int type)
+{
+	if(isGrenadeKillBefore())
+	{
+		saveLastGeneralParam(&gGrenadeKill_GCParam);
+	}
+	else if(isGrenadeGasBefore())
+	{
+		saveLastGeneralParam(&gGrenadeGas_GCParam);
+	}
+	else if(isMachineGunBefore())
+	{
+		saveLastGeneralParam(&gMachineGun_GCParam);
+	}
+
+	if(PROJECTILE_BULLET == type)
+	{
+		setNextGeneralParam(&gMachineGun_GCParam);
+	}
+	else if(PROJECTILE_GRENADE_KILL == type)
+	{
+		setNextGeneralParam(&gGrenadeKill_GCParam);
+	}
+	else if(PROJECTILE_GRENADE_GAS == type)
+	{
+		setNextGeneralParam(&gGrenadeGas_GCParam);
+	}
+}
+
+
+static void saveLastGeneralParam(GeneralCorrectionItem * Item)
+{
+	Item->distance	 = getLastGeneralDistance();
+	Item->data.deltaX = getLastGeneralDataX();
+	Item->data.deltaY = getLastGeneralDataY();
+}
+
+
+double getLastGeneralDataY()
+{
+	double value = General[10]*1000 +General[11]*100 + General[12]*10 + General[13];
+	if(General[9] >= 0)
+		return value;
+	else 
+		return -value;
+}
+
+
+int getLastGeneralDistance()
+{
+	return (General[0]*1000 + General[1]*100 + General[2]*10 + General[3]);
+}
+
+
+double getLastGeneralDataX()
+{
+	double value = General[5]*1000 +General[6]*100 + General[7]*10 + General[8];
+	if(General[4] >= 0)
+		return value;
+	else 
+		return -value;
+}
+
+void UpdataBoreSight()
+{
+	if(isMachineGun())
+	{
+		setNextZeroData(&gMachineGun_ZCTable);
+		//AVTCTRL_SwitchFOV(0);
+	}
+	else if(isGrenadeGas()||isGrenadeKill())
+	{
+		setNextZeroData(&gGrenadeKill_ZCTable);
+		//AVTCTRL_SwitchFOV(1);
+	}
+	return ;
+}
+
+
 void moveCrossCenter(int x, int y)
 {
 	CFOV* cthis = pFovCtrlObj;
 	int borX,borY;
 	if(isMachineGun())
-	{printf("gun gun gun gun gun   \n");
+	{
+		//printf("gun gun gun gun gun   \n");
 		borX = gMachineGun_ZCTable.data.deltaX+x;
 		//borY = gMachineGun_ZCTable.data.deltaY+(y>>1);
 		borY = gMachineGun_ZCTable.data.deltaY+(y);
-		printf("x = %d \n",x);
-		printf("y = %d \n",y);
-		printf(" borX = %d\n",borX);
-		printf(" borY = %d\n",borY);
+		//printf("x = %d \n",x);
+		//printf("y = %d \n",y);
+		//printf(" borX = %d\n",borX);
+		//printf(" borY = %d\n",borY);
 	}
 	else
 	{
@@ -209,12 +322,13 @@ void initilGeneralParam()
 static void setNextZeroData(ZeroCorrectionItem *Item)
 {
 	
-	//CFOV* cthis = pFovCtrlObj;
-	//int borX,borY;
-	//borX = cthis->fovX = Item->data.deltaX;
-	//borY = cthis->fovY = Item->data.deltaY;
+	CFOV* cthis = pFovCtrlObj;
+	int borX,borY;
+	borX = cthis->fovX = Item->data.deltaX;
+	borY = cthis->fovY = Item->data.deltaY;
 
 	//FOVCTRL_updateFovRect(cthis,0,0,borX,(borY)>>1);
+	FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
 
 

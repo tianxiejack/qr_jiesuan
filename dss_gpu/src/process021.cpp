@@ -4006,30 +4006,27 @@ void CProcess021::EnterCMD_BULLET_SWITCH1(LPARAM lParam)
 {
 	if(isCalibrationMode() && isCalibrationMainMenu())
 	{
-		//check XPosition before  udateMenuItem_Zero_General()
-		//udateMenuItem_Zero_General(PROJECTILE_BULLET);
 		OSDCTRL_updateMainMenu(PROJECTILE_BULLET);
 	}
 	else
 	{
 		if(isCalibrationMode() && isCalibrationZero())
 		{
-			//saveLastAndGetNewZeroParam(PROJECTILE_BULLET);
+			saveLastAndGetNewZeroParam(PROJECTILE_BULLET);
 		}
 		else if(isCalibrationMode()&&isCalibrationGeneral())
 		{
-			//saveLastAndGetNewGeneralParam(PROJECTILE_BULLET);
+			saveLastAndGetNewGeneralParam(PROJECTILE_BULLET);
 			updateBulletType(PROJECTILE_BULLET);
 		}
-		else if(isBattleMode()&&isMeasureManual())//&&isBeyondDistance())
+		else if(isBattleMode()&&isMeasureManual()&&isBeyondDistance())
 		{
 			Posd[eDynamicZone] = DynamicOsd[5];
 			OSDCTRL_ItemShow(eDynamicZone);
 		}
 	}
-//	gProjectileType=PROJECTILE_BULLET;
-	//UpdataBoreSight();
-	//setServoControlObj();
+	UpdataBoreSight();
+	setServoControlObj();
 
 }
 
@@ -4374,7 +4371,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			sendCommand(CMD_LASER_OK);
 		else
 			LaserPORT_requst();
- 
+	}
  	//OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE",__func__,__LINE__);
 	return ;
  }
@@ -4686,9 +4683,7 @@ void CProcess021::processCMD_MACHSERVO_STOP(LPARAM lParam)
  
 
 void CProcess021::processCMD_MODE_AIM_LAND(LPARAM lParam)
- {
-
-		
+ {		
  	Posd[eAimType] = AimOsd[0];
 	return ;
  }
@@ -4822,7 +4817,6 @@ void CProcess021::processCMD_LIHEQI_OPEN(long lParam )
   	OSA_printf("%s,line:%d ... processCMD_GRENADEMOTOR_OK",__func__,__LINE__);
   	return ;
   }
-
 
  #endif
 

@@ -182,6 +182,10 @@ bool isLaserOK();
 bool isBattleTriggerMeasureVelocity();
 bool isAutoTriggerMeasureVelocity();
 void setServoAvailable(bool avail);
+bool isBeyondDistance();
+bool isMachineGunBefore();
+bool isGrenadeKillBefore();
+bool isGrenadeGasBefore();
 
 	
 PROJECTILE_TYPE getFovProjectileType();

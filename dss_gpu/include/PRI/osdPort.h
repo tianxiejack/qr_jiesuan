@@ -5,6 +5,9 @@
 #include "basePort.h"
 #include "permanentStorage.h"
 
+
+void saveLastAndGetNewZeroParam(int type);
+void saveLastAndGetNewGeneralParam(int type);
 void increaseMeasureMul();
 void decreaseMeasureMul();
 void moveCrossCenter(int x, int y);
@@ -33,7 +36,13 @@ void initilGeneralParam();
 void increaseMeasureDis();
 void decreaseMeasureDis();
 void saveZeroParam();
-
+static void saveLastGeneralParam(GeneralCorrectionItem * Item);
+int getLastGeneralDistance();
+double getLastGeneralDataX();
+double getLastGeneralDataY();
+void setNextGeneralParam(GeneralCorrectionItem * Item);
+void UpdataBoreSight();
+static void setNextZeroData(ZeroCorrectionItem *Item);
 
 
 
