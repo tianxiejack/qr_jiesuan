@@ -72,7 +72,7 @@ int process_decode(struct RS422_data * pRS422_data)
 		int have_data = 1;
 		int parse_length = 0;
 
-		short PlatformThetaX,PlatformThetaY,Temperature;
+		short PlatformThetaX = 0.00,PlatformThetaY = 0.00,Temperature = 0.00;
 		
 		short sum_xor=0;
 		int i=0;
