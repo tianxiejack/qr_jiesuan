@@ -1113,10 +1113,12 @@ void WeaponCtrlPORT_ParseFrameByte_type2(unsigned char* buf)
 			MSGDRIV_send(CMD_BUTTON_RIGHT,0);
 			break;
 		case Button_UP:
-			MSGDRIV_send(CMD_BUTTON_UP,0);
+			//MSGDRIV_send(CMD_BUTTON_UP,0);
+			MSGDRIV_send(CMD_BUTTON_DOWN,0);
 			break;
 		case Button_Down:
-			MSGDRIV_send(CMD_BUTTON_DOWN,0);
+			//MSGDRIV_send(CMD_BUTTON_DOWN,0);
+			MSGDRIV_send(CMD_BUTTON_UP,0);
 			break;
 		case Button_Enter:
 			MSGDRIV_send(CMD_BUTTON_ENTER,0);
@@ -1321,7 +1323,7 @@ static int WeaponCtrlPORT_ParseFrame_type3(UartObj*pUartObj)
 void WeaponCtrlPORT_ParseFrameByte_type4(unsigned char* buf)
 {
 //		case Frame_Type4://֡4����                   ---�������� /��ǹָ�� /��ǿ��ָ��
-#if 0
+#if 1
 	switch(BYTE3(buf)){
 		case Fire_Gun:
 			sendCommand(CMD_SCHEDULE_GUN);
@@ -1485,7 +1487,7 @@ void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 		WeaponCtrlPORT_ParseFrameByte_type3(buf);
 		break;
 	case Frame_Type4:
-		//WeaponCtrlPORT_ParseFrameByte_type4(buf);
+		WeaponCtrlPORT_ParseFrameByte_type4(buf);
 		break;
 	case Frame_TEST:
 		//WeaponCtrlPORT_ParseFrameByte_test(buf);

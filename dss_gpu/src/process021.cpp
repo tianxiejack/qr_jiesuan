@@ -3957,12 +3957,14 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 					OSDCTRL_ItemShow(eDynamicZone);
 					//startDynamicTimer();
 				}
-				else if(0)//(isBeyondDistance()/*!isMachineGun()&&(DistanceManual>365)*/)
+				else if(isBeyondDistance()/*!isMachineGun()&&(DistanceManual>365)*/)
 				{
 					Posd[eDynamicZone] = DynamicOsd[5];
 					OSDCTRL_ItemShow(eDynamicZone);
 					//startDynamicTimer();
 				}
+				else
+					OSDCTRL_ItemHide(eDynamicZone);
 			}
 		}
 	}
@@ -4094,36 +4096,73 @@ void CProcess021::processCMD_BUTTON_BATTLE_ALERT(LPARAM lParam)
 
 
 void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_USER_FIRED",__func__,__LINE__);
+{
+	//killRGQtimer();
+	if(isBattleMode()&& isStatBattleAuto()&&isBattleReady())
+	{
+		OSDCTRL_ItemHide(eCorrectionTip);
+		if(MEASURETYPE_MANUAL == getMeasureType())
+		{
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
+			OSDCTRL_ItemShow(eCorrectionTip);
+			//startRGQtimer();
+		}
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&&isAutoReady())
+	{
+		gLevel3CalculatorState = Auto_Idle;
+		OSDCTRL_ItemHide(eCorrectionTip);
+		if(MEASURETYPE_MANUAL == getMeasureType())
+		{
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
+			OSDCTRL_ItemShow(eCorrectionTip);
+			//startRGQtimer();
+		}
+
+	}
+	else 
+	{
+		Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
+		OSDCTRL_ItemShow(eCorrectionTip);
+		//startRGQtimer();
+	}
+
 	return ;
- }
+}
 
 
 void CProcess021::processCMD_DETEND_LOCK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_DETEND_LOCK",__func__,__LINE__);
+ 	isDetendClose=TRUE;
+	OSDCTRL_updateAreaN();
+ 	//OSA_printf("%s,line:%d ... processCMD_DETEND_LOCK",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_DETEND_UNLOCK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_DETEND_UNLOCK",__func__,__LINE__);
+ 	isDetendClose=FALSE;
+	OSDCTRL_updateAreaN();
+ 	//OSA_printf("%s,line:%d ... processCMD_DETEND_UNLOCK",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_MAINTPORT_LOCK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MAINTPORT_LOCK",__func__,__LINE__);
+ 	isDetendClose=FALSE;
+	OSDCTRL_updateAreaN();
+ 	//OSA_printf("%s,line:%d ... processCMD_MAINTPORT_LOCK",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_MAINTPORT_UNLOCK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MAINTPORT_UNLOCK",__func__,__LINE__);
+ 	isDetendClose=FALSE;
+	OSDCTRL_updateAreaN();
+ 	//OSA_printf("%s,line:%d ... processCMD_MAINTPORT_UNLOCK",__func__,__LINE__);
 	return ;
  }
 
@@ -4216,9 +4255,32 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENERAL(LPARAM lParam)
 
 void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENPRAM(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_GENPRAM",__func__,__LINE__);
-	return ;
- }
+	if(isCalibrationMode())
+	{
+		gLevel2CalibrationState = STATE_CALIBRATION_GENPRAM;
+		//update OSDdisplay
+		switch(gLevel3CalibrationState){
+			case Menu_FireView:
+				//initilFireViewPram();
+				OSDCTRL_ItemShine(eCalibGenPram_VFLDOXValue0);
+				break;
+			case Menu_FireCtrl:
+				//initFireCtrlPram();
+				OSDCTRL_ItemShine(eCalibGenPram_TimeValue0);
+				break;
+			case Menu_ServoX:
+				//initServoXPram();
+				break;
+			case Menu_ServoY:
+				//initServoYPram();
+				break;
+			default:
+				break;
+		}
+		OSDCTRL_EnterCalibMode();
+	}
+}
+
 
 
 void CProcess021::processCMD_CALIBRATION_SWITCH_TO_HORIZEN(LPARAM lParam)

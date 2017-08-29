@@ -189,9 +189,12 @@ bool isGrenadeGasBefore();
 void EnterCMD_BULLET_SWITCH1();
 void EnterCMD_BULLET_SWITCH2();
 void EnterCMD_BULLET_SWITCH3();
-	
+bool isAutoCatching()	;
+
+
 PROJECTILE_TYPE getFovProjectileType();
 PROJECTILE_TYPE getProjectileType();
+DIS_MEASURE_TYPE getMeasureType();
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;
@@ -205,6 +208,9 @@ extern PROJECTILE_TYPE gProjectileType,gProjectileTypeBefore;
 extern SHOT_TYPE gGunShotType;
 extern bool AUTOCATCH;
 extern WeatherItem gWeatherTable;
+extern bool isDetendClose;
+
+
 
 #ifdef __cplusplus
 	}

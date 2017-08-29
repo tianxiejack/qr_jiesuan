@@ -539,30 +539,31 @@ void DrawjsGrenadeLoadOK(Mat frame,CFOV * fovOsdCtrl)
 	int linew = 1;
 	int i=0;
 
+	CFOV*cthis =fovOsdCtrl;
 
 	start.x = 367 ;
 	start.y = 298 ;
 	end.x = start.x;
 	end.y = start.y + 5;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 	
 	start.x = 372 ;
 	start.y = 298 ;
 	end.x = start.x;
 	end.y = start.y + 5;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
 	start.x = 367 ;
 	start.y = 298 ;
 	end.x = start.x+5;
 	end.y = start.y;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
 	start.x = 367 ;
 	start.y = 303 ;
 	end.x = start.x+5;
 	end.y = start.y;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 	
 	return ;
 }
@@ -576,13 +577,16 @@ void DrawjsAngleFrame(Mat frame,CFOV * fovOsdCtrl,double angle)
 	int linew = 1;
 	int i=0;
 
+	CFOV*cthis =fovOsdCtrl;
+	
 	start.x = 665 ;
 	start.y = 285 ;
 	end.x = start.x+30;
 	end.y = start.y;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
-	if(isFovSmall()){
+	if(isFovSmall())
+	{
 		angle = angle/FOVDEGREE_HSMALL*200;
 		angle = (angle<200)?angle:200;
 		angle = (angle>-200)?angle:-200;
@@ -598,25 +602,25 @@ void DrawjsAngleFrame(Mat frame,CFOV * fovOsdCtrl,double angle)
 	start.y = 285-angle + 5 ;
 	end.x = start.x+25;
 	end.y = start.y;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
 	start.x = 670 ;
 	start.y = 285-angle - 5 ;
 	end.x = start.x+25;
 	end.y = start.y;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
 	start.x = 670 ;
 	start.y = 285-angle - 5 ;
 	end.x = start.x;
 	end.y = start.y +10;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
 	start.x = 670 +25 ;
 	start.y = 285-angle - 5 ;
 	end.x = start.x;
 	end.y = start.y +10;
-	DrawcvLine(frame,&start,&end, 2,linew);
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
 	return;
 }
@@ -722,13 +726,15 @@ void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl)
 	int linew = 1;
 	int i=0;
 
+	CFOV* cthis = fovOsdCtrl;
+
 	for(i=0;i<10;i++)
 	{
 		start.x = 230 + i*len;
 		start.y = 555 ;
 		end.x = start.x + len/2;
 		end.y = start.y ;
-		DrawcvLine(frame,&start,&end, 2,linew);
+		DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 	}
 
 	{
@@ -736,7 +742,7 @@ void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl)
 		start.y = 555;
 		end.x = start.x ;
 		end.y = start.y + 6;
-		DrawcvLine(frame,&start,&end, 2,linew);
+		DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 	}
 
 	{
@@ -744,7 +750,7 @@ void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl)
 		start.y = 565;
 		end.x = start.x ;
 		end.y = start.y -6;
-		DrawcvLine(frame,&start,&end, 2,linew);
+		DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 	}
 
 	for(i=0;i<10;i++)
@@ -753,13 +759,76 @@ void Drawjs_bottomFrame(Mat frame,CFOV * fovOsdCtrl)
 		start.y = 565 ;
 		end.x = start.x + len/2;
 		end.y = start.y ;
-		DrawcvLine(frame,&start,&end, 2,linew);
+		DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 	}
 
 	
 }
 
 
+void DrawjsAlertFrame(Mat frame,CFOV * fovOsdCtrl)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+
+	CFOV* cthis = fovOsdCtrl;
+
+	/*******************V*******************/
+	start.x = 70 ;
+	start.y = 80 ;
+	end.x = start.x;
+	end.y = start.y + 70;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+	
+	start.x = 70 ;
+	start.y = 390 ;
+	end.x = start.x;
+	end.y = start.y + 70;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+	
+
+	start.x = 660 ;
+	start.y = 80 ;
+	end.x = start.x;
+	end.y = start.y + 70;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 660 ;
+	start.y = 390 ;
+	end.x = start.x;
+	end.y = start.y + 70;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+	
+	/*******************H*******************/
+	start.x = 70 ;
+	start.y = 80 ;
+	end.x = start.x + 100;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+	
+	start.x = 70 ;
+	start.y = 460 ;
+	end.x = start.x + 100;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 560 ;
+	start.y = 80 ;
+	end.x = start.x + 100;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 560;
+	start.y = 460;
+	end.x = start.x + 100;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+	
+	return;
+}
 
 void Drawcvcross(Mat frame,Line_Param_fb *lineparm)
 {

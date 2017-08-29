@@ -11,7 +11,7 @@ static float g_FovRat[2][3]=
 	{FILR_MFOV_ARG/FILR_LFOV_ARG, FILR_NFOV_ARG/FILR_MFOV_ARG,	FILR_EFOV_ARG/FILR_NFOV_ARG}
 };
 
-
+static double last_angle = 0.0;
 
 
 FOVCTRL_Handle FOVCTRL_create( UINT Sens,UINT fovElem,UINT x,UINT y)
@@ -112,7 +112,9 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	DrawjsCompass(frame,cthis);
 	DrawjsCross(frame,cthis);
 	DrawjsRuler(frame,cthis);
-
+	DrawjsAlertFrame(frame,cthis);
+	DrawjsAngleFrame(frame,cthis,last_angle);
+	DrawjsGrenadeLoadOK(frame,cthis);
 	return ;
 }
 
@@ -125,8 +127,9 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	SDK_ASSERT(cthis!=NULL);
 	if(cthis->bFovDraw==FALSE)
 		return;
-	
-	DrawjsAngleFrame(frame,cthis,getGrenadeAngle()-getMachGunAngle());
+
+	last_angle = getGrenadeAngle()-getMachGunAngle();
+	DrawjsAngleFrame(frame,cthis,last_angle);
 	if(isCalibrationMode() && isBootUpMode())
 	{
 		//no draw
@@ -189,15 +192,17 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	  if( isGrenadeGas()||isGrenadeKill())
 		DrawjsGrenadeLoadOK(frame,cthis);
 	
-#if 0
+#if 1
 	if(isStatBattleAlert() && isAutoCatching())//\u951f\u7686\u8bb9\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u793a\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?
 	{
 		static int i=0;
-		FOVCTRL_drawAlertFrame(hFov,pImg);
-		if((i++)%8 == 0)
-			FOVCTRL_clearAlertMovingAim(hFov,pImg);
-		else
-			FOVCTRL_drawAlertMovingAim(hFov,pImg);
+		DrawjsAlertFrame(frame,cthis);
+		#if 0
+			if((i++)%8 == 0)
+				FOVCTRL_clearAlertMovingAim(hFov,pImg);
+			else
+				FOVCTRL_drawAlertMovingAim(hFov,pImg);
+		#endif
 //		FOVCTRL_drawAimBolder(hFov, pImg, 5,-5,32,32);
 	/**
 		if(cthis->fovElem==eFov_SmlFov_Stat)

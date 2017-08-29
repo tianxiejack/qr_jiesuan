@@ -28,8 +28,8 @@ SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_SHORT;
 bool isWeaponCtrlOK=FALSE,isPositionSensorOK=FALSE, isPositionServoOK=FALSE;
 bool isJoyStickOK=FALSE,isDipAngleSensorOK=FALSE,isMachineGunSensorOK=FALSE;
 bool isGrenadeSensorOK=FALSE,isGrenadeServoOK=FALSE,isMachineGunServoOK=FALSE;
+bool isDetendClose=TRUE,isMaintPortOpen=TRUE;
 static bool isVideoOK=FALSE;
-static bool isDetendClose=TRUE,isMaintPortOpen=TRUE;
 static bool FOVSHINE = FALSE;
 Derection_Type SHINE_DERECTION=DERECTION_DOWN;
 bool isfixingMeasure = FALSE;
@@ -63,6 +63,11 @@ SHOT_TYPE getGunShotType()
 SHOT_TYPE getShotType()
 {
 	return gShotType;
+}
+
+bool isAutoCatching()
+{
+	return AUTOCATCH;
 }
 
 bool isBattleIdle()
