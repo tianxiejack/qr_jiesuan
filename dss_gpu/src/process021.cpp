@@ -3129,18 +3129,17 @@ void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
 	{
 		OSDCTRL_EnterCalibMode();
 	}
-	//OSDCTRL_updateAreaN();
+	OSDCTRL_updateAreaN();
 
 	if(bUnlock)
 	{
 		bUnlock = !bUnlock;
 		Posd[eDynamicZone] = DynamicOsd[0];
 		OSDCTRL_ItemShow(eDynamicZone);
+		startDynamicTimer();
 	}
 
-
-
- 	OSA_printf("%s,line:%d ... processCMD_EXIT_SELF_CHECK",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_EXIT_SELF_CHECK",__func__,__LINE__);
 	return ;
  }
 
@@ -3562,16 +3561,17 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 		}
 		OSDCTRL_NoShine();
 	}
-	else if(isBattleMode())//&& isStatBattleAuto()&&(isBattleReady()||isBattleLoadFiringTable()))
+	else if(isBattleMode()&& isStatBattleAuto()&&(isBattleReady()||isBattleLoadFiringTable()))
 	{
-		OSDCTRL_ItemHide(eDynamicZone);
+		//OSDCTRL_ItemHide(eDynamicZone);
+		enterLevel3CalculatorIdle();
 		
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&&(isAutoReady()||isAutoLoadFiringTable()))
 	{
-		//gLevel3CalculatorState = Auto_Idle;
+		gLevel3CalculatorState = Auto_Idle;
 	}
-	else if(isBattleMode()&& isStatBattleAuto())//&&isBattleIdle()
+	else if(isBattleMode()&& isStatBattleAuto())
 	{
 		if(OSDCTRL_IsOsdDisplay(eDynamicZone))
 			OSDCTRL_ItemHide(eDynamicZone);
@@ -3959,13 +3959,13 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				{
 					Posd[eDynamicZone] = DynamicOsd[6];
 					OSDCTRL_ItemShow(eDynamicZone);
-					//startDynamicTimer();
+					startDynamicTimer();
 				}
 				else if(isBeyondDistance()/*!isMachineGun()&&(DistanceManual>365)*/)
 				{
 					Posd[eDynamicZone] = DynamicOsd[5];
 					OSDCTRL_ItemShow(eDynamicZone);
-					//startDynamicTimer();
+					startDynamicTimer();
 				}
 				else
 					OSDCTRL_ItemHide(eDynamicZone);
@@ -3977,18 +3977,40 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
  {
-	if(isCalibrationMode()||isBattleMode())
+	if(isCalibrationMode())
 	{
-		if(gProjectileType <= PROJECTILE_GRENADE_GAS)
-			gProjectileTypeBefore = gProjectileType;
-		
-		gProjectileType =(PROJECTILE_TYPE) ((gProjectileType + 1)%3);
-		Posd[eGunType] = GunOsd[gProjectileType];
-	
-		OSDCTRL_updateMainMenu(gProjectileType);		
-		
+		if(isCalibrationMainMenu())
+		{
+			//check XPosition before  udateMenuItem_Zero_General()
+			//udateMenuItem_Zero_General();
+		}
+		/*else if(isCalibrationGeneral())
+		{
+			gProjectileType = (gProjectileType + 1)%3;
+			//todo: \u66f4\u65b0\u8ddd\u79bb\u3001\u7efc\u4fee\u53c2\u6570
+		}else if(isCalibrationZero())
+		{
+			gProjectileType = (gProjectileType + 1)%2;
+			//todo: \u66f4\u65b0\u8ddd\u79bb\u3001\u7efc\u4fee\u53c2\u6570
+
+		}*/
 	}
 
+
+
+	#if 0
+		if(isCalibrationMode()||isBattleMode())
+		{
+			if(gProjectileType <= PROJECTILE_GRENADE_GAS)
+				gProjectileTypeBefore = gProjectileType;
+			
+			gProjectileType =(PROJECTILE_TYPE) ((gProjectileType + 1)%3);
+			Posd[eGunType] = GunOsd[gProjectileType];
+		
+			OSDCTRL_updateMainMenu(gProjectileType);		
+			
+		}
+	#endif
 	
  	
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH0",__func__,__LINE__);
@@ -4345,10 +4367,9 @@ void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
  {
  	if(isBattleMode()&&isStatBattleAuto())
 	{
-		//enterLevel3CalculatorIdle();
 		Posd[eDynamicZone]=DynamicOsd[3];
 		OSDCTRL_ItemShow(eDynamicZone);
-		//startDynamicTimer();
+		startDynamicTimer();
 	}
  	//OSA_printf("%s,line:%d ... processCMD_VELOCITY_FAIL",__func__,__LINE__);
 	return ;
@@ -4357,6 +4378,7 @@ void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
 
 void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
  {
+
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleIdle())
 	{
 		//trigger get Velocity
@@ -4364,7 +4386,6 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 		resetTurretVelocityCounter();
 		markMeasure_dist_Time();
 		resetDipVelocityCounter();
-		//markMeasure_dip_Time();
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&& isAutoIdle())
 	{
@@ -4380,35 +4401,49 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 
 
 void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
- {
+ {	printf("@@@@@@@@@  \n");	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleTriggerMeasureVelocity())
 	{
 		if(1||isMeasureManual())   
 		{
 			if(!isTurretVelocityValid())
-				sendCommand(CMD_VELOCITY_FAIL);
+			{	
+				processCMD_VELOCITY_FAIL(0);
+				//sendCommand(CMD_VELOCITY_FAIL);
+			}	
 			
-			Posd[eMeasureType] = MeasureTypeOsd[2];
+			Posd[eMeasureType] = MeasureTypeOsd[2];	//LSBG
+			OSDCTRL_ItemShine(eMeasureType);
+			
 			//todo: trigger Laser and AVT
 			gLevel3CalculatorState = Battle_Preparation;
 			gLevel4subCalculatorState = WaitForFeedBack;
 			if(isMeasureManual())
-				sendCommand(CMD_LASER_OK);
+				processCMD_LASER_OK(0);
+				//sendCommand(CMD_LASER_OK);
 			else
 				LaserPORT_requst();
-			sendCommand(CMD_TRIGGER_AVT);
+
+			//sendCommand(CMD_TRIGGER_AVT);
 		}
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&& isAutoTriggerMeasureVelocity())
 	{
-		if(1)//(!isTurretVelocityValid())
-			sendCommand(CMD_VELOCITY_FAIL);
+		//printf("%%%%%%%%%%%%%%%%%%%  \n");
+		if(!isTurretVelocityValid())
+			processCMD_VELOCITY_FAIL(0);
+			//sendCommand(CMD_VELOCITY_FAIL);
 		
 		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG
+		OSDCTRL_ItemShine(eMeasureType);
+		pTimerObj->SetTimer(eAVT_Timer,AVT_TIMER);
+
+		
 		//todo: trigger Laser and AVT
 		gLevel3CalculatorState = Auto_Preparation;
 		if(isMeasureManual())
-			sendCommand(CMD_LASER_OK);
+			processCMD_LASER_OK(0);
+			//sendCommand(CMD_LASER_OK);
 		else
 			LaserPORT_requst();
 	}
@@ -4428,7 +4463,7 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 		}
 		else if(isWaitforFeedback())
 		{
-			//killLaserTimer();
+			killLaserTimer();
 			gLevel4subCalculatorState = Laser_OK;			
 			//sendCommand(CMD_TRACKING_OK);
 			processCMD_TRACKING_OK(0);
@@ -4864,10 +4899,12 @@ void CProcess021::updateCMD_BUTTON_SWITCH(int param)
 	if(PROJECTILE_BULLET == param)
 	{
 		EnterCMD_BULLET_SWITCH1();
-	}else if(PROJECTILE_GRENADE_KILL== param)
+	}
+	else if(PROJECTILE_GRENADE_KILL== param)
 	{
 		EnterCMD_BULLET_SWITCH2();
-	}else if(PROJECTILE_GRENADE_GAS== param)
+	}
+	else if(PROJECTILE_GRENADE_GAS== param)
 	{
 		EnterCMD_BULLET_SWITCH3();
 	}

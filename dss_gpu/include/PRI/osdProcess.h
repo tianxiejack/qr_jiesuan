@@ -519,6 +519,7 @@ void OSDCTRL_EnterCalibMode();
 void OSDCTRL_CheckResultsShow();
 void OSDCTRL_ItemShine(int Id);
 void OSDCTRL_NoShine();
+void OSDCTRL_NoShineShow();
 void Osd_shinItem(int id);
 int getCrossX();
 int getCrossY();

@@ -5,6 +5,7 @@
 
 
 #include "LaserPort.h"
+#include "statCtrl.h"
 
 static LaserPort_t LaserObj;
 static int ibInit=0;
@@ -27,12 +28,12 @@ static void startLaserTimer()
 }
 void killLaserTimer()
 {
-#if 0
-	CTimerCtrl * pCtrlTimer;
-	pCtrlTimer = pOsdCtrlObj->pOsdTimer;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eLaser_Timer)!=eTimer_Stat_Stop)
+#if 1
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eLaser_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(pCtrlTimer,eLaser_Timer);
+		pCtrlTimer->KillTimer(eLaser_Timer);
+		pCtrlTimer->pTimeArray[eLaser_Timer].nStat = eTimer_Stat_Stop;
 	}
 	//Posd[eMeasureType] = MeasureTypeOsd[0];
 #endif

@@ -646,9 +646,9 @@ void OSDCTRL_BattleShow()
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wAuto];
-	//OSDCTRL_updateAreaN();
-	//OSDCTRL_NoShine();
-	//OSDCTRL_AlgSelect();
+	OSDCTRL_updateAreaN();
+	OSDCTRL_NoShine();
+	OSDCTRL_AlgSelect();
 	
 	
 	num = 1;
@@ -930,10 +930,8 @@ void OSDCTRL_updateAreaN()
 	}
 	else
 	{
-		//globalShoweErrorZone = 1;
 		OSDCTRL_ItemShow(eErrorZone);
-		//OSDCTRL_ItemShow(eStateDetend);	
-		//OSDCTRL_ItemShow(eSuperOrder);
+		startDynamicTimer();
 	}
 #endif
 }
@@ -1064,8 +1062,8 @@ void OSDCTRL_ItemHide(LPARAM lParam)
 	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
-	//if(pCtrlObj->uInit==0)
-	//	return;
+	if(pCtrlObj->uInit==0)
+		return;
 
 	pTextObj[lParam].osdState = eOsd_Hide;
 	

@@ -43,6 +43,7 @@
 #include "osd_graph.h"
 #include "app_hardctrl.h"
 #include "statCtrl.h"
+#include "osdProcess.h"
 
 
 static Int32 APP_loadDefCfg( int item);
@@ -535,7 +536,7 @@ static Int32 APP_onTimer( Int32 timerId )
     if( timerId == GPIO_INSPECT_TIMER)
     {
     	
-	printf("OSA_getCurTimeInMsec() = %d \n",OSA_getCurTimeInMsec());
+	//printf("OSA_getCurTimeInMsec() = %d \n",OSA_getCurTimeInMsec());
 
 		//APP_getvideostatus();
     }
@@ -547,9 +548,39 @@ static Int32 APP_onTimer( Int32 timerId )
     }
 
    if(timerId == ALG_TRACK_TIMER)
-   	{
+   {
 	  APP_tracker_timer_alarm();
-   	}
+   }
+
+  if(timerId == eDynamic_Timer)
+  {
+	
+
+
+
+
+
+	DynamicTimer_cbFxn();
+  }
+
+  
+  if(timerId == eAVT_Timer)
+  {
+  	if(pTimerObj->GetTimerStat(eAVT_Timer) == eTimer_Stat_Run)
+  	{
+  		pTimerObj->KillTimer(eAVT_Timer);
+		pTimerObj->pTimeArray[eAVT_Timer].nStat = eTimer_Stat_Stop;
+  	}
+	Posd[eMeasureType] = MeasureTypeOsd[5];
+	OSDCTRL_NoShineShow();
+  }
+
+
+	
+
+
+
+
 	
     return OSA_SOK;
 }

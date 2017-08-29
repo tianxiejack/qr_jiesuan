@@ -1,3 +1,4 @@
+#include <osa.h>
 #include "TurretPosPort.h"
 #include "msgDriv.h"
 
@@ -16,10 +17,6 @@
 
 */
 
-
-
-
-
 //#include "std.h"
 //#include "sdkdef.h"
 //#include "main.h"
@@ -31,7 +28,7 @@
 #define COUNT_TURRET_VELO 200
 static TurretPosPort_t TurretPosObj;
 static int ibInit=0;
-static double g_measure_dist_time = 0;
+static unsigned int g_measure_dist_time = 0;
 extern int turretTimer;
 
 
@@ -74,11 +71,13 @@ void startSelfCheckPosAngle_Timer()
 void markMeasure_dist_Time()
 {
 	//g_measure_dist_time = turretTimer;
+	g_measure_dist_time = OSA_getCurTimeInMsec();
 }
 
 static double Measure_dist_time_delta()
 {
 	//return turretTimer - g_measure_dist_time;
+	return (OSA_getCurTimeInMsec()- g_measure_dist_time);
 }
 
 void computeMeanVar( double *src, double *mean, double *var, int size )
@@ -110,7 +109,7 @@ double getTurretTheta()
 
 BOOL isTurretVelocityValid()
 {
-	return (Measure_dist_time_delta() >= 2000) && (counter>0);
+	return (Measure_dist_time_delta() >= 2000) ;//&& (counter>0);
 }
 
 void resetTurretVelocityCounter()

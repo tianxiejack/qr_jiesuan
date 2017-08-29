@@ -175,26 +175,26 @@ typedef enum timer_stat
 
 typedef struct 
 {
-	volatile unsigned int nIDEvent;
-	volatile unsigned int nElapse;
 	volatile unsigned int nStat;
-	volatile unsigned int nClockCout;
-	void * pParam;
-	void (* lpfnTimer)(void *);
-}CTime;
+	//volatile unsigned int nIDEvent;
+	//volatile unsigned int nElapse;
+	//volatile unsigned int nClockCout;
+	//void * pParam;
+	//void (* lpfnTimer)(void *);
+}CDTime;
 
 typedef struct 
 {
-	CTime pTimeArray[MAX_TIMER_NUM];
+	CDTime pTimeArray[MAX_TIMER_NUM];
 	unsigned int timNum;
 
-	int  (*InitTimerCtrl)();
-	void (*DestroyTimerCtrl)();
 	int (*SetTimer)( unsigned int timerId, unsigned int nMs );
 	int (*KillTimer)( unsigned int  timerId );
-	void (*RunTimer)();
 	int  (*GetTimerStat)(unsigned int  nIDEvent);
-	void (*ReSetTimer)(unsigned int  nIDEvent);
+	//int  (*InitTimerCtrl)();
+	//void (*DestroyTimerCtrl)();
+	//void (*RunTimer)();
+	//void (*ReSetTimer)(unsigned int  nIDEvent);
 }CTimerCtrl;
 
 
@@ -271,8 +271,9 @@ bool isGrenadeGasBefore();
 void EnterCMD_BULLET_SWITCH1();
 void EnterCMD_BULLET_SWITCH2();
 void EnterCMD_BULLET_SWITCH3();
-bool isAutoCatching()	;
-
+bool isAutoCatching();
+bool isFovShine();
+void EnterCMD_BULLET_SWITCH(int i);
 
 PROJECTILE_TYPE getFovProjectileType();
 PROJECTILE_TYPE getProjectileType();
@@ -280,10 +281,10 @@ DIS_MEASURE_TYPE getMeasureType();
 
 
 int  CTIMERCTRL_initTimerCtrl();
-
-
-
-
+void startDynamicTimer();
+void DynamicTimer_cbFxn();
+int CTIMERCTRL_getTimerStat(unsigned int nIDEvent);
+void killDynamicTimer();
 
 
 
@@ -301,7 +302,8 @@ extern SHOT_TYPE gGunShotType;
 extern bool AUTOCATCH;
 extern WeatherItem gWeatherTable;
 extern bool isDetendClose;
-extern CTimerCtrl * pTimer;
+
+extern CTimerCtrl * pTimerObj;
 
 
 #ifdef __cplusplus

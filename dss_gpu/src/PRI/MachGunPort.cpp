@@ -19,12 +19,10 @@
 //#include "main.h"
 //#include "PVEMsgfunsTab.h"
 //#include "byteParser_util.h"
-
+#include <osa.h>
 #include "permanentStorage.h"
 #include "MachGunPort.h"
 #include "msgDriv.h"
-
-
 
 
 #if 1
@@ -35,7 +33,7 @@
 C_Thetas MachGunAngle={0.0,0};
 static double gDipVelocity[COUNT_DIP_VELO]={0};
 static int counter=-1;
-static double g_measure_dist_time = 0;
+static unsigned int g_measure_dist_time = 0;
 extern int turretTimer;
 
 #else
@@ -79,11 +77,11 @@ void startSelfCheckMachGunAngle_Timer()
 
 void markMeasure_dip_Time()
 {
-//	g_measure_dist_time = turretTimer;
+	g_measure_dist_time =OSA_getCurTimeInMsec();
 }
 void resetDipVelocityCounter()
 {
-//	counter = -1;
+	counter = -1;
 }
 double getMachGunAngleAbs()
 {

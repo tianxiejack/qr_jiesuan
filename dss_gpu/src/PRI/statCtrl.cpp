@@ -264,6 +264,11 @@ bool bPositionSensorOK()
 	return isPositionSensorOK ;
 }
 
+bool isFovShine()
+{
+	return FOVSHINE;
+}
+
 bool bGrenadeServoOK()
 {
 	isGrenadeServoOK = 1;
@@ -633,17 +638,15 @@ printf("TargetAngularVelocityX = %f \n",input.TargetAngularVelocityX);
 			return ;
 		}
 		FOVSHINE = TRUE;
-		//startDynamicTimer();
-		//sendCommand(CMD_QUIT_AVT_TRACKING);
+		startDynamicTimer();
 
 	}
 	else if(CALC_OVER_DISTANCE == ret )
 	{
 		Posd[eDynamicZone] = DynamicOsd[5];
 		OSDCTRL_ItemShow(eDynamicZone);
-		//startDynamicTimer();
+		startDynamicTimer();
 		sendCommand(CMD_FIRING_TABLE_FAILURE);
-//		sendCommand(CMD_QUIT_AVT_TRACKING);
 
 		return;
 	}
@@ -754,7 +757,7 @@ void loadFiringTable()
 			return ;
 		}
 		FOVSHINE = TRUE;
-		//startDynamicTimer();
+		startDynamicTimer();
 		sendCommand(CMD_QUIT_AVT_TRACKING);
 
 	}
@@ -762,7 +765,7 @@ void loadFiringTable()
 	{
 		Posd[eDynamicZone] = DynamicOsd[5];
 		OSDCTRL_ItemShow(eDynamicZone);
-		//startDynamicTimer();
+		startDynamicTimer();
 		sendCommand(CMD_FIRING_TABLE_FAILURE);
 		sendCommand(CMD_QUIT_AVT_TRACKING);
 
@@ -774,6 +777,37 @@ void loadFiringTable()
 	}
 	
 }
+
+
+void EnterCMD_BULLET_SWITCH(int i)
+{
+	//gProjectileType=i;
+	UpdataBoreSight();
+	if(isCalibrationMode()&& isCalibrationMainMenu())
+	{
+		//check XPosition before  udateMenuItem_Zero_General()
+		//udateMenuItem_Zero_General(PROJECTILE_GRENADE_KILL);
+		OSDCTRL_updateMainMenu(i);
+	}else 
+	{
+		if(isCalibrationMode()&&isCalibrationZero())
+		{
+			OSDCTRL_CalibZeroShow();
+		}else if(isCalibrationMode()&&isCalibrationGeneral())
+		{
+			saveLastAndGetNewGeneralParam(i);
+			updateBulletType(i);
+		}else if(isBattleMode()&&isMeasureManual()&&isBeyondDistance())
+		{
+			Posd[eDynamicZone] = DynamicOsd[5];
+			OSDCTRL_ItemShow(eDynamicZone);
+			startDynamicTimer();
+		}
+	}
+	UpdataBoreSight();
+	setServoControlObj();
+}
+
 
 
 void EnterCMD_BULLET_SWITCH1()
@@ -799,6 +833,7 @@ void EnterCMD_BULLET_SWITCH1()
 			OSDCTRL_ItemShow(eDynamicZone);
 		}
 	}
+	
 	UpdataBoreSight();
 	setServoControlObj();
 
@@ -872,19 +907,66 @@ int  CTIMERCTRL_initTimerCtrl()
 	CTimerCtrl * pCtrlObj= pTimerObj;
 	SDK_ASSERT(pTimerObj!=NULL);
 	
-	memset(pCtrlObj->pTimeArray,0,sizeof(CTime)*MAX_TIMER_NUM);	
+	memset(pCtrlObj->pTimeArray,0,sizeof(CDTime)*MAX_TIMER_NUM);
 	pCtrlObj->timNum =0;
 
 	pCtrlObj->SetTimer= Dx_setTimer;
 	pCtrlObj->KillTimer = Dx_killTimer;
-	pCtrlObj->RunTimer= NULL;
-	pCtrlObj->GetTimerStat = NULL;
-	pCtrlObj->DestroyTimerCtrl = NULL;
-	pCtrlObj->InitTimerCtrl = NULL;
-	pCtrlObj->ReSetTimer = NULL;
+	pCtrlObj->GetTimerStat = CTIMERCTRL_getTimerStat;
+	//pCtrlObj->RunTimer= NULL;
+	//pCtrlObj->DestroyTimerCtrl = NULL;
+	//pCtrlObj->InitTimerCtrl = NULL;
+	//pCtrlObj->ReSetTimer = NULL;
 	
 	return 0;
 }
 
+int CTIMERCTRL_getTimerStat(unsigned int nIDEvent)
+{
+	CDTime * pTime =NULL;
+	CTimerCtrl * pCtrlObj	= pTimerObj;
 
+	SDK_ASSERT(pTimerObj!=NULL);
+	SDK_ASSERT(nIDEvent < MAX_TIMER_NUM);
+
+	pTime = &pCtrlObj->pTimeArray[nIDEvent];
+
+	return	(pTime->nStat);
+}
+
+
+void startDynamicTimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eDynamic_Timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->SetTimer(eDynamic_Timer,DYNAMIC_TIMER);	
+		pCtrlTimer->pTimeArray[eDynamic_Timer].nStat = eTimer_Stat_Run;
+	}
+}
+
+void DynamicTimer_cbFxn()
+{
+	killDynamicTimer();
+	if(OSDCTRL_IsOsdDisplay(eErrorZone))
+		OSDCTRL_ItemHide(eErrorZone);
+	if(OSDCTRL_IsOsdDisplay(eDynamicZone))
+		OSDCTRL_ItemHide(eDynamicZone);
+	if(!isMeasureOsdNormal())
+	{
+		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
+	}
+	if(isFovShine())
+		FOVSHINE = FALSE;
+}
+
+void killDynamicTimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eDynamic_Timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eDynamic_Timer);
+		pCtrlTimer->pTimeArray[eDynamic_Timer].nStat = eTimer_Stat_Stop;
+	}
+}
 
