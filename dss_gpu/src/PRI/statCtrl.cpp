@@ -512,7 +512,8 @@ void output_prm_print(FiringInputs input,FiringOutputs output)
 
 
 void loadFiringTable_Enter()
-{printf("!!!!!!11111111111111111111111111111@@@@@@@@@@@@@\n");
+{
+	//printf("!!!!!!11111111111111111111111111111@@@@@@@@@@@@@\n");
 	int ret;
 	FiringInputs input;
 	FiringOutputs output;
@@ -528,7 +529,7 @@ void loadFiringTable_Enter()
 	ret = getAverageVelocity(&input.TargetAngularVelocityX);
 	if(ret < 0)
 		input.TargetAngularVelocityX = 0.0;
-printf("TargetAngularVelocityX = %f \n",input.TargetAngularVelocityX);
+//printf("TargetAngularVelocityX = %f \n",input.TargetAngularVelocityX);
 	ret = getAverageDipVelocity(&input.TargetAngularVelocityY);
 	if(ret < 0)
 		input.TargetAngularVelocityY = 0.0;
@@ -571,7 +572,8 @@ printf("TargetAngularVelocityX = %f \n",input.TargetAngularVelocityX);
 	if(CALC_OK == ret)
 	{
 		int borX=0,borY=0;
-		//startRGQtimer();
+		pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
+		
 		//todo ValidateOutput(&output);//check offset overflow. 5.6x4.2 16x12
 
 		if(isMachineGun())

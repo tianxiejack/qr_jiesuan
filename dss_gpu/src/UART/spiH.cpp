@@ -393,7 +393,7 @@ int Process_vcode(struct RS422_data * pRS422_data)
 				//if( sum_xor ==  buf[parse_length-1] )
 				if(1)
 				{
-					printf( "buf[2]=%02x buf[3]=%02x \n" , buf[2], buf[3]);
+					//printf( "buf[2]=%02x buf[3]=%02x \n" , buf[2], buf[3]);
 					angle = buf[2]<<8|buf[3];  //对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
 
@@ -401,8 +401,8 @@ int Process_vcode(struct RS422_data * pRS422_data)
 					tmp = (positive)*angle/100.00;
 					if(tmp>= -5 && tmp<=75)
 					{
-						printf("********************************\n");
-						printf("tmp = %f\n",tmp);
+						//printf("********************************\n");
+						//printf("tmp = %f\n",tmp);
 						MachGunAngle.theta = tmp;
 					}
 					//printf(" positive=%d angle=%d  \n", positive, angle);
@@ -1106,9 +1106,9 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 	for(int i=0;i<length;i++)
 	{
 		RS422_data_buff->receiveData[lengthTmp+i]=transfer_readOneData(comNum);
-		printf(" %02x  ",RS422_data_buff->receiveData[lengthTmp+i]);
+		//printf(" %02x  ",RS422_data_buff->receiveData[lengthTmp+i]);
 	}
-	printf("\n");
+	//printf("\n");
 	pthread_mutex_unlock(&RS422_data_buff->mutex);
 	return 0;
 }

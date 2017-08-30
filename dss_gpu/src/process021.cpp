@@ -4123,7 +4123,7 @@ void CProcess021::processCMD_BUTTON_BATTLE_ALERT(LPARAM lParam)
 
 void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 {
-	//killRGQtimer();
+	pTimerObj->KillTimer(eRGQ_Timer);
 	if(isBattleMode()&& isStatBattleAuto()&&isBattleReady())
 	{
 		OSDCTRL_ItemHide(eCorrectionTip);
@@ -4131,7 +4131,7 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 		{
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
 			OSDCTRL_ItemShow(eCorrectionTip);
-			//startRGQtimer();
+			pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
 		}
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&&isAutoReady())
@@ -4142,7 +4142,7 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 		{
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
 			OSDCTRL_ItemShow(eCorrectionTip);
-			//startRGQtimer();
+			pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
 		}
 
 	}
@@ -4150,7 +4150,7 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 	{
 		Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
 		OSDCTRL_ItemShow(eCorrectionTip);
-		//startRGQtimer();
+		pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
 	}
 
 	return ;
@@ -4506,10 +4506,34 @@ void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
 
 void CProcess021::processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_FIRING_TABLE_LOAD_OK",__func__,__LINE__);
-	return ;
- }
+	if(isBattleMode()&& isStatBattleAuto()&&isBattleLoadFiringTable())//&&isTrackingMode())
+	{
+		
+			gLevel3CalculatorState = Battle_Ready;
+			//OSDdisplay
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
+			OSDCTRL_ItemShow(eCorrectionTip);
 
+			// auto track and shoot.
+			requstServoContrl();
+
+			OSDCTRL_ItemShow(ePlatFormX);
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoLoadFiringTable())
+	{
+			gLevel3CalculatorState = Auto_Ready;
+			//OSDdisplay
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
+			OSDCTRL_ItemShow(eCorrectionTip);
+
+			// auto track and shoot.
+//			requstServoContrl();
+//			OSDCTRL_ItemShow(ePlatFormX);
+	}
+}
 
 void CProcess021::processCMD_FIRING_TABLE_FAILURE(LPARAM lParam)
  {

@@ -554,13 +554,10 @@ static Int32 APP_onTimer( Int32 timerId )
 
   if(timerId == eDynamic_Timer)
   {
-	
-
-
-
-
-
 	DynamicTimer_cbFxn();
+
+	//Posd[eCorrectionTip] = AngleCorrectOsd[0];
+	//OSDCTRL_ItemShow(eCorrectionTip);
   }
 
   
@@ -576,6 +573,20 @@ static Int32 APP_onTimer( Int32 timerId )
   }
 
 
+   if(timerId == eRGQ_Timer)
+   {
+	pTimerObj->KillTimer(eRGQ_Timer);
+	if(Posd[eCorrectionTip] == AngleCorrectOsd[CORRECTION_GQ])
+	{
+		Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_RGQ];
+		pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
+	}
+	else if(Posd[eCorrectionTip] != AngleCorrectOsd[CORRECTION_GQ])
+		OSDCTRL_ItemHide(eCorrectionTip);
+
+	if(OSDCTRL_IsOsdDisplay(eSuperOrder))
+		OSDCTRL_ItemHide(eSuperOrder);
+   }
 	
 
 

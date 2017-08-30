@@ -61,7 +61,7 @@ char menuid[33] = {0x00,0xC0,0xC3,0x4A,0x60,0x6C,0x20,0x21,0x6A,0x10,0x70,0x74,0
 unsigned int MtdAlg_stat;
 
 
-//Óëspi¶ÔÓ¦´®¿ÚµÄÊý¾Ý½á¹¹
+//ï¿½ï¿½spiï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Ý½á¹¹
 
 static OSA_ThrHndl spi1ThrHandl;
 static OSA_ThrHndl spi2ThrHandl;
@@ -76,28 +76,28 @@ struct RS422_data RS422_BAK1_buff;    //5
 struct RS422_data RS422_TEST_buff;    //6
 struct RS422_data RS422_HCODE_buff;   //7
 
-//spi£±Éè±¸µÄÏß³Ì
+//spiï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ß³ï¿½
 void* spi1InteruptHandle(void* args)
 {
 		interuptHandleSpi1(&RS422_ROTER_buff, &RS422_DECODE_buff, &RS422_BAK2_buff);
 		return NULL;
 }
 
-//spi£²Éè±¸µÄÏß³Ì
+//spiï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ß³ï¿½
 void* spi2InteruptHandle(void* args)
 {
 		interuptHandleSpi2(&RS422_MIRROR_buff, &RS422_VCODE_buff, &RS422_BAK1_buff);
 		return NULL;
 }
 
-//spi£³Éè±¸µÄÏß³Ì
+//spiï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ß³ï¿½
 void* spi3InteruptHandle(void* args)
 {
 		interuptHandleSpi3(&RS422_TEST_buff, &RS422_HCODE_buff);
 		return NULL;
 }
 
-//³õÊ¼»¯spiÉè±¸
+//ï¿½ï¿½Ê¼ï¿½ï¿½spiï¿½è±¸
 int  InitDevice_spi()
 {
 		int status = -1;
@@ -2726,13 +2726,13 @@ int NetPort_ParseByte(unsigned char* buf)
 
 
 /**********************************  test spi ******************************************/
-//can Í·µÄ½âÎö
+//can Í·ï¿½Ä½ï¿½ï¿½ï¿½
 int CanPort_recvFlg(char * buf, int iLen, int * index)
 {
 	char * pCur = buf;
 	int length = iLen;
 
-	//Ð¡ÓÚ£²¸ö×Ö½Ú
+	//Ð¡ï¿½Ú£ï¿½ï¿½ï¿½ï¿½Ö½ï¿½
 	if(length<2)
 	{
 		//printf(" length<2 \n");
@@ -2741,7 +2741,7 @@ int CanPort_recvFlg(char * buf, int iLen, int * index)
 	int i=0;
 	while(1)
 	{
-			if( 0x0002 == stoh2(pCur) )		//ÅÐ¶Ï¿ªÍ·±êÖ¾
+			if( 0x0002 == stoh2(pCur) )		//ï¿½Ð¶Ï¿ï¿½Í·ï¿½ï¿½Ö¾
 					break;
 			else{
 					//printf("move one data..%d\n",i++);
@@ -2761,7 +2761,7 @@ int CanPort_recvFlg(char * buf, int iLen, int * index)
 }
 
 
-// can¡¡Í¨ÐÅ½âÎö
+// canï¿½ï¿½Í¨ï¿½Å½ï¿½ï¿½ï¿½
 int CanPort_parseByte(unsigned char* buf )
 {
 	switch(stoh2(buf))
@@ -2802,7 +2802,7 @@ void * SPI_CAN_process(void * prm)
 		int haveData=0;
 
 		 InitDevice_spi();
-
+		
 		OpenCANDevice();
 
 		canfd = GetCanfd();
@@ -2814,13 +2814,13 @@ void * SPI_CAN_process(void * prm)
 				select(canfd+1,&readfds,NULL,NULL,NULL);
 				if(FD_ISSET(canfd,&readfds))
 				{
-							//Êý¾ÝÃ»ÓÐÄÃ×ß£¬Êý×éÂú
+							//ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 							if(bufLen < length || length >sizeof(buf))
 							{
 									printf("bufLen < length, length=0");
 									length = 0;
 							}
-							//¶ÁÊý¾Ý
+							//ï¿½ï¿½ï¿½ï¿½ï¿½
 							nread = 0;
 							length= 0;
 							nread =  ReadCANBuf(buf+length, bufLen-length);
@@ -2835,12 +2835,12 @@ void * SPI_CAN_process(void * prm)
 									//CanPort_parseByte((unsigned char*)buf);
 									//continue;
 
-									length += nread;  //¶Áµ½ÐÂÊý¾Ý£¬¸üÐÂÊý¾Ý³¤¶È
+									length += nread;  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
 									haveData = 1;
 
-									while(haveData)  //Ò»´ÎÀ´ºÜ¶àÊý¾Ý
+									while(haveData)  //Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ü¶ï¿½ï¿½ï¿½ï¿½
 									{
-											//ÅÐ¶ÏÊÇ·ñÓÐcanÊý¾ÝÍ·£¬
+											//ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½canï¿½ï¿½ï¿½Í·ï¿½ï¿½
 											printf("have data length=%d ...\n",  length);
 											for(i=0; i<length; i++)
 											{
@@ -2849,7 +2849,7 @@ void * SPI_CAN_process(void * prm)
 											printf("\n");
 											index=0;
 											ret = CanPort_recvFlg(buf, length, &index);
-											length -= index;//½âÎöÖ®ºó£¬Êµ¼ÊÊý¾Ý³¤¶È¸üÐÂ
+											length -= index;//ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½È¸ï¿½ï¿½ï¿½
 
 											if(ret != 0)
 											{
@@ -2857,7 +2857,7 @@ void * SPI_CAN_process(void * prm)
 												continue;
 											}
 
-											//ÅÐ¶ÏÒª½âÎöÊý¾ÝµÄ³¤¶È
+											//ï¿½Ð¶ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÝµÄ³ï¿½ï¿½ï¿½
 											dataLength =0;
 
 											switch(buf[2])
@@ -2881,10 +2881,10 @@ void * SPI_CAN_process(void * prm)
 											}
 
 
-											//½âÎöÖ®ºó,¸üÐÂÊý¾Ý³¤¶È
+											//ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
 											if(dataLength > 0)
 											{
-													//´òÓ¡Òª½âÎöµÄÊý¾Ý
+													//ï¿½ï¿½Ó¡Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 													for(i=0; i<dataLength; i++)
 													{
 														printf("%02x ", buf[i]);
@@ -2901,7 +2901,7 @@ void * SPI_CAN_process(void * prm)
 													else
 													{
 
-														//½âÎöÊý¾Ý
+														//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 														CanPort_parseByte((unsigned char*)buf);
 
 														memcpy(buf, buf+dataLength, length-dataLength);
@@ -2927,7 +2927,7 @@ void * SPI_CAN_process(void * prm)
 
 
 
-// bak2¡¡spi3£¬com3 ½âÎö
+// bak2ï¿½ï¿½spi3ï¿½ï¿½com3 ï¿½ï¿½ï¿½ï¿½
 int BAK2Port_parseByte(unsigned char * buf)
 {
 
