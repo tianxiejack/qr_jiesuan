@@ -1347,8 +1347,8 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=4;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
-				printf("from RS422_VCODE: ");
-				Process_vcode(RS422_VCODE_buff);
+					printf("from RS422_VCODE: ");
+					Process_vcode(RS422_VCODE_buff);
 
 					transfer_ban(fd1,com2);
 					readCount=transfer_readDataCount(fd1,com2);

@@ -73,6 +73,8 @@ double getGrenadeDestTheta();
 int getParamBuf(unsigned char * buf);
 void setUseInterPolation(void);
 
+
+
 #ifdef __cplusplus
 }
 #endif /* extern "C" */

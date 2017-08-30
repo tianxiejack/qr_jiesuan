@@ -286,8 +286,8 @@ void startDynamicTimer();
 void DynamicTimer_cbFxn();
 int CTIMERCTRL_getTimerStat(unsigned int nIDEvent);
 void killDynamicTimer();
-
-
+void processCMD_FIRING_TABLE_LOAD_OK(long lParam);
+void processCMD_FIRING_TABLE_FAILURE(long lParam);
 
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;

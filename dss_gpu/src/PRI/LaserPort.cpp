@@ -6,6 +6,7 @@
 
 #include "LaserPort.h"
 #include "statCtrl.h"
+#include "osdProcess.h"
 
 static LaserPort_t LaserObj;
 static int ibInit=0;
@@ -201,11 +202,11 @@ int LaserPORT_requst()		//���Ͳ������
 	stat = LaserPORT_send(LaserObj.UartPort.sendBuf, sizeof(buf));
 	if(sizeof(buf) != stat)
 		return -1;
-	
+#endif	
 	LaserPORT_requst_TRACE();
 // start a timeout fail
-	startLaserTimer();
-#endif
+	pTimerObj->startTimer(eLaser_Timer,LASERERR_TIMEOUT);
+
 	return 0;
 }
 

@@ -1,3 +1,4 @@
+
 #include "firingCtrl.h"
 #include "trajectoryCalc.h"
 #include "LaserPort.h"
@@ -451,4 +452,5 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 
 	return 0;
 }
+
 

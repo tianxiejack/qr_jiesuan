@@ -173,8 +173,7 @@ protected:
         static void processCMD_MEASURE_DISTANCE(LPARAM lParam);
         static void processCMD_LASER_OK(LPARAM lParam);
         static void processCMD_TRACKING_OK(LPARAM lParam);
-        static void processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam);
-        static void processCMD_FIRING_TABLE_FAILURE(LPARAM lParam);
+
         static void processCMD_MODE_ATTACK_SIGLE(LPARAM lParam);
         static void processCMD_MODE_ATTACK_MULTI(LPARAM lParam);
         static void processCMD_MODE_FOV_SMALL(LPARAM lParam);

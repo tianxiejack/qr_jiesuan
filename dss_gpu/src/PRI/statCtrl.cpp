@@ -552,15 +552,13 @@ void loadFiringTable_Enter()
 	if(0 == input.TargetDistance)
 		input.TargetDistance = 1;
 	
-//test 0825
-	//input.TargetDistance = 860;	
-//end
+
 	input.Temperature = gWeatherTable.Temparature;
 	
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
 
 	ret = FiringCtrl(&input, &output);
-	output_prm_print(input, output);
+	//output_prm_print(input, output);
 
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
@@ -616,7 +614,7 @@ void loadFiringTable_Enter()
 		{
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 			//: input PID aimoffset
-/*			AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
+			/*AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
 			if(isMachineGun())
 				AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);*/
 		//	printf("%s:%d		output.AimOffsetX = %d,output.AimOffsetY=%d\n",__func__,__LINE__,output.AimOffsetX,output.AimOffsetY);
@@ -633,8 +631,9 @@ void loadFiringTable_Enter()
 			{
 				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
 				cmd_grenadeservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
-				MSGDRIV_send(CMD_GRENADESERVO_MOVEOFFSET, 0);
-				sendCommand(CMD_FIRING_TABLE_LOAD_OK);
+				processCMD_GRENADESERVO_MOVEOFFSET(0);
+				printf("!!!!!!!!!!!!!!!!!1processCMD_FIRING_TABLE_LOAD_OK1\n");
+				processCMD_FIRING_TABLE_LOAD_OK(0);
 			}
 				
 			return ;
@@ -648,7 +647,7 @@ void loadFiringTable_Enter()
 		Posd[eDynamicZone] = DynamicOsd[5];
 		OSDCTRL_ItemShow(eDynamicZone);
 		startDynamicTimer();
-		sendCommand(CMD_FIRING_TABLE_FAILURE);
+		processCMD_FIRING_TABLE_FAILURE(0);
 
 		return;
 	}
@@ -673,7 +672,7 @@ void loadFiringTable()
 	input.PlatformXTheta = DEGREE2MIL(getPlatformPositionX());
 	input.PlatformYTheta = DEGREE2MIL(getPlatformPositionY());
 	input.ProjectileType = getProjectileType();
-	if(!isMeasureManual()) //todo \u540e\u671f\u9700\u5220\u9664
+	if(!isMeasureManual()) 
 	{
 		ret = getAverageVelocity(&input.TargetAngularVelocityX);
 		if(ret < 0)
@@ -715,7 +714,8 @@ void loadFiringTable()
 		int borX=0,borY=0;
 		//startRGQtimer();
 		//todo ValidateOutput(&output);//check offset overflow. 5.6x4.2 16x12
-		if(isMachineGun()){
+		if(isMachineGun())
+		{
 			borX = gMachineGun_ZCTable.data.deltaX;
 			borY = gMachineGun_ZCTable.data.deltaY;
 		}
@@ -755,12 +755,14 @@ void loadFiringTable()
 				;//AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);
 			
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-			sendCommand(CMD_FIRING_TABLE_LOAD_OK);
+			printf("!!!!!!!!!!!!!!!!!1processCMD_FIRING_TABLE_LOAD_OK2\n");
+			processCMD_FIRING_TABLE_LOAD_OK(0);
+			//sendCommand(CMD_FIRING_TABLE_LOAD_OK);
 			return ;
 		}
 		FOVSHINE = TRUE;
 		startDynamicTimer();
-		sendCommand(CMD_QUIT_AVT_TRACKING);
+		//sendCommand(CMD_QUIT_AVT_TRACKING);
 
 	}
 	else if(CALC_OVER_DISTANCE == ret )
@@ -768,8 +770,8 @@ void loadFiringTable()
 		Posd[eDynamicZone] = DynamicOsd[5];
 		OSDCTRL_ItemShow(eDynamicZone);
 		startDynamicTimer();
-		sendCommand(CMD_FIRING_TABLE_FAILURE);
-		sendCommand(CMD_QUIT_AVT_TRACKING);
+		processCMD_FIRING_TABLE_FAILURE(0);
+		//sendCommand(CMD_QUIT_AVT_TRACKING);
 
 		return;
 	}
@@ -972,4 +974,55 @@ void killDynamicTimer()
 		pCtrlTimer->pTimeArray[eDynamic_Timer].nStat = eTimer_Stat_Stop;
 	}
 }
+
+
+
+void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
+ {
+	if(isBattleMode()&& isStatBattleAuto()&&isBattleLoadFiringTable())//&&isTrackingMode())
+	{
+		
+			gLevel3CalculatorState = Battle_Ready;
+			//OSDdisplay
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
+			OSDCTRL_ItemShow(eCorrectionTip);
+
+			// auto track and shoot.
+			requstServoContrl();
+
+			OSDCTRL_ItemShow(ePlatFormX);
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoLoadFiringTable())
+	{
+			gLevel3CalculatorState = Auto_Ready;
+			//OSDdisplay
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
+			OSDCTRL_ItemShow(eCorrectionTip);
+
+			// auto track and shoot.
+//			requstServoContrl();
+//			OSDCTRL_ItemShow(ePlatFormX);
+	}
+}
+
+
+void processCMD_FIRING_TABLE_FAILURE(long lParam)
+ {
+	if(isBattleMode()&& isStatBattleAuto()&&isBattleLoadFiringTable())
+	{
+		enterLevel3CalculatorIdle();
+		releaseServoContrl();
+ 		//OSDdisplay  ? 		
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoLoadFiringTable())
+	{
+		gLevel3CalculatorState = Auto_Idle;
+	}
+
+ 	//OSA_printf("%s,line:%d ... processCMD_FIRING_TABLE_FAILURE",__func__,__LINE__);
+	return ;
+ }
 

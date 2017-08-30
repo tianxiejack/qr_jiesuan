@@ -587,10 +587,13 @@ static Int32 APP_onTimer( Int32 timerId )
 	if(OSDCTRL_IsOsdDisplay(eSuperOrder))
 		OSDCTRL_ItemHide(eSuperOrder);
    }
-	
 
-
-
+   if(timerId == eLaser_Timer)
+   {
+   	pTimerObj->KillTimer(eLaser_Timer);
+	MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_TIMEOUT);
+   
+   }
 
 	
     return OSA_SOK;

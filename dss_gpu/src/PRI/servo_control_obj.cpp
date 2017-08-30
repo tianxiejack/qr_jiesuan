@@ -208,11 +208,11 @@ void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
 	//5.send CAN packet Y to Mach gun servo
 	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_LONG);
 	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
+	OSA_waitMsecs(10);
 	FILLBUFFBGIN(Turretbuf);
 	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);	
 	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
+	OSA_waitMsecs(10);
 #endif
 }
 

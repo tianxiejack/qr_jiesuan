@@ -2339,9 +2339,12 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 	
     MSGDRIV_attachMsgFun(handle,	CMD_DISPLAY_ERR,				          onDisplayErr,	0); // OSD��ʾ�쳣
     MSGDRIV_attachMsgFun(handle,	CMD_DISPLAY_OK,				          onDisplayOK,	0); // OSD��ʾ��
-    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_OK,				          onJoyStickOK,	0); // �ֱ������?    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_ERR,				          onJoyStickErr,	0); // �ֱ������?    MSGDRIV_attachMsgFun(handle,	CMD_WEAPONCTRL_OK,			          onWeaponCtrlOK,		0); //�Կ���
+    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_OK,				          onJoyStickOK,	0); // �ֱ������?    
+    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_ERR,				          onJoyStickErr,	0); // �ֱ������?    
+    MSGDRIV_attachMsgFun(handle,	CMD_WEAPONCTRL_OK,			          onWeaponCtrlOK,		0); //�Կ���
     
-    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_OK,				          onDipAngleSensorOK,	0); // ����Ǵ�������?    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_ERR,				          onDipAngleSensorERR,	0); // ����Ǵ�������?    
+    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_OK,				          onDipAngleSensorOK,	0); // ����Ǵ�������?    
+    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_ERR,				          onDipAngleSensorERR,	0); // ����Ǵ�������?    
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_OK,	          onMachineGunSensorOK,	0); // ��ǹ��������
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_ERR,	          onMachineGunSensorERR,	0); // ��ǹ��������
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_OK,		          onMachineGunServoOK,	0); // ��ǹ�ŷ���
@@ -2357,7 +2360,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE,				processCMD_BUTTON_BATTLE,	0); // qie huan wei zhan dou mo shi
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_QUIT,				processCMD_BUTTON_QUIT,	0); //tui chu an jian
-    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,			processCMD_BUTTON_UNLOCK,	0); // �����?    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UP,					processCMD_BUTTON_UP,	0); // ���ϰ���
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,			processCMD_BUTTON_UNLOCK,	0); // �����?   
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_DOWN,				processCMD_BUTTON_DOWN,	0); // ���°���
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UP,					processCMD_BUTTON_UP,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_LEFT,				processCMD_BUTTON_LEFT,	0); // ���󰴼�
@@ -2376,7 +2379,8 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_MAINTPORT_LOCK,			processCMD_MAINTPORT_LOCK,	0); //ά���Ź�
     MSGDRIV_attachMsgFun(handle,	CMD_MAINTPORT_UNLOCK,			processCMD_MAINTPORT_UNLOCK,	0); // ά���ſ�
     
-    MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_DISTANCE_SWITCH,			processCMD_MEASURE_DISTANCE_SWITCH,	0); //�л���෽�?    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_SAVE,		processCMD_CALIBRATION_SWITCH_TO_SAVE,	0); // У׼-�л�����
+    MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_DISTANCE_SWITCH,			processCMD_MEASURE_DISTANCE_SWITCH,	0); //�л���෽�?    
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_SAVE,		processCMD_CALIBRATION_SWITCH_TO_SAVE,	0); // У׼-�л�����
     MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_ZERO,		processCMD_CALIBRATION_SWITCH_TO_ZERO,	0); // У׼-�л�У��
     MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_WEATHER,	processCMD_CALIBRATION_SWITCH_TO_WEATHER,	0); // У׼-�л�����
     MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_GENERAL,	processCMD_CALIBRATION_SWITCH_TO_GENERAL,	0); // У׼-�л�����
@@ -2390,7 +2394,9 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_DISTANCE,					processCMD_MEASURE_DISTANCE,0); // ���ָ��?    
     MSGDRIV_attachMsgFun(handle,	CMD_LASER_OK,							processCMD_LASER_OK,		0); // ��������
     MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_OK,						processCMD_TRACKING_OK,			0); // ������
-    MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_LOAD_OK,				processCMD_FIRING_TABLE_LOAD_OK,		0); // �����Ԫװ����?    MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // �����Ԫװ��ʧ��?    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				      		processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
+    MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_LOAD_OK,				processCMD_FIRING_TABLE_LOAD_OK,		0); // �����Ԫװ����?    
+    MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // �����Ԫװ��ʧ��?    
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				      		processCMD_MODE_AIM_LAND,		0); // �л��Ե�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_SKY,						processCMD_MODE_AIM_SKY,		0); // �л��Կ�Ŀ��
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,				processCMD_MODE_ATTACK_SIGLE,		0); // �л�Ϊ����
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,				processCMD_MODE_ATTACK_MULTI,		0); // �л�Ϊ����
@@ -2409,7 +2415,8 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_TRACE_SENDFRAME0,					processCMD_TRACE_SENDFRAME0,		0); //send frame0 through TracePort
     MSGDRIV_attachMsgFun(handle,	CMD_TRIGGER_AVT,						processCMD_TRIGGER_AVT,		0); //����AVT������������
     MSGDRIV_attachMsgFun(handle,	CMD_QUIT_AVT_TRACKING,					quitAVTtrigger,		0); //����AVT�˳���������
-    MSGDRIV_attachMsgFun(handle,	CMD_SEND_MIDPARAMS,					processCMD_SEND_MIDPARAMS,		0); //�����м����?    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_LOAD_IN_POSITION,			processCMD_GRENADE_LOAD_IN_POSITION,		0); //35��װ�?λָʾ��
+    MSGDRIV_attachMsgFun(handle,	CMD_SEND_MIDPARAMS,					processCMD_SEND_MIDPARAMS,		0); //�����м����?    
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_LOAD_IN_POSITION,			processCMD_GRENADE_LOAD_IN_POSITION,		0); //35��װ�?λָʾ��
     MSGDRIV_attachMsgFun(handle,	CMD_CALCNUM_SHOW,						processCMD_CALCNUM_SHOW,		0); //�����м�ֵ��ʾ
     MSGDRIV_attachMsgFun(handle,	CMD_CALCNUM_HIDE,						processCMD_CALCNUM_HIDE,		0); //�����м�ֵ����
     MSGDRIV_attachMsgFun(handle,	CMD_MIDPARAMS_SWITCH,					processCMD_MIDPARAMS_SWITCH,		0); //����F5
@@ -4327,14 +4334,13 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
  {
 	if(isBattleMode()&&isStatBattleAuto()&&(isBattlePreparation()))
 	{
-		//enterLevel3CalculatorIdle();
 		gLevel3CalculatorState = Battle_Idle;
 		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
 		OSDCTRL_ItemShow(eDynamicZone);
 		Posd[eDynamicZone] = DynamicOsd[2];
-		//startDynamicTimer();
+		startDynamicTimer();
 
-		sendCommand(CMD_QUIT_AVT_TRACKING);
+		//sendCommand(CMD_QUIT_AVT_TRACKING);
 	}
 	else if(isBattleMode()&&isStatBattleAuto()&&isAutoPreparation())
 	{
@@ -4342,11 +4348,11 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
 		OSDCTRL_ItemShow(eDynamicZone);
 		Posd[eDynamicZone] = DynamicOsd[2];
-		//startDynamicTimer();
+		startDynamicTimer();
 	}
 
  	
- 	OSA_printf("%s,line:%d ... processCMD_LASER_FAIL",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_LASER_FAIL",__func__,__LINE__);
 	return ;
  }
 
@@ -4401,7 +4407,9 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 
 
 void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
- {	printf("@@@@@@@@@  \n");	
+ {	
+	//OSDCTRL_ItemShow(eCorrectionTip);
+	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleTriggerMeasureVelocity())
 	{
 		if(1||isMeasureManual())   
@@ -4491,7 +4499,7 @@ void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
 		if(isLaserOK())
 		{
 			gLevel3CalculatorState = Battle_LoadFiringTable;
-			//\u89e3\u7b97
+		
 			loadFiringTable();
 		}else if(isWaitforFeedback())
 		{
@@ -4499,11 +4507,11 @@ void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
 		}
 	}
 	
- 	OSA_printf("%s,line:%d ... processCMD_TRACKING_OK",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_TRACKING_OK",__func__,__LINE__);
 	return ;
  }
 
-
+#if 0
 void CProcess021::processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam)
  {
 	if(isBattleMode()&& isStatBattleAuto()&&isBattleLoadFiringTable())//&&isTrackingMode())
@@ -4534,12 +4542,9 @@ void CProcess021::processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam)
 //			OSDCTRL_ItemShow(ePlatFormX);
 	}
 }
+#endif
 
-void CProcess021::processCMD_FIRING_TABLE_FAILURE(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_FIRING_TABLE_FAILURE",__func__,__LINE__);
-	return ;
- }
+
 
 
 void CProcess021::processCMD_MODE_ATTACK_SIGLE(LPARAM lParam)
