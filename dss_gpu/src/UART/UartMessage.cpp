@@ -103,35 +103,35 @@ int  InitDevice_spi()
 		int status = -1;
 		int ret = -1;
 
-		memset(RS422_ROTER_buff.receiveData,0,2048);
+		memset(RS422_ROTER_buff.receiveData,0,sizeof(RS422_ROTER_buff.receiveData));
 		RS422_ROTER_buff.length=0;
 		pthread_mutex_init(&RS422_ROTER_buff.mutex,NULL);
 
-		memset(RS422_DECODE_buff.receiveData,0,2048);
+		memset(RS422_DECODE_buff.receiveData,0,sizeof(RS422_DECODE_buff.receiveData));
 		RS422_DECODE_buff.length=0;
 		pthread_mutex_init(&RS422_DECODE_buff.mutex,NULL);
 
-		memset(RS422_BAK2_buff.receiveData,0,2048);
+		memset(RS422_BAK2_buff.receiveData,0,sizeof(RS422_BAK2_buff.receiveData));
 		RS422_BAK2_buff.length=0;
 		pthread_mutex_init(&RS422_BAK2_buff.mutex,NULL);
 
-		memset(RS422_MIRROR_buff.receiveData,0,2048);
+		memset(RS422_MIRROR_buff.receiveData,0,sizeof(RS422_MIRROR_buff.receiveData));
 		RS422_MIRROR_buff.length=0;
 		pthread_mutex_init(&RS422_MIRROR_buff.mutex,NULL);
 
-		memset(RS422_VCODE_buff.receiveData,0,2048);
+		memset(RS422_VCODE_buff.receiveData,0,sizeof(RS422_VCODE_buff.receiveData));
 		RS422_VCODE_buff.length=0;
 		pthread_mutex_init(&RS422_VCODE_buff.mutex,NULL);
 
-		memset(RS422_BAK1_buff.receiveData,0,2048);
+		memset(RS422_BAK1_buff.receiveData,0,sizeof(RS422_BAK1_buff.receiveData));
 		RS422_BAK1_buff.length=0;
 		pthread_mutex_init(&RS422_BAK1_buff.mutex,NULL);
 
-		memset(RS422_TEST_buff.receiveData,0,2048);
+		memset(RS422_TEST_buff.receiveData,0,sizeof(RS422_TEST_buff.receiveData));
 		RS422_TEST_buff.length=0;
 		pthread_mutex_init(&RS422_TEST_buff.mutex,NULL);
 
-		memset(RS422_HCODE_buff.receiveData,0,2048);
+		memset(RS422_HCODE_buff.receiveData,0,sizeof(RS422_HCODE_buff.receiveData));
 		RS422_HCODE_buff.length=0;
 		pthread_mutex_init(&RS422_HCODE_buff.mutex,NULL);
 
