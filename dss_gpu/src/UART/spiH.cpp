@@ -36,6 +36,8 @@ static uint16_t delay = 0;
 
 bool uart_open_close_flag = 0;
 
+#define   SPI_DEBUG   0
+
 /****************************************************************************/
 //decode 倾斜角头的解析
 int SPI_decode_recvFlg(char * buf, int iLen, int * index)
@@ -72,7 +74,7 @@ int process_decode(struct RS422_data * pRS422_data)
 		int have_data = 1;
 		int parse_length = 0;
 
-		short PlatformThetaX = 0.00,PlatformThetaY = 0.00,Temperature = 0.00;
+		short PlatformThetaX = 0.00, PlatformThetaY = 0.00, Temperature = 0.00;
 		
 		short sum_xor=0;
 		int i=0;
@@ -107,15 +109,16 @@ int process_decode(struct RS422_data * pRS422_data)
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
-					//printf( "%02x " ,buf[i]);
 				}
-				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				if( sum_xor ==  buf[parse_length-1] ){
 					PlatformThetaX = buf[1]<<8|buf[2];
 					PlatformThetaY =  buf[3]<<8|buf[4];
 					Temperature =  buf[5]<<8|buf[6];
+
+#if SPI_DEBUG
 					printf(" PlatformThetaX=%d PlatformThetaY=%d weather=%d \n", PlatformThetaX, PlatformThetaY, Temperature);
+#endif
 
 				if((abs(PlatformThetaX) > 30000)||(abs(PlatformThetaY) >30000))
 				{
@@ -222,11 +225,8 @@ int Process_mirror(struct RS422_data * pRS422_data)
 			parse_length = 5;
 
 			if(length<parse_length){
-
-				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
-
 			}
 			else
 			{
@@ -234,16 +234,15 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
-					//printf( "%02x " ,buf[i]);
 				}
-				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				//if( sum_xor ==  buf[parse_length-1] )
 				if(1)
 				{
-					laser_dis = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。
+					laser_dis = buf[2]<<8|buf[3];
+#if SPI_DEBUG
 					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
-
+#endif
 					if(9999 == laser_dis)
 					{
 						LaserDistance = -1;
@@ -271,7 +270,6 @@ int Process_mirror(struct RS422_data * pRS422_data)
 
 					SPI_mirror_send_requst() ;
 					SPI_mirror_send_ack();
-
 				}
 				else
 				{
@@ -347,7 +345,6 @@ int Process_vcode(struct RS422_data * pRS422_data)
 
 		int  angle=0;
 		int positive=1;
-		int sum_xor =0;
 		int i=0;
 		double tmp;
 
@@ -367,7 +364,6 @@ int Process_vcode(struct RS422_data * pRS422_data)
 				have_data=0;
 				continue;
 			}
-
 			parse_length = 5;
 
 			if(length<parse_length)
@@ -375,52 +371,32 @@ int Process_vcode(struct RS422_data * pRS422_data)
 				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
-
 			}
 			else
 			{
-
 				//解析数据
-				sum_xor=0;
-				for(i=0; i<parse_length-1; i++)
-				{
-					sum_xor ^= buf[i];
-					//printf( "%02x " ,buf[i]);
-				}
-				//printf( "%02x \n" ,buf[parse_length-1]);
+				  positive=1;
 
-				positive=1;
-				//if( sum_xor ==  buf[parse_length-1] )
-				if(1)
-				{
-					printf( "buf[2]=%02x buf[3]=%02x \n" , buf[2], buf[3]);
-					angle = buf[2]<<8|buf[3];  //对超出范围的数据如何处理
-					positive = buf[4] ==0 ? 1: -1;
+#if SPI_DEBUG
+				 printf( "buf[2]=%02x buf[3]=%02x \n" , buf[2], buf[3]);
+#endif
+				 angle = buf[2]<<8|buf[3];  //对超出范围的数据如何处理
+				 positive = buf[4] ==0 ? 1: -1;
 
-
-					tmp = (positive)*angle/100.00;
+					tmp = (positive)*angle*0.01;
 					if(tmp>= -5 && tmp<=75)
 					{
-						printf("********************************\n");
+#if SPI_DEBUG
 						printf("tmp = %f\n",tmp);
+#endif
 						MachGunAngle.theta = tmp;
 					}
-					//printf(" positive=%d angle=%d  \n", positive, angle);
 				
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
+
 				}
-				else
-				{
-					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
-					memcpy(buf, buf+1, length-1);
-					length--;
-				}
-
-
-			}
-
 		}
 		pRS422_data->length = length ;
 		return 0;
@@ -440,7 +416,7 @@ int SPI_grenade_recvFlg(char * buf, int iLen, int * index)
 
 		while(1){
 
-				if( 0x5FF5 == (pCur[0]<<8)|(pCur[1]) )	{	//判断开头标志
+				if( 0x5FF5 == ((pCur[0]<<8)|(pCur[1])) )	{	//判断开头标志
 						break;
 				}else{
 						memcpy(pCur, pCur+1, length-1);
@@ -496,42 +472,28 @@ int Process_grenade(struct RS422_data * pRS422_data)
 			}else{
 
 				//解析数据
-				sum_xor=0;
-				for(i=0; i<parse_length-1; i++){
-					sum_xor ^= buf[i];
-					//printf( "%02x " ,buf[i]);
-					}
-				//printf( "%02x \n" ,buf[parse_length-1]);
 
 				positive=1;
-				//if( sum_xor ==  buf[parse_length-1] )
-				if(1)
+
+				angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
+				positive = buf[4] ==0 ? 1: -1;
+#if SPI_DEBUG
+				printf(" about the GrenadeAngle  !!!!!! positive=%d angle=%d  \n", positive, angle);
+#endif
+				tmp = angle*0.01;
+				if(!bGrenadeSensorOK())
 				{
-					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
-					positive = buf[4] ==0 ? 1: -1;
-					//printf(" about the GrenadeAngle  !!!!!! positive=%d angle=%d  \n", positive, angle);
-					tmp = angle*0.01;
-					if(!bGrenadeSensorOK())
-					{
-						MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
-					}
-					
-					if(tmp >= -5 && tmp <= 75)
-						GrenadeAngle = positive*tmp;
-					
-					memcpy(buf, buf+parse_length, length-parse_length);
-					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
-					length -= parse_length;
-				}
-				else{
-					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
-					memcpy(buf, buf+1, length-1);
-					length--;
+					MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
 				}
 
+				if(tmp >= -5 && tmp <= 75)
+					GrenadeAngle = positive*tmp;
 
+				memcpy(buf, buf+parse_length, length-parse_length);
+				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+				length -= parse_length;
+					
 			}
-
 		}
 		pRS422_data->length = length ;
 		return 0;
@@ -551,7 +513,7 @@ int SPI_hcode_recvFlg(char * buf, int iLen, int * index)
 
 		while(1){
 
-				if( 0x8FF8 == (pCur[0]<<8)|(pCur[1]) )	{	//判断开头标志
+				if( 0x8FF8 == ((pCur[0]<<8)|(pCur[1]))  )	{	//判断开头标志
 						break;
 				}else{
 						memcpy(pCur, pCur+1, length-1);
@@ -600,7 +562,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 
 			if(length<parse_length){
 
-				//printf(" length<dataLength ...\n");
+				printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
@@ -609,21 +571,14 @@ int Process_hcode(struct RS422_data * pRS422_data)
 			{
 
 				//解析数据
-				sum_xor=0;
-				for(i=0; i<parse_length-1; i++)
-				{
-					sum_xor ^= buf[i];
-					//printf( "%02x " ,buf[i]);
-				}
-				//printf( "%02x \n" ,buf[parse_length-1]);
 
-				positive=1;
-				//if( sum_xor ==  buf[parse_length-1] )
-				if(1)
-				{
-					angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
+				  positive=1;
+
+					angle = buf[2]<<8|buf[3];
 					positive = buf[4] ==0 ? 1: -1;	
-					//printf(" positive=%d angle=%d  \n", positive, angle);
+#if SPI_DEBUG
+					printf(" positive=%d angle=%d  \n", positive, angle);
+#endif
 					
 					tmp = (positive)*angle/100.00;
 					if(tmp>= -5 && tmp<=75)
@@ -634,13 +589,6 @@ int Process_hcode(struct RS422_data * pRS422_data)
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
-				}
-				else
-				{
-					printf("[%s] sum of xor=%02x  buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
-					memcpy(buf, buf+1, length-1);
-					length--;
-				}
 			}
 
 		}
@@ -1106,9 +1054,14 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 	for(int i=0;i<length;i++)
 	{
 		RS422_data_buff->receiveData[lengthTmp+i]=transfer_readOneData(comNum);
+#if SPI_DEBUG
 		printf(" %02x  ",RS422_data_buff->receiveData[lengthTmp+i]);
 	}
 	printf("\n");
+#else
+    }
+#endif
+
 	pthread_mutex_unlock(&RS422_data_buff->mutex);
 	return 0;
 }
@@ -1119,7 +1072,9 @@ void interuptHandleSpi1(struct RS422_data* RS422_ROTER_buff,struct RS422_data* R
 	fd_set readfds;	
 	while(1)
 	{
-		printf("%s\n",__func__);
+#if SPI_DEBUG
+		 printf("%s\n",__func__);
+#endif
         	FD_ZERO(&readfds);
         	FD_SET(fd0,&readfds);
         	select(fd0+1,&readfds,NULL,NULL,NULL);
@@ -1137,7 +1092,10 @@ void interuptHandleSpi2(struct RS422_data* RS422_MIRROR_buff,struct RS422_data* 
 	fd_set readfds;	
 	while(1)
 	{
+#if SPI_DEBUG
 		printf("%s\n",__func__);
+#endif
+
         	FD_ZERO(&readfds);
         	FD_SET(fd1,&readfds);
         	select(fd1+1,&readfds,NULL,NULL,NULL);
@@ -1155,7 +1113,9 @@ void interuptHandleSpi3(struct RS422_data* RS422_TEST_buff,struct RS422_data* RS
 	fd_set readfds;	
 	while(1)
 	{
+#if SPI_DEBUG
 		printf("%s\n",__func__);
+#endif
         	FD_ZERO(&readfds);
         	FD_SET(fd2,&readfds);
         	select(fd2+1,&readfds,NULL,NULL,NULL);
@@ -1184,7 +1144,9 @@ void interuptHandleDataSpi3(int interuptNum,struct RS422_data* RS422_TEST_buff,s
 					interuptNumTmp=6;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);		
+#if SPI_DEBUG
 					printf("from RS422_TEST: ");
+#endif
 					break;
 				case 128:
 					transfer_ban(fd2,com1);
@@ -1195,7 +1157,9 @@ void interuptHandleDataSpi3(int interuptNum,struct RS422_data* RS422_TEST_buff,s
 					interuptNumTmp=7;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_HCODE: ");
+#endif
 					Process_hcode(RS422_HCODE_buff);
 					break;
 				case 192:
@@ -1207,8 +1171,9 @@ void interuptHandleDataSpi3(int interuptNum,struct RS422_data* RS422_TEST_buff,s
 					interuptNumTmp=6;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_TEST: ");
-
+#endif
 
 					transfer_ban(fd2,com1);
 					readCount=transfer_readDataCount(fd2,com1);
@@ -1218,7 +1183,9 @@ void interuptHandleDataSpi3(int interuptNum,struct RS422_data* RS422_TEST_buff,s
 					interuptNumTmp=7;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_HCODE: ");
+#endif
 					Process_hcode(RS422_HCODE_buff);
 					break;
 				default:
@@ -1244,7 +1211,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=3;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_MIRROR: ");
+#endif
 					Process_mirror(RS422_MIRROR_buff);
 					break;
 				case 16:
@@ -1256,7 +1225,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=4;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_VCODE: ");
+#endif
 					Process_vcode(RS422_VCODE_buff);
 					break;
 				case 32:
@@ -1268,7 +1239,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=5;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_BAK1: ");
+#endif
 					break;
 				case 24:
 					transfer_ban(fd1,com0);
@@ -1279,7 +1252,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=3;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_MIRROR: ");
+#endif
 					Process_mirror(RS422_MIRROR_buff);
 
 					transfer_ban(fd1,com1);
@@ -1290,7 +1265,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=4;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_VCODE: ");
+#endif
 					Process_vcode(RS422_VCODE_buff);
 					break;
 				case 40:
@@ -1302,7 +1279,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=5;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_BAK1: ");
+#endif
 
 
 					transfer_ban(fd1,com0);
@@ -1313,7 +1292,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=3;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_MIRROR: ");
+#endif
 					Process_mirror(RS422_MIRROR_buff);
 					break;
 				case 48:
@@ -1325,7 +1306,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=4;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_VCODE: ");
+#endif
 					Process_vcode(RS422_VCODE_buff);
 
 					transfer_ban(fd1,com2);
@@ -1336,7 +1319,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=5;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_BAK1: ");
+#endif
 					break;
 				case 56:
 					transfer_ban(fd1,com1);
@@ -1347,8 +1332,11 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=4;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
-					printf("from RS422_VCODE: ");
-					Process_vcode(RS422_VCODE_buff);
+#if SPI_DEBUG
+		printf("from RS422_VCODE: ");
+#endif
+				Process_vcode(RS422_VCODE_buff);
+
 
 					transfer_ban(fd1,com2);
 					readCount=transfer_readDataCount(fd1,com2);
@@ -1358,7 +1346,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=5;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_BAK1: ");
+#endif
 
 					transfer_ban(fd1,com0);
 					readCount=transfer_readDataCount(fd1,com0);
@@ -1368,7 +1358,9 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					interuptNumTmp=3;
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 					printf("from RS422_MIRROR: ");
+#endif
 					Process_mirror(RS422_MIRROR_buff);
 					break;
 				default:
@@ -1422,7 +1414,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=1;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length",RS422_DECODE_buff->length);
+#endif
 						process_decode(RS422_DECODE_buff);
 						break;
 
@@ -1436,7 +1430,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=0;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length",RS422_ROTER_buff->length);
+#endif
 
 
 
@@ -1447,7 +1443,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=1;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length",RS422_DECODE_buff->length);
+#endif
 						process_decode(RS422_DECODE_buff);
 
 						break;
@@ -1460,7 +1458,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=2;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+#endif
 						Process_grenade(RS422_BAK2_buff);
 						break;
 					case 5:
@@ -1472,7 +1472,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=2;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+#endif
 						Process_grenade(RS422_BAK2_buff);
 
 
@@ -1485,7 +1487,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=0;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
+#endif
 						break;
 
 					case 6:
@@ -1497,7 +1501,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=2;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
+#endif
 						Process_grenade(RS422_BAK2_buff);
 						
 
@@ -1509,7 +1515,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=1;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length\n",RS422_DECODE_buff->length);
+#endif
 						process_decode(RS422_DECODE_buff);
 						break;
 
@@ -1522,7 +1530,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=0;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
+#endif
 
 						transfer_ban(fd0,com1);
 						readCount=transfer_readDataCount(fd0,com1);
@@ -1532,7 +1542,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=1;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
+#if SPI_DEBUG
 						printf("from RS422_DECODE:--%d--RS422_DECODE_buff->length\n",RS422_DECODE_buff->length);
+#endif
 						process_decode(RS422_DECODE_buff);
 
 						transfer_ban(fd0,com2);
@@ -1544,8 +1556,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
 						Process_grenade(RS422_BAK2_buff);
+#if SPI_DEBUG
 						printf("from RS422_BAK2: --%d--RS422_BAK2_buff->length\n ",RS422_BAK2_buff->length);
-						
+#endif
 						break;
 					default:
 						fdtmp=-1;
