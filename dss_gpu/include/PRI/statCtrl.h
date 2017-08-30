@@ -187,14 +187,15 @@ typedef struct
 {
 	CDTime pTimeArray[MAX_TIMER_NUM];
 	unsigned int timNum;
-
-	int (*SetTimer)( unsigned int timerId, unsigned int nMs );
+	int (*startTimer)( unsigned int timerId, unsigned int nMs );
 	int (*KillTimer)( unsigned int  timerId );
 	int  (*GetTimerStat)(unsigned int  nIDEvent);
+	int (*ReSetTimer)(unsigned int timerId, unsigned int nMs);
+	//int (*SetTimer)( unsigned int timerId, unsigned int nMs );
 	//int  (*InitTimerCtrl)();
 	//void (*DestroyTimerCtrl)();
 	//void (*RunTimer)();
-	//void (*ReSetTimer)(unsigned int  nIDEvent);
+	
 }CTimerCtrl;
 
 

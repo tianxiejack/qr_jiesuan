@@ -43,6 +43,7 @@
 #include "ipc_port.h"
 #include "app_user.h"
 #include "osdPort.h"
+#include "statCtrl.h"
 
 #define DX_TSK_PRI          2
 #define DX_TSK_STACK_SIZE   ( 0 )
@@ -1522,6 +1523,30 @@ Int32 Dx_killTimer( UInt32 timerId )
 
     return OSA_SOK;
 }
+
+Int32 kill_Timer(UInt32 timerId)
+{
+	Dx_killTimer(timerId);
+	pTimerObj->pTimeArray[timerId].nStat = eTimer_Stat_Stop;
+	return 0;
+}
+
+Int32 start_Timer(UInt32 timerId,UInt32 nMs)
+{
+	Dx_setTimer( timerId, nMs );
+	pTimerObj->pTimeArray[timerId].nStat = eTimer_Stat_Run;
+	return 0;
+}
+
+
+Int32 reset_Timer( UInt32 timerId, UInt32 nMs )
+{
+	kill_Timer(timerId);
+	start_Timer( timerId, nMs );
+    	return 0;
+}
+
+
 
 void button_to_save()
 {

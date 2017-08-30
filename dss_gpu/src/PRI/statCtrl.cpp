@@ -910,13 +910,15 @@ int  CTIMERCTRL_initTimerCtrl()
 	memset(pCtrlObj->pTimeArray,0,sizeof(CDTime)*MAX_TIMER_NUM);
 	pCtrlObj->timNum =0;
 
-	pCtrlObj->SetTimer= Dx_setTimer;
-	pCtrlObj->KillTimer = Dx_killTimer;
-	pCtrlObj->GetTimerStat = CTIMERCTRL_getTimerStat;
+	pCtrlObj->startTimer		=	start_Timer;
+	pCtrlObj->KillTimer 		= 	kill_Timer;
+	pCtrlObj->GetTimerStat 	= 	CTIMERCTRL_getTimerStat;
+	pCtrlObj->ReSetTimer 		= 	reset_Timer;
+	//pCtrlObj->SetTimer		= 	Dx_setTimer;
 	//pCtrlObj->RunTimer= NULL;
 	//pCtrlObj->DestroyTimerCtrl = NULL;
 	//pCtrlObj->InitTimerCtrl = NULL;
-	//pCtrlObj->ReSetTimer = NULL;
+	
 	
 	return 0;
 }
@@ -940,8 +942,7 @@ void startDynamicTimer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eDynamic_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(eDynamic_Timer,DYNAMIC_TIMER);	
-		pCtrlTimer->pTimeArray[eDynamic_Timer].nStat = eTimer_Stat_Run;
+		pCtrlTimer->startTimer(eDynamic_Timer,DYNAMIC_TIMER);	
 	}
 }
 

@@ -4436,8 +4436,8 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 		
 		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG
 		OSDCTRL_ItemShine(eMeasureType);
-		pTimerObj->SetTimer(eAVT_Timer,AVT_TIMER);
-
+		pTimerObj->startTimer(eAVT_Timer,AVT_TIMER);
+		pTimerObj->ReSetTimer(eDynamic_Timer,DYNAMIC_TIMER);
 		
 		//todo: trigger Laser and AVT
 		gLevel3CalculatorState = Auto_Preparation;

@@ -569,10 +569,10 @@ static Int32 APP_onTimer( Int32 timerId )
   	if(pTimerObj->GetTimerStat(eAVT_Timer) == eTimer_Stat_Run)
   	{
   		pTimerObj->KillTimer(eAVT_Timer);
-		pTimerObj->pTimeArray[eAVT_Timer].nStat = eTimer_Stat_Stop;
   	}
 	Posd[eMeasureType] = MeasureTypeOsd[5];
 	OSDCTRL_NoShineShow();
+	pTimerObj->ReSetTimer(eDynamic_Timer,DYNAMIC_TIMER);
   }
 
 

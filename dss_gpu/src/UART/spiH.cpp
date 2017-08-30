@@ -323,7 +323,7 @@ int SPI_vcode_recvFlg(char * buf, int iLen, int * index)
 
 		while(1){
 
-				if( 0x5FF5 == (pCur[0]<<8)|(pCur[1]) )	{	//判断开头标志
+				if( 0x5FF5 == ((pCur[0]<<8)|(pCur[1])) )	{	//判断开头标志
 						break;
 				}else{
 						memcpy(pCur, pCur+1, length-1);
@@ -372,7 +372,6 @@ int Process_vcode(struct RS422_data * pRS422_data)
 
 			if(length<parse_length)
 			{
-
 				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
@@ -394,6 +393,7 @@ int Process_vcode(struct RS422_data * pRS422_data)
 				//if( sum_xor ==  buf[parse_length-1] )
 				if(1)
 				{
+					printf( "buf[2]=%02x buf[3]=%02x \n" , buf[2], buf[3]);
 					angle = buf[2]<<8|buf[3];  //对超出范围的数据如何处理
 					positive = buf[4] ==0 ? 1: -1;
 

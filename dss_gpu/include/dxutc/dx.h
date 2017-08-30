@@ -239,8 +239,14 @@ Int32 Dx_update_field( Int32 blkId, Int32 fieldno, Bool notify );
 
 Int32 Dx_initparam( );
 
-
 void button_to_save();
+
+Int32 reset_Timer( UInt32 timerId, UInt32 nMs );
+Int32 kill_Timer(UInt32 timerId);
+Int32 start_Timer(UInt32 timerId,UInt32 nMs);
+
+
+
 
 #endif /* CR_DX_DRIVER_DXD_H */
 /************************************** The End Of File **************************************/
