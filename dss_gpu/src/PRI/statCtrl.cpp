@@ -48,6 +48,8 @@ static bool gTrackingMode=FALSE;
 static bool bServoAavailable = FALSE;
 bool bUnlock = TRUE;
 bool AUTOCATCH = FALSE;
+volatile bool finish_laser_measure = 0;
+
 
 CTimerCtrl * pTimerObj = (CTimerCtrl*)OSA_memAlloc(sizeof(CTimerCtrl));
 
@@ -612,19 +614,21 @@ void loadFiringTable_Enter()
 		}
 		else
 		{
+			printf("loadFiringTable_EnteloadFiringTable_EnterrloadFiringTable_Enter\n\n");
+			printf("getMeasureType = %d\n",getMeasureType());
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
+
+
 			//: input PID aimoffset
 			/*AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
 			if(isMachineGun())
 				AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);*/
-		//	printf("%s:%d		output.AimOffsetX = %d,output.AimOffsetY=%d\n",__func__,__LINE__,output.AimOffsetX,output.AimOffsetY);
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
 			
 			if(isMachineGun())
 			{
 				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
 				cmd_machservo_moveoffset_tmp = output.AimOffsetY-DEGREE2MIL(getGrenadeAngle());
-				//MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, 0);	
 				processCMD_MACHSERVO_MOVEOFFSET(0);			
 			}
 			else
@@ -632,9 +636,8 @@ void loadFiringTable_Enter()
 				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
 				cmd_grenadeservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
 				processCMD_GRENADESERVO_MOVEOFFSET(0);
-				printf("!!!!!!!!!!!!!!!!!1processCMD_FIRING_TABLE_LOAD_OK1\n");
-				processCMD_FIRING_TABLE_LOAD_OK(0);
 			}
+			processCMD_FIRING_TABLE_LOAD_OK(0);
 				
 			return ;
 		}
@@ -749,13 +752,13 @@ void loadFiringTable()
 		else
 		{
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
-
+printf("loadFiringTable loadFiringTable loadFiringTable\n\n");
 			//AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
 			if(isMachineGun())
 				;//AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);
 			
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-			printf("!!!!!!!!!!!!!!!!!1processCMD_FIRING_TABLE_LOAD_OK2\n");
+
 			processCMD_FIRING_TABLE_LOAD_OK(0);
 			//sendCommand(CMD_FIRING_TABLE_LOAD_OK);
 			return ;
@@ -968,11 +971,7 @@ void DynamicTimer_cbFxn()
 void killDynamicTimer()
 {
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eDynamic_Timer)!=eTimer_Stat_Stop)
-	{
-		pCtrlTimer->KillTimer(eDynamic_Timer);
-		pCtrlTimer->pTimeArray[eDynamic_Timer].nStat = eTimer_Stat_Stop;
-	}
+	pCtrlTimer->KillTimer(eDynamic_Timer);
 }
 
 
@@ -1002,9 +1001,6 @@ void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
 			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
 			OSDCTRL_ItemShow(eCorrectionTip);
 
-			// auto track and shoot.
-//			requstServoContrl();
-//			OSDCTRL_ItemShow(ePlatFormX);
 	}
 }
 

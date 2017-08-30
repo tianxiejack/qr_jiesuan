@@ -555,9 +555,6 @@ static Int32 APP_onTimer( Int32 timerId )
   if(timerId == eDynamic_Timer)
   {
 	DynamicTimer_cbFxn();
-
-	//Posd[eCorrectionTip] = AngleCorrectOsd[0];
-	//OSDCTRL_ItemShow(eCorrectionTip);
   }
 
   
@@ -567,9 +564,7 @@ static Int32 APP_onTimer( Int32 timerId )
   	{
   		pTimerObj->KillTimer(eAVT_Timer);
   	}
-	Posd[eMeasureType] = MeasureTypeOsd[5];
 	OSDCTRL_NoShineShow();
-	pTimerObj->ReSetTimer(eDynamic_Timer,DYNAMIC_TIMER);
   }
 
 
@@ -595,6 +590,13 @@ static Int32 APP_onTimer( Int32 timerId )
    
    }
 
+     if(timerId == eOSD_shine_Timer)
+     {
+     		//printf("eOSD_shine_Timer eOSD_shine_Timer eOSD_shine_Timer\n");
+     		pTimerObj->KillTimer(eOSD_shine_Timer);
+	//	Posd[eMeasureType] = MeasureTypeOsd[0];
+		OSDCTRL_NoShineShow();
+     }
 	
     return OSA_SOK;
 }

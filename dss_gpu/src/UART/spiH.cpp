@@ -240,7 +240,7 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				if(1)
 				{
 					laser_dis = buf[2]<<8|buf[3];
-#if SPI_DEBUG
+#if 1//SPI_DEBUG
 					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
 #endif
 					if(9999 == laser_dis)

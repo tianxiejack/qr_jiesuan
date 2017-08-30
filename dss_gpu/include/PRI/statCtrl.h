@@ -139,6 +139,7 @@ typedef enum _time_id
 	eF5_Timer,
 	eF3_Timer,
 	eDipAngle_Timer,
+eOSD_shine_Timer	,					// the max of the timer number  is 0x20
 	ePosAngle_Timer,
 	eMachGunAngle_Timer,
 	eGrenadeAngle_Timer,
@@ -297,12 +298,11 @@ extern Level_four_state  gLevel4subCalculatorState;
 extern DIS_MEASURE_TYPE gMeasureType;
 extern bool isfixingMeasure,isJoyStickOK,isDipAngleSensorOK,isMachineGunSensorOK,isGrenadeSensorOK;	
 extern bool isWeaponCtrlOK,isPositionSensorOK,isGrenadeServoOK,isMachineGunServoOK,isPositionServoOK;
-extern bool bUnlock;
 extern PROJECTILE_TYPE gProjectileType,gProjectileTypeBefore;
 extern SHOT_TYPE gGunShotType;
-extern bool AUTOCATCH;
+extern bool bUnlock,AUTOCATCH,isDetendClose;
+extern volatile bool finish_laser_measure;
 extern WeatherItem gWeatherTable;
-extern bool isDetendClose;
 
 extern CTimerCtrl * pTimerObj;
 

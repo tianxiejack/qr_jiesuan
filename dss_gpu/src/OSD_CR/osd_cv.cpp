@@ -474,7 +474,10 @@ void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 	cthis = fovOsdCtrl;
 	Osd_cvPoint start;
 	Osd_cvPoint end;
-	int flag = gMeasureType ;  // 0 jiguang    1 ren
+	int flag = 0 ;  // 0 jiguang  chang  1 ren duan
+
+	if(gMeasureType ||finish_laser_measure)
+		flag = 1;
 	
 	if(isFovSmall())
 		len *= 1.2;
