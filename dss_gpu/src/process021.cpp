@@ -3731,7 +3731,7 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 			//do nothing
 			if(4 == getXPosition())
 			{
-				//decreaseAdvancedMenu();
+				decreaseAdvancedMenu();
 			}
 		}
 		else if(isCalibrationZero())
@@ -3753,16 +3753,16 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 			switch(gLevel3CalibrationState)
 			{
 				case Menu_FireView:
-					//moveLeftFireViewPram();
+					moveLeftFireViewPram();
 					break;
 				case Menu_FireCtrl:
-					//moveLeftFireCtrlPram();
+					moveLeftFireCtrlPram();
 					break;
 				case Menu_ServoX:
-					//moveLeftServoXPram();
+					moveLeftServoXPram();
 					break;
 				case Menu_ServoY:
-					//moveLeftServoYPram();
+					moveLeftServoYPram();
 					break;
 				default:
 					break;

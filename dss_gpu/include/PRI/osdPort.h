@@ -43,7 +43,10 @@ double getLastGeneralDataY();
 void setNextGeneralParam(GeneralCorrectionItem * Item);
 void UpdataBoreSight();
 static void setNextZeroData(ZeroCorrectionItem *Item);
-
+void moveLeftFireViewPram();
+void moveLeftFireCtrlPram();
+void moveLeftServoXPram();
+void moveLeftServoYPram();
 
 
 extern FOVCTRL_Handle pFovCtrlObj;

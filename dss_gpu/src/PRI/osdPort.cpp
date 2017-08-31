@@ -206,7 +206,7 @@ void moveCrossUp()
 	borY = (borY - STEPLEN + 576)%576;
 	if(borY > 0)
 		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
-	//todo: ÒÆ¶¯·½Î»ËÅ·þ
+	//todo: ï¿½Æ¶ï¿½ï¿½ï¿½Î»ï¿½Å·ï¿½
 }
 
 
@@ -248,8 +248,8 @@ void increaseDigitOrSymbolGeneral()
 	}
 	/*else if(0 == i)
 	{
-		//¸üÐÂ¾àÀë¡¢×ÛÐÞ²ÎÊý
-		// ¸üÐÂ ÐÞÕýÖµ
+		//ï¿½ï¿½ï¿½Â¾ï¿½ï¿½ë¡¢ï¿½ï¿½ï¿½Þ²ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Öµ
 		saveLastAndGetDownGeneralData();
 	}*/
 	else
@@ -278,7 +278,7 @@ void setNextGeneralParam(GeneralCorrectionItem * Item)
 		value = DistanceManual;
 	else
 		value = getLaserDistance();
-	value = (value>0)?(value):500;//Èç¹ûÎ´ÉèÖÃ¾àÀëÖµ£¬Ä¬ÈÏÉèÖÃ500Ã×
+	value = (value>0)?(value):500;//ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½Ã¾ï¿½ï¿½ï¿½Öµï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½500ï¿½ï¿½
 
 	General[0] = value/1000%10;
 	General[1] = value/100%10;
@@ -600,5 +600,37 @@ void saveZeroParam()
 		gGrenadeKill_ZCTable.Angle	     = getGrenadeAngleAbs();
 }
 
+void moveLeftFireViewPram()
+{
+	if(!SHINE)
+		return;
+	OSDCTRL_ItemShow(ShinId);
+	ShinId = eCalibGenPram_VFLDOXValue0 + (ShinId - eCalibGenPram_VFLDOXValue0+ 47)%48;
+}
+
+void moveLeftFireCtrlPram()
+{
+	if(!SHINE)
+		return;
+	OSDCTRL_ItemShow(ShinId);
+	ShinId = eCalibGenPram_TimeValue0+ (ShinId - eCalibGenPram_TimeValue0+ 7)%8;
+}
+
+void moveLeftServoXPram()
+{
+	//if(signX=='+')
+	//	signX = '-';
+	//else
+	//	signX = '+';
+}
+
+
+void moveLeftServoYPram()
+{
+	//if(signY=='+')
+	//	signY = '-';
+	//else
+	//	signY = '+';
+}
 
 

@@ -1022,3 +1022,16 @@ void processCMD_FIRING_TABLE_FAILURE(long lParam)
 	return ;
  }
 
+int getAdvancedMenuIndex()
+{
+	int i=(Posd[eCalibMenu_Child] - GenPramMenu[0])/12;
+	return i;
+}
+void decreaseAdvancedMenu()
+{
+	int i = getAdvancedMenuIndex();
+	i = (i+3)%4;
+	Posd[eCalibMenu_Child] = GenPramMenu[i];
+	gLevel3CalibrationState = (Level_three_state)(i + Menu_FireView);
+}
+

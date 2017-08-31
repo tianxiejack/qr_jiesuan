@@ -290,6 +290,11 @@ void killDynamicTimer();
 void processCMD_FIRING_TABLE_LOAD_OK(long lParam);
 void processCMD_FIRING_TABLE_FAILURE(long lParam);
 
+int getAdvancedMenuIndex();
+void decreaseAdvancedMenu();
+
+
+
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;
