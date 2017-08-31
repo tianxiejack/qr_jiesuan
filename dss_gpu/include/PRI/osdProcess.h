@@ -530,6 +530,15 @@ void increaseFireCtrlPram();
 void increaseServoXPram();
 void increaseServoYPram();
 
+void moveLeftServoXPram();
+void moveLeftServoYPram();
+void isBeyondServoX(int id);
+void moveRightServoXPram();
+void isBeyondServoY(int id);
+void moveRightServoYPram();
+
+
+
 extern volatile char globalShoweErrorZone;
 extern WeatherItem gWeatherTable;
  

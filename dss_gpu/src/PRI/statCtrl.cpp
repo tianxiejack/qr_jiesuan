@@ -838,6 +838,7 @@ void EnterCMD_BULLET_SWITCH1()
 		{
 			Posd[eDynamicZone] = DynamicOsd[5];
 			OSDCTRL_ItemShow(eDynamicZone);
+			startDynamicTimer();
 		}
 	}
 	
@@ -868,7 +869,7 @@ void EnterCMD_BULLET_SWITCH2( )
 		{
 			Posd[eDynamicZone] = DynamicOsd[5];
 			OSDCTRL_ItemShow(eDynamicZone);
-			//startDynamicTimer();
+			startDynamicTimer();
 		}
 	}
 	//gProjectileType=PROJECTILE_GRENADE_KILL;
@@ -898,7 +899,7 @@ void EnterCMD_BULLET_SWITCH3( )
 		{
 			Posd[eDynamicZone] = DynamicOsd[5];
 			OSDCTRL_ItemShow(eDynamicZone);
-			//startDynamicTimer();
+			startDynamicTimer();
 		}
 	}
 	gProjectileType=PROJECTILE_GRENADE_GAS;
@@ -1034,4 +1035,21 @@ void decreaseAdvancedMenu()
 	Posd[eCalibMenu_Child] = GenPramMenu[i];
 	gLevel3CalibrationState = (Level_three_state)(i + Menu_FireView);
 }
+
+void changeSaveOption()
+{
+	if(isAtSaveYes())
+		Posd[eSaveYesNo] = SaveYesNoOsd[1];
+	else
+		Posd[eSaveYesNo] = SaveYesNoOsd[0];
+}
+
+void increaseAdvancedMenu()
+{
+	int i = getAdvancedMenuIndex();
+	i = (i+1)%4;
+	Posd[eCalibMenu_Child] = GenPramMenu[i];
+	gLevel3CalibrationState =(Level_three_state)(i + Menu_FireView);
+}
+
 

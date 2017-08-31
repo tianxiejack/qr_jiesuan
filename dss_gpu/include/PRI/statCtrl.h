@@ -292,7 +292,8 @@ void processCMD_FIRING_TABLE_FAILURE(long lParam);
 
 int getAdvancedMenuIndex();
 void decreaseAdvancedMenu();
-
+void changeSaveOption();
+void increaseAdvancedMenu();
 
 
 

@@ -2233,3 +2233,67 @@ void increaseServoYPram()
 	codeY = (codeY+1)%10;
 }
 
+void moveLeftServoXPram()
+{
+	if(signX=='+')
+		signX = '-';
+	else
+		signX = '+';
+}
+
+
+void moveLeftServoYPram()
+{
+	if(signY=='+')
+		signY = '-';
+	else
+		signY = '+';
+}
+
+
+void isBeyondServoX(int id)
+{
+	if((1<=id)&&(id<=9)){
+		ServoX[id]= (ServoX[id]>8.0)?(8.0):ServoX[id];
+		ServoX[id]= (ServoX[id]<0.0)?(0.0):ServoX[id];
+	}else if((10<=id)&&(id<=14)){
+		ServoX[id]= (ServoX[id]>99.0)?(99.0):ServoX[id];
+		ServoX[id]= (ServoX[id]<0.0)?(0.0):ServoX[id];
+	}else{
+		ServoX[id]= (ServoX[id]>300.0)?(300.0):ServoX[id];
+		ServoX[id]= (ServoX[id]<0.0)?(0.0):ServoX[id];
+	}
+}
+
+
+void moveRightServoXPram()
+{
+	if(signX=='+')
+		ServoX[codeX] += addX;
+	else
+		ServoX[codeX] -= addX;
+	isBeyondServoX(codeX);
+}
+
+
+void isBeyondServoY(int id)
+{
+	if(id){
+		ServoY[id]= (ServoY[id]>8.0)?(8.0):ServoY[id];
+		ServoY[id]= (ServoY[id]<0.0)?(0.0):ServoY[id];
+	}else{
+		ServoY[id]= (ServoY[id]>300.0)?(300.0):ServoY[id];
+		ServoY[id]= (ServoY[id]<0.0)?(0.0):ServoY[id];
+	}
+}
+
+
+void moveRightServoYPram()
+{
+	if(signY=='+'){
+		ServoY[codeY] += addY;
+	}else{
+		ServoY[codeY] -= addY;
+	}
+	isBeyondServoY(codeY);
+}

@@ -616,21 +616,41 @@ void moveLeftFireCtrlPram()
 	ShinId = eCalibGenPram_TimeValue0+ (ShinId - eCalibGenPram_TimeValue0+ 7)%8;
 }
 
-void moveLeftServoXPram()
+
+void moveRightFireViewPram()
 {
-	//if(signX=='+')
-	//	signX = '-';
-	//else
-	//	signX = '+';
+	if(!SHINE)
+		return;
+	OSDCTRL_ItemShow(ShinId);
+	ShinId = eCalibGenPram_VFLDOXValue0 + (ShinId - eCalibGenPram_VFLDOXValue0+ 1)%48;
 }
 
-
-void moveLeftServoYPram()
+void moveRightFireCtrlPram()
 {
-	//if(signY=='+')
-	//	signY = '-';
-	//else
-	//	signY = '+';
+	if(!SHINE)
+		return;
+	OSDCTRL_ItemShow(ShinId);
+	ShinId = eCalibGenPram_TimeValue0+ (ShinId - eCalibGenPram_TimeValue0+ 1)%8;
 }
 
+void udateMenuItem_Zero_General(PROJECTILE_TYPE type)
+{
+	
+	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
+
+	SDK_ASSERT(pCtrlObj!=NULL);
+	if(pCtrlObj->uInit==0)
+		return;
+
+	if(pTextObj[eCalibMenu_General].osdInitY == pTextObj[eCursorX].osdInitY)
+	{
+		Posd[eCalibMenu_General] = CalibGeneralOsd[type];
+	}else if(pTextObj[eCalibMenu_Zero].osdInitY == pTextObj[eCursorX].osdInitY)
+	{
+		//if(type != PROJECTILE_GRENADE_KILL)
+		//if(type>=1)
+		//	type--;
+			Posd[eCalibMenu_Zero] = CalibZeroOsd[type];
+	}
+}
 

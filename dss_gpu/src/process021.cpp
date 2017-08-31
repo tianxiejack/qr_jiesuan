@@ -3602,7 +3602,8 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		{
 			if(isGrenadeGas())
 				return ;
-			moveCrossUp();  //move the axis up
+			//moveCrossUp();  //move the axis up
+			moveCrossDown();
 		}
 		else if(isCalibrationWeather())
 		{
@@ -3668,7 +3669,8 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 		{
 			if(isGrenadeGas())
 				return ;
-			moveCrossDown();
+			//moveCrossDown();
+			moveCrossUp(); 
 		}
 		else if(isCalibrationWeather())
 		{
@@ -3770,7 +3772,7 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 		}
 		else if(isCalibrationSave())
 		{
-			//changeSaveOption();
+			changeSaveOption();
 		}
 	}
 	else if(isBattleMode())
@@ -3799,7 +3801,7 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 			}
 			else if(4 == getXPosition())
 			{
-				//increaseAdvancedMenu();
+				increaseAdvancedMenu();
 			}
 		}
 		else if(isCalibrationZero())
@@ -3821,16 +3823,16 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 			switch(gLevel3CalibrationState)
 			{
 				case Menu_FireView:
-					//moveRightFireViewPram();
+					moveRightFireViewPram();
 					break;
 				case Menu_FireCtrl:
-					//moveRightFireCtrlPram();
+					moveRightFireCtrlPram();
 					break;
 				case Menu_ServoX:
-					//moveRightServoXPram();
+					moveRightServoXPram();
 					break;
 				case Menu_ServoY:
-					//moveRightServoYPram();
+					moveRightServoYPram();
 					break;
 				default:
 					break;
@@ -3838,7 +3840,7 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 		}
 		else if(isCalibrationSave())
 		{
-			//changeSaveOption();
+			changeSaveOption();
 		}
 	}
 	else if(isBattleMode())
@@ -3869,10 +3871,10 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			int cmdId;//,i;
 			// assign cmdId according to XPosition
 			cmdId = CMD_CALIBRATION_SWITCH_TO_WEATHER + getXPosition();
-			//if((1 == getXPosition())&&(Posd[eCalibMenu_Zero] == CalibZeroOsd[2]))
-			//{
-			//	return ;
-			//}
+			if((1 == getXPosition())&&(Posd[eCalibMenu_Zero] == CalibZeroOsd[2]))
+			{
+				return ;
+			}
 			
 			//MSGDRIV_send(cmdId,0);//msg driv bug,cann't send the second msg
 			switch(cmdId)
@@ -3983,7 +3985,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 
 
 void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
- {
+ {//no used
 	if(isCalibrationMode())
 	{
 		if(isCalibrationMainMenu())
@@ -3991,19 +3993,7 @@ void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
 			//check XPosition before  udateMenuItem_Zero_General()
 			//udateMenuItem_Zero_General();
 		}
-		/*else if(isCalibrationGeneral())
-		{
-			gProjectileType = (gProjectileType + 1)%3;
-			//todo: \u66f4\u65b0\u8ddd\u79bb\u3001\u7efc\u4fee\u53c2\u6570
-		}else if(isCalibrationZero())
-		{
-			gProjectileType = (gProjectileType + 1)%2;
-			//todo: \u66f4\u65b0\u8ddd\u79bb\u3001\u7efc\u4fee\u53c2\u6570
-
-		}*/
 	}
-
-
 
 	#if 0
 		if(isCalibrationMode()||isBattleMode())
@@ -4108,6 +4098,7 @@ void CProcess021::processCMD_BUTTON_BATTLE_AUTO(LPARAM lParam)
 		OSDCTRL_EnterBattleMode();
 		Posd[eDynamicZone] = DynamicOsd[0];
 		OSDCTRL_ItemShow(eDynamicZone);
+		startDynamicTimer();
 	}
 	
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_BATTLE_AUTO",__func__,__LINE__);
@@ -4384,6 +4375,8 @@ void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
 		OSDCTRL_ItemShow(eDynamicZone);
 		startDynamicTimer();
 
+
+	
 		OSDCTRL_ItemShine(eMeasureType);
 	
 		if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)

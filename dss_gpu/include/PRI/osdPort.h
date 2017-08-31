@@ -45,8 +45,10 @@ void UpdataBoreSight();
 static void setNextZeroData(ZeroCorrectionItem *Item);
 void moveLeftFireViewPram();
 void moveLeftFireCtrlPram();
-void moveLeftServoXPram();
-void moveLeftServoYPram();
+void moveRightFireViewPram();
+void moveRightFireCtrlPram();
+void udateMenuItem_Zero_General(PROJECTILE_TYPE type);
+
 
 
 extern FOVCTRL_Handle pFovCtrlObj;
