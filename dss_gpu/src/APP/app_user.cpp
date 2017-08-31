@@ -567,6 +567,12 @@ static Int32 APP_onTimer( Int32 timerId )
 	OSDCTRL_NoShineShow();
   }
 
+	
+	 if(timerId == eGrenadeAngle_Timer)
+	 {
+			killSelfCheckGrenadeAngleTimer();
+			MSGDRIV_send(CMD_GENERADE_SENSOR_ERR,0);
+	 }
 
    if(timerId == eRGQ_Timer)
    {

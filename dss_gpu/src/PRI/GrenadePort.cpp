@@ -35,30 +35,25 @@ static BOOL GrenadePORT_open();
 static void GrenadePORT_close();
 void killSelfCheckGrenadeAngleTimer()
 {
-#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eGrenadeAngle_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(eGrenadeAngle_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(pCtrlTimer,eGrenadeAngle_Timer);
+		pCtrlTimer->KillTimer(eGrenadeAngle_Timer);
 	}
-#endif
 }
 void SelfCheckGrenadeAngleTimer_cbFxn(void* cbParam)
 {
-//	killSelfCheckGrenadeAngleTimer();
-//	sendCommand(CMD_GENERADE_SENSOR_ERR);
+	//killSelfCheckGrenadeAngleTimer();
+	//sendCommand(CMD_GENERADE_SENSOR_ERR);
 }
 
 void startSelfCheckGrenadeAngle_Timer()
 {
-#if 0
-	CTimerCtrl * pCtrlTimer;
-	pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eGrenadeAngle_Timer)==eTimer_Stat_Stop)
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eGrenadeAngle_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(pCtrlTimer,eGrenadeAngle_Timer,SELFCHECK_TIMER,SelfCheckGrenadeAngleTimer_cbFxn,(void*)(0x01));	
+		pCtrlTimer->SetTimer(eGrenadeAngle_Timer,SELFCHECK_TIMER);	
 	}
-#endif
 }
 
 double getGrenadeAngleAbs()
@@ -95,12 +90,12 @@ GrenadePORT_Handle GrenadePORT_initial(int(*MuxPortRecvFun)(Enum_MuxPortType,BYT
 
 //	SDK_SEM_RESET(GrenadeObj.UartPort.syncObj);
 
-#if 0
-	if(!GrenadePORT_open()){
-		SDK_SEM_DESTROY(GrenadeObj.UartPort.syncObj);
-		return NULL;
-	}
-#endif
+
+//	if(!GrenadePORT_open()){
+//		SDK_SEM_DESTROY(GrenadeObj.UartPort.syncObj);
+//		return NULL;
+//	}
+
 	return (&GrenadeObj);
 }
 

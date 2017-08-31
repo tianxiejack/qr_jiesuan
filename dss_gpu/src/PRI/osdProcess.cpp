@@ -670,13 +670,9 @@ void OSDCTRL_CalibMenuShow()
 	}
 	
 	Posd[eWorkMode] = WorkOsd[wCalibration];
-	//if(gProjectileType > PROJECTILE_GRENADE_GAS)
-	//	gProjectileType =(PROJECTILE_TYPE)(gProjectileType - 2);
 
-	//OSDCTRL_updateMainMenu((int)gProjectileType);
-	//OSDCTRL_NoShine();
-	//OSDCTRL_AlgSelect();
-	//printf("%s:%d		getProjectileType() = %d\n",__func__,__LINE__,getProjectileType());
+	OSDCTRL_NoShine();
+	OSDCTRL_AlgSelect();
 	OSDCTRL_updateMainMenu(getProjectileType());
 }
 
@@ -693,70 +689,59 @@ void OSDCTRL_CalibSaveShow()
 
 void OSDCTRL_CalibGenPramMenu0Show()
 {
-#if 0
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibGenPram_Menu; i<=eCalibGenPram_VFLD2YValue7; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibGenPram];
-#endif
 }
 
 void OSDCTRL_CalibGenPramMenu1Show()
 {
-#if 0
 	int i;
 	OSDCTRL_AllHide();
-	for(i=eCalibGenPram_MachGunTime; i<=eCalibGenPram_TimeValue7; i++){
+	for(i=eCalibGenPram_MachGunTime; i<=eCalibGenPram_TimeValue7; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibGenPram];
-#endif
 }
 
 void OSDCTRL_CalibGenPramMenu2Show()
 {
-#if 0
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibGenPram_ServoXMenu; i<=eCalibGenPram_ServoXValue14; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibGenPram];
-#endif
 }
 
 void OSDCTRL_CalibGenPramMenu3Show()
 {
-#if 0
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibGenPram_ServoYMenu; i<=eCalibGenPram_ServoYValue9; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibGenPram];
-#endif
 }
 
 void OSDCTRL_CalibHorizenShow()
 {
-#if 0
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibHorizen_Menu; i<=eCalibHorizen_Grenade; i++){
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibHorizen];
-#endif
 }
 
 void OSDCTRL_CalibLaserShow()
 {
-#if 0
 	OSDCTRL_AllHide();
 	Posd[eWorkMode] = WorkOsd[wCalibLaser];
-#endif
 }
 
 
@@ -828,7 +813,6 @@ void OSDCTRL_BattleAlertShow()
 
 void OSDCTRL_BattleTrackShow()
 {
-#if 0
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eWeather1; i<=eAngleV; i++){
@@ -836,10 +820,9 @@ void OSDCTRL_BattleTrackShow()
 	}
 	Posd[eWorkMode] = WorkOsd[wTrack];
 	OSDCTRL_updateAreaN();
-	AVTCTRL_setAquire();
+	//AVTCTRL_setAquire();
 	OSDCTRL_NoShine();
 	OSDCTRL_AlgSelect();
-#endif
 }
 
 void OSDCTRL_EnterBattleMode()
@@ -857,7 +840,7 @@ void OSDCTRL_EnterBattleMode()
 
 void OSDCTRL_CalibGenPramShow()
 {
-#if 0
+#if 1
 	int i = getAdvancedMenuIndex();
 	switch(i){
 		case 0:
