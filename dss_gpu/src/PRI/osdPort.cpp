@@ -496,6 +496,16 @@ bool isXatSave()
 }
 
 
+void moveCrossAbs(int x, int y)
+{
+	CFOV* cthis = pFovCtrlObj;
+	int borX,borY;
+	borX =  x;
+	borY =  y;
+	FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
+}
+
+
 void moveFocusRight()
 {
 	if(!SHINE)

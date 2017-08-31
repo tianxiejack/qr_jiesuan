@@ -1069,7 +1069,6 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		else if(BIT0(BYTE5(buf)) == 0x01)//up button to test the distance
 		{
 			//if(!isMeasureManual())
-			printf("CMD_MEASURE_DISTANCE CMD_MEASURE_DISTANCE CMD_MEASURE_DISTANCE\n");
 			MSGDRIV_send(CMD_MEASURE_DISTANCE,0);
 		}
 	}

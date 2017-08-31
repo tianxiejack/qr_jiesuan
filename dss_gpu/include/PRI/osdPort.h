@@ -49,7 +49,7 @@ void moveRightFireViewPram();
 void moveRightFireCtrlPram();
 void udateMenuItem_Zero_General(PROJECTILE_TYPE type);
 void updateMoveCross();
-
+void moveCrossAbs(int x, int y);
 
 extern FOVCTRL_Handle pFovCtrlObj;
 

@@ -3574,18 +3574,24 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 	{
 		//OSDCTRL_ItemHide(eDynamicZone);
 		enterLevel3CalculatorIdle();
-		
+		releaseServoContrl();
+		OSDCTRL_ItemHide(ePlatFormX);
+		resetGrenadeInPositionFlag();
+		moveCrossAbs(352, 288);
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&&(isAutoReady()||isAutoLoadFiringTable()))
 	{
+		//ce ju zhi hou jiu jin dao zhe li
+		moveCrossAbs(352, 288);
 		gLevel3CalculatorState = Auto_Idle;
 	}
 	else if(isBattleMode()&& isStatBattleAuto())
 	{
+		//normal enter this brance
 		if(OSDCTRL_IsOsdDisplay(eDynamicZone))
 			OSDCTRL_ItemHide(eDynamicZone);
 	}
-
+	
  
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_UNLOCK",__func__,__LINE__);
 	return ;
@@ -4392,9 +4398,8 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 
 void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
  {	
- 	printf("processCMD_MEASURE_DISTANCE processCMD_MEASURE_DISTANCE\n");
-	finish_laser_measure = 1;
-	printf("gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
+ 	finish_laser_measure = 1;
+	//printf("gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
 	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleTriggerMeasureVelocity())
 	{
@@ -4424,8 +4429,6 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&& isAutoTriggerMeasureVelocity())
 	{
-		printf("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\n");
-
 		if(!isTurretVelocityValid())
 			processCMD_VELOCITY_FAIL(0);
 			//sendCommand(CMD_VELOCITY_FAIL);
