@@ -117,7 +117,7 @@ int process_decode(struct RS422_data * pRS422_data)
 					Temperature =  buf[5]<<8|buf[6];
 
 #if SPI_DEBUG
-					printf(" PlatformThetaX=%d PlatformThetaY=%d weather=%d \n", PlatformThetaX, PlatformThetaY, Temperature);
+				printf(" PlatformThetaX=%d PlatformThetaY=%d weather=%d \n", PlatformThetaX, PlatformThetaY, Temperature);
 #endif
 
 				if((abs(PlatformThetaX) > 30000)||(abs(PlatformThetaY) >30000))

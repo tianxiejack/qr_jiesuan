@@ -3717,6 +3717,12 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
 			decreaseMeasureDis();
+			if(0 == DistanceManual)
+			{
+				Posd[eDynamicZone] = DynamicOsd[6];
+				OSDCTRL_ItemShow(eDynamicZone);
+				startDynamicTimer();
+			}
 			//loadFiringTable_Enter();
 		}
 	}

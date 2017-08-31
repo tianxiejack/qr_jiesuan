@@ -1471,19 +1471,19 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%s",Posd[eDynamicZone]);//); //��������
 			break;
 		case eAngleH:
-/*			PositionX = getPlatformPositionX();
+			PositionX = getPlatformPositionX();
 			PositionY = getPlatformPositionY();
 			sprintf(pStr,"Q%+03.0f%+03.0f",(PositionX),(PositionY)); 
-*/			
-			sprintf(pStr,"%c%+03.0f",200,getMachGunAngle());//�� 
+		
+		//	sprintf(pStr,"%c%+03.0f",200,getMachGunAngle());//�� 
 
 			break;
 		case eAngleV:
-/*			AngleGun = getMachGunAngle();
+			AngleGun = getMachGunAngle();
 			AngleGrenade = getGrenadeAngle();
 			sprintf(pStr,"G%+03.0f%+03.0f",(AngleGun),(AngleGrenade)); //��λΪ��
-*/
-			sprintf(pStr,"%c%+03.0f",211,getGrenadeAngle());//�� 
+
+			//sprintf(pStr,"%c%+03.0f",211,getGrenadeAngle());//�� 
 			break;
 		case eCorrectionTip:
 			sprintf(pStr,"%s",Posd[eCorrectionTip]);
