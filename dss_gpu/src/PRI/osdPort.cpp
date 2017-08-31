@@ -161,11 +161,12 @@ void moveCrossCenter(int x, int y)
 	}
 	
 	//FOVCTRL_updateFovRect(cthis,0,0,borX,(borY>>1));
-	if(borX > 0 && borX < 704 && borY >0 && borY < 576)
-	{
-		printf("move move move move\n");
-		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
-	}
+	#if 1
+		if(borX > 0 && borX < 704 && borY >0 && borY < 576)
+		{
+			FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
+		}
+	#endif
 }
 
 
@@ -182,6 +183,17 @@ int getCrossY()
 }
 
 
+void updateMoveCross()
+{
+	CFOV* cthis = pFovCtrlObj;
+	int borX,borY;
+	borX = cthis->fovX;
+	borY = cthis->fovY;
+	if(borY > 0 && borY < 576 && borX >0 && borX < 704)
+		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
+}
+
+
 
 void moveCrossDown()
 {
@@ -191,7 +203,7 @@ void moveCrossDown()
 	//borY = cthis->fovY<<1;
 	borY = cthis->fovY;
 	borY = (borY + STEPLEN + 576)%576;
-	if(borY < 576)
+	if(borY > 0)
 		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
 
@@ -206,7 +218,6 @@ void moveCrossUp()
 	borY = (borY - STEPLEN + 576)%576;
 	if(borY > 0)
 		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
-	//todo: �ƶ���λ�ŷ�
 }
 
 

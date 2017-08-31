@@ -1641,8 +1641,21 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		//msgdriv_event(MSGID_EXT_INPUT_RST_THETA, NULL);
 		MSGDRIV_send(MSGID_EXT_INPUT_RST_THETA,NULL);
 	}
-	
-	
+
+
+	if (key == 'U' || key == 'u')
+	{
+		isWeaponCtrlOK = 1;
+		isJoyStickOK = 1;
+		isPositionSensorOK = 1;
+		isPositionServoOK = 1;
+		isDipAngleSensorOK = 1;
+		isMachineGunSensorOK = 1;
+		isGrenadeSensorOK = 1;
+		isMachineGunServoOK = 1;
+		isGrenadeServoOK = 1;
+	}
+		
 
 	if (key == 'w')
 	{
@@ -3191,7 +3204,6 @@ void CProcess021::onPositionSensorOK(LPARAM lParam)
 	       }
 	}
 
-	//OSA_printf("%s,line:%d ... onPositionSensorOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3200,7 +3212,6 @@ void CProcess021::onPositionSensorERR(LPARAM lParam)
  {
  	isPositionSensorOK = FALSE;
 	
- 	//OSA_printf("%s,line:%d ... onPositionSensorERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3234,7 +3245,6 @@ void CProcess021::onJoyStickOK(LPARAM lParam)
 	}
 	// update area N 
 	OSDCTRL_updateAreaN();
-	//OSA_printf("%s,line:%d ... onJoyStickOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3250,7 +3260,6 @@ void CProcess021::onJoyStickErr(LPARAM lParam)
 	// update area N 
 	OSDCTRL_updateAreaN();
 
- 	//OSA_printf("%s,line:%d ... onJoyStickErr",__func__,__LINE__);
 	return ;
  }
 
@@ -3266,8 +3275,7 @@ void CProcess021::onWeaponCtrlOK(LPARAM lParam)
    		}
 		return;
 	}
-	//OSDCTRL_updateAreaN();
- 	//OSA_printf("%s,line:%d ... onWeaponCtrlOK",__func__,__LINE__);
+	OSDCTRL_updateAreaN();
 	return ;
  }
 
@@ -3279,7 +3287,7 @@ void CProcess021::onWeaponCtrlErr(LPARAM lParam)
 		return;
 	}
 	// update area N 
-	//OSDCTRL_updateAreaN();
+	OSDCTRL_updateAreaN();
 	return ;
 }
 
@@ -3294,8 +3302,6 @@ void CProcess021::onDipAngleSensorOK(LPARAM lParam)
 	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
 	       }
 	}
-
-	//OSA_printf("%s,line:%d ... onDipAngleSensorOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3304,7 +3310,6 @@ void CProcess021::onDipAngleSensorERR(LPARAM lParam)
  {
  	isDipAngleSensorOK = FALSE;
 	
-	//OSA_printf("%s,line:%d ... onDipAngleSensorERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3323,7 +3328,6 @@ void CProcess021::onMachineGunSensorOK(LPARAM lParam)
 	       }
 	}
 
-	//OSA_printf("%s,line:%d ... onMachineGunSensorOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3332,7 +3336,6 @@ void CProcess021::onMachineGunSensorOK(LPARAM lParam)
 void CProcess021::onMachineGunSensorERR(LPARAM lParam)
  {
  	isMachineGunSensorOK = FALSE;
- 	//OSA_printf("%s,line:%d ... onMachineGunSensorERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3348,7 +3351,6 @@ void CProcess021::onMachineGunServoOK(LPARAM lParam)
 	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
 	       }
 	}
-	//OSA_printf("%s,line:%d ... onMachineGunServoOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3358,7 +3360,6 @@ void CProcess021::onMachineGunServoERR(LPARAM lParam)
  {
  	isMachineGunServoOK = FALSE;
 	
- 	//OSA_printf("%s,line:%d ... onMachineGunServoERR",__func__,__LINE__);
 	return ;
  }
 
@@ -3649,7 +3650,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
 			increaseMeasureDis();
-			loadFiringTable_Enter();
+			//loadFiringTable_Enter();
 		}
 	}
 
@@ -3716,7 +3717,7 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
 			decreaseMeasureDis();
-			loadFiringTable_Enter();
+			//loadFiringTable_Enter();
 		}
 	}
 
@@ -3962,7 +3963,8 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 	{
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
-			if(SHINE &&(eMeasureDis == ShinId)){
+			if(SHINE &&(eMeasureDis == ShinId))
+			{
 				OSDCTRL_NoShine();
 				isfixingMeasure = FALSE;
 				if(0 == DistanceManual)
@@ -3980,6 +3982,8 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				else
 					OSDCTRL_ItemHide(eDynamicZone);
 			}
+			loadFiringTable_Enter();
+			//updateMoveCross();
 		}
 	}
 }

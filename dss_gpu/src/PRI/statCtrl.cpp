@@ -178,7 +178,7 @@ bool isMachineGun()
 
 bool bWeaponCtrlOK()
 {
-	isWeaponCtrlOK =1 ;
+	//isWeaponCtrlOK =1 ;
 	return isWeaponCtrlOK;
 }
 
@@ -247,7 +247,7 @@ bool bDipAngleSensorOK()
 
 bool bPositionServoOK()
 {
-	isPositionServoOK = 1;
+	//isPositionServoOK = 1;
 	return isPositionServoOK;
 }
 
@@ -273,7 +273,7 @@ bool isFovShine()
 
 bool bGrenadeServoOK()
 {
-	isGrenadeServoOK = 1;
+	//isGrenadeServoOK = 1;
 	return isGrenadeServoOK;
 }
 
@@ -289,7 +289,7 @@ bool bMaintPortOpen()
 
 bool bMachineGunServoOK()
 {
-	isMachineGunServoOK = 1;
+	//isMachineGunServoOK = 1;
 	return isMachineGunServoOK;
 }
 
