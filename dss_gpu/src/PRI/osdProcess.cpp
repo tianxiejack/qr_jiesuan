@@ -890,7 +890,7 @@ void OSDCTRL_updateAreaN()
 #if 1
 	int i=0;
 	bool noErr = FALSE;
-   #if 1	
+	
 	if(!Is9stateOK())
 	{
 		i = getErrCodeId();
@@ -906,7 +906,7 @@ void OSDCTRL_updateAreaN()
 	{
 		noErr = TRUE;
 	}
-   #endif	 
+
 	if(noErr)
 	{
 		OSDCTRL_ItemHide(eErrorZone);	

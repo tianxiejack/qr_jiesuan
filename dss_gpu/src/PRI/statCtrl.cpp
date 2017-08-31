@@ -614,8 +614,8 @@ void loadFiringTable_Enter()
 		}
 		else
 		{
-			printf("loadFiringTable_EnteloadFiringTable_EnterrloadFiringTable_Enter\n\n");
-			printf("getMeasureType = %d\n",getMeasureType());
+			//printf("loadFiringTable_EnteloadFiringTable_EnterrloadFiringTable_Enter\n\n");
+			//printf("getMeasureType = %d\n",getMeasureType());
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 
 
@@ -958,9 +958,14 @@ void DynamicTimer_cbFxn()
 {
 	killDynamicTimer();
 	if(OSDCTRL_IsOsdDisplay(eErrorZone))
+	
 		OSDCTRL_ItemHide(eErrorZone);
+	
 	if(OSDCTRL_IsOsdDisplay(eDynamicZone))
-		OSDCTRL_ItemHide(eDynamicZone);
+	{
+		if(Posd[eDynamicZone] != DynamicOsd[0])
+			OSDCTRL_ItemHide(eDynamicZone);
+	}
 	if(!isMeasureOsdNormal())
 	{
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
@@ -1018,8 +1023,6 @@ void processCMD_FIRING_TABLE_FAILURE(long lParam)
 	{
 		gLevel3CalculatorState = Auto_Idle;
 	}
-
- 	//OSA_printf("%s,line:%d ... processCMD_FIRING_TABLE_FAILURE",__func__,__LINE__);
 	return ;
  }
 
@@ -1051,5 +1054,38 @@ void increaseAdvancedMenu()
 	Posd[eCalibMenu_Child] = GenPramMenu[i];
 	gLevel3CalibrationState =(Level_three_state)(i + Menu_FireView);
 }
+
+
+void processCMD_MAINTPORT_LOCK(long lParam)
+ {
+ 	isMaintPortOpen=FALSE;
+	OSDCTRL_updateAreaN();
+	return ;
+ }
+
+void processCMD_MAINTPORT_UNLOCK(long lParam)
+ {
+ 	isMaintPortOpen=TRUE;
+	OSDCTRL_updateAreaN();
+	return ;
+ }
+
+
+void processCMD_DETEND_LOCK(long lParam)
+ {
+ 	isDetendClose=TRUE;
+	OSDCTRL_updateAreaN();
+ 	//OSA_printf("%s,line:%d ... processCMD_DETEND_LOCK",__func__,__LINE__);
+	return ;
+ }
+
+
+void processCMD_DETEND_UNLOCK(long lParam)
+ {
+ 	isDetendClose=FALSE;
+	OSDCTRL_updateAreaN();
+ 	//OSA_printf("%s,line:%d ... processCMD_DETEND_UNLOCK",__func__,__LINE__);
+	return ;
+ }
 
 

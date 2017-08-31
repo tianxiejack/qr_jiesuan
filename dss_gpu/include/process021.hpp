@@ -154,10 +154,7 @@ protected:
         static void processCMD_BUTTON_BATTLE_AUTO(LPARAM lParam);
         static void processCMD_BUTTON_BATTLE_ALERT(LPARAM lParam);
         static void processCMD_USER_FIRED(LPARAM lParam);
-        static void processCMD_DETEND_LOCK(LPARAM lParam);
-        static void processCMD_DETEND_UNLOCK(LPARAM lParam);
-        static void processCMD_MAINTPORT_LOCK(LPARAM lParam);
-        static void processCMD_MAINTPORT_UNLOCK(LPARAM lParam);
+       
         static void processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam);
         static void processCMD_CALIBRATION_SWITCH_TO_SAVE(LPARAM lParam);
         static void processCMD_CALIBRATION_SWITCH_TO_ZERO(LPARAM lParam);

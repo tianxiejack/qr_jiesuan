@@ -44,6 +44,7 @@
 #include "app_hardctrl.h"
 #include "statCtrl.h"
 #include "osdProcess.h"
+#include "GrenadePort.h"
 
 
 static Int32 APP_loadDefCfg( int item);

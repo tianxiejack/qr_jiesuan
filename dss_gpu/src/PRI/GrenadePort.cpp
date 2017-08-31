@@ -26,6 +26,7 @@
 #include "app_global.h"
 #include "GrenadePort.h"
 #include "msgDriv.h"
+#include "statCtrl.h"
 
 static GrenadePort_t GrenadeObj;
 static int ibInit=0;
@@ -52,7 +53,7 @@ void startSelfCheckGrenadeAngle_Timer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eGrenadeAngle_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(eGrenadeAngle_Timer,SELFCHECK_TIMER);	
+		pCtrlTimer->startTimer(eGrenadeAngle_Timer,SELFCHECK_TIMER);
 	}
 }
 

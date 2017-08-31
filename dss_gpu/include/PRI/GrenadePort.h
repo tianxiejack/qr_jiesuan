@@ -26,7 +26,8 @@ double getGrenadeAngleAbs();
 
 int GrenadePORT_PhraseByte(BYTE* pRecv);
 
-
+void startSelfCheckGrenadeAngle_Timer();
+void killSelfCheckGrenadeAngleTimer();
 
 
 
