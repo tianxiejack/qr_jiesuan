@@ -37,7 +37,7 @@ void TurretPosPORT_PhraseBye(unsigned char *pRecv);
 
 
 extern C_Thetas gTurretTheta;
-
+extern volatile bool valid_measure;
 
 
 #ifdef __cplusplus

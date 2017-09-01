@@ -206,6 +206,8 @@ int Process_mirror(struct RS422_data * pRS422_data)
 		int16_t sum_xor=0;
 		int i=0;
 
+		static int16_t last_laser_dis = 0;
+
 		int length = pRS422_data->length;
 		char * buf = (char*)pRS422_data->receiveData;
 
@@ -240,29 +242,35 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				if(1)
 				{
 					laser_dis = buf[2]<<8|buf[3];
-#if 1//SPI_DEBUG
+#if SPI_DEBUG
 					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
-#endif
-					if(9999 == laser_dis)
+#endif 
+					if(valid_measure == 1)
 					{
-						LaserDistance = -1;
-						//msg_tmp = LASERERR_NOECHO;
-						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOECHO);
-					}
-					else if(0 == laser_dis)
-					{
-						LaserDistance = -1;	
-						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOSAMPLE);
-					}
-					else
-					{
-						LaserDistance = laser_dis;
-						//SendMessage(CMD_LASER_OK,value);
-						MSGDRIV_send(CMD_LASER_OK,0);
+						if(9999 == laser_dis)
+						{
+							LaserDistance = -1;
+							//msg_tmp = LASERERR_NOECHO;
+							MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOECHO);
+						}
+						else if(0 == laser_dis)
+						{
+							LaserDistance = -1;	
+							MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOSAMPLE);
+						}
+						else
+						{
+							LaserDistance = laser_dis;
+							last_laser_dis = LaserDistance;
+							//SendMessage(CMD_LASER_OK,value);
+							MSGDRIV_send(CMD_LASER_OK,0);
+						}
 					}
 					
-					//LaserPORT_Ack();   send out the distance
+					LaserDistance = last_laser_dis;
 
+					valid_measure = 0;
+					//LaserPORT_Ack();   send out the distance
 					
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );

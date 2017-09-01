@@ -4344,7 +4344,6 @@ void CProcess021::processCMD_TRACKING_FAIL(LPARAM lParam)
 		enterLevel3CalculatorIdle();
 		releaseServoContrl();
 	}
- 	//OSA_printf("%s,line:%d ... processCMD_TRACKING_FAIL",__func__,__LINE__);
 	return ;
  }
 
@@ -4374,7 +4373,7 @@ void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
 
 void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
  {
-
+	printf("processCMD_MEASURE_VELOCITY   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleIdle())
 	{
 		//trigger get Velocity
@@ -4399,7 +4398,7 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
  {	
  	finish_laser_measure = 1;
-	//printf("gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
+	printf(" processCMD_MEASURE_DISTANCE   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
 	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleTriggerMeasureVelocity())
 	{
@@ -4444,14 +4443,13 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 		gLevel3CalculatorState = Auto_Preparation;
 		if(isMeasureManual())
 			processCMD_LASER_OK(0);
-			//sendCommand(CMD_LASER_OK);
 		else
 		{
+			//gLevel3CalculatorState = Auto_Idle;
 			OSDCTRL_ItemShow(eCorrectionTip);
 			LaserPORT_requst();
 		}	
 	}
- 	//OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE",__func__,__LINE__);
 	return ;
  }
 
@@ -4469,7 +4467,6 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 		{
 			killLaserTimer();
 			gLevel4subCalculatorState = Laser_OK;			
-			//sendCommand(CMD_TRACKING_OK);
 			processCMD_TRACKING_OK(0);
 		}
 		else
@@ -4482,8 +4479,6 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 		gLevel3CalculatorState = Auto_LoadFiringTable;
 		loadFiringTable_Enter();
 	}
-
-	//OSA_printf("%s,line:%d ... processCMD_LASER_OK",__func__,__LINE__);
 	return ;
  }
 

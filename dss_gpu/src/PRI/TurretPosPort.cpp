@@ -31,6 +31,7 @@ static int ibInit=0;
 static unsigned int g_measure_dist_time = 0;
 extern int turretTimer;
 
+volatile bool valid_measure = 0;
 
 C_Thetas gTurretTheta= {0.0,0};
 
@@ -109,7 +110,13 @@ double getTurretTheta()
 
 BOOL isTurretVelocityValid()
 {
-	return (Measure_dist_time_delta() >= 2000) ;//&& (counter>0);
+	//return (Measure_dist_time_delta() >= 2000) ;//&& (counter>0);
+	if(Measure_dist_time_delta() >= 2000) //&& (counter>0);
+	{
+		valid_measure = 1;
+		return 1;
+	}
+	
 }
 
 void resetTurretVelocityCounter()
