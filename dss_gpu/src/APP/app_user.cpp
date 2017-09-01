@@ -594,7 +594,7 @@ static Int32 APP_onTimer( Int32 timerId )
    {
    	pTimerObj->KillTimer(eLaser_Timer);
 	MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_TIMEOUT);
-   
+   	
    }
 
      if(timerId == eOSD_shine_Timer)

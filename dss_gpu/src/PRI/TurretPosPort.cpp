@@ -116,7 +116,8 @@ BOOL isTurretVelocityValid()
 		valid_measure = 1;
 		return 1;
 	}
-	
+	else
+		return 0;
 }
 
 void resetTurretVelocityCounter()

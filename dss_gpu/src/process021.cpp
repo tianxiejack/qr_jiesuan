@@ -4433,11 +4433,11 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			//sendCommand(CMD_VELOCITY_FAIL);
 		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG
 
-		OSDCTRL_ItemShine(eMeasureType);
-		if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
-		{
-			pTimerObj->startTimer(eOSD_shine_Timer,2000);
-		}
+	//	OSDCTRL_ItemShine(eMeasureType);
+	//	if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
+	//	{
+	//		pTimerObj->startTimer(eOSD_shine_Timer,2000);
+	//	}
 		
 		//todo: trigger Laser and AVT
 		gLevel3CalculatorState = Auto_Preparation;
