@@ -45,6 +45,7 @@
 #include "statCtrl.h"
 #include "osdProcess.h"
 #include "GrenadePort.h"
+#include "WeaponCtrl.h"
 
 
 static Int32 APP_loadDefCfg( int item);
@@ -599,34 +600,34 @@ static Int32 APP_onTimer( Int32 timerId )
 
 	     if(timerId == eOSD_shine_Timer)
 	     {
-	     		//printf("eOSD_shine_Timer eOSD_shine_Timer eOSD_shine_Timer\n");
-	     		pTimerObj->KillTimer(eOSD_shine_Timer);
-				//Posd[eMeasureType] = MeasureTypeOsd[0];
-				OSDCTRL_NoShineShow();
+     			//printf("eOSD_shine_Timer eOSD_shine_Timer eOSD_shine_Timer\n");
+     			pTimerObj->KillTimer(eOSD_shine_Timer);
+			//Posd[eMeasureType] = MeasureTypeOsd[0];
+			OSDCTRL_NoShineShow();
 	     }
 
 		if(timerId == eGrenadeServo_Timer)
 		{
-				killSelfCheckGrenadeServoTimer();
-				sendCommand(CMD_GENERADE_SERVO_ERR);
+			killSelfCheckGrenadeServoTimer();
+			sendCommand(CMD_GENERADE_SERVO_ERR);
 		}
 
 		if(timerId == eMachGunServo_Timer)
 		{
-				killSelfCheckMachGunServoTimer();
-				sendCommand(CMD_MACHINEGUN_SERVO_ERR);
+			killSelfCheckMachGunServoTimer();
+			sendCommand(CMD_MACHINEGUN_SERVO_ERR);
 		}
 
 		if(timerId == ePosServo_Timer)
 		{
-				killSelfCheckPosServoTimer();
-				sendCommand(CMD_POSITION_SERVO_ERR);		
+			killSelfCheckPosServoTimer();
+			sendCommand(CMD_POSITION_SERVO_ERR);		
 		}
 
 		if(timerId == eF3_Timer)
 		{
-				killF3Timer();
-				sendCommand(CMD_STABLEVIDEO_SWITCH );	
+			killF3Timer();
+			sendCommand(CMD_STABLEVIDEO_SWITCH );	
 		}
 
 		if(timerId == eF5_Timer)
@@ -644,7 +645,7 @@ static Int32 APP_onTimer( Int32 timerId )
 		if(timerId == eServoCheck_Timer)
 		{
 			if(isBootUpMode()&&isBootUpSelfCheck())
-				return ;
+				return 0;
 			sendCommand(CMD_SERVOTIMER_MACHGUN);
 		}
 	

@@ -22,15 +22,15 @@ typedef enum _FrameType{
 }FrameType;
 
 typedef enum _Button_Type{
-	Button_Base   = 0x0,	//ÎÞÐ§
-	Button_Right  = 0x1,	//·½Ïò-ÓÒ
+	Button_Base   = 0x0,	//ï¿½ï¿½Ð§
+	Button_Right  = 0x1,	//ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½
 	Button_Left   = 0x2,	
 	Button_UP     = 0x3,	//ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½
 	Button_Down   = 0x4,	//ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½
 	Button_Enter  = 0x5,	//È·ï¿½ï¿½
 	Button_Esc    = 0x6,	//ï¿½Ë³ï¿½
 	Button_Unlock = 0x7,	//ï¿½ï¿½ï¿½ï¿½
-	Button_AutoCheck  = 0x8//×Ô¼ì
+	Button_AutoCheck  = 0x8//ï¿½Ô¼ï¿½
 }Button_Type;
 
 typedef enum _Fire_Type{
@@ -105,6 +105,12 @@ int WeaponCtrlPort_ParseByte(BYTE* buf);
 
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf);
 void startServoServer(BYTE code);
+void  killF3Timer();
+void killSelfCheckMachGunServoTimer();
+void killSelfCheckGrenadeServoTimer();
+void killF5Timer();
+void killF6Timer();
+void killSelfCheckPosServoTimer();
 
 
 #ifdef __cplusplus

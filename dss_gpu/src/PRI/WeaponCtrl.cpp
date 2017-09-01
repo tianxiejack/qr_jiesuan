@@ -132,7 +132,7 @@ void startServoCheck_Timer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eServoCheck_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(eServoCheck_Timer,SERVOCHECK_TIMER);	
+		pCtrlTimer->startTimer(eServoCheck_Timer,SERVOCHECK_TIMER);	
 	}
 }
 
@@ -151,7 +151,7 @@ void startF6_Timer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eF6_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(eF6_Timer,FN_TIMER);	
+		pCtrlTimer->startTimer(eF6_Timer,FN_TIMER);	
 	}
 }
 
@@ -169,7 +169,7 @@ void startF5_Timer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eF5_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(eF5_Timer,FN_TIMER);	
+		pCtrlTimer->startTimer(eF5_Timer,FN_TIMER);	
 	}
 }
 
@@ -187,7 +187,7 @@ void startF3_Timer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eF3_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(eF3_Timer,FN_TIMER);	
+		pCtrlTimer->startTimer(eF3_Timer,FN_TIMER);	
 	}
 }
 
@@ -210,7 +210,7 @@ void startSelfCheckPosServo_Timer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(ePosServo_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(ePosServo_Timer,SELFCHECK_TIMER);	
+		pCtrlTimer->startTimer(ePosServo_Timer,SELFCHECK_TIMER);	
 	}
 }
 void killSelfCheckMachGunServoTimer()
@@ -227,9 +227,10 @@ void startSelfCheckMachGunServo_Timer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eMachGunServo_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(eMachGunServo_Timer,SELFCHECK_TIMER);	
+		pCtrlTimer->startTimer(eMachGunServo_Timer,SELFCHECK_TIMER);	
 	}
 }
+
 void killSelfCheckGrenadeServoTimer()
 {
 	CTimerCtrl * pCtrlTimer = pTimerObj;
@@ -244,7 +245,7 @@ void startSelfCheckGrenadeServo_Timer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eGrenadeServo_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(eGrenadeServo_Timer,SELFCHECK_TIMER);	
+		pCtrlTimer->startTimer(eGrenadeServo_Timer,SELFCHECK_TIMER);	
 	}
 }
 
