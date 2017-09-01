@@ -45,7 +45,6 @@
 #include "statCtrl.h"
 #include "osdProcess.h"
 #include "GrenadePort.h"
-#include "WeaponCtrl.h"
 
 
 static Int32 APP_loadDefCfg( int item);
@@ -76,7 +75,6 @@ DXD_Info gDXD_infoSave;
 static Bool  gAPP_Started   = FALSE;
 static Int32 gAPP_Usecase   = 0x00;
 
-	
 void initgdxd_info()
 {
 	 gDXD_info.OnLoadDefCfg  = APP_loadDefCfg;
@@ -435,15 +433,22 @@ static Int32 APP_start( int nType )
     gAPP_Started = TRUE;
 
 	
+
+	
+	//	Dx_setTimer(OSD_SHOW_TIMER, OSD_SHOW_TIMER_TICKS);
 	Dx_setTimer(GRPX_SHOW_TIMER,GRPX_SHOW_TIME_TICKS);
 	
+
+	
+	//Dx_setTimer(SYS_INFOR_SHOW_TIMER,SYS_INFOR_SHOW_TIMER_TICKS);
+	//Dx_setTimer(ALG_MTD_TIMER,  ALG_MTD_TIMER_TICKS);
 	Dx_setTimer(ALG_TRACK_TIMER,ALG_TRACK_TIMER_TICKS);
 	Dx_setTimer(GPIO_INSPECT_TIMER,GPIO_INSPECT_TICKS);
 	Dx_sendMsg( NULL, DX_MSGID_CTRL, (void*)( DX_CTL_ALG_LINK_INIT ), sizeof( Int32 ), FALSE );
 
 
-	startSelfCheckTimer();
-	startCANSendTimer();
+
+	
 	
 
 	OSA_printf("%s:exit", __func__);
@@ -470,8 +475,6 @@ static Int32 APP_stop( int item )
     //Dx_killTimer(ALG_TRACK_TIMER);
     Dx_killTimer(GRPX_SHOW_TIMER);
 
-    killSelfCheckTimer();
-    killCANSendTimer();
 
     if ( gAPP_Started )
     {
@@ -525,161 +528,84 @@ static Int32 APP_control( Int32 cmd )
 static Int32 APP_onTimer( Int32 timerId )
 {
 
-	    //printf("**********************************\n");
-	    if( timerId == SYS_INFOR_SHOW_TIMER)
-	    {
-	    	//no thing
-	    }
+    //printf("**********************************\n");
+    if( timerId == SYS_INFOR_SHOW_TIMER)
+    {
+    	
+    }
 
-	    if( timerId == GPIO_INSPECT_TIMER)
-	    {	    	
+    if( timerId == GPIO_INSPECT_TIMER)
+    {
+    	
+	//printf("OSA_getCurTimeInMsec() = %d \n",OSA_getCurTimeInMsec());
+
 		//APP_getvideostatus();
-	    }
+    }
 
-	    if(timerId == GRPX_SHOW_TIMER)
-	    {
-	    	 //Hard_getccdstatus();
-	        APP_graphic_timer_alarm();
-	    }
+    if(timerId == GRPX_SHOW_TIMER)
+    {
+    	 //Hard_getccdstatus();
+        APP_graphic_timer_alarm();
+    }
 
-	   if(timerId == ALG_TRACK_TIMER)
-	   {
-		  APP_tracker_timer_alarm();
-	   }
+   if(timerId == ALG_TRACK_TIMER)
+   {
+	  APP_tracker_timer_alarm();
+   }
 
-	  if(timerId == eDynamic_Timer)
-	  {
-		DynamicTimer_cbFxn();
-	  }
+  if(timerId == eDynamic_Timer)
+  {
+	DynamicTimer_cbFxn();
+  }
+
   
-	  if(timerId == eAVT_Timer)
-	  {
-	  	if(pTimerObj->GetTimerStat(eAVT_Timer) == eTimer_Stat_Run)
-	  	{
-	  		pTimerObj->KillTimer(eAVT_Timer);
-	  	}
-		OSDCTRL_NoShineShow();
-	  }
+  if(timerId == eAVT_Timer)
+  {
+  	if(pTimerObj->GetTimerStat(eAVT_Timer) == eTimer_Stat_Run)
+  	{
+  		pTimerObj->KillTimer(eAVT_Timer);
+  	}
+	OSDCTRL_NoShineShow();
+  }
 
 	
-	   if(timerId == eGrenadeAngle_Timer)
-	   {
+	 if(timerId == eGrenadeAngle_Timer)
+	 {
 			killSelfCheckGrenadeAngleTimer();
 			MSGDRIV_send(CMD_GENERADE_SENSOR_ERR,0);
-	   }
+	 }
 
-	   if(timerId == eRGQ_Timer)
-	   {
-			pTimerObj->KillTimer(eRGQ_Timer);
-			if(Posd[eCorrectionTip] == AngleCorrectOsd[CORRECTION_GQ])
-			{
-				Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_RGQ];
-				pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
-			}
-			else if(Posd[eCorrectionTip] != AngleCorrectOsd[CORRECTION_GQ])
-				OSDCTRL_ItemHide(eCorrectionTip);
+   if(timerId == eRGQ_Timer)
+   {
+	pTimerObj->KillTimer(eRGQ_Timer);
+	if(Posd[eCorrectionTip] == AngleCorrectOsd[CORRECTION_GQ])
+	{
+		Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_RGQ];
+		pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
+	}
+	else if(Posd[eCorrectionTip] != AngleCorrectOsd[CORRECTION_GQ])
+		OSDCTRL_ItemHide(eCorrectionTip);
 
-			if(OSDCTRL_IsOsdDisplay(eSuperOrder))
-				OSDCTRL_ItemHide(eSuperOrder);
-	   }
+	if(OSDCTRL_IsOsdDisplay(eSuperOrder))
+		OSDCTRL_ItemHide(eSuperOrder);
+   }
 
-	   if(timerId == eLaser_Timer)
-	   {
-	   		pTimerObj->KillTimer(eLaser_Timer);
-			MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_TIMEOUT);
-	   	
-	   }
+   if(timerId == eLaser_Timer)
+   {
+   	pTimerObj->KillTimer(eLaser_Timer);
+	MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_TIMEOUT);
+   	
+   }
 
-	     if(timerId == eOSD_shine_Timer)
-	     {
-     			//printf("eOSD_shine_Timer eOSD_shine_Timer eOSD_shine_Timer\n");
-     			pTimerObj->KillTimer(eOSD_shine_Timer);
-			//Posd[eMeasureType] = MeasureTypeOsd[0];
-			OSDCTRL_NoShineShow();
-	     }
-
-		if(timerId == eGrenadeServo_Timer)
-		{
-			killSelfCheckGrenadeServoTimer();
-			sendCommand(CMD_GENERADE_SERVO_ERR);
-		}
-
-		if(timerId == eMachGunServo_Timer)
-		{
-			killSelfCheckMachGunServoTimer();
-			sendCommand(CMD_MACHINEGUN_SERVO_ERR);
-		}
-
-		if(timerId == ePosServo_Timer)
-		{
-			killSelfCheckPosServoTimer();
-			sendCommand(CMD_POSITION_SERVO_ERR);		
-		}
-
-		if(timerId == eF3_Timer)
-		{
-			killF3Timer();
-			sendCommand(CMD_STABLEVIDEO_SWITCH );	
-		}
-
-		if(timerId == eF5_Timer)
-		{
-			killF5Timer();
-			sendCommand(CMD_MIDPARAMS_SWITCH );
-		}
-
-		if(timerId == eF6_Timer)
-		{
-			killF6Timer();
-			sendCommand(CMD_CONNECT_SWITCH);
-		}
-
-		if(timerId == eServoCheck_Timer)
-		{
-			if(isBootUpMode()&&isBootUpSelfCheck())
-				return 0;
-			sendCommand(CMD_SERVOTIMER_MACHGUN);
-		}
-
-		if(timerId == eBootUp_Timer)
-		{
-			CTimerCtrl * pCtrlTimer = pTimerObj;
-			if(pCtrlTimer->GetTimerStat(eDynamic_Timer)!=eTimer_Stat_Stop)
-			{
-				pCtrlTimer->KillTimer(eBootUp_Timer);
-			}
-			sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);
-		}
-
-
-		
-		if(timerId == eCAN_Timer)
-		{
-			if(servoInit)
-			{
-				servoInit = 0;
-				startServoCheck_Timer();
-				sendCommand(CMD_SERVO_INIT);
-			}
-			
-			if(isBootUpMode()&&isBootUpSelfCheck())
-			{
-				startServoCheck_Timer();
-				return 0;
-			}
-
-			sendCommand(CMD_TIMER_SENDFRAME0);
-			
-			if(bTraceSend)
-				sendCommand(CMD_TRACE_SENDFRAME0);
-		}
-
-
-
-
-		
+     if(timerId == eOSD_shine_Timer)
+     {
+     		//printf("eOSD_shine_Timer eOSD_shine_Timer eOSD_shine_Timer\n");
+     		pTimerObj->KillTimer(eOSD_shine_Timer);
+	//	Posd[eMeasureType] = MeasureTypeOsd[0];
+		OSDCTRL_NoShineShow();
+     }
 	
-    	return OSA_SOK;
+    return OSA_SOK;
 }
 
 int cltrl_dis_user(int value,int id)

@@ -58,18 +58,19 @@ BYTE FrameBuf1[5]={0xA1,0x10,0x44,0xFF,0x00};
 BYTE FrameBuf3[4]={0xA3,0x0F,0x00,0x00};
 //SIGNAL signal;
 static WeaponCtrlPort_t WeaponCtrlObj;
-static int ibInit=0;
-int servoInit=1;
+static int ibInit=0,servoInit=1;
 static BOOL WeaponCtrlPORT_open();
 static void WeaponCtrlPORT_close();
 
-BOOL bTraceSend=FALSE;
+static BOOL bTraceSend=FALSE;
 //static PVE_MSG *pOutMsg=NULL;
 
 static BYTE CANSendbuf[10]={0x01,0x04,0xB1,0x00,};
 static BYTE CANSendFrame1[10]={0x01,0x04,0xB0,0x00,};
 static BYTE CANSendFrame2[10]={0x01,0x04,0xB2,0x00,};
-
+//static BYTE CHECKSERVOMACH[6]={0x03,0x42,0x50,0x58,0x00,0x00};
+//static BYTE CHECKSERVOPOS[6]   ={0x03,0x42,0x50,0x58,0x00,0x00};
+//static BYTE CHECKSERVOGRENADE[6]={0x03,0x42,0x50,0x58,0x00,0x00};
 static char WeaponCtrl[16]={0};
 static 	unsigned short panoAngleV=0,panoAngleH=0;
 
@@ -77,10 +78,12 @@ static 	unsigned short panoAngleV=0,panoAngleH=0;
 
 void absPosRequest(BYTE code)
 {
+#if 1
 	char SERVOPOS[6]   ={0x03,0x00,0x50,0x58,0x00,0x00};
 	SERVOPOS[1] = code;
 	SendCANBuf(SERVOPOS, sizeof(SERVOPOS));
 	usleep(500);
+#endif
 }
 
 void startServo(BYTE code)
@@ -118,134 +121,208 @@ void startServoServer(BYTE code)
 
 void killServoCheckTimer()
 {
+#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eServoCheck_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eServoCheck_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(eServoCheck_Timer);
+		pCtrlTimer->KillTimer(pCtrlTimer,eServoCheck_Timer);
 	}
+#endif
 }
-
+void ServoCheckTimer_cbFxn(void* cbParam)
+{
+#if 0
+	if(isBootUpMode()&&isBootUpSelfCheck())
+		return ;
+	sendCommand(CMD_SERVOTIMER_MACHGUN);
+#endif
+}
 
 void startServoCheck_Timer()
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eServoCheck_Timer)==eTimer_Stat_Stop)
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eServoCheck_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eServoCheck_Timer,SERVOCHECK_TIMER);	
+		pCtrlTimer->SetTimer(pCtrlTimer,eServoCheck_Timer,SERVOCHECK_TIMER,ServoCheckTimer_cbFxn,(void*)(0x01));	
 	}
+#endif
 }
 
 
 void killF6Timer()
 {
+#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eF6_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eF6_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(eF6_Timer);
+		pCtrlTimer->KillTimer(pCtrlTimer,eF6_Timer);
 	}
+#endif
+}
+void F6Timer_cbFxn(void* cbParam)
+{
+//	killF6Timer();
+//	sendCommand(CMD_CONNECT_SWITCH);
 }
 
 void startF6_Timer()
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eF6_Timer)==eTimer_Stat_Stop)
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eF6_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eF6_Timer,FN_TIMER);	
+		pCtrlTimer->SetTimer(pCtrlTimer,eF6_Timer,FN_TIMER,F6Timer_cbFxn,(void*)(0x01));	
 	}
+#endif
 }
 
 void killF5Timer()
 {
+#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eF5_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eF5_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(eF5_Timer);
+		pCtrlTimer->KillTimer(pCtrlTimer,eF5_Timer);
 	}
+#endif
+}
+void F5Timer_cbFxn(void* cbParam)
+{
+//	killF5Timer();
+//	sendCommand(CMD_MIDPARAMS_SWITCH );
 }
 
 void startF5_Timer()
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eF5_Timer)==eTimer_Stat_Stop)
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eF5_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eF5_Timer,FN_TIMER);	
+		pCtrlTimer->SetTimer(pCtrlTimer,eF5_Timer,FN_TIMER,F5Timer_cbFxn,(void*)(0x01));	
 	}
+#endif
 }
 
 void  killF3Timer()
 {
+#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eF3_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eF3_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(eF3_Timer);
+		pCtrlTimer->KillTimer(pCtrlTimer,eF3_Timer);
 	}
+#endif
+}
+
+void F3Timer_cbFxn(void* cbParam)
+{
+//	killF3Timer();
+//	sendCommand(CMD_STABLEVIDEO_SWITCH );
 }
 
 void startF3_Timer()
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eF3_Timer)==eTimer_Stat_Stop)
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eF3_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eF3_Timer,FN_TIMER);	
+		pCtrlTimer->SetTimer(pCtrlTimer,eF3_Timer,FN_TIMER,F3Timer_cbFxn,(void*)(0x01));	
 	}
+#endif
 }
-
 BOOL isTimerAlive(UINT id)
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	return (pCtrlTimer->GetTimerStat(id)==eTimer_Stat_Run);
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	return (pCtrlTimer->GetTimerStat(pCtrlTimer,id)==eTimer_Stat_Run);
+#endif
 }
 void killSelfCheckPosServoTimer()
 {
+#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(ePosServo_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,ePosServo_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(ePosServo_Timer);
+		pCtrlTimer->KillTimer(pCtrlTimer,ePosServo_Timer);
 	}
+#endif
+}
+void SelfCheckPosServoTimer_cbFxn(void* cbParam)
+{
+//	killSelfCheckPosServoTimer();
+//	sendCommand(CMD_POSITION_SERVO_ERR);
 }
 
 void startSelfCheckPosServo_Timer()
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(ePosServo_Timer)==eTimer_Stat_Stop)
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,ePosServo_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(ePosServo_Timer,SELFCHECK_TIMER);	
+		pCtrlTimer->SetTimer(pCtrlTimer,ePosServo_Timer,SELFCHECK_TIMER,SelfCheckPosServoTimer_cbFxn,(void*)(0x01));	
 	}
+#endif
 }
 void killSelfCheckMachGunServoTimer()
 {
+#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eMachGunServo_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eMachGunServo_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(eMachGunServo_Timer);
+		pCtrlTimer->KillTimer(pCtrlTimer,eMachGunServo_Timer);
 	}
+#endif
+}
+void SelfCheckMachGunServoTimer_cbFxn(void* cbParam)
+{
+//	killSelfCheckMachGunServoTimer();
+//	sendCommand(CMD_MACHINEGUN_SERVO_ERR);
 }
 
 void startSelfCheckMachGunServo_Timer()
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eMachGunServo_Timer)==eTimer_Stat_Stop)
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eMachGunServo_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eMachGunServo_Timer,SELFCHECK_TIMER);	
+		pCtrlTimer->SetTimer(pCtrlTimer,eMachGunServo_Timer,SELFCHECK_TIMER,SelfCheckMachGunServoTimer_cbFxn,(void*)(0x01));	
 	}
+#endif
 }
-
 void killSelfCheckGrenadeServoTimer()
 {
+#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eGrenadeServo_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eGrenadeServo_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(eGrenadeServo_Timer);
+		pCtrlTimer->KillTimer(pCtrlTimer,eGrenadeServo_Timer);
 	}
+#endif
+}
+void SelfCheckGrenadeServoTimer_cbFxn(void* cbParam)
+{
+//	killSelfCheckGrenadeServoTimer();
+//	sendCommand(CMD_GENERADE_SERVO_ERR);
 }
 
 void startSelfCheckGrenadeServo_Timer()
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eGrenadeServo_Timer)==eTimer_Stat_Stop)
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eGrenadeServo_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eGrenadeServo_Timer,SELFCHECK_TIMER);	
+		pCtrlTimer->SetTimer(pCtrlTimer,eGrenadeServo_Timer,SELFCHECK_TIMER,SelfCheckGrenadeServoTimer_cbFxn,(void*)(0x01));	
 	}
+#endif
 }
 
 BOOL isMachGunUpLocked()
@@ -324,7 +401,7 @@ float getpanoAngleH()
 
 void setTraceModeSwitch(BOOL context)
 {
-	bTraceSend = context;
+//	bTraceSend = context;
 }
 
 void requstServoContrl()
@@ -348,16 +425,15 @@ void resetGrenadeInPositionFlag(void)
 {
 	CANSendbuf[3] = (CANSendbuf[3]&0x0F);
 }
-
 void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 {
-	absPosRequest(CODE_GRENADE);
-	absPosRequest(CODE_MACHGUN);
-	absPosRequest(CODE_TURRET);
+//	absPosRequest(CODE_GRENADE);
+//	absPosRequest(CODE_MACHGUN);
+//	absPosRequest(CODE_TURRET);
 }
-
 void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 {
+#if 0
 	short TempAngle;
 	
 	if(isBootUpMode()&&isBootUpSelfCheck())
@@ -375,11 +451,13 @@ void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 	CANSendbuf[8] = ((TempAngle>>8)&0xFF);
 	CANSendbuf[9] = (TempAngle&0xFF);
 	
-	SendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
+	WeaponCtrlPORT_send(CANSendbuf, sizeof(CANSendbuf));
+#endif
+	
 }
-
 void processCMD_TIMER_SENDFRAME1(LPARAM lParam)//����֡1
 {
+#if 0
 	short TempAngle;
 	
 	if(isBootUpMode()&&isBootUpSelfCheck())
@@ -397,14 +475,16 @@ void processCMD_TIMER_SENDFRAME1(LPARAM lParam)//����֡1
 	CANSendFrame1[7] = ((TempAngle>>8)&0xFF);
 	CANSendFrame1[8] = (TempAngle&0xFF);
 	
-	SendCANBuf((char *)CANSendFrame1, 10);
+	WeaponCtrlPORT_send(CANSendFrame1, 10);
+#endif
 }
-
-void processCMD_TIMER_SENDFRAME2(LPARAM lParam)
+void processCMD_TIMER_SENDFRAME2(LPARAM lParam)//����֡2
 {
+#if 0
 	if(isBootUpMode()&&isBootUpSelfCheck())
 		return ;
 
+	//todo: ���Լ�״̬����ʵʱ���µ�״̬?�Ӷ�ʱ��?
 	(BYTE9(CANSendFrame2)) &= 0XFE;
 	(BYTE9(CANSendFrame2)) |= (0XFE | bMachineGunSensorOK());//5.8�Ƕȴ�����״̬
 	(BYTE9(CANSendFrame2)) &= 0XFD;
@@ -416,9 +496,10 @@ void processCMD_TIMER_SENDFRAME2(LPARAM lParam)
 	(BYTE9(CANSendFrame2)) &= 0XEF;
 //	(BYTE9(CANSendFrame2)) |= ;//��׼��״̬ todo value
 	(BYTE9(CANSendFrame2)) &= 0XDF;
-	(BYTE9(CANSendFrame2)) |= (0XDF | (/*bVideoOK()*/1<<5));//��Ƶ����״̬
+	(BYTE9(CANSendFrame2)) |= (0XDF | (bVideoOK()<<5));//��Ƶ����״̬
 	
-	SendCANBuf((char *)CANSendFrame1, 10);
+	WeaponCtrlPORT_send(CANSendFrame1, 10);
+#endif
 }
 
 void processCMD_TRACE_SENDFRAME0(LPARAM lParam)
@@ -444,19 +525,18 @@ void processCMD_TRACE_SENDFRAME0(LPARAM lParam)
 	TRACEPORT_send(buf,pOutMsg->head.uiSize);
 #endif
 }
-
 void processCMD_SERVO_INIT(LPARAM lParam)
 {
+#if 0
 	startServoServer(CODE_GRENADE);
 	startServoServer(CODE_MACHGUN);
 	startServoServer(CODE_TURRET);
+#endif
 }
-
 Fov_Type getFovState()
 {
 	return (BIT3_2(BYTE2(FrameBuf1)))?(FOV_SMALL):(FOV_LARGE);
 }
-
 void setSysWorkMode()
 {
 	BYTE1(FrameBuf1) &= ~0x0C;
@@ -487,26 +567,37 @@ int getBulletType()
 	return 1;
 }
 
+void CANSend_cbFxn(void* cbParam)
+{
+#if 0
+//	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(servoInit){
+		servoInit = 0;
+		startServoCheck_Timer();
+		sendCommand(CMD_SERVO_INIT);
+	}
+	
+	if(isBootUpMode()&&isBootUpSelfCheck()){
+		startServoCheck_Timer();
+		return ;
+	}
+	sendCommand(CMD_TIMER_SENDFRAME0);
+	if(bTraceSend)
+		sendCommand(CMD_TRACE_SENDFRAME0);
+#endif
+}
 
  void startCANSendTimer()
 {
-	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eCAN_Timer)==eTimer_Stat_Stop)
+#if 0
+	CTimerCtrl * pCtrlTimer;
+	pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eCAN_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eCAN_Timer,CAN_TIMER);	
+		pCtrlTimer->SetTimer(pCtrlTimer,eCAN_Timer,CAN_TIMER,CANSend_cbFxn,(void*)(0x01));	
 	}
+#endif
 }
-
- void killCANSendTimer()
- {
- 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(eCAN_Timer)==eTimer_Stat_Run)
-	{
-		pCtrlTimer->KillTimer(eCAN_Timer);	
-	}
- }
-
- 
 //DFU_Handle pDUFObj=NULL;
 /*
  *  ======== WeaponCtrlPORT_initial========
@@ -517,26 +608,27 @@ WeaponCtrlPORT_Handle WeaponCtrlPORT_initial(int(*MuxPortRecvFun)(Enum_MuxPortTy
 {
 	if(ibInit)
 		return (&WeaponCtrlObj);
-#if 0
+#if 0	
 	ibInit=1;
-	WeaponCtrlObj.pInter.PortType		= Enum_WeaponCtrlPort;//Enum_TracPort;//
+	WeaponCtrlObj.pInter.PortType	= Enum_WeaponCtrlPort;//Enum_TracPort;//
 	WeaponCtrlObj.pInter.OpenPort 	= WeaponCtrlPORT_open;
-	WeaponCtrlObj.pInter.ClosePort		= WeaponCtrlPORT_close;
+	WeaponCtrlObj.pInter.ClosePort	= WeaponCtrlPORT_close;
 	WeaponCtrlObj.pInter.Write		= WeaponCtrlPORT_send;
 	WeaponCtrlObj.pInter.Read		= NULL;
 	WeaponCtrlObj.pInter.Control		= NULL;
-	WeaponCtrlObj.pInter.MuxPortRecv	= NULL;
+	WeaponCtrlObj.pInter.MuxPortRecv	= MuxPortRecvFun;
 
-	WeaponCtrlObj.UartPort.uartId		= 0xFF;
+	WeaponCtrlObj.UartPort.uartId	= 0xFF;
 	WeaponCtrlObj.UartPort.syncObj 	= SDK_SEM_CREATE(0);
 	WeaponCtrlObj.UartPort.recvLen	= 0;
 
+	SDK_SEM_RESET(WeaponCtrlObj.UartPort.syncObj);
 	if(!WeaponCtrlPORT_open()){
 		SDK_SEM_DESTROY(WeaponCtrlObj.UartPort.syncObj);
 		return NULL;
 	}
 	
-	//pOutMsg = SDK_MALLOC(sizeof(PVE_MSG)+10, EXTERNALHEAP);
+	pOutMsg = SDK_MALLOC(sizeof(PVE_MSG)+10, EXTERNALHEAP);
 #endif	
 	return (&WeaponCtrlObj);
 }

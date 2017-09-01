@@ -242,7 +242,7 @@ void CProcess021::OnCreate()
 	MSGAPI_initial();
 	//App_dxmain();
 
-	//MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
 	
 	#if 1
 	CMD_EXT *pIStuts = &extInCtrl;
@@ -3088,30 +3088,33 @@ void CProcess021::MSGAPI_settrackBreakLock(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
  {
-	 	if(!isBootUpMode())
+#if 1
+ 	if(!isBootUpMode())
+	{
+		if(isCalibrationMode()&&!isCalibrationMainMenu())
 		{
-			if(isCalibrationMode()&&!isCalibrationMainMenu())
+			if(isCalibrationZero())
 			{
-				if(isCalibrationZero())
-				{
-					saveZeroParam();
-				}
-				else if(isCalibrationGeneral())
-				{
-					saveGeneralParam();
-				}
-				else if(isCalibrationWeather())
-				{
-					saveWeatherParam();
-				}		
-				gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
-			//	OSDCTRL_NoShine();
-			}	
-			gLevel1LastMode = gLevel1Mode;
-			gLevel1Mode = MODE_BOOT_UP;
-			releaseServoContrl();
-		}
-		OSDCTRL_CheckResultsShow();
+				;//saveZeroParam();
+			}
+			else if(isCalibrationGeneral())
+			{
+				;//saveGeneralParam();
+			}
+			else if(isCalibrationWeather())
+			{
+				;//saveWeatherParam();
+			}		
+			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+		//	OSDCTRL_NoShine();
+		}	
+		gLevel1LastMode = gLevel1Mode;
+		gLevel1Mode = MODE_BOOT_UP;
+	//	releaseServoContrl();
+	}
+#endif	
+	OSDCTRL_CheckResultsShow();
+ 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_AUTOCHECK",__func__,__LINE__);
 	return ;
  }
 
@@ -3128,6 +3131,7 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
 	}
 	//ReadParamsFlash();//read data from flash
 	
+ 	//OSA_printf("%s,line:%d ... processCMD_BOOT_UP_CHECK_COMPLETE",__func__,__LINE__);
 	return ;
  }
 
@@ -3166,18 +3170,24 @@ void CProcess021::processCMD_BUTTON_CALIBRATION(LPARAM lParam)
  {
 	if( isBattleMode())
 	{
+		//if(isStatBattleAlert())
+		//	return;
 		gLevel1LastMode = gLevel1Mode;
 		gLevel1Mode = MODE_CALIBRATION;
 		gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
 		gLevel3CalibrationState   = Menu_FireView;
-		releaseServoContrl();
+		//releaseServoContrl();
+		// update OSD to calibration display
 	}
 	else
 	{
 		return ;
 		//assert(FALSE);
 	}
+	//OSDCTRL_updateMainMenu(gProjectileType);
+			
 	OSDCTRL_EnterCalibMode();
+ 	OSA_printf("%s,line:%d ... processCMD_BUTTON_CALIBRATION",__func__,__LINE__);
 	return ;
  }
 
@@ -3349,6 +3359,7 @@ void CProcess021::onMachineGunServoOK(LPARAM lParam)
 void CProcess021::onMachineGunServoERR(LPARAM lParam)
  {
  	isMachineGunServoOK = FALSE;
+	
 	return ;
  }
 
@@ -3425,6 +3436,8 @@ void CProcess021::onGrenadeServoOK(LPARAM lParam)
 void CProcess021::onGrenadeServoERR(LPARAM lParam)
  {
  	isGrenadeServoOK = FALSE;
+	
+ 	//OSA_printf("%s,line:%d ... onGrenadeServoERR",__func__,__LINE__);
 	return ;
  }
 
@@ -4484,8 +4497,45 @@ void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
 			gLevel4subCalculatorState = TrackingOK;
 		}
 	}
+	
+ 	//OSA_printf("%s,line:%d ... processCMD_TRACKING_OK",__func__,__LINE__);
 	return ;
  }
+
+#if 0
+void CProcess021::processCMD_FIRING_TABLE_LOAD_OK(LPARAM lParam)
+ {
+	if(isBattleMode()&& isStatBattleAuto()&&isBattleLoadFiringTable())//&&isTrackingMode())
+	{
+		
+			gLevel3CalculatorState = Battle_Ready;
+			//OSDdisplay
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
+			OSDCTRL_ItemShow(eCorrectionTip);
+
+			// auto track and shoot.
+			requstServoContrl();
+
+			OSDCTRL_ItemShow(ePlatFormX);
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ
+	}
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoLoadFiringTable())
+	{
+			gLevel3CalculatorState = Auto_Ready;
+			//OSDdisplay
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
+			OSDCTRL_ItemShow(eCorrectionTip);
+
+			// auto track and shoot.
+//			requstServoContrl();
+//			OSDCTRL_ItemShow(ePlatFormX);
+	}
+}
+#endif
+
+
 
 
 void CProcess021::processCMD_MODE_ATTACK_SIGLE(LPARAM lParam)
@@ -4588,6 +4638,13 @@ void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
  }
 
 
+void CProcess021::processCMD_TIMER_SENDFRAME0(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_TIMER_SENDFRAME0",__func__,__LINE__);
+	return ;
+ }
+
+
 void CProcess021::processCMD_TRACE_SENDFRAME0(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_TRACE_SENDFRAME0",__func__,__LINE__);
@@ -4683,6 +4740,20 @@ void CProcess021::processCMD_IDENTIFY_KILL(LPARAM lParam)
 void CProcess021::processCMD_IDENTIFY_GAS(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_IDENTIFY_GAS",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SERVO_INIT(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SERVO_INIT",__func__,__LINE__);
+	return ;
+ }
+
+
+void CProcess021::processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
+ {
+ 	OSA_printf("%s,line:%d ... processCMD_SERVOTIMER_MACHGUN",__func__,__LINE__);
 	return ;
  }
 

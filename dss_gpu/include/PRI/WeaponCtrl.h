@@ -22,15 +22,15 @@ typedef enum _FrameType{
 }FrameType;
 
 typedef enum _Button_Type{
-	Button_Base   = 0x0,	//ï¿½ï¿½Ð§
-	Button_Right  = 0x1,	//ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½
+	Button_Base   = 0x0,	//ÎÞÐ§
+	Button_Right  = 0x1,	//·½Ïò-ÓÒ
 	Button_Left   = 0x2,	
 	Button_UP     = 0x3,	//ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½
 	Button_Down   = 0x4,	//ï¿½ï¿½ï¿½ï¿½-ï¿½ï¿½
 	Button_Enter  = 0x5,	//È·ï¿½ï¿½
 	Button_Esc    = 0x6,	//ï¿½Ë³ï¿½
 	Button_Unlock = 0x7,	//ï¿½ï¿½ï¿½ï¿½
-	Button_AutoCheck  = 0x8//ï¿½Ô¼ï¿½
+	Button_AutoCheck  = 0x8//×Ô¼ì
 }Button_Type;
 
 typedef enum _Fire_Type{
@@ -60,25 +60,6 @@ typedef union SIGNAL_TAG {
 	unsigned  GrenadeP:1;//ï¿½ñµ¯·ï¿½ï¿½ï¿½
 	}bit;
 }SIGNAL;
-
-
-typedef struct _pve_msg_header{
-	unsigned int SyFlag;
-	unsigned int uiVersion;		
-	//eCMD_TYPE eCmdType;
-	unsigned int uiRequestId;
-	unsigned int uiSize;		
-}PVE_MSG_HEADER, *PPVE_MSG_HEADER;
-
-typedef struct _pve_msg{
-	PVE_MSG_HEADER head;
-	union{
-		unsigned char data[4];
-		int  iReplyValue;
-	}UN_MSG;
-}PVE_MSG, *PPVE_MSG;
-
-
 //extern SIGNAL signal;
 BOOL isMachGunUpLocked();
 BOOL isMachGunDownLocked();
@@ -124,18 +105,8 @@ int WeaponCtrlPort_ParseByte(BYTE* buf);
 
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf);
 void startServoServer(BYTE code);
-void  killF3Timer();
-void killSelfCheckMachGunServoTimer();
-void killSelfCheckGrenadeServoTimer();
-void killF5Timer();
-void killF6Timer();
-void killSelfCheckPosServoTimer();
- void startCANSendTimer();
- void startServoCheck_Timer();
- void killCANSendTimer();
 
-extern BOOL bTraceSend;
-extern int servoInit;
+
 #ifdef __cplusplus
 }
 #endif

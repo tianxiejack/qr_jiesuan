@@ -621,18 +621,6 @@ void saveZeroParam()
 		gGrenadeKill_ZCTable.Angle	     = getGrenadeAngleAbs();
 }
 
-void saveGeneralParam()
-{
-	if(isGrenadeKill()){
-		saveLastGeneralParam(&gGrenadeKill_GCParam);
-	}else if(isGrenadeGas()){
-		saveLastGeneralParam(&gGrenadeGas_GCParam);
-	}else if(isMachineGun()){
-		saveLastGeneralParam(&gMachineGun_GCParam);
-	}
-}
-
-
 void moveLeftFireViewPram()
 {
 	if(!SHINE)
