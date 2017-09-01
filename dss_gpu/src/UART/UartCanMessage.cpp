@@ -31,10 +31,10 @@
 
 #include "UartCanMessage.h"
 #include "WeaponCtrl.h"
-
+bool test_flag_uart = 0;
 static int fd_can;
 
-//·¢ËÍÊý¾Ý¸øËÅ·þµÄ£É£ÄºÅ¡£¡¡»úÇ¹	Áñµ¯	ÅÚÌ¨
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¸ï¿½ï¿½Å·ï¿½ï¿½Ä£É£ÄºÅ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ç¹	ï¿½ï¿½	ï¿½ï¿½Ì¨
 #define CODE_SERVO_MACHGUN   	(0x2C)
 #define CODE_SERVO_GRENADE	(0x37)
 #define CODE_SERVO_TURRET     	(0x42)
@@ -345,14 +345,21 @@ int ReadCANBuf(char *buf, int length)
 
 int SendCANBuf(char *buf, int length)
 {
-	int nwrite= 0 ;
-	nwrite = write(fd_can, buf, length);
-	return nwrite;
+	//if(test_flag_uart == 1)
+	//{
+		int nwrite= 0 ;
+		nwrite = write(fd_can, buf, length);
+		//test_flag_uart = 0;
+		return nwrite;
+	//}
+	//test_flag_uart = 0;
+	//return 0;
+	
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//»ñÈ¡¾ø¶ÔÎ»ÖÃ
+//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 void ServoAbsPosRequest( char code)
 {
 	 char servoPos[6]={ 0x03, 0x00, 0x50, 0x58, 0x00, 0x00  };
@@ -360,7 +367,7 @@ void ServoAbsPosRequest( char code)
 	SendCANBuf(servoPos,  sizeof(servoPos));
 }
 
-//¿ªÊ¼ÔËÐÐ
+//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
 void ServoStart( char code)
 {
 	 char start[6] = {0x03, 0x00, 0x42, 0x47, 0x00, 0x00 };
@@ -368,8 +375,8 @@ void ServoStart( char code)
 	SendCANBuf(start, sizeof(start));
 }
 
-//ÒýÓÃstartServoServer()º¯Êý
-//³õÊ¼»¯ËÅ·þÉè±¸
+//ï¿½ï¿½ï¿½ï¿½startServoServer()ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Å·ï¿½ï¿½è±¸
 int InitServo(  char code )
 {
 	 char buf[4] = {0x00, 0x00, 0x01, 0x00};
@@ -377,23 +384,23 @@ int InitServo(  char code )
 	 char MOTOR1[10] = { 0x03, 0x00, 0x4d, 0x4f, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00};
 	 char MODE[10] 	 =  { 0x03, 0x00, 0x55, 0x4d, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00 };
 
-	SendCANBuf(buf,  sizeof(buf));  //Æô¶¯canÍøÂç
+	SendCANBuf(buf,  sizeof(buf));  //ï¿½ï¿½ï¿½ï¿½canï¿½ï¿½ï¿½ï¿½
 
 	MOTOR0[1] = code;
-	SendCANBuf(MOTOR0,  sizeof(MOTOR0));	//µç»úÊ¹ÄÜÎª£°
+	SendCANBuf(MOTOR0,  sizeof(MOTOR0));	//ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Îªï¿½ï¿½
 	MODE[1] = code;
-	SendCANBuf(MODE, sizeof(MODE)); 	//ËÙ¶ÈÑ¡ÔñÄ£Ê½Îª£µ
+	SendCANBuf(MODE, sizeof(MODE)); 	//ï¿½Ù¶ï¿½Ñ¡ï¿½ï¿½Ä£Ê½Îªï¿½ï¿½
 	MOTOR1[1] = code;
-	SendCANBuf(MOTOR1, sizeof(MOTOR1)); //µç»úÊ¹ÄÜÎª£±
-	ServoAbsPosRequest(code); //ÇëÇó¾ø¶ÔÎ»ÖÃ
-	ServoStart(code); //µç»úÔË¶¯
+	SendCANBuf(MOTOR1, sizeof(MOTOR1)); //ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Îªï¿½ï¿½
+	ServoAbsPosRequest(code); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+	ServoStart(code); //ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½
 
 	return 0;
 }
 
 ///////////////////////////////////////////////////
 
-//µ÷Õû»úÇ¹ËÙ¶È
+//ï¿½ï¿½ï¿½ï¿½ï¿½Ç¹ï¿½Ù¶ï¿½
 void Mach_servo_move_speed(float xSpeed, float ySpeed)
 {
 
@@ -401,7 +408,7 @@ void Mach_servo_move_speed(float xSpeed, float ySpeed)
 
 }
 
-//¸Ä±ä»úÇ¹µÄÎ»ÖÃ
+//ï¿½Ä±ï¿½ï¿½Ç¹ï¿½ï¿½Î»ï¿½ï¿½
 void Mach_servo_move_offset(float xOffset, float yOffset)
 {
 
@@ -409,7 +416,7 @@ void Mach_servo_move_offset(float xOffset, float yOffset)
 
 }
 
-//»úÇ¹Í£Ö¹ÔË¶¯
+//ï¿½ï¿½Ç¹Í£Ö¹ï¿½Ë¶ï¿½
 void Mach_servo_stop()
 {
 
@@ -425,7 +432,7 @@ void Mach_servo_stop()
 
 ///////////////////////////////////////////////////
 
-//Áñµ¯ËÅ·þËÙ¶È
+//ï¿½ï¿½ï¿½Å·ï¿½ï¿½Ù¶ï¿½
 void Grenade_servo_move_speed(float xSpeed, float ySpeed)
 {
 
@@ -433,7 +440,7 @@ void Grenade_servo_move_speed(float xSpeed, float ySpeed)
 
 }
 
-//Áñµ¯Î»ÖÃÆ«ÒÆ
+//ï¿½ï¿½Î»ï¿½ï¿½Æ«ï¿½ï¿½
 void Grenade_servo_move_offset(float xOffset, float yOffset)
 {
 
@@ -441,7 +448,7 @@ void Grenade_servo_move_offset(float xOffset, float yOffset)
 
 }
 
-//Áñµ¯ËÅ·þÍ£Ö¹ÔË¶¯
+//ï¿½ï¿½ï¿½Å·ï¿½Í£Ö¹ï¿½Ë¶ï¿½
 void Grenade_servo_stop()
 {
 		char grenade_stop_buff[10] 	 =  { 0x03, CODE_SERVO_GRENADE, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -456,7 +463,7 @@ void Grenade_servo_stop()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-//ÅÚÌ¨ËÅ·þËÙ¶È
+//ï¿½ï¿½Ì¨ï¿½Å·ï¿½ï¿½Ù¶ï¿½
 void Turret_servo_move_speed(float xSpeed, float ySpeed)
 {
 
@@ -464,14 +471,14 @@ void Turret_servo_move_speed(float xSpeed, float ySpeed)
 
 }
 
-//ÅÚÌ¨ËÅ·þÎ»ÖÃÆ«ÒÆ
+//ï¿½ï¿½Ì¨ï¿½Å·ï¿½Î»ï¿½ï¿½Æ«ï¿½ï¿½
 void Turret_servo_move_offset(float xOffset, float yOffset)
 {
 
 
 }
 
-//ÅÚÌ¨ËÅ·þÍ£Ö¹ÔË¶¯
+//ï¿½ï¿½Ì¨ï¿½Å·ï¿½Í£Ö¹ï¿½Ë¶ï¿½
 void Turret_servo_stop()
 {
 	char turret_stop_buff[10] 			 =  { 0x03, CODE_SERVO_TURRET, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };

@@ -358,9 +358,8 @@ void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 }
 void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 {
-#if 0
 	short TempAngle;
-	
+
 	if(isBootUpMode()&&isBootUpSelfCheck())
 		return ;
 	//todo: check Sensor and Servo is All OK
@@ -376,8 +375,7 @@ void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 	CANSendbuf[8] = ((TempAngle>>8)&0xFF);
 	CANSendbuf[9] = (TempAngle&0xFF);
 	
-	WeaponCtrlPORT_send(CANSendbuf, sizeof(CANSendbuf));
-#endif
+	SendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
 	
 }
 void processCMD_TIMER_SENDFRAME1(LPARAM lParam)//����֡1
@@ -1006,6 +1004,12 @@ static int WeaponCtrlPORT_ParseFrame_type1(UartObj*pUartObj)
 void WeaponCtrlPORT_ParseFrameByte_type2(unsigned char* buf)
 {
 #if 1
+	if(uart_open_close_flag)
+	{
+		if(BIT3_0(BYTE3(buf)) != Button_AutoCheck)
+				return ;
+	}
+		
 	switch (BIT3_0(BYTE3(buf)))
 	{
 		case Button_Left:
@@ -1381,8 +1385,6 @@ void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 		WeaponCtrlPORT_ParseFrameByte_type1(buf);
 		break;
 	case Frame_Type2:
-		if(uart_open_close_flag)
-			return ;
 		WeaponCtrlPORT_ParseFrameByte_type2(buf);
 		break;
 	case Frame_Type3:

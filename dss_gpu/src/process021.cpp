@@ -242,7 +242,7 @@ void CProcess021::OnCreate()
 	MSGAPI_initial();
 	//App_dxmain();
 
-	MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	//MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
 	
 	#if 1
 	CMD_EXT *pIStuts = &extInCtrl;
@@ -4584,13 +4584,6 @@ void CProcess021::processCMD_SCHEDULE_STRONG(LPARAM lParam)
 void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_SCHEDULE_RESET",__func__,__LINE__);
-	return ;
- }
-
-
-void CProcess021::processCMD_TIMER_SENDFRAME0(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_TIMER_SENDFRAME0",__func__,__LINE__);
 	return ;
  }
 

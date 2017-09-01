@@ -183,7 +183,6 @@ protected:
         static void processCMD_SCHEDULE_GUN(LPARAM lParam);
         static void processCMD_SCHEDULE_STRONG(LPARAM lParam);
         static void processCMD_SCHEDULE_RESET(LPARAM lParam);
-        static void processCMD_TIMER_SENDFRAME0(LPARAM lParam);
         static void processCMD_TRACE_SENDFRAME0(LPARAM lParam);
         static void processCMD_TRIGGER_AVT(LPARAM lParam);
         static void quitAVTtrigger(LPARAM lParam);
