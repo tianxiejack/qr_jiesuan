@@ -491,36 +491,14 @@ int getBulletType()
 	return 1;
 }
 
-void CANSend_cbFxn(void* cbParam)
-{
-#if 0
-//	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(servoInit){
-		servoInit = 0;
-		startServoCheck_Timer();
-		sendCommand(CMD_SERVO_INIT);
-	}
-	
-	if(isBootUpMode()&&isBootUpSelfCheck()){
-		startServoCheck_Timer();
-		return ;
-	}
-	sendCommand(CMD_TIMER_SENDFRAME0);
-	if(bTraceSend)
-		sendCommand(CMD_TRACE_SENDFRAME0);
-#endif
-}
 
  void startCANSendTimer()
 {
-#if 0
-	CTimerCtrl * pCtrlTimer;
-	pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eCAN_Timer)==eTimer_Stat_Stop)
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eCAN_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(pCtrlTimer,eCAN_Timer,CAN_TIMER,CANSend_cbFxn,(void*)(0x01));	
+		pCtrlTimer->startTimer(eCAN_Timer,CAN_TIMER);	
 	}
-#endif
 }
 //DFU_Handle pDUFObj=NULL;
 /*
@@ -532,27 +510,26 @@ WeaponCtrlPORT_Handle WeaponCtrlPORT_initial(int(*MuxPortRecvFun)(Enum_MuxPortTy
 {
 	if(ibInit)
 		return (&WeaponCtrlObj);
-#if 0	
+#if 0
 	ibInit=1;
-	WeaponCtrlObj.pInter.PortType	= Enum_WeaponCtrlPort;//Enum_TracPort;//
+	WeaponCtrlObj.pInter.PortType		= Enum_WeaponCtrlPort;//Enum_TracPort;//
 	WeaponCtrlObj.pInter.OpenPort 	= WeaponCtrlPORT_open;
-	WeaponCtrlObj.pInter.ClosePort	= WeaponCtrlPORT_close;
+	WeaponCtrlObj.pInter.ClosePort		= WeaponCtrlPORT_close;
 	WeaponCtrlObj.pInter.Write		= WeaponCtrlPORT_send;
 	WeaponCtrlObj.pInter.Read		= NULL;
 	WeaponCtrlObj.pInter.Control		= NULL;
-	WeaponCtrlObj.pInter.MuxPortRecv	= MuxPortRecvFun;
+	WeaponCtrlObj.pInter.MuxPortRecv	= NULL;
 
-	WeaponCtrlObj.UartPort.uartId	= 0xFF;
+	WeaponCtrlObj.UartPort.uartId		= 0xFF;
 	WeaponCtrlObj.UartPort.syncObj 	= SDK_SEM_CREATE(0);
 	WeaponCtrlObj.UartPort.recvLen	= 0;
 
-	SDK_SEM_RESET(WeaponCtrlObj.UartPort.syncObj);
 	if(!WeaponCtrlPORT_open()){
 		SDK_SEM_DESTROY(WeaponCtrlObj.UartPort.syncObj);
 		return NULL;
 	}
 	
-	pOutMsg = SDK_MALLOC(sizeof(PVE_MSG)+10, EXTERNALHEAP);
+	//pOutMsg = SDK_MALLOC(sizeof(PVE_MSG)+10, EXTERNALHEAP);
 #endif	
 	return (&WeaponCtrlObj);
 }

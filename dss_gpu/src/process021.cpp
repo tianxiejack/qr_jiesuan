@@ -4696,7 +4696,7 @@ void CProcess021::processCMD_IDENTIFY_GAS(LPARAM lParam)
 
 void CProcess021::processCMD_SERVO_INIT(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_SERVO_INIT",__func__,__LINE__);
+
 	return ;
  }
 

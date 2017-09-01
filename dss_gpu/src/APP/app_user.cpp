@@ -448,8 +448,8 @@ static Int32 APP_start( int nType )
 	Dx_sendMsg( NULL, DX_MSGID_CTRL, (void*)( DX_CTL_ALG_LINK_INIT ), sizeof( Int32 ), FALSE );
 
 
-
-	
+	startSelfCheckTimer();
+	startCANSendTimer();
 	
 
 	OSA_printf("%s:exit", __func__);
@@ -532,15 +532,12 @@ static Int32 APP_onTimer( Int32 timerId )
 	    //printf("**********************************\n");
 	    if( timerId == SYS_INFOR_SHOW_TIMER)
 	    {
-	    	
+	    	//no thing
 	    }
 
 	    if( timerId == GPIO_INSPECT_TIMER)
-	    {
-	    	
-		//printf("OSA_getCurTimeInMsec() = %d \n",OSA_getCurTimeInMsec());
-
-			//APP_getvideostatus();
+	    {	    	
+		//APP_getvideostatus();
 	    }
 
 	    if(timerId == GRPX_SHOW_TIMER)
@@ -558,7 +555,6 @@ static Int32 APP_onTimer( Int32 timerId )
 	  {
 		DynamicTimer_cbFxn();
 	  }
-
   
 	  if(timerId == eAVT_Timer)
 	  {
@@ -593,8 +589,8 @@ static Int32 APP_onTimer( Int32 timerId )
 
 	   if(timerId == eLaser_Timer)
 	   {
-	   	pTimerObj->KillTimer(eLaser_Timer);
-		MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_TIMEOUT);
+	   		pTimerObj->KillTimer(eLaser_Timer);
+			MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_TIMEOUT);
 	   	
 	   }
 
@@ -648,6 +644,43 @@ static Int32 APP_onTimer( Int32 timerId )
 				return 0;
 			sendCommand(CMD_SERVOTIMER_MACHGUN);
 		}
+
+		if(timerId == eBootUp_Timer)
+		{
+			CTimerCtrl * pCtrlTimer = pTimerObj;
+			if(pCtrlTimer->GetTimerStat(eDynamic_Timer)!=eTimer_Stat_Stop)
+			{
+				pCtrlTimer->KillTimer(eBootUp_Timer);
+			}
+			sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);
+		}
+
+
+		
+		if(timerId == eCAN_Timer)
+		{
+			if(servoInit)
+			{
+				servoInit = 0;
+				startServoCheck_Timer();
+				sendCommand(CMD_SERVO_INIT);
+			}
+			
+			if(isBootUpMode()&&isBootUpSelfCheck())
+			{
+				startServoCheck_Timer();
+				return ;
+			}
+			sendCommand(CMD_TIMER_SENDFRAME0);
+			
+			if(bTraceSend)
+				sendCommand(CMD_TRACE_SENDFRAME0);
+		}
+
+
+
+
+		
 	
     	return OSA_SOK;
 }

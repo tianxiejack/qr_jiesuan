@@ -306,17 +306,19 @@ bool isTrackingOK()
 void enterLevel3CalculatorIdle()
 {
 	gLevel3CalculatorState = Battle_Idle;
-//	releaseServoContrl();
 }
 
 void setServoAvailable(bool avail)
 {
 	bServoAavailable = avail;
-	if(avail){
-	Posd[eDynamicZone] = DynamicOsd[4];
-	OSDCTRL_ItemShow(eDynamicZone);
-	}else{
-	OSDCTRL_ItemHide(eDynamicZone);
+	if(avail)
+	{
+		Posd[eDynamicZone] = DynamicOsd[4];
+		OSDCTRL_ItemShow(eDynamicZone);
+	}
+	else
+	{
+		OSDCTRL_ItemHide(eDynamicZone);
 	}
 }
 
@@ -1087,5 +1089,14 @@ void processCMD_DETEND_UNLOCK(long lParam)
  	//OSA_printf("%s,line:%d ... processCMD_DETEND_UNLOCK",__func__,__LINE__);
 	return ;
  }
+
+void startSelfCheckTimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eBootUp_Timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eBootUp_Timer,BOOTUP_TIMER);	
+	}
+}
 
 

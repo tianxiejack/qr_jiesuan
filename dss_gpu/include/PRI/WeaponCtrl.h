@@ -60,6 +60,25 @@ typedef union SIGNAL_TAG {
 	unsigned  GrenadeP:1;//�񵯷���
 	}bit;
 }SIGNAL;
+
+
+typedef struct _pve_msg_header{
+	unsigned int SyFlag;
+	unsigned int uiVersion;		
+	//eCMD_TYPE eCmdType;
+	unsigned int uiRequestId;
+	unsigned int uiSize;		
+}PVE_MSG_HEADER, *PPVE_MSG_HEADER;
+
+typedef struct _pve_msg{
+	PVE_MSG_HEADER head;
+	union{
+		unsigned char data[4];
+		int  iReplyValue;
+	}UN_MSG;
+}PVE_MSG, *PPVE_MSG;
+
+
 //extern SIGNAL signal;
 BOOL isMachGunUpLocked();
 BOOL isMachGunDownLocked();
