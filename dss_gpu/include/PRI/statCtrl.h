@@ -298,6 +298,9 @@ void processCMD_MAINTPORT_LOCK(long lParam);
 void processCMD_MAINTPORT_UNLOCK(long lParam);
 void processCMD_DETEND_LOCK(long lParam);
 void processCMD_DETEND_UNLOCK(long lParam);
+void startSelfCheckTimer();
+
+
 
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
