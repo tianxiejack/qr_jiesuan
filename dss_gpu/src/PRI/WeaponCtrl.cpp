@@ -58,11 +58,12 @@ BYTE FrameBuf1[5]={0xA1,0x10,0x44,0xFF,0x00};
 BYTE FrameBuf3[4]={0xA3,0x0F,0x00,0x00};
 //SIGNAL signal;
 static WeaponCtrlPort_t WeaponCtrlObj;
-static int ibInit=0,servoInit=1;
+static int ibInit=0;
+int servoInit=1;
 static BOOL WeaponCtrlPORT_open();
 static void WeaponCtrlPORT_close();
 
-static BOOL bTraceSend=FALSE;
+BOOL bTraceSend=FALSE;
 //static PVE_MSG *pOutMsg=NULL;
 
 static BYTE CANSendbuf[10]={0x01,0x04,0xB1,0x00,};

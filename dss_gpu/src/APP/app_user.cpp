@@ -669,7 +669,7 @@ static Int32 APP_onTimer( Int32 timerId )
 			if(isBootUpMode()&&isBootUpSelfCheck())
 			{
 				startServoCheck_Timer();
-				return ;
+				return 0;
 			}
 			sendCommand(CMD_TIMER_SENDFRAME0);
 			

@@ -130,8 +130,11 @@ void killSelfCheckGrenadeServoTimer();
 void killF5Timer();
 void killF6Timer();
 void killSelfCheckPosServoTimer();
+ void startCANSendTimer();
+ void startServoCheck_Timer();
 
-
+extern BOOL bTraceSend;
+extern int servoInit;
 #ifdef __cplusplus
 }
 #endif
