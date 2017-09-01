@@ -242,7 +242,7 @@ void CProcess021::OnCreate()
 	MSGAPI_initial();
 	//App_dxmain();
 
-	MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
+	//MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
 	
 	#if 1
 	CMD_EXT *pIStuts = &extInCtrl;
@@ -4588,13 +4588,6 @@ void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
  }
 
 
-void CProcess021::processCMD_TIMER_SENDFRAME0(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_TIMER_SENDFRAME0",__func__,__LINE__);
-	return ;
- }
-
-
 void CProcess021::processCMD_TRACE_SENDFRAME0(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_TRACE_SENDFRAME0",__func__,__LINE__);
@@ -4690,20 +4683,6 @@ void CProcess021::processCMD_IDENTIFY_KILL(LPARAM lParam)
 void CProcess021::processCMD_IDENTIFY_GAS(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_IDENTIFY_GAS",__func__,__LINE__);
-	return ;
- }
-
-
-void CProcess021::processCMD_SERVO_INIT(LPARAM lParam)
- {
-
-	return ;
- }
-
-
-void CProcess021::processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_SERVOTIMER_MACHGUN",__func__,__LINE__);
 	return ;
  }
 

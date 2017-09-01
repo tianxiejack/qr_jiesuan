@@ -299,7 +299,7 @@ void processCMD_MAINTPORT_UNLOCK(long lParam);
 void processCMD_DETEND_LOCK(long lParam);
 void processCMD_DETEND_UNLOCK(long lParam);
 void startSelfCheckTimer();
-
+void killSelfCheckTimer();
 
 
 

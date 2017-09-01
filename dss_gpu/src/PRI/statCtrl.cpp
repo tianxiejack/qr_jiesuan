@@ -1099,4 +1099,12 @@ void startSelfCheckTimer()
 	}
 }
 
+void killSelfCheckTimer()
+{	
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eBootUp_Timer)==eTimer_Stat_Run)
+	{
+		pCtrlTimer->KillTimer(eBootUp_Timer);	
+	}
+}
 

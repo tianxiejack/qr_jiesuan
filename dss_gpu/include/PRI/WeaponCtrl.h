@@ -132,6 +132,7 @@ void killF6Timer();
 void killSelfCheckPosServoTimer();
  void startCANSendTimer();
  void startServoCheck_Timer();
+ void killCANSendTimer();
 
 extern BOOL bTraceSend;
 extern int servoInit;

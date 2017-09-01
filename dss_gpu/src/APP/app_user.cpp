@@ -76,6 +76,7 @@ DXD_Info gDXD_infoSave;
 static Bool  gAPP_Started   = FALSE;
 static Int32 gAPP_Usecase   = 0x00;
 
+	
 void initgdxd_info()
 {
 	 gDXD_info.OnLoadDefCfg  = APP_loadDefCfg;
@@ -434,15 +435,8 @@ static Int32 APP_start( int nType )
     gAPP_Started = TRUE;
 
 	
-
-	
-	//	Dx_setTimer(OSD_SHOW_TIMER, OSD_SHOW_TIMER_TICKS);
 	Dx_setTimer(GRPX_SHOW_TIMER,GRPX_SHOW_TIME_TICKS);
 	
-
-	
-	//Dx_setTimer(SYS_INFOR_SHOW_TIMER,SYS_INFOR_SHOW_TIMER_TICKS);
-	//Dx_setTimer(ALG_MTD_TIMER,  ALG_MTD_TIMER_TICKS);
 	Dx_setTimer(ALG_TRACK_TIMER,ALG_TRACK_TIMER_TICKS);
 	Dx_setTimer(GPIO_INSPECT_TIMER,GPIO_INSPECT_TICKS);
 	Dx_sendMsg( NULL, DX_MSGID_CTRL, (void*)( DX_CTL_ALG_LINK_INIT ), sizeof( Int32 ), FALSE );
@@ -476,6 +470,8 @@ static Int32 APP_stop( int item )
     //Dx_killTimer(ALG_TRACK_TIMER);
     Dx_killTimer(GRPX_SHOW_TIMER);
 
+    killSelfCheckTimer();
+    killCANSendTimer();
 
     if ( gAPP_Started )
     {
@@ -671,6 +667,7 @@ static Int32 APP_onTimer( Int32 timerId )
 				startServoCheck_Timer();
 				return 0;
 			}
+
 			sendCommand(CMD_TIMER_SENDFRAME0);
 			
 			if(bTraceSend)

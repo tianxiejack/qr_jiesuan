@@ -77,12 +77,10 @@ static 	unsigned short panoAngleV=0,panoAngleH=0;
 
 void absPosRequest(BYTE code)
 {
-#if 1
 	char SERVOPOS[6]   ={0x03,0x00,0x50,0x58,0x00,0x00};
 	SERVOPOS[1] = code;
 	SendCANBuf(SERVOPOS, sizeof(SERVOPOS));
 	usleep(500);
-#endif
 }
 
 void startServo(BYTE code)
@@ -350,15 +348,16 @@ void resetGrenadeInPositionFlag(void)
 {
 	CANSendbuf[3] = (CANSendbuf[3]&0x0F);
 }
+
 void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 {
-//	absPosRequest(CODE_GRENADE);
-//	absPosRequest(CODE_MACHGUN);
-//	absPosRequest(CODE_TURRET);
+	absPosRequest(CODE_GRENADE);
+	absPosRequest(CODE_MACHGUN);
+	absPosRequest(CODE_TURRET);
 }
+
 void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 {
-#if 0
 	short TempAngle;
 	
 	if(isBootUpMode()&&isBootUpSelfCheck())
@@ -376,13 +375,11 @@ void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 	CANSendbuf[8] = ((TempAngle>>8)&0xFF);
 	CANSendbuf[9] = (TempAngle&0xFF);
 	
-	WeaponCtrlPORT_send(CANSendbuf, sizeof(CANSendbuf));
-#endif
-	
+	SendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
 }
+
 void processCMD_TIMER_SENDFRAME1(LPARAM lParam)//����֡1
 {
-#if 0
 	short TempAngle;
 	
 	if(isBootUpMode()&&isBootUpSelfCheck())
@@ -400,16 +397,14 @@ void processCMD_TIMER_SENDFRAME1(LPARAM lParam)//����֡1
 	CANSendFrame1[7] = ((TempAngle>>8)&0xFF);
 	CANSendFrame1[8] = (TempAngle&0xFF);
 	
-	WeaponCtrlPORT_send(CANSendFrame1, 10);
-#endif
+	SendCANBuf((char *)CANSendFrame1, 10);
 }
-void processCMD_TIMER_SENDFRAME2(LPARAM lParam)//����֡2
+
+void processCMD_TIMER_SENDFRAME2(LPARAM lParam)
 {
-#if 0
 	if(isBootUpMode()&&isBootUpSelfCheck())
 		return ;
 
-	//todo: ���Լ�״̬����ʵʱ���µ�״̬?�Ӷ�ʱ��?
 	(BYTE9(CANSendFrame2)) &= 0XFE;
 	(BYTE9(CANSendFrame2)) |= (0XFE | bMachineGunSensorOK());//5.8�Ƕȴ�����״̬
 	(BYTE9(CANSendFrame2)) &= 0XFD;
@@ -421,10 +416,9 @@ void processCMD_TIMER_SENDFRAME2(LPARAM lParam)//����֡2
 	(BYTE9(CANSendFrame2)) &= 0XEF;
 //	(BYTE9(CANSendFrame2)) |= ;//��׼��״̬ todo value
 	(BYTE9(CANSendFrame2)) &= 0XDF;
-	(BYTE9(CANSendFrame2)) |= (0XDF | (bVideoOK()<<5));//��Ƶ����״̬
+	(BYTE9(CANSendFrame2)) |= (0XDF | (/*bVideoOK()*/1<<5));//��Ƶ����״̬
 	
-	WeaponCtrlPORT_send(CANSendFrame1, 10);
-#endif
+	SendCANBuf((char *)CANSendFrame1, 10);
 }
 
 void processCMD_TRACE_SENDFRAME0(LPARAM lParam)
@@ -450,18 +444,19 @@ void processCMD_TRACE_SENDFRAME0(LPARAM lParam)
 	TRACEPORT_send(buf,pOutMsg->head.uiSize);
 #endif
 }
+
 void processCMD_SERVO_INIT(LPARAM lParam)
 {
-#if 0
 	startServoServer(CODE_GRENADE);
 	startServoServer(CODE_MACHGUN);
 	startServoServer(CODE_TURRET);
-#endif
 }
+
 Fov_Type getFovState()
 {
 	return (BIT3_2(BYTE2(FrameBuf1)))?(FOV_SMALL):(FOV_LARGE);
 }
+
 void setSysWorkMode()
 {
 	BYTE1(FrameBuf1) &= ~0x0C;
@@ -501,6 +496,17 @@ int getBulletType()
 		pCtrlTimer->startTimer(eCAN_Timer,CAN_TIMER);	
 	}
 }
+
+ void killCANSendTimer()
+ {
+ 	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eCAN_Timer)==eTimer_Stat_Run)
+	{
+		pCtrlTimer->KillTimer(eCAN_Timer);	
+	}
+ }
+
+ 
 //DFU_Handle pDUFObj=NULL;
 /*
  *  ======== WeaponCtrlPORT_initial========
