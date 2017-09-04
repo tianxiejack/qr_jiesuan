@@ -61,7 +61,7 @@ void FOVCTRL_updateFovRect(HANDLE hFov,char Sens,char fovElem,short x,short y)
 	cthis->fovElem = fovElem;
 	cthis->fovX    = x;
 	cthis->fovY    = y;
-	cthis->fovW	   = 704;
+	cthis->fovW	   = 720;
 	cthis->fovH	   = 576;
 
 	ftmp = (float)cthis->fovScal/100.0;
@@ -189,8 +189,8 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 			FOVCTRL_drawBoresight(hFov,pImg);
 	}
 	*/
-	//if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
-	  if( isGrenadeGas()||isGrenadeKill())
+	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
+	  //if( isGrenadeGas()||isGrenadeKill())
 		DrawjsGrenadeLoadOK(frame,cthis);
 	
 #if 1

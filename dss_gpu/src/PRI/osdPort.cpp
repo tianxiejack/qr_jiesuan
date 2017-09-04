@@ -162,7 +162,7 @@ void moveCrossCenter(int x, int y)
 	
 	//FOVCTRL_updateFovRect(cthis,0,0,borX,(borY>>1));
 	#if 1
-		if(borX > 0 && borX < 704 && borY >0 && borY < 576)
+		if(borX > 0 && borX < 720 && borY >0 && borY < 576)
 		{
 			FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 		}
@@ -189,7 +189,7 @@ void updateMoveCross()
 	int borX,borY;
 	borX = cthis->fovX;
 	borY = cthis->fovY;
-	if(borY > 0 && borY < 576 && borX >0 && borX < 704)
+	if(borY > 0 && borY < 576 && borX >0 && borX < 720)
 		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
 
@@ -227,7 +227,7 @@ void moveCrossLeft()
 	int borX,borY;
 	borX = cthis->fovX;
 	borY = cthis->fovY;
-	borX = (borX - STEPLEN + 704)%704;
+	borX = (borX - STEPLEN + 720)%720;
 	if(borX > 0)
 		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
@@ -238,8 +238,8 @@ void moveCrossRight()
 	int borX,borY;
 	borX = cthis->fovX;
 	borY = cthis->fovY;
-	borX = (borX + STEPLEN + 704)%704;
-	if(borX < 704)
+	borX = (borX + STEPLEN + 720)%720;
+	if(borX < 720)
 		FOVCTRL_updateFovRect(cthis,0,0,borX,borY);
 }
 

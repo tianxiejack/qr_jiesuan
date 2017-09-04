@@ -3454,6 +3454,8 @@ void CProcess021::processCMD_BUTTON_BATTLE(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
  {
+ 	if(ShinId == eGunTip)
+		OSDCTRL_NoShine();
  
 	if(isBootUpMode()&& isBootUpSelfCheckFinished())
 	{

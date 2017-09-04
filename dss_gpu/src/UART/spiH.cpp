@@ -277,8 +277,8 @@ int Process_mirror(struct RS422_data * pRS422_data)
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
 
-					SPI_mirror_send_requst() ;
-					SPI_mirror_send_ack();
+					//SPI_mirror_send_requst() ;
+					//SPI_mirror_send_ack();
 				}
 				else
 				{
