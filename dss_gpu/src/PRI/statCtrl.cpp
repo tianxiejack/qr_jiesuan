@@ -990,6 +990,7 @@ void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
 		
 			gLevel3CalculatorState = Battle_Ready;
 			//OSDdisplay
+		
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
 			OSDCTRL_ItemShow(eCorrectionTip);

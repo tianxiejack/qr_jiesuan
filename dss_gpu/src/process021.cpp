@@ -4413,8 +4413,6 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			
 			Posd[eMeasureType] = MeasureTypeOsd[2];	//LSBG
 			OSDCTRL_ItemShine(eMeasureType);
-
-
 			
 			//todo: trigger Laser and AVT
 			gLevel3CalculatorState = Battle_Preparation;
@@ -4448,6 +4446,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 		else
 		{
 			//gLevel3CalculatorState = Auto_Idle;
+			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			OSDCTRL_ItemShow(eCorrectionTip);
 			LaserPORT_requst();
 		}	
