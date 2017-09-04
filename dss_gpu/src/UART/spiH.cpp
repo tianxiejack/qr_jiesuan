@@ -245,30 +245,29 @@ int Process_mirror(struct RS422_data * pRS422_data)
 #if SPI_DEBUG
 					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
 #endif 
-					if(valid_measure == 1)
-					{
-						if(9999 == laser_dis)
-						{
-							LaserDistance = -1;
-							//msg_tmp = LASERERR_NOECHO;
-							MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOECHO);
-						}
-						else if(0 == laser_dis)
-						{
-							LaserDistance = -1;	
-							MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOSAMPLE);
-						}
-						else
-						{
-							LaserDistance = laser_dis;
-							last_laser_dis = LaserDistance;
-
-							finish_laser_measure = 1;
-							MSGDRIV_send(CMD_LASER_OK,0);
-						}
-					}
 					
-					LaserDistance = last_laser_dis;
+					
+					if(9999 == laser_dis)
+					{
+						//LaserDistance = -1;
+						LaserDistance = last_laser_dis;
+						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOECHO);
+					}
+					else if(0 == laser_dis)
+					{
+						//LaserDistance = -1;	
+						LaserDistance = last_laser_dis;
+						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOSAMPLE);
+					}
+					else
+					{
+						
+						LaserDistance = laser_dis;
+						last_laser_dis = LaserDistance;
+						finish_laser_measure = 1;
+						MSGDRIV_send(CMD_LASER_OK,0);
+					}
+								
 
 					valid_measure = 0;
 					//LaserPORT_Ack();   send out the distance
