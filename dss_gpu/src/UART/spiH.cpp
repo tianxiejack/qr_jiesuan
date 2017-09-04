@@ -261,14 +261,18 @@ int Process_mirror(struct RS422_data * pRS422_data)
 					}
 					else
 					{
+						if(valid_measure)
+						{
+							LaserDistance = laser_dis;
+							last_laser_dis = LaserDistance;
+						}
+						else
+							LaserDistance = last_laser_dis;
 						
-						LaserDistance = laser_dis;
-						last_laser_dis = LaserDistance;
 						finish_laser_measure = 1;
 						MSGDRIV_send(CMD_LASER_OK,0);
 					}
 								
-
 					valid_measure = 0;
 					//LaserPORT_Ack();   send out the distance
 					
