@@ -37,7 +37,7 @@
 #define CODE_GRENADE 		(0x42)
 #define CODE_TURRET   		(0x2C)
 
-
+#define CAN_DEBUG 0
 
 int globalflag = 1;
   OSA_SemHndl semSend;
@@ -2827,9 +2827,9 @@ void * SPI_CAN_process(void * prm)
 
 							//if(uart_open_close_flag)
 								//nread = -1;
-
+						#if CAN_DEBUG
 						   	printf(" before parse --- length=%d  nread=%d...\n", length, nread);
-
+						#endif
 							if(nread > 0)
 							{
 									//CanPort_parseByte((unsigned char*)buf);
@@ -2841,12 +2841,18 @@ void * SPI_CAN_process(void * prm)
 									while(haveData)  //һ�����ܶ����
 									{
 											//�ж��Ƿ���can���ͷ��
-											printf("have data length=%d ...\n",  length);
+											#if CAN_DEBUG
+												printf("have data length=%d ...\n",  length);
+											#endif
 											for(i=0; i<length; i++)
 											{
-												printf("%02x ", buf[i]);
+												#if CAN_DEBUG
+													printf("%02x ", buf[i]);
+												#endif
 											}
-											printf("\n");
+											#if CAN_DEBUG
+												printf("\n");
+											#endif
 											index=0;
 											ret = CanPort_recvFlg(buf, length, &index);
 											length -= index;//����֮��ʵ����ݳ��ȸ���
@@ -2887,11 +2893,14 @@ void * SPI_CAN_process(void * prm)
 													//��ӡҪ���������
 													for(i=0; i<dataLength; i++)
 													{
-														printf("%02x ", buf[i]);
+														#if CAN_DEBUG
+															printf("%02x ", buf[i]);
+														#endif
 													}
-
-													printf("length=%d, dataLength=%d\n", length, dataLength);
-
+													#if CAN_DEBUG		
+														printf("length=%d, dataLength=%d\n", length, dataLength);
+													#endif
+													
 													if(length<dataLength)
 													{
 														printf(" length<dataLength ...\n");

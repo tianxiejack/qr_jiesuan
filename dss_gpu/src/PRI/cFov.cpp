@@ -130,6 +130,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 
 	last_angle = getGrenadeAngle()-getMachGunAngle();
 	DrawjsAngleFrame(frame,cthis,last_angle);
+
 	if(isCalibrationMode() && isBootUpMode())
 	{
 		//no draw

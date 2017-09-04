@@ -544,26 +544,29 @@ void DrawjsGrenadeLoadOK(Mat frame,CFOV * fovOsdCtrl)
 
 	CFOV*cthis =fovOsdCtrl;
 
-	start.x = 367 ;
-	start.y = 298 ;
+	int center_x = cthis->fovX;
+	int center_y = cthis->fovY;
+
+	start.x = center_x +15 ;
+	start.y = center_y+ 10 ;
 	end.x = start.x;
 	end.y = start.y + 5;
 	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 	
-	start.x = 372 ;
-	start.y = 298 ;
+	start.x = center_x + 20 ;
+	start.y = center_y + 10 ;
 	end.x = start.x;
 	end.y = start.y + 5;
 	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
-	start.x = 367 ;
-	start.y = 298 ;
+	start.x = center_x + 15 ;
+	start.y = center_y + 10 ;
 	end.x = start.x+5;
 	end.y = start.y;
 	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
-	start.x = 367 ;
-	start.y = 303 ;
+	start.x = center_x + 15 ;
+	start.y = center_y + 15 ;
 	end.x = start.x+5;
 	end.y = start.y;
 	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);

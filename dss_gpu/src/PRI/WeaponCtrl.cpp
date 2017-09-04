@@ -483,11 +483,8 @@ void  updateBulletType(int type)
 
 int getBulletType()
 {
-#if 1
 	int i = BIT6_4(BYTE1(FrameBuf1));
 	return (i > 0)? i:1 ;
-#endif
-	return 1;
 }
 
 
@@ -838,21 +835,29 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			case 0x00:
 			case 0x01:	//5.8
 				MSGDRIV_send(CMD_BULLET_SWITCH1,0);
-				if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf)))	 //Ե/Կ Ŀ 
+				printf(" send CMD_BULLET_SWITCH1\n");
+				if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf)))	 //switch bullet
 				{    
 					if(BIT7_6(BYTE4(buf)) == 0x00)
 						MSGDRIV_send(CMD_MODE_AIM_SKY,0);
 					else
-						MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
+						MSGDRIV_send(CMD_MODE_AIM_LAND,0);				
 				}
+				MSGDRIV_send(CMD_MODE_FOV_SMALL,0);	//5.8  default small fov
 				break;
 			case 0x02:	//
 				MSGDRIV_send(CMD_BULLET_SWITCH2,0);
 				MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
+					printf(" send CMD_MODE_FOV_LARGE\n");
+
+				MSGDRIV_send(CMD_MODE_FOV_LARGE,0);			//grenade default large fov
 				break;
 			case 0x03:
 				MSGDRIV_send(CMD_BULLET_SWITCH3,0);
 				MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
+					printf(" send CMD_MODE_FOV_LARGE\n");
+
+				MSGDRIV_send(CMD_MODE_FOV_LARGE,0);			//grenade default large fov
 				break;
 			default:
 			break;

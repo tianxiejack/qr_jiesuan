@@ -262,7 +262,8 @@ int Process_mirror(struct RS422_data * pRS422_data)
 						{
 							LaserDistance = laser_dis;
 							last_laser_dis = LaserDistance;
-							//SendMessage(CMD_LASER_OK,value);
+
+							finish_laser_measure = 1;
 							MSGDRIV_send(CMD_LASER_OK,0);
 						}
 					}
@@ -488,14 +489,15 @@ int Process_grenade(struct RS422_data * pRS422_data)
 #if SPI_DEBUG
 				printf(" about the GrenadeAngle  !!!!!! positive=%d angle=%d  \n", positive, angle);
 #endif
-				tmp = angle*0.01;
+				tmp = positive*angle*0.01;
+				
+				if(tmp >= -5 && tmp <= 75)
+					GrenadeAngle = tmp;
+
 				if(!bGrenadeSensorOK())
 				{
 					MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
 				}
-
-				if(tmp >= -5 && tmp <= 75)
-					GrenadeAngle = positive*tmp;
 
 				memcpy(buf, buf+parse_length, length-parse_length);
 				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );

@@ -3145,7 +3145,6 @@ void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
 	{
 		OSDCTRL_EnterCalibMode();
 	}
-printf("&&&&&&&&&&&&&&&&&&&exit self check \n\n\n");
 	OSDCTRL_updateAreaN();
 
 	if(bUnlock)
@@ -3539,6 +3538,8 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
  {
+ 	finish_laser_measure = 0;
+	
 	if(isBootUpMode()&& isBootUpSelfCheckFinished())
 	{
 		processCMD_EXIT_SELF_CHECK(0);
@@ -3568,7 +3569,7 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&&(isAutoReady()||isAutoLoadFiringTable()))
 	{
-		//ce ju zhi hou jiu jin dao zhe li
+		//ce ju zhi hou jiu jin dao zhe li 
 		moveCrossAbs(352, 288);
 		gLevel3CalculatorState = Auto_Idle;
 	}
@@ -4360,7 +4361,12 @@ void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
 
 void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
  {
-	printf("processCMD_MEASURE_VELOCITY   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
+	//printf("processCMD_MEASURE_VELOCITY   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
+
+	gLevel3CalculatorState = Auto_Idle;
+
+	finish_laser_measure = 0;
+	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleIdle())
 	{
 		//trigger get Velocity
@@ -4384,7 +4390,7 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 
 void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
  {	
- 	finish_laser_measure = 1;
+ 	//finish_laser_measure = 1;
 	printf(" processCMD_MEASURE_DISTANCE   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
 	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleTriggerMeasureVelocity())
@@ -4507,7 +4513,7 @@ void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
 	Posd[eFovType] = FovTypeOsd[1];
 	pFovCtrlObj->fovElem=eFov_SmlFov_Stat;
 
-	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
+	OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
 	return ;
  }
 
@@ -4517,7 +4523,7 @@ void CProcess021::processCMD_MODE_FOV_LARGE(LPARAM lParam)
  	Posd[eFovType] = FovTypeOsd[0];
 	pFovCtrlObj->fovElem=eFov_LarFov_Stat;
 	
- 	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);
+ 	OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);
 	return ;
  }
 
