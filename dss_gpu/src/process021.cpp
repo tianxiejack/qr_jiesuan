@@ -349,7 +349,7 @@ void CProcess021::process_osd(void *pPrm)
 			n = 0;
 		}
 	}
-
+	
 
 
 	if(flag)
@@ -357,10 +357,11 @@ void CProcess021::process_osd(void *pPrm)
 		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
 	}
 	//OSDCTRL_ItemShow(eErrorZone);
+	//OSDCTRL_AllHide();
+	
 
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
-
 
 	//beside the text
 	//jiao zhun & ji jian --hide
@@ -3861,7 +3862,6 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 {
-
 	if(!ValidateGunType())
 		return;
 
@@ -4022,12 +4022,15 @@ void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
  {
+ 	OSDCTRL_ItemShine(eGunTip);
+	
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
-	gProjectileTypeBefore = gProjectileType;
+		gProjectileTypeBefore = gProjectileType;
 
-	gProjectileType = PROJECTILE_BULLET;
-	Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
-	EnterCMD_BULLET_SWITCH1();
+	gProjectileType = (PROJECTILE_TYPE)(PROJECTILE_BULLET+5);
+	//Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
+Posd[eGunTip] = GunOsd[5];
+	//EnterCMD_BULLET_SWITCH1();
 
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH1",__func__,__LINE__);
 	return ;
@@ -4036,12 +4039,14 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
  {
+ 	OSDCTRL_ItemShine(eGunTip);
+	
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
-	Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_KILL+2];
-
+	//Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_KILL+2];
+Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_KILL+2];
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH2",__func__,__LINE__);
 	return ;
  }
@@ -4049,12 +4054,14 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
  {
+ 	OSDCTRL_ItemShine(eGunTip);
+
  	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_GAS+2);
-	Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_GAS+2];
-	
+	//Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_GAS+2];
+Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_GAS+2];	
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH3",__func__,__LINE__);
 	return ;
  }
@@ -4513,7 +4520,7 @@ void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
 	Posd[eFovType] = FovTypeOsd[1];
 	pFovCtrlObj->fovElem=eFov_SmlFov_Stat;
 
-	OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
+	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
 	return ;
  }
 
@@ -4523,7 +4530,7 @@ void CProcess021::processCMD_MODE_FOV_LARGE(LPARAM lParam)
  	Posd[eFovType] = FovTypeOsd[0];
 	pFovCtrlObj->fovElem=eFov_LarFov_Stat;
 	
- 	OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);
 	return ;
  }
 
@@ -4881,12 +4888,15 @@ void CProcess021::updateCMD_BUTTON_SWITCH(int param)
 
 bool CProcess021::ValidateGunType()
 {
+	OSDCTRL_NoShine();
 	if(gProjectileType > PROJECTILE_GRENADE_GAS)
-	{
+	{		
 		if(gProjectileType == QUESTION_GRENADE_KILL)
 			gProjectileType = PROJECTILE_GRENADE_KILL;
 		else if(gProjectileType == QUESTION_GRENADE_GAS)
-			gProjectileType = PROJECTILE_GRENADE_GAS;
+			gProjectileType = PROJECTILE_GRENADE_GAS;	
+		else if(gProjectileType == QUESTION_BULLET)
+			gProjectileType = PROJECTILE_BULLET;
 		//gProjectileType -=2;
 		Posd[eGunType] = GunOsd[gProjectileType];
 		updateCMD_BUTTON_SWITCH(gProjectileType);

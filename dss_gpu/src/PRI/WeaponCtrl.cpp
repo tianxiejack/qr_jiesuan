@@ -830,12 +830,13 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	
 	if(BIT6_4(BYTE1(FrameBuf1)) != BIT6_4(BYTE3(buf)))	//  л
 	{
+		
 		switch(BIT6_4(BYTE3(buf)))
 		{
 			case 0x00:
 			case 0x01:	//5.8
 				MSGDRIV_send(CMD_BULLET_SWITCH1,0);
-				printf(" send CMD_BULLET_SWITCH1\n");
+				
 				if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf)))	 //switch bullet
 				{    
 					if(BIT7_6(BYTE4(buf)) == 0x00)
@@ -848,14 +849,12 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			case 0x02:	//
 				MSGDRIV_send(CMD_BULLET_SWITCH2,0);
 				MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
-					printf(" send CMD_MODE_FOV_LARGE\n");
 
 				MSGDRIV_send(CMD_MODE_FOV_LARGE,0);			//grenade default large fov
 				break;
 			case 0x03:
 				MSGDRIV_send(CMD_BULLET_SWITCH3,0);
 				MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
-					printf(" send CMD_MODE_FOV_LARGE\n");
 
 				MSGDRIV_send(CMD_MODE_FOV_LARGE,0);			//grenade default large fov
 				break;

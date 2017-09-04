@@ -517,7 +517,6 @@ void output_prm_print(FiringInputs input,FiringOutputs output)
 
 void loadFiringTable_Enter()
 {
-	//printf("!!!!!!11111111111111111111111111111@@@@@@@@@@@@@\n");
 	int ret;
 	FiringInputs input;
 	FiringOutputs output;
@@ -590,12 +589,12 @@ void loadFiringTable_Enter()
 		}
 		if(isFovSmall())
 		{
-			FOVSIZE_V = FOVDEGREE_VSMALL*(704-borX)/352; 
+			FOVSIZE_V = FOVDEGREE_VSMALL*(720-borX)/360; 
 			FOVSIZE_H = FOVDEGREE_VSMALL*(576-borY)/288; 
 		}
 		else
 		{
-			FOVSIZE_V = FOVDEGREE_VLARGE*(704-borX)/352;
+			FOVSIZE_V = FOVDEGREE_VLARGE*(720-borX)/360;
 			FOVSIZE_H = FOVDEGREE_HLARGE*(576-borY)/288;
 		}
 		

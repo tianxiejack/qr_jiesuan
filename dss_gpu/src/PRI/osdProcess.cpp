@@ -75,7 +75,7 @@ volatile unsigned char g_FilrBack=0;
 
 char WorkOsd[10][8];	//����ģʽ
 char AimOsd[2][8];
-char GunOsd[5][8];	//ǹ������
+char GunOsd[6][8];	//ǹ������
 char ShotOsd[2][8];//���ģʽ:��
 char ShotGunOsd[2][8];//���ģʽ:��ǹ
 char LaserOsd[2][8];
@@ -475,8 +475,8 @@ static void OSDCTRL_OsdInitial()
 	sprintf(GunOsd[2],"%c%c",189,176);//fang bao
 	sprintf(GunOsd[3],"%c%c%c%c?",223,224,216,193);//sha shang qiang guan
 	sprintf(GunOsd[4],"%c%c%c%c?",189,176,216,193);//fang bao qiang guan
-//	sprintf(GunOsd[3],"%c%c?",223,224);//ɱ��?
-//	sprintf(GunOsd[4],"%c%c?",189,176);//����?
+	sprintf(GunOsd[5],"%c%c%c%c?",200,216,216,193);//fang bao qiang guan
+
 
 
 	sprintf(ShotOsd[0],"%c",188);//duan 	liu dan

@@ -443,7 +443,7 @@ extern char SuperOsd[7][8];
 extern char DynamicOsd[9][8];
 extern char *Posd[OSD_TEXT_SIZE];
 extern char ResultOsd[2][8];
-extern char GunOsd[5][8];
+extern char GunOsd[6][8];
 extern char ErrorOsd[19][8];
 extern bool SHINE;
 extern int ShinId;
@@ -462,7 +462,7 @@ extern int DisValue[4];
 extern char ShotGunOsd[2][8];//ï¿½ï¿½ï¿½Ä£Ê½:ï¿½ï¿½Ç¹
 extern char LaserOsd[2][8];
 extern char GenPramMenu[4][12];
-extern char WorkOsd[10][8];	//¹¤×÷Ä£Ê½
+extern char WorkOsd[10][8];	//ï¿½ï¿½ï¿½ï¿½Ä£Ê½
 
 
 

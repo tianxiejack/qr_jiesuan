@@ -58,8 +58,7 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 {
 	int i=0;
-	//static int gun=0;//,type=0;
-	//volatile FONT_OBJ *pFont = &g_Font;
+
 	OSDText_Obj * pTextObj = NULL;
 	int startx,starty;
 	char *ptr;
