@@ -35,6 +35,7 @@ static uint16_t delay = 0;
 //long msg_tmp;
 
 bool uart_open_close_flag = 0;
+bool laser_fail_flag = 0;
 
 #define   SPI_DEBUG   0
 
@@ -251,13 +252,15 @@ int Process_mirror(struct RS422_data * pRS422_data)
 					{
 						//LaserDistance = -1;
 						LaserDistance = last_laser_dis;
-						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOECHO);
+						//if(laser_fail_flag)
+							MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOECHO);
 					}
 					else if(0 == laser_dis)
 					{
 						//LaserDistance = -1;	
 						LaserDistance = last_laser_dis;
-						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOSAMPLE);
+						//if(laser_fail_flag)
+							MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOSAMPLE);
 					}
 					else
 					{
@@ -301,6 +304,7 @@ int SPI_mirror_send_requst()  //发送测距请求
 
 	buf[3] = ( buf[0]^buf[1]^buf[2] );
 
+	startLaserTimer();
 	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
 
 	 return 0;

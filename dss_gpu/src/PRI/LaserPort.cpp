@@ -21,7 +21,7 @@ int getLaserDistance()
 {
 	return (LaserDistance>=0)?(LaserDistance):(0);
 }
-static void startLaserTimer()
+ void startLaserTimer()
 {
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	pCtrlTimer->startTimer(eLaser_Timer,LASER_TIMER);

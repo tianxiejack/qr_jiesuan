@@ -1526,8 +1526,11 @@ Int32 Dx_killTimer( UInt32 timerId )
 
 Int32 kill_Timer(UInt32 timerId)
 {
-	Dx_killTimer(timerId);
-	pTimerObj->pTimeArray[timerId].nStat = eTimer_Stat_Stop;
+	if(pTimerObj->pTimeArray[timerId].nStat == eTimer_Stat_Run)
+	{
+		Dx_killTimer(timerId);
+		pTimerObj->pTimeArray[timerId].nStat = eTimer_Stat_Stop;
+	}
 	return 0;
 }
 

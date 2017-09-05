@@ -1406,7 +1406,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				int Distance = getLaserDistance();
 				//Distance = (Distance < 0)? 0:(Distance);
 				if(Distance>1700)
-					printf("Distance = %d\n",Distance);
+					;//printf("Distance = %d\n",Distance);
 				Distance = (Distance>1700)?0:(Distance);
 				//Distance = 100;
 				if(isMeasureOsdNormal())

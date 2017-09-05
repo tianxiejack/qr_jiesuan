@@ -28,7 +28,8 @@ int getLaserDistance();
 void killLaserTimer();
 
 int LaserPORT_PhraseBye(BYTE* pRecv);
-
+ void startLaserTimer();
+ 
 
 extern int LaserDistance;
 

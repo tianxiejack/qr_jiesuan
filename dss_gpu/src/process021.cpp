@@ -10,11 +10,9 @@
 #include "vmath.h"
 //#include "grpFont.h"
 #include <string.h>
-
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
-
 #include "dx_main.h"
 #include "UartMessage.h"
 #include "msgDriv.h"
@@ -23,9 +21,10 @@
 #include"osd_cv.h"
 #include "statCtrl.h"
 #include "cFov.h"
-
 #include "servo_control_obj.h"
 #include "app_user.h"
+
+#include "spiH.h"
 //extern Level_one_state gLevel1Mode;
 //extern Level_one_state gLevel1LastMode;
 
@@ -41,6 +40,7 @@ OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ))
 FOVCTRL_Handle  pFovCtrlBeforObj = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ));	
 
 int n=0,ShinId=eCalibGeneral_XPole;
+
 
 UInt32 interfaceflag;
 	
@@ -4305,6 +4305,8 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_LASER(LPARAM lParam)
 
 void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
  {
+ 	//laser_fail_flag = 1;
+	
 	//intf("Iparam = %d\n",lParam);
 	killDynamicTimer();
  
@@ -4327,6 +4329,8 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 		Posd[eDynamicZone] = DynamicOsd[2];
 		startDynamicTimer();
 	}
+	
+	//laser_fail_flag = 0;
  	return ;
  }
 
@@ -4446,7 +4450,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			//gLevel3CalculatorState = Auto_Idle;
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			OSDCTRL_ItemShow(eCorrectionTip);
-			LaserPORT_requst();
+			SPI_mirror_send_requst();
 		}	
 	}
 	return ;
