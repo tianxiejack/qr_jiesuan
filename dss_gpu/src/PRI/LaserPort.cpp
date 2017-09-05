@@ -23,22 +23,20 @@ int getLaserDistance()
 }
 static void startLaserTimer()
 {
-//	CTimerCtrl * pCtrlTimer;
-//	pCtrlTimer = pOsdCtrlObj->pOsdTimer;
-//	pCtrlTimer->SetTimer(pCtrlTimer,eLaser_Timer,LASER_TIMER,LaserPORT_lpfnTimer,NULL);
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	pCtrlTimer->startTimer(eLaser_Timer,LASER_TIMER);
 }
+
 void killLaserTimer()
 {
-#if 1
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eLaser_Timer)!=eTimer_Stat_Stop)
 	{
 		pCtrlTimer->KillTimer(eLaser_Timer);
-		pCtrlTimer->pTimeArray[eLaser_Timer].nStat = eTimer_Stat_Stop;
 	}
 	//Posd[eMeasureType] = MeasureTypeOsd[0];
-#endif
 }
+
 //DFU_Handle pDUFObj=NULL;
 /*
  *  ======== LaserPORT_initial========
@@ -203,7 +201,7 @@ int LaserPORT_requst()		//���Ͳ������
 	if(sizeof(buf) != stat)
 		return -1;
 #endif	
-	LaserPORT_requst_TRACE();
+	//LaserPORT_requst_TRACE();
 // start a timeout fail
 	pTimerObj->startTimer(eLaser_Timer,LASER_TIMER);
 

@@ -4305,11 +4305,9 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_LASER(LPARAM lParam)
 
 void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
  {
-	printf("Iparam = %d\n",lParam);
+	//intf("Iparam = %d\n",lParam);
 	killDynamicTimer();
-
-	//while(!(pTimerObj->GetTimerStat[eOSD_shine_Timer] == eTimer_Stat_Stop));
-
+ 
 	if(isBattleMode()&&isStatBattleAuto()&&(isBattlePreparation()))
 	{
 		gLevel3CalculatorState = Battle_Idle;
@@ -4319,7 +4317,6 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 		OSDCTRL_ItemShow(eDynamicZone);
 		Posd[eDynamicZone] = DynamicOsd[2];
 		startDynamicTimer();
-
 		//sendCommand(CMD_QUIT_AVT_TRACKING);
 	}
 	else if(isBattleMode()&&isStatBattleAuto()&&isAutoPreparation())
@@ -4400,7 +4397,7 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
  {	
  	//finish_laser_measure = 1;
-	printf(" processCMD_MEASURE_DISTANCE   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
+	//printf(" processCMD_MEASURE_DISTANCE   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
 	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleTriggerMeasureVelocity())
 	{
@@ -4432,12 +4429,13 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			processCMD_VELOCITY_FAIL(0);
 			//sendCommand(CMD_VELOCITY_FAIL);
 		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG
+		
 
-	//	OSDCTRL_ItemShine(eMeasureType);
-	//	if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
-	//	{
-	//		pTimerObj->startTimer(eOSD_shine_Timer,2000);
-	//	}
+		OSDCTRL_ItemShine(eMeasureType);
+		if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
+		{
+			pTimerObj->startTimer(eOSD_shine_Timer,2000);
+		}
 		
 		//todo: trigger Laser and AVT
 		gLevel3CalculatorState = Auto_Preparation;

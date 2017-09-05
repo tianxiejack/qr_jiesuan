@@ -589,7 +589,7 @@ static Int32 APP_onTimer( Int32 timerId )
 
 	   if(timerId == eLaser_Timer)
 	   {
-	   		pTimerObj->KillTimer(eLaser_Timer);
+	   		killLaserTimer();
 			MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_TIMEOUT);
 	   	
 	   }

@@ -959,7 +959,6 @@ void DynamicTimer_cbFxn()
 {
 	killDynamicTimer();
 	if(OSDCTRL_IsOsdDisplay(eErrorZone))
-	
 		OSDCTRL_ItemHide(eErrorZone);
 	
 	if(OSDCTRL_IsOsdDisplay(eDynamicZone))
@@ -967,10 +966,14 @@ void DynamicTimer_cbFxn()
 		if(Posd[eDynamicZone] != DynamicOsd[0])
 			OSDCTRL_ItemHide(eDynamicZone);
 	}
+
+	//printf("@@@@@@@@@@@2gMeasureType = %d\n",gMeasureType);
 	if(!isMeasureOsdNormal())
 	{
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
 	}
+	
+
 	if(isFovShine())
 		FOVSHINE = FALSE;
 }
