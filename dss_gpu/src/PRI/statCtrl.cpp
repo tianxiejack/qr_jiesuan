@@ -947,7 +947,7 @@ int CTIMERCTRL_getTimerStat(unsigned int nIDEvent)
 
 
 void startDynamicTimer()
-{
+{	
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eDynamic_Timer)==eTimer_Stat_Stop)
 	{
@@ -979,7 +979,7 @@ void DynamicTimer_cbFxn()
 }
 
 void killDynamicTimer()
-{
+{	
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	pCtrlTimer->KillTimer(eDynamic_Timer);
 }

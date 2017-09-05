@@ -95,7 +95,7 @@ void printf_read_data(uint8_t* receiveData,int readCountTmp);
 
 
 extern bool uart_open_close_flag;
-extern bool laser_fail_flag;
+//extern bool laser_fail_flag;
 #endif
 
 

@@ -4304,10 +4304,8 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_LASER(LPARAM lParam)
 
 
 void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
- {
- 	//laser_fail_flag = 1;
-	
-	//intf("Iparam = %d\n",lParam);
+ {	
+	//printf("Iparam = %d\n",lParam);
 	killDynamicTimer();
  
 	if(isBattleMode()&&isStatBattleAuto()&&(isBattlePreparation()))
@@ -4328,9 +4326,11 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 		OSDCTRL_ItemShow(eDynamicZone);
 		Posd[eDynamicZone] = DynamicOsd[2];
 		startDynamicTimer();
-	}
+	}	
+
+	if(pTimerObj->GetTimerStat(eDynamic_Timer) == eTimer_Stat_Stop)
+		startDynamicTimer();
 	
-	//laser_fail_flag = 0;
  	return ;
  }
 
