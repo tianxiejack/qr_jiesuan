@@ -25,7 +25,7 @@ ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};
 WeatherItem gWeatherTable={15,101325};
 #endif
 
-static int DISLEN=10;
+static int DISLEN=100;
 
 
 void saveLastAndGetNewZeroParam(int type)
@@ -541,13 +541,23 @@ void moveFocusLeftGeneral()
 	ShinId = eCalibGeneral_DisValue1 + (ShinId - eCalibGeneral_DisValue1+ 13)%14;
 }
 
+int getDisLen()
+{
+	return DISLEN;
+}
+
 void increaseMeasureMul()
 {
 	if(!SHINE)
 		return;
 	if(DISLEN<100)
 		DISLEN *= 10;
-	
+
+	if(ShinId > eMeasureDis_Value2)
+	{
+		OSDCTRL_ItemShow(ShinId);
+		ShinId -- ;
+	}
 	resetTickNum();
 }
 
@@ -557,7 +567,12 @@ void decreaseMeasureMul()
 		return;
 	if(DISLEN>1)
 		DISLEN /= 10;
-	
+
+	if(ShinId < eMeasureDis_Value4)
+	{
+		OSDCTRL_ItemShow(ShinId);
+		ShinId ++;
+	}
 	resetTickNum();
 }
 
@@ -568,7 +583,7 @@ void increaseMeasureDis()
 	if(!SHINE)
 		return;
 
-	if(eMeasureDis == i)
+	if( /*eMeasureDis == i || */eMeasureDis_Value2 == i || eMeasureDis_Value3 == i || eMeasureDis_Value4 == i)
 	{
 		DistanceManual+= DISLEN;
 		if(isMachineGun())
@@ -586,6 +601,7 @@ void increaseMeasureDis()
 			if(DistanceManual >= 360)
 				DistanceManual = 360;
 		}
+		//printf("@@@@@DistanceManual = %d\n\n", DistanceManual);
 	}
 }
 
@@ -597,7 +613,8 @@ void decreaseMeasureDis()
 	if(!SHINE)
 		return;
 
-	if(eMeasureDis == i){
+	if( /*eMeasureDis == i || */ eMeasureDis_Value2 == i || eMeasureDis_Value3 == i || eMeasureDis_Value4 == i)
+	{
 		DistanceManual -= DISLEN;
 		if(DistanceManual <= 0)
 			DistanceManual = 0;

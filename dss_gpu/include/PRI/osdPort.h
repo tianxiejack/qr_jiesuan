@@ -51,6 +51,8 @@ void udateMenuItem_Zero_General(PROJECTILE_TYPE type);
 void updateMoveCross();
 void moveCrossAbs(int x, int y);
 void saveGeneralParam();
+int getDisLen();
+
 
 extern FOVCTRL_Handle pFovCtrlObj;
 

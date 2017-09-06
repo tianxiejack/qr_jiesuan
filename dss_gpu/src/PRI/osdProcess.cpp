@@ -165,6 +165,12 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,	10,	0,	{0}},
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,	10,	0,	{0}},
 	{eMeasureDis,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	10,	0,	{0}},
+
+	{eMeasureDis_Value1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	10,	0,	{0}},
+	{eMeasureDis_Value2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	458+LOFFSET,	10,	0,	{0}},
+	{eMeasureDis_Value3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	481+LOFFSET,	10,	0,	{0}},
+	{eMeasureDis_Value4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	504+LOFFSET,	10,	0,	{0}},
+	
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,	10,	0,	{0}},
 	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,	470,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,	460,	0,	{0}},
@@ -440,7 +446,7 @@ void resetTickNum()
 
 
 BOOL isMultiChanged()
-{
+{	
 	if(tick > 0)
 		tick--;
 	return (tick != 0);
@@ -1372,6 +1378,8 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 	static double value =0.0;
 	static BYTE Bye;
 
+	unsigned char thousand = 0 ,hundred = 0,tens = 0,unit = 0;
+
 	SDK_ASSERT(pCtrlObj!=NULL);
 
 	pTextObj=&pCtrlObj->pTextList[uItemId];
@@ -1422,12 +1430,34 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			}
 			break;
 		case eMeasureDis:
+
 			if(isMultiChanged())
-				//sprintf(pStr,"x%03d",getDisLen()); //����
-				sprintf(pStr,"x%03d",333);
+				sprintf(pStr,"x%03d",getDisLen()); //����
 			else
 				sprintf(pStr,"%04d",DistanceManual);
 			break;
+			
+			//thousand = DistanceManual/1000;
+			//hundred =  (DistanceManual%1000)/100;
+			//tens = (DistanceManual/10)%10;
+			//unit = (DistanceManual%10);
+
+		case eMeasureDis_Value1 :
+				sprintf(pStr,"%d", DistanceManual/1000);
+				break;
+
+		case eMeasureDis_Value2 :
+				sprintf(pStr,"%d",(DistanceManual%1000)/100);
+				break;
+
+		case eMeasureDis_Value3 :
+				sprintf(pStr,"%d",(DistanceManual/10)%10);
+				break;
+
+		case eMeasureDis_Value4 :
+				sprintf(pStr,"%d",(DistanceManual%10));
+				break;	
+		
 		case eLaserState:
 			sprintf(pStr,"%s",Posd[eLaserState]); 	//��ĩѡͨ
 			break;

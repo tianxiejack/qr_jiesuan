@@ -951,6 +951,7 @@ void startDynamicTimer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eDynamic_Timer)==eTimer_Stat_Stop)
 	{
+		printf("######startDynamicTimer startDynamicTimer\n");
 		pCtrlTimer->startTimer(eDynamic_Timer,DYNAMIC_TIMER);	
 	}
 }

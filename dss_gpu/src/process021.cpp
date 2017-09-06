@@ -1579,7 +1579,12 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if (key == 'J')
 	{
-		MSGDRIV_send(CMD_MODE_AIM_SKY,NULL);
+		//MSGDRIV_send(CMD_MODE_AIM_SKY,NULL);
+		printf("DistanceManual = %d\n",DistanceManual);
+		printf("qianwei = %d\n",DistanceManual/1000 );
+		printf("baiwei = %d\n",(DistanceManual%1000)/100);
+		printf("shiwei = %d\n",(DistanceManual/10)%10 );
+		printf("gewei = %d\n",(DistanceManual%10));
 	}
 
 		
@@ -2560,7 +2565,6 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
  void CProcess021::MSGAPI_inputtrack(long lParam )
 {
 	#if 1
-	printf("%s^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",__func__);
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		//if(pIStuts->AvtTrkStat)
 		//	pIStuts->AvtTrkStat = eTrk_mode_acq;
@@ -3646,6 +3650,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 	{
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
+			
 			increaseMeasureDis();
 			//loadFiringTable_Enter();
 		}
@@ -3866,7 +3871,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 {
 	if(!ValidateGunType())
 		return;
-
+	
 	if(isCalibrationMode())
 	{
 		if(isCalibrationMainMenu())
@@ -3965,9 +3970,10 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 	{
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
-			if(SHINE &&(eMeasureDis == ShinId))
+		
+			if(SHINE &&(/*eMeasureDis == ShinId*/eMeasureDis_Value2 == ShinId ||eMeasureDis_Value3 == ShinId ||eMeasureDis_Value4 == ShinId))
 			{
-				OSDCTRL_NoShine();
+				OSDCTRL_NoShineShow();
 				isfixingMeasure = FALSE;
 				if(0 == DistanceManual)
 				{
@@ -4174,19 +4180,48 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 
 void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
  {
+ 	int i = 0;
 	if(isBattleMode()&&isStatBattleAuto())
 	{
 		gMeasureType =(DIS_MEASURE_TYPE)(MEASURETYPE_MANUAL - gMeasureType);
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
-			OSDCTRL_ItemShine(eMeasureDis);
-			isfixingMeasure = TRUE;
+			#if 0
+				OSDCTRL_ItemShine(eMeasureDis);
+				isfixingMeasure = TRUE;
+				
+				finish_laser_measure = 0;
+			#endif
 			
+			for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+				OSDCTRL_ItemShow(i);
+			
+			switch(getDisLen())
+			{
+				case 100: 
+					i = eMeasureDis_Value2;
+					break;
+				case 10: 
+					i = eMeasureDis_Value3;
+					break;
+				case 1:
+					i = eMeasureDis_Value4;
+					break;
+				default :
+					break;
+			}
+			OSDCTRL_ItemShine(i);		
+
+			isfixingMeasure = TRUE;
 			finish_laser_measure = 0;
 		}
 		else
 		{
+			for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+				OSDCTRL_ItemHide(i);
+			OSDCTRL_ItemShow(eMeasureDis);
+			
 			SHINE = FALSE;
 			ShinId = 0;
 			isfixingMeasure = FALSE;
@@ -4891,7 +4926,12 @@ void CProcess021::updateCMD_BUTTON_SWITCH(int param)
 
 bool CProcess021::ValidateGunType()
 {
-	OSDCTRL_NoShine();
+	if(ShinId == eMeasureDis_Value1 ||ShinId == eMeasureDis_Value2 ||ShinId == eMeasureDis_Value3 ||ShinId == eMeasureDis_Value4)
+	{
+		//do nothing
+	}
+	else
+		OSDCTRL_NoShine();
 	if(gProjectileType > PROJECTILE_GRENADE_GAS)
 	{		
 		if(gProjectileType == QUESTION_GRENADE_KILL)

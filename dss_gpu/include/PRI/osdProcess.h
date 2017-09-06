@@ -90,25 +90,31 @@ typedef enum _eOsdTypeId{
 	eFovType		=	0x07,
 	eEnhance		=	0x08,
 	eMeasureDis		=	0x09,
-	eLaserState		=	0x0A,//��Ϊ�������ĩѡͨ��ʾʹ��
-	eSuperOrder		=	0x0B,
-	eErrorZone		=	0x0C,
-	eWeather1		=	0x0D,
-	eWeather2		=	0x0E,
-	eAngleH			=	0x0F,
-	eAngleV			=	0x10,
-	eDynamicZone	=	0x11,
-	eCorrectionTip	=	0x12,
-	eF1Button		=	0x13,
-	eF2Button		=	0x14,
-	eF3Button		=	0x15,
-	eF4Button		=	0x16,
-	eF5Button		=	0x17,
-	eF6Button		=	0x18,
-	eCalibMenu_Weather=	0x19,
-	eCalibMenu_Zero	=	0x1A,
-	eCalibMenu_General=	0x1B,
-	eCalibMenu_Save	=	0x1C,
+
+	eMeasureDis_Value1,
+	eMeasureDis_Value2,
+	eMeasureDis_Value3,
+	eMeasureDis_Value4,
+	
+	eLaserState	,//	=	0x0A,//��Ϊ�������ĩѡͨ��ʾʹ��
+	eSuperOrder	,//	=	0x0B,
+	eErrorZone	,//	=	0x0C,
+	eWeather1	,//	=	0x0D,
+	eWeather2	,//	=	0x0E,
+	eAngleH		,//	=	0x0F,
+	eAngleV		,//	=	0x10,
+	eDynamicZone,//	=	0x11,
+	eCorrectionTip,//	=	0x12,
+	eF1Button	,//	=	0x13,
+	eF2Button	,//	=	0x14,
+	eF3Button	,//	=	0x15,
+	eF4Button	,//	=	0x16,
+	eF5Button	,//	=	0x17,
+	eF6Button	,//	=	0x18,
+	eCalibMenu_Weather	,//=	0x19,
+	eCalibMenu_Zero	,//=	0x1A,
+	eCalibMenu_General,//=	0x1B,
+	eCalibMenu_Save	,//=	0x1C,
 	eCalibMenu_GenPram,
 	eCalibMenu_Horizen,
 	eCalibMenu_Laser,
@@ -278,7 +284,7 @@ typedef enum _eOsdTypeId{
 	eCalcNum_Posion,
 
 	eStateMaintD,//ά����
-	eStateDetend = 0xC5,//,//����ֹ����
+	eStateDetend ,//= 0xC5,//,//����ֹ����
 	eStateClutch,//�����
 	eStateGrenad,//35������
 	eStateFirer,//����

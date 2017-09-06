@@ -210,7 +210,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 							if(frcolor == 0)
 								pixcolor 		= (data&0x80)?frcolor:bgcolor;
 							else						
-								pixcolor		= (data&0x80)?frcolor:0xff000000;
+								pixcolor		= (data&0x80)?frcolor:0x50000000;//0xff000000;
 							
 							
 							//pixcolor		= (data&0x80)?frcolor:bgcolor;
