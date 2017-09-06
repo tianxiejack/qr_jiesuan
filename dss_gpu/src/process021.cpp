@@ -3652,7 +3652,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		{
 			
 			increaseMeasureDis();
-			//loadFiringTable_Enter();
+			loadFiringTable_Enter();
 		}
 	}
 
@@ -3725,7 +3725,7 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 				OSDCTRL_ItemShow(eDynamicZone);
 				startDynamicTimer();
 			}
-			//loadFiringTable_Enter();
+			loadFiringTable_Enter();
 		}
 	}
 
@@ -3990,7 +3990,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				else
 					OSDCTRL_ItemHide(eDynamicZone);
 			}
-			loadFiringTable_Enter();
+			//loadFiringTable_Enter();
 			//updateMoveCross();
 		}
 	}
