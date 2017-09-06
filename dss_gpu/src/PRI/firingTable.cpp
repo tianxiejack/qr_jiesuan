@@ -7,7 +7,7 @@
 
 //5.8\u673a\u67aa\u5c04\u8868\uff0c\u6309\u8ddd\u79bb\u503c\u5347\u5e8f\u6392\u5217
 static const RowItems gMachineGunTable[]= {
-	{0,		0.0,					0.00,	0},
+	//{0,		0.0,					0.00,	0},
 	{100, 	CALC_MIL(0,8,2.3), 		0.12,	0/*BIAS2MIL(0.01,100)*/},
 	{200, 	CALC_MIL(0,10,2.7), 	0.25,	0/*BIAS2MIL(0.02,200)*/},
 	{300, 	CALC_MIL(0,12,3.5), 	0.39,	RADIAN2MIL(0.000167)/*BIAS2MIL(0.05,300)*/},
@@ -30,7 +30,7 @@ static const RowItems gMachineGunTable[]= {
 //\u69b4\u5f39\u5c04\u8868,\u6309\u8ddd\u79bb\u503c\u5347\u5e8f\u6392\u5217
 //todo:\u65f6\u95f4\u76ee\u524d\u6309190\u7c73\u6bcf\u79d2\u521d\u901f\u4f30\u7b97\uff0c\u7b49\u5b9e\u6d4b\u7ea0\u6b63
 static const RowItems gGrenadeTable[]= {
-	{0,			0,						0.0,	0.0},
+	//{0,			0,						0.0,	0.0},
 	{100,		CALC_MIL(1,26,0.0),		0.97,	0.26},
 	{200,		CALC_MIL(2,14,0.0),		1.51,	0.52},
 	{300,		CALC_MIL(3,4,0.0),		2.07,	0.81},
@@ -55,8 +55,8 @@ static const RowItems gGrenadeTable[]= {
 //\u69b4\u5f39\u74e6\u65af\u5c04\u8868\uff0c\u6309\u8ddd\u79bb\u503c\u5347\u5e8f\u6392\u5217,\u5ffd\u7565\u4e86\u964d\u5e8f\u90e8\u5206\u7684\u5c04\u8868
 //\u504f\u6d41\u4e0d\u8ba1
 static const RowItems gGrenadeTableGas[]= {
-	{0,		 0 ,		0.0 ,		0},
-	{25,	 19.16,		0.32,		0},
+	//{0,		 0 ,		0.0 ,		0},
+	//{25,	 19.16,		0.32,		0},
 	{50,	 38.94,		0.64,		0},
 	{75,	 60.42,		1.01,		0},
 	{100,	 83.33,		1.38,		0},

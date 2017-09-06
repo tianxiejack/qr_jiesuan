@@ -618,6 +618,24 @@ void decreaseMeasureDis()
 		DistanceManual -= DISLEN;
 		if(DistanceManual <= 0)
 			DistanceManual = 0;
+
+		#if 0
+			if(isMachineGun())
+			{
+				if(DistanceManual <= 100)
+					DistanceManual = 100;
+			}
+			else if(isGrenadeKill())
+			{
+				if(DistanceManual <= 100)
+					DistanceManual = 100;
+			}
+			else if(isGrenadeGas())
+			{
+				if(DistanceManual <= 50)
+					DistanceManual = 50;
+			}
+		#endif
 	}
 }
 

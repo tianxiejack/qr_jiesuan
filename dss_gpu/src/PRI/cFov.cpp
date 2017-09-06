@@ -157,9 +157,6 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 			
 		}
 		
-		//Drawjs_leftFrame(frame,cthis);
-		//Drawjs_rightFrame(frame, cthis);
-		//Drawjs_bottomFrame(frame, cthis);
 	}
 	else
 	{
@@ -190,11 +187,10 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	#endif
 
 	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
-	  //if( isGrenadeGas()||isGrenadeKill())
 		DrawjsGrenadeLoadOK(frame,cthis);
 	
 
-	if(isStatBattleAlert() && isAutoCatching())//\u951f\u7686\u8bb9\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u793a\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?
+	if(isStatBattleAlert() && isAutoCatching())
 	{
 		static int i=0;
 		DrawjsAlertFrame(frame,cthis);

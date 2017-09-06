@@ -547,7 +547,7 @@ void moveRightServoYPram();
 
 extern volatile char globalShoweErrorZone;
 extern WeatherItem gWeatherTable;
-extern int Pressure,Temparature;
+
 
 
 

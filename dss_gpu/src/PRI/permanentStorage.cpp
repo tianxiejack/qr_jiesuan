@@ -73,7 +73,7 @@ GeneralCorrectionItem gGrenadeGas_GCTable[]=
 };
 
 ZeroCorrectionItem gMachineGun_ZCTable = {500,	{352,288}};
-ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};
+ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};//{500,	{352,288}};
 WeatherItem gWeatherTable={15,101325};
 
 

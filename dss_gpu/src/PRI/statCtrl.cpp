@@ -654,9 +654,15 @@ void loadFiringTable_Enter()
 
 		return;
 	}
-	else if( CALC_INVALID_PARAM == ret || CALC_UNDER_DISTANCE == ret)
+	else if( CALC_INVALID_PARAM == ret )
 	{
-		SDK_ASSERT(FALSE);
+		//SDK_ASSERT(FALSE);
+		OSA_printf("CALC_INVALID_PARAM!\n");
+	}
+	else if(CALC_UNDER_DISTANCE == ret)
+	{		
+		moveCrossCenter(0,0);
+		OSA_printf("%s__%d:CALC_UNDER_DISTANCE!\n",__func__,__LINE__);
 	}
 	return ;
 }
@@ -702,7 +708,7 @@ void loadFiringTable()
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
 	
 	ret = FiringCtrl( &input, &output);
-	output_prm_print(input, output);
+	//output_prm_print(input, output);
 		
 //	sendCommand(CMD_SEND_MIDPARAMS);
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
@@ -950,7 +956,7 @@ void startDynamicTimer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eDynamic_Timer)==eTimer_Stat_Stop)
 	{
-		printf("######startDynamicTimer startDynamicTimer\n");
+		//printf("######startDynamicTimer startDynamicTimer\n");
 		pCtrlTimer->startTimer(eDynamic_Timer,DYNAMIC_TIMER);	
 	}
 }

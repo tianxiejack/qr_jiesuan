@@ -52,7 +52,7 @@ static void PositionPORT_close();
 
 
 
-double hPositionX=0.0,hPositionY=0.0,Tempre=0.0;
+double hPositionX=0.0,hPositionY=0.0;
 
 void killSelfCheckDipAngleTimer()
 {
