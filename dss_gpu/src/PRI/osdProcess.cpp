@@ -1484,15 +1484,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"T%+02d   P%03dk",gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
 			break;
 		case eWeather2:
-			//sprintf(pStr,"R:%+05.2f%+05.2f",getAimOffsetX(),getAimOffsetY()); 
-			sprintf(pStr,"R:%+05.2f%+05.2f",1.1,2.2); 
-/*			if(isTrackingMode())
-			{
-				sprintf(pStr,"R:%+05.2f%+05.2f",getAimOffsetX(),getAimOffsetY()); 
-			}else
-			{
-				sprintf(pStr,"R:%+05.2f%+05.2f",0.0,0.0); 
-			}*/
+			sprintf(pStr,"R:%+05.2f%+05.2f",getAimOffsetX(),getAimOffsetY()); 
 			break;
 		case eErrorZone:
 			sprintf(pStr,"%s",Posd[eErrorZone]); 

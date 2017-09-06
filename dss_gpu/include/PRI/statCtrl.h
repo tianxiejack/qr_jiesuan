@@ -299,7 +299,9 @@ void processCMD_MAINTPORT_UNLOCK(long lParam);
 void processCMD_DETEND_LOCK(long lParam);
 void processCMD_DETEND_UNLOCK(long lParam);
 void startSelfCheckTimer();
-
+float getAimOffsetX();
+float getAimOffsetY();
+bool isBeyondDerection(Derection_Type type);
 
 
 

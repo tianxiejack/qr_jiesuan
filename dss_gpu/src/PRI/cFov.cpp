@@ -167,33 +167,33 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		
 	}
 		
-	/*	
 	if(isFovShine() && (((shin++)%50)<25) )//yue jie kuang
 	{
 		if(isBeyondDerection(DERECTION_LEFT))
-			FOVCTRL_drawLeftFrame(hFov,pImg);
+			DrawjsLeftFrame(frame,cthis);
 		else if(isBeyondDerection(DERECTION_RIGHT))
-			FOVCTRL_drawRightFrame(hFov,pImg);
+			DrawjsRightFrame(frame,cthis);
 		else if(isBeyondDerection(DERECTION_DOWN))
-			FOVCTRL_drawBottomFrame(hFov,pImg);
+			DrawjsBottomFrame(frame,cthis);
 	}
 	
+	#if 0
+		if(!(isBattleMode()&&isStatBattleAlert())){
+			FOVCTRL_drawRulerFrame(hFov,pImg);//biao chi
+			if(isCalibrationMode()&& isCalibrationZero())
+				FOVCTRL_drawBoresightZero(hFov,pImg);
+			else if((isMeasureManual())||(isBattleMode()&& isStatBattleAuto()&& isDistanceMeasured()))
+				FOVCTRL_drawBoresightAim(hFov,pImg);
+			else
+				FOVCTRL_drawBoresight(hFov,pImg);
+		}
+	#endif
 
-	if(!(isBattleMode()&&isStatBattleAlert())){
-		FOVCTRL_drawRulerFrame(hFov,pImg);//biao chi
-		if(isCalibrationMode()&& isCalibrationZero())
-			FOVCTRL_drawBoresightZero(hFov,pImg);
-		else if((isMeasureManual())||(isBattleMode()&& isStatBattleAuto()&& isDistanceMeasured()))
-			FOVCTRL_drawBoresightAim(hFov,pImg);
-		else
-			FOVCTRL_drawBoresight(hFov,pImg);
-	}
-	*/
 	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
 	  //if( isGrenadeGas()||isGrenadeKill())
 		DrawjsGrenadeLoadOK(frame,cthis);
 	
-#if 1
+
 	if(isStatBattleAlert() && isAutoCatching())//\u951f\u7686\u8bb9\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u793a\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?
 	{
 		static int i=0;
@@ -205,19 +205,8 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 				FOVCTRL_drawAlertMovingAim(hFov,pImg);
 		#endif
 //		FOVCTRL_drawAimBolder(hFov, pImg, 5,-5,32,32);
-	/**
-		if(cthis->fovElem==eFov_SmlFov_Stat)
-		{
-			FOVCTRL_drawFovCorner(hFov,pImg);
-		}
-		else if(cthis->fovElem==eFov_LarFov_Stat||cthis->fovElem==eFov_MidFov_Stat)
-		{
-			FOVCTRL_drawFovCorner(hFov,pImg);
-			FOVCTRL_drawFovMid(hFov,pImg);
-		}
-		**/
 	}
-#endif
+
 	//FOVSYMBOL_drawTrk(handle,pImg);
 #endif
 }

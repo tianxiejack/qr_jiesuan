@@ -836,6 +836,116 @@ void DrawjsAlertFrame(Mat frame,CFOV * fovOsdCtrl)
 	return;
 }
 
+
+void DrawjsLeftFrame(Mat frame,CFOV * fovOsdCtrl)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+	CFOV* cthis = fovOsdCtrl;
+
+	start.x = 35;
+	start.y = 240;
+	end.x = start.x;
+	end.y = start.y + 100;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 40;
+	start.y = 240;
+	end.x = start.x;
+	end.y = start.y + 100;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 35;
+	start.y = 240;
+	end.x = start.x + 5;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 35;
+	start.y = 340;
+	end.x = start.x + 5;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);	
+	
+}
+
+
+void DrawjsRightFrame(Mat frame,CFOV * fovOsdCtrl)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+	CFOV* cthis = fovOsdCtrl;
+
+	start.x = 660;
+	start.y = 240;
+	end.x = start.x;
+	end.y = start.y + 100;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 665;
+	start.y = 240;
+	end.x = start.x;
+	end.y = start.y + 100;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 660;
+	start.y = 240;
+	end.x = start.x + 5;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 660;
+	start.y = 340;
+	end.x = start.x + 5;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);	
+	
+}
+
+
+void DrawjsBottomFrame(Mat frame,CFOV * fovOsdCtrl)
+{
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+	int len = 20;
+	int linew = 1;
+	int i=0;
+	CFOV* cthis = fovOsdCtrl;
+
+	start.x = 300;
+	start.y = 520;
+	end.x = start.x;
+	end.y = start.y + 5;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 400;
+	start.y = 520;
+	end.x = start.x;
+	end.y = start.y + 5;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 300;
+	start.y = 520;
+	end.x = start.x + 100;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
+
+	start.x = 300;
+	start.y = 525;
+	end.x = start.x + 100;
+	end.y = start.y;
+	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);	
+	
+}
+
+
+
 void Drawcvcross(Mat frame,Line_Param_fb *lineparm)
 {
 

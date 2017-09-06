@@ -135,7 +135,9 @@ int process_decode(struct RS422_data * pRS422_data)
 					memcpy(buf, buf+parse_length, length-parse_length);
 					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 					length -= parse_length;
-				}else{
+				}
+				else
+				{
 					printf("[%s] sum of xor=%02x   buf[%d]=%02x is error.\n", __func__, sum_xor,  parse_length-1, buf[parse_length-1]  );
 					memcpy(buf, buf+1, length-1);
 					length--;

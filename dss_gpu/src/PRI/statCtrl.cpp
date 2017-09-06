@@ -273,7 +273,6 @@ bool isFovShine()
 
 bool bGrenadeServoOK()
 {
-	//isGrenadeServoOK = 1;
 	return isGrenadeServoOK;
 }
 
@@ -1101,6 +1100,22 @@ void startSelfCheckTimer()
 	{
 		pCtrlTimer->startTimer(eBootUp_Timer,BOOTUP_TIMER);	
 	}
+}
+
+
+float getAimOffsetX()
+{
+	return (AimOffsetX)/100.0;
+}
+
+float getAimOffsetY()
+{
+	return (AimOffsetY)/100.0;
+}
+
+bool isBeyondDerection(Derection_Type type)
+{
+	return type == SHINE_DERECTION;
 }
 
 
