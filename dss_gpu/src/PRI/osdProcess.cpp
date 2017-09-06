@@ -1481,7 +1481,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%s",Posd[eSuperOrder]);//); //��ǹ��
 			break;
 		case eWeather1:
-			sprintf(pStr,"T%+02d   P%03dk",gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
+			sprintf(pStr,"T%+02d   P%03dk",Temparature,Pressure);//gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
 			break;
 		case eWeather2:
 			sprintf(pStr,"R:%+05.2f%+05.2f",getAimOffsetX(),getAimOffsetY()); 

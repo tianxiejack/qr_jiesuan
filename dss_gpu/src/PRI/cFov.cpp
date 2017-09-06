@@ -164,7 +164,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		
 	}
 		
-	if(isFovShine() && (((shin++)%50)<25) )//yue jie kuang
+	if(isFovShine() && (((shin++)%6)<3) )//yue jie kuang
 	{
 		if(isBeyondDerection(DERECTION_LEFT))
 			DrawjsLeftFrame(frame,cthis);
