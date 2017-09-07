@@ -100,7 +100,7 @@ int process_decode(struct RS422_data * pRS422_data)
 
 			if(length<parse_length){
 
-				printf(" length<dataLength ...\n");
+				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
@@ -481,7 +481,7 @@ int Process_grenade(struct RS422_data * pRS422_data)
 
 			if(length<parse_length){
 
-				printf(" length<dataLength ...\n");
+				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
@@ -579,7 +579,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 
 			if(length<parse_length){
 
-				printf(" length<dataLength ...\n");
+				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 

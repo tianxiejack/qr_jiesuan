@@ -359,7 +359,6 @@ void CProcess021::process_osd(void *pPrm)
 	//OSDCTRL_ItemShow(eErrorZone);
 	//OSDCTRL_AllHide();
 	
-
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 

@@ -226,7 +226,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibZero_Fy,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	550+LOFFSET,		520,	0,	{0}},
 	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		250,	0,	{0}},
 	{eCalibZero_AngleGrenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		285,	0,	{0}},
-	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		520,	0,	{0}},
 
 	{eCalibWeather_Tep,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		100,	0,	{0}},
 	{eCalibWeather_Pre,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		135,	0,	{0}},
@@ -775,7 +775,6 @@ void OSDCTRL_CalibGeneralShow()
 
 void OSDCTRL_CalibZeroShow()
 {
-#if 1
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eCalibZero_D; i<=eCalibZero_Fy; i++)
@@ -799,7 +798,6 @@ void OSDCTRL_CalibZeroShow()
 		}
 	}
 	OSDCTRL_NoShine();
-#endif
 }
 
 void OSDCTRL_BattleAlertShow()
@@ -1481,7 +1479,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%s",Posd[eSuperOrder]);//); //��ǹ��
 			break;
 		case eWeather1:
-			sprintf(pStr,"T%+02d   P%03dk",Temparature,Pressure);//gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
+			sprintf(pStr,"T%+02d P%03dk",Temparature,Pressure);//gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
 			break;
 		case eWeather2:
 			sprintf(pStr,"R:%+05.2f%+05.2f",getAimOffsetX(),getAimOffsetY()); 
@@ -1495,16 +1493,17 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eAngleH:
 			PositionX = getPlatformPositionX();
 			PositionY = getPlatformPositionY();
-			sprintf(pStr,"Q%+03.0f%+03.0f",(PositionX),(PositionY)); 
-		
+			//sprintf(pStr,"Q%+03.0f%+03.0f",(PositionX),(PositionY)); 
+			sprintf(pStr,"%c%+03.0f%+03.0f",200,(PositionX),(PositionY)); 
 		//	sprintf(pStr,"%c%+03.0f",200,getMachGunAngle());//�� 
 
 			break;
 		case eAngleV:
 			AngleGun = getMachGunAngle();
 			AngleGrenade = getGrenadeAngle();
-			sprintf(pStr,"G%+03.0f%+03.0f",(AngleGun),(AngleGrenade)); //��λΪ��
-
+			//sprintf(pStr,"G%+03.0f%+03.0f",(AngleGun),(AngleGrenade)); //��λΪ��
+			sprintf(pStr,"%c%+03.0f%+03.0f",211,(AngleGun),(AngleGrenade)); 
+			
 			//sprintf(pStr,"%c%+03.0f",211,getGrenadeAngle());//�� 
 			break;
 		case eCorrectionTip:

@@ -115,6 +115,9 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	DrawjsAlertFrame(frame,cthis);
 	DrawjsAngleFrame(frame,cthis,last_angle);
 	DrawjsGrenadeLoadOK(frame,cthis);
+	DrawjsLeftFrame(frame,cthis);
+	DrawjsRightFrame(frame,cthis);
+	DrawjsBottomFrame(frame,cthis);
 	return ;
 }
 
@@ -164,7 +167,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		
 	}
 		
-	if(isFovShine() && (((shin++)%6)<3) )//yue jie kuang
+	if(/*isFovShine() && */(((shin++)%6)<3) )//yue jie kuang
 	{
 		if(isBeyondDerection(DERECTION_LEFT))
 			DrawjsLeftFrame(frame,cthis);

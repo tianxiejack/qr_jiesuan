@@ -98,7 +98,8 @@ typedef enum{
 typedef enum _Derection{
 	DERECTION_LEFT,
 	DERECTION_RIGHT,
-	DERECTION_DOWN
+	DERECTION_DOWN,
+	DERECTION_NULL
 }Derection_Type;
 
 /*

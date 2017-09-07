@@ -32,7 +32,7 @@ bool isGrenadeSensorOK=FALSE,isGrenadeServoOK=FALSE,isMachineGunServoOK=FALSE;
 bool isDetendClose=TRUE,isMaintPortOpen=TRUE;
 static bool isVideoOK=FALSE;
 static bool FOVSHINE = FALSE;
-Derection_Type SHINE_DERECTION=DERECTION_DOWN;
+Derection_Type SHINE_DERECTION=DERECTION_NULL;//DERECTION_DOWN;
 bool isfixingMeasure = FALSE;
 extern void setJoyStickStat(BOOL stat);
 extern void setServoControlObj();
@@ -596,6 +596,8 @@ void loadFiringTable_Enter()
 			FOVSIZE_V = FOVDEGREE_VLARGE*(720-borX)/360;
 			FOVSIZE_H = FOVDEGREE_HLARGE*(576-borY)/288;
 		}
+
+		SHINE_DERECTION = DERECTION_NULL;
 		
 		if(-FOVSIZE_V >  MIL2DEGREE(output.AimOffsetThetaX))
 		{
@@ -956,7 +958,6 @@ void startDynamicTimer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eDynamic_Timer)==eTimer_Stat_Stop)
 	{
-		//printf("######startDynamicTimer startDynamicTimer\n");
 		pCtrlTimer->startTimer(eDynamic_Timer,DYNAMIC_TIMER);	
 	}
 }
@@ -973,7 +974,6 @@ void DynamicTimer_cbFxn()
 			OSDCTRL_ItemHide(eDynamicZone);
 	}
 
-	//printf("@@@@@@@@@@@2gMeasureType = %d\n",gMeasureType);
 	if(!isMeasureOsdNormal())
 	{
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
