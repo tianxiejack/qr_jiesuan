@@ -34,7 +34,9 @@
 bool test_flag_uart = 0;
 static int fd_can;
 
-//������ݸ��ŷ��ģɣĺš�����ǹ	��	��̨
+pthread_mutex_t can_mutex;
+
+//\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u839e\u951f\u65a4\u62f7\u6b27\u951f\u65a4\u62f7\u6a21\u6851\u66ae\u62e7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u89d2?\u951f\u65a4\u62f7	\u951f\u65a4\u62f7\u53f0
 #define CODE_SERVO_MACHGUN   	(0x2C)
 #define CODE_SERVO_GRENADE	(0x37)
 #define CODE_SERVO_TURRET     	(0x42)
@@ -312,7 +314,9 @@ int OpenCANDevice()
 		printf("Uart Set Error\n");
 		return -1;
 	}
-
+	
+	pthread_mutex_init(&can_mutex,NULL);
+	
 	Servo_start_init();
 
 	return fd_can;
@@ -326,6 +330,7 @@ int GetCanfd()
 int CloseCANDevice()
 {
 	close(fd_can);
+	pthread_mutex_destroy(&can_mutex);
 	return 0;
 }
 
@@ -338,28 +343,30 @@ int SetCANConfig(int baud_rate,int data_bits,char parity,int stop_bits)
 int ReadCANBuf(char *buf, int length)
 {
 	int nread = 0 ;
-	nread = read(fd_can, buf, length);
 
+	pthread_mutex_lock(&can_mutex);
+	nread = read(fd_can, buf, length);
+	pthread_mutex_unlock(&can_mutex);
+	
 	return nread;
 }
 
 int SendCANBuf(char *buf, int length)
 {
-	//if(test_flag_uart == 1)
-	//{
 		int nwrite= 0 ;
+
+		pthread_mutex_lock(&can_mutex);
+		
 		nwrite = write(fd_can, buf, length);
-		//test_flag_uart = 0;
-		return nwrite;
-	//}
-	//test_flag_uart = 0;
-	//return 0;
-	
+
+		pthread_mutex_unlock(&can_mutex);
+		
+		return nwrite;	
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//��ȡ���λ��
+//\u951f\u65a4\u62f7\u53d6\u951f\u65a4\u62f7\u951f\u8f7f\u4f19\u62f7\u951f?
 void ServoAbsPosRequest( char code)
 {
 	 char servoPos[6]={ 0x03, 0x00, 0x50, 0x58, 0x00, 0x00  };
@@ -367,7 +374,7 @@ void ServoAbsPosRequest( char code)
 	SendCANBuf(servoPos,  sizeof(servoPos));
 }
 
-//��ʼ����
+//\u951f\u65a4\u62f7\u59cb\u951f\u65a4\u62f7\u951f\u65a4\u62f7
 void ServoStart( char code)
 {
 	 char start[6] = {0x03, 0x00, 0x42, 0x47, 0x00, 0x00 };
@@ -375,8 +382,8 @@ void ServoStart( char code)
 	SendCANBuf(start, sizeof(start));
 }
 
-//����startServoServer()����
-//��ʼ���ŷ��豸
+//\u951f\u65a4\u62f7\u951f\u65a4\u62f7startServoServer()\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+//\u951f\u65a4\u62f7\u59cb\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u501f\u5907
 int InitServo(  char code )
 {
 	 char buf[4] = {0x00, 0x00, 0x01, 0x00};
@@ -384,23 +391,23 @@ int InitServo(  char code )
 	 char MOTOR1[10] = { 0x03, 0x00, 0x4d, 0x4f, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00};
 	 char MODE[10] 	 =  { 0x03, 0x00, 0x55, 0x4d, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00 };
 
-	SendCANBuf(buf,  sizeof(buf));  //����can����
+	SendCANBuf(buf,  sizeof(buf));  //\u951f\u65a4\u62f7\u951f\u65a4\u62f7can\u951f\u65a4\u62f7\u951f\u65a4\u62f7
 
 	MOTOR0[1] = code;
-	SendCANBuf(MOTOR0,  sizeof(MOTOR0));	//���ʹ��Ϊ��
+	SendCANBuf(MOTOR0,  sizeof(MOTOR0));	//\u951f\u65a4\u62f7\u951f\u7ede\u7678\u62f7\u951f\u8f7f\ue04e\u62f7\u951f?
 	MODE[1] = code;
-	SendCANBuf(MODE, sizeof(MODE)); 	//�ٶ�ѡ��ģʽΪ��
+	SendCANBuf(MODE, sizeof(MODE)); 	//\u951f\u52ab\u8bb9\u62f7\u9009\u951f\u65a4\u62f7\u6a21\u5f0f\u4e3a\u951f\u65a4\u62f7
 	MOTOR1[1] = code;
-	SendCANBuf(MOTOR1, sizeof(MOTOR1)); //���ʹ��Ϊ��
-	ServoAbsPosRequest(code); //������λ��
-	ServoStart(code); //����˶�
+	SendCANBuf(MOTOR1, sizeof(MOTOR1)); //\u951f\u65a4\u62f7\u951f\u7ede\u7678\u62f7\u951f\u8f7f\ue04e\u62f7\u951f?
+	ServoAbsPosRequest(code); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u4f4d\u951f\u65a4\u62f7
+	ServoStart(code); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u7855\u951f?
 
 	return 0;
 }
 
 ///////////////////////////////////////////////////
 
-//�����ǹ�ٶ�
+//\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u89d2\u7678\u62f7\u4fe3\u951f?
 void Mach_servo_move_speed(float xSpeed, float ySpeed)
 {
 
@@ -408,7 +415,7 @@ void Mach_servo_move_speed(float xSpeed, float ySpeed)
 
 }
 
-//�ı��ǹ��λ��
+//\u951f\u4fa5\u618b\u62f7\u951f\u89d2\u7678\u62f7\u951f\u8f7f\u4f19\u62f7\u951f?
 void Mach_servo_move_offset(float xOffset, float yOffset)
 {
 
@@ -416,7 +423,7 @@ void Mach_servo_move_offset(float xOffset, float yOffset)
 
 }
 
-//��ǹֹͣ�˶�
+//\u951f\u65a4\u62f7\u67aa\u505c\u6b62\u951f\u527f\u8bb9\u62f7
 void Mach_servo_stop()
 {
 
@@ -432,7 +439,7 @@ void Mach_servo_stop()
 
 ///////////////////////////////////////////////////
 
-//���ŷ��ٶ�
+//\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u52ab\u8bb9\u62f7
 void Grenade_servo_move_speed(float xSpeed, float ySpeed)
 {
 
@@ -440,7 +447,7 @@ void Grenade_servo_move_speed(float xSpeed, float ySpeed)
 
 }
 
-//��λ��ƫ��
+//\u951f\u65a4\u62f7\u4f4d\u951f\u65a4\u62f7\u504f\u951f\u65a4\u62f7
 void Grenade_servo_move_offset(float xOffset, float yOffset)
 {
 
@@ -448,7 +455,7 @@ void Grenade_servo_move_offset(float xOffset, float yOffset)
 
 }
 
-//���ŷ�ֹͣ�˶�
+//\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u505c\u6b62\u951f\u527f\u8bb9\u62f7
 void Grenade_servo_stop()
 {
 		char grenade_stop_buff[10] 	 =  { 0x03, CODE_SERVO_GRENADE, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -463,7 +470,7 @@ void Grenade_servo_stop()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-//��̨�ŷ��ٶ�
+//\u951f\u65a4\u62f7\u53f0\u951f\u811a\u51e4\u62f7\u951f\u52ab\u8bb9\u62f7
 void Turret_servo_move_speed(float xSpeed, float ySpeed)
 {
 
@@ -471,14 +478,14 @@ void Turret_servo_move_speed(float xSpeed, float ySpeed)
 
 }
 
-//��̨�ŷ�λ��ƫ��
+//\u951f\u65a4\u62f7\u53f0\u951f\u811a\u51e4\u62f7\u4f4d\u951f\u65a4\u62f7\u504f\u951f\u65a4\u62f7
 void Turret_servo_move_offset(float xOffset, float yOffset)
 {
 
 
 }
 
-//��̨�ŷ�ֹͣ�˶�
+//\u951f\u65a4\u62f7\u53f0\u951f\u811a\u51e4\u62f7\u505c\u6b62\u951f\u527f\u8bb9\u62f7
 void Turret_servo_stop()
 {
 	char turret_stop_buff[10] 			 =  { 0x03, CODE_SERVO_TURRET, 0x53, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
