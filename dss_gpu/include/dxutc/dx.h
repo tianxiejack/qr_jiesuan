@@ -110,8 +110,8 @@
 #define FXN_REG( blkId, feildId, fxn ) ( gDXD_info.fxnsCfg[CFGID_BUILD( blkId, feildId )] = fxn )
 #define FXN_REG2( cfgId, fxn ) ( gDXD_info.fxnsCfg[ cfgId ] = fxn )
 #define FXN_REG_ALL( blkId, fxn )  \
-    ( gDXD_info.fxnsCfg[CFGID_BUILD( blkId, 0 )] = fxn );     \
-      ( gDXD_info.fxnsCfg[CFGID_BUILD( blkId, 1 )] = fxn );   \
+    	( gDXD_info.fxnsCfg[CFGID_BUILD( blkId, 0 )] = fxn );     \
+       ( gDXD_info.fxnsCfg[CFGID_BUILD( blkId, 1 )] = fxn );   \
        ( gDXD_info.fxnsCfg[CFGID_BUILD( blkId, 2 )] = fxn );  \
        ( gDXD_info.fxnsCfg[CFGID_BUILD( blkId, 3 )] = fxn );  \
        ( gDXD_info.fxnsCfg[CFGID_BUILD( blkId, 4 )] = fxn );  \
@@ -245,7 +245,7 @@ Int32 reset_Timer( UInt32 timerId, UInt32 nMs );
 Int32 kill_Timer(UInt32 timerId);
 Int32 start_Timer(UInt32 timerId,UInt32 nMs);
 
-
+void button_to_read();
 
 
 #endif /* CR_DX_DRIVER_DXD_H */

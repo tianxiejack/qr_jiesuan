@@ -1671,6 +1671,12 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	{
 		button_to_save();
 	}
+
+	if (key == 'y'|| key == 'Y')
+	{
+		button_to_read();
+	}
+	
 	
 	if (key == 'z'|| key == 'Z')
 	{
@@ -3953,14 +3959,13 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			{
 				//todo: write data to file
 				//add the function that write to the file
+				button_to_save();
 				OSDCTRL_ItemShow(eCalibMenu_SaveOK);
-				//OSDCTRL_ItemShow(eSaveYesNo);
 			}
 			else
 			{
 				//todo: read flash to mem
 				//ReadParamsFlash();
-				//OSDCTRL_ItemHide(eSaveYesNo);
 			}
 			OSDCTRL_NoShine();
 		}

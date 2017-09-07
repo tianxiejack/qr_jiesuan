@@ -221,7 +221,7 @@ static Int32 Dx_syscfgSaveConfig026( Int32 blkId, Int32 feildId )
 {
     Int32 iRet = OSA_SOK;
     char syscmd[256]={0};
-    OSA_printf("*********************%s ****************************",__func__);
+    OSA_printf("****************%s ******************\n",__func__);
     if(gDXD_infoSave.sysConfig == NULL )
     {
         FIELD_ITEM_SYS(CFGID_SYS_SAVE_CONFIG_AS) = 0;
@@ -1568,24 +1568,59 @@ void button_to_save()
 
 	CFGID_CONFIG_SETSAVE(CFGID_Weather_Temparature,   	gWeatherTable.Temparature);
 	CFGID_CONFIG_SETSAVE(CFGID_Weather_Pressure, 	     	gWeatherTable.Pressure);
-	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_distance,     	(int)(gMachineGun_GCParam.distance*100));
-	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_deltaX,        	(int)(gMachineGun_GCParam.data.deltaX*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_distance,     		(int)(gMachineGun_GCParam.distance*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_deltaX,        		(int)(gMachineGun_GCParam.data.deltaX*100));
 	CFGID_CONFIG_SETSAVE(CFGID_Gun_GC_deltaY,       	 	(int)(gMachineGun_GCParam.data.deltaY*100));
 
-	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_distance,     	(int)(gGrenadeGas_GCParam.distance*100));
-	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_deltaX,        	(int)(gGrenadeGas_GCParam.data.deltaX*100));
-	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_deltaY,        	(int)(gGrenadeGas_GCParam.data.deltaY*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_distance,     		(int)(gGrenadeGas_GCParam.distance*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_deltaX,        		(int)(gGrenadeGas_GCParam.data.deltaX*100));
+	CFGID_CONFIG_SETSAVE(CFGID_Gas_GC_deltaY,        		(int)(gGrenadeGas_GCParam.data.deltaY*100));
 
 	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_distance,     		(int)(gGrenadeKill_GCParam.distance*100));
 	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_deltaX,        		(int)(gGrenadeKill_GCParam.data.deltaX*100));
-	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_deltaY,        		(int)(gGrenadeKill_GCParam.data.deltaY*100));
-
-
-	 
+	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_deltaY,        		(int)(gGrenadeKill_GCParam.data.deltaY*100)); 
 	
-	 Dx_sendCfgMsg(NULL,DX_MSGID_SET_CFG,&dxCfg[0],FALSE);
+	Dx_sendCfgMsg(NULL,DX_MSGID_SET_CFG,&dxCfg[0],FALSE);
 	 return ;
 }
 
+
+void button_to_read()
+{
+
+
+	 if( FIELD_ITEM_SYS(CFGID_SYS_SEL_STARTUP) == 1 )
+	 {
+        	syscfg_load( SYSCONFIG_FILE1, gDXD_info.sysConfig, 256 * 16 * 4 );
+	 }
+	 
+       gMachineGun_ZCTable.distance 	= 	gDXD_info.sysConfig[CFGID_Gun_ZC_distance];
+	gMachineGun_ZCTable.Angle 		= 	gDXD_info.sysConfig[CFGID_Gun_ZC_Angle];
+	gMachineGun_ZCTable.data.deltaX	= 	gDXD_info.sysConfig[CFGID_Gun_ZC_deltaX];
+	gMachineGun_ZCTable.data.deltaY 	= 	gDXD_info.sysConfig[CFGID_Gun_ZC_deltaY];
+
+	gGrenadeKill_ZCTable.distance 	=	gDXD_info.sysConfig[CFGID_Kill_ZC_distance];
+	gGrenadeKill_ZCTable.Angle	 	=	gDXD_info.sysConfig[CFGID_Kill_ZC_Angle];
+	gGrenadeKill_ZCTable.data.deltaX	=	gDXD_info.sysConfig[CFGID_Kill_ZC_deltaX];
+	gGrenadeKill_ZCTable.data.deltaY	=	gDXD_info.sysConfig[CFGID_Kill_ZC_deltaY];
+
+	gWeatherTable.Temparature		=	gDXD_info.sysConfig[CFGID_Weather_Temparature];
+	gWeatherTable.Pressure			=	gDXD_info.sysConfig[CFGID_Weather_Pressure];
+
+	gMachineGun_GCParam.distance	=	gDXD_info.sysConfig[CFGID_Gun_GC_distance];
+	gMachineGun_GCParam.data.deltaX	=	gDXD_info.sysConfig[CFGID_Gun_GC_deltaX];
+	gMachineGun_GCParam.data.deltaY	=	gDXD_info.sysConfig[CFGID_Gun_GC_deltaY];
+	
+	gGrenadeGas_GCParam.distance	=	gDXD_info.sysConfig[CFGID_Gas_GC_distance];
+	gGrenadeGas_GCParam.data.deltaX	=	gDXD_info.sysConfig[CFGID_Gas_GC_deltaX];
+	gGrenadeGas_GCParam.data.deltaY	=	gDXD_info.sysConfig[CFGID_Gas_GC_deltaY];
+
+	gGrenadeKill_GCParam.distance	=	gDXD_info.sysConfig[CFGID_Kill_GC_distance];
+	gGrenadeKill_GCParam.data.deltaX	=	gDXD_info.sysConfig[CFGID_Kill_GC_deltaX];
+	gGrenadeKill_GCParam.data.deltaY	=	gDXD_info.sysConfig[CFGID_Kill_GC_deltaY];
+
+	//printf("gMachineGun_ZCTable.distance = %f\n\n",gMachineGun_ZCTable.distance);
+	return ;
+}
 
 /************************************** The End Of File **************************************/
