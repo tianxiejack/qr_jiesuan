@@ -315,7 +315,7 @@ void setNextGeneralParam(GeneralCorrectionItem * Item)
 void initilGeneralParam()
 {
 	if(isMachineGun())
-	{
+	{	//printf("gMachineGun_GCParam.distance = %d\n",gMachineGun_GCParam.distance);
 		setNextGeneralParam(&gMachineGun_GCParam);
 	}
 	else if(isGrenadeKill())
@@ -652,8 +652,8 @@ void saveZeroParam()
 		gGrenadeKill_ZCTable.data.deltaX = getCrossX();
 		gGrenadeKill_ZCTable.data.deltaY = getCrossY();
 	}
-		gMachineGun_ZCTable.Angle	     = getMachGunAngleAbs();
-		gGrenadeKill_ZCTable.Angle	     = getGrenadeAngleAbs();
+	gMachineGun_ZCTable.Angle	     = getMachGunAngleAbs();
+	gGrenadeKill_ZCTable.Angle	     = getGrenadeAngleAbs();
 }
 
 void saveGeneralParam()

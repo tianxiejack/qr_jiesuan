@@ -1630,8 +1630,9 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				Posd[eSelfCheckState9] = ResultOsd[1];
 			sprintf(pStr,"%c%c%c%c-35%c:			%s",191,246,226,192,211,Posd[eSelfCheckState9]);//); 	//�����ŷ�-35��:��-�쳣
 			break;	
-		case eCalibZero_D:				
-			sprintf(pStr,"D:%04d",500);				//ju li:500
+		case eCalibZero_D:		
+			sprintf(pStr,"D:%04d",LaserDistance);	
+			//sprintf(pStr,"D:%04d",500);				//ju li:500
 			break;
 		case eCalibZero_Fx:
 			sprintf(pStr,"Fx:%+05d",getCrossX()); 	//Fx

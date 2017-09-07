@@ -3885,7 +3885,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			int cmdId;//,i;
 			// assign cmdId according to XPosition
 			cmdId = CMD_CALIBRATION_SWITCH_TO_WEATHER + getXPosition();
-			if((1 == getXPosition())&&(Posd[eCalibMenu_Zero] == CalibZeroOsd[2]))
+			if((1 == getXPosition())&&(Posd[eCalibMenu_Zero] == CalibZeroOsd[3]))
 			{
 				return ;
 			}
@@ -3915,12 +3915,10 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			if(isCalibrationZero())
 			{
 				saveZeroParam();
-				//udateMenuItem_Zero_General(getProjectileType());
 			}
 			else if(isCalibrationGeneral())
 			{
-				//saveGeneralParam();
-				//udateMenuItem_Zero_General(getProjectileType());
+				saveGeneralParam();
 			}
 			else if(isCalibrationWeather())
 			{
@@ -3966,6 +3964,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			{
 				//todo: read flash to mem
 				//ReadParamsFlash();
+				button_to_read();
 			}
 			OSDCTRL_NoShine();
 		}
@@ -4041,7 +4040,7 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 
 	gProjectileType = (PROJECTILE_TYPE)(PROJECTILE_BULLET+5);
 	//Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
-Posd[eGunTip] = GunOsd[5];
+	Posd[eGunTip] = GunOsd[5];
 	//EnterCMD_BULLET_SWITCH1();
 
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH1",__func__,__LINE__);
