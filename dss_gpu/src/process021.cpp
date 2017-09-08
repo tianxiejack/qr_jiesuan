@@ -3885,7 +3885,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			int cmdId;//,i;
 			// assign cmdId according to XPosition
 			cmdId = CMD_CALIBRATION_SWITCH_TO_WEATHER + getXPosition();
-			if((1 == getXPosition())&&(Posd[eCalibMenu_Zero] == CalibZeroOsd[3]))
+			if((1 == getXPosition())&&(Posd[eCalibMenu_Zero] == CalibZeroOsd[2]))
 			{
 				return ;
 			}
