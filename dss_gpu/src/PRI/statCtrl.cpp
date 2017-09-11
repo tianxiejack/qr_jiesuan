@@ -1086,7 +1086,6 @@ void processCMD_DETEND_LOCK(long lParam)
  {
  	isDetendClose=TRUE;
 	OSDCTRL_updateAreaN();
- 	//OSA_printf("%s,line:%d ... processCMD_DETEND_LOCK",__func__,__LINE__);
 	return ;
  }
 
@@ -1095,7 +1094,6 @@ void processCMD_DETEND_UNLOCK(long lParam)
  {
  	isDetendClose=FALSE;
 	OSDCTRL_updateAreaN();
- 	//OSA_printf("%s,line:%d ... processCMD_DETEND_UNLOCK",__func__,__LINE__);
 	return ;
  }
 
@@ -1123,5 +1121,22 @@ bool isBeyondDerection(Derection_Type type)
 {
 	return type == SHINE_DERECTION;
 }
+
+
+void processCMD_MODE_ATTACK_SIGLE(LPARAM lParam)
+ {
+	if(!isMachineGun())
+		gShotType = SHOTTYPE_SHORT;
+	return ;
+ }
+
+
+void processCMD_MODE_ATTACK_MULTI(LPARAM lParam)
+ {
+	if(!isMachineGun())
+		gShotType = SHOTTYPE_LONG;
+	return ;
+ }
+
 
 

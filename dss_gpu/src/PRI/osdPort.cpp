@@ -8,7 +8,7 @@
 
 
 #define abs(a) (((a)>0)?(a):(0-(a)))
-#define STEPLEN 1
+#define STEPLEN 4
 
 extern OSDCTRL_OBJ * pCtrlObj;
 

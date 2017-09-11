@@ -171,8 +171,6 @@ protected:
         static void processCMD_LASER_OK(LPARAM lParam);
         static void processCMD_TRACKING_OK(LPARAM lParam);
 
-        static void processCMD_MODE_ATTACK_SIGLE(LPARAM lParam);
-        static void processCMD_MODE_ATTACK_MULTI(LPARAM lParam);
         static void processCMD_MODE_FOV_SMALL(LPARAM lParam);
         static void processCMD_MODE_FOV_LARGE(LPARAM lParam);
         static void processCMD_MODE_SCALE_SWITCH(LPARAM lParam);

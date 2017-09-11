@@ -3217,14 +3217,14 @@ void CProcess021::onPositionSensorERR(LPARAM lParam)
 
 void CProcess021::onDisplayErr(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onDisplayErr",__func__,__LINE__);
+	OSDCTRL_ItemShow(eVideoErr);	
 	return ;
  }
 
 
 void CProcess021::onDisplayOK(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... onDisplayOK",__func__,__LINE__);
+ 	OSDCTRL_ItemShow(eVideoErr);
 	return ;
  }
 
@@ -3313,9 +3313,6 @@ void CProcess021::onDipAngleSensorERR(LPARAM lParam)
  }
 
 
-
-
-
 void CProcess021::onMachineGunSensorOK(LPARAM lParam)
  {
 	isMachineGunSensorOK = TRUE;
@@ -3329,7 +3326,6 @@ void CProcess021::onMachineGunSensorOK(LPARAM lParam)
 
 	return ;
  }
-
 
 
 void CProcess021::onMachineGunSensorERR(LPARAM lParam)
@@ -4230,9 +4226,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 			isfixingMeasure = FALSE;
 		}
 	}
- 	
- 	//OSA_printf("%s,line:%d ... processCMD_MEASURE_DISTANCE_SWITCH",__func__,__LINE__);
-	return ;
+ 	return ;
  }
 
 
@@ -4244,8 +4238,6 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_SAVE(LPARAM lParam)
 		//update OSDdisplay
 		OSDCTRL_EnterCalibMode();
 	}
-
- 	//OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_SAVE",__func__,__LINE__);
 	return ;
  }
 
@@ -4259,8 +4251,6 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_ZERO(LPARAM lParam)
 	//	initilZeroParam(gProjectileType);
 		OSDCTRL_EnterCalibMode();
 	}
-
- 	//OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_ZERO",__func__,__LINE__);
 	return ;
  }
 
@@ -4274,9 +4264,7 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_WEATHER(LPARAM lParam)
 		initilWeatherParam();
 		OSDCTRL_ItemShine(eCalibWeather_TepPole);
 		OSDCTRL_EnterCalibMode();
-
 	}	
- 	//OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_WEATHER",__func__,__LINE__);
 	return ;
  }
 
@@ -4291,8 +4279,6 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENERAL(LPARAM lParam)
 		OSDCTRL_ItemShine(eCalibGeneral_DisValue1);
 		OSDCTRL_EnterCalibMode();
 	}
-
-	//OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_GENERAL",__func__,__LINE__);
 	return ;
  }
 
@@ -4542,20 +4528,6 @@ void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
  }
 
 
-void CProcess021::processCMD_MODE_ATTACK_SIGLE(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_ATTACK_SIGLE",__func__,__LINE__);
-	return ;
- }
-
-
-void CProcess021::processCMD_MODE_ATTACK_MULTI(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_ATTACK_MULTI",__func__,__LINE__);
-	return ;
- }
-
-
 void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
  {
 	Posd[eFovType] = FovTypeOsd[1];
@@ -4602,9 +4574,7 @@ void CProcess021::processCMD_MODE_SHOT_SHORT(LPARAM lParam)
  	if(isMachineGun())
 	{
 		gGunShotType = SHOTTYPE_SHORT;
-	}
-	
- 	//OSA_printf("%s,line:%d ... processCMD_MODE_SHOT_SHORT",__func__,__LINE__);
+	}	
 	return ;
  }
 
@@ -4615,8 +4585,6 @@ void CProcess021::processCMD_MODE_SHOT_LONG(LPARAM lParam)
 	{
 		gGunShotType = SHOTTYPE_LONG;
 	}
-	
- 	//OSA_printf("%s,line:%d ... processCMD_MODE_SHOT_LONG",__func__,__LINE__);
 	return ;
  }
 

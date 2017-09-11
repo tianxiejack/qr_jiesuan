@@ -198,7 +198,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCursorX,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	190+LOFFSET,		170,	0,	{0}},
 	{eSaveYesNo,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		170,	0,	{0}},
 	{eCalibMenu_SaveOK,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,		65,	0,	{0}},
-	{eSelfCheckResult,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		65,	0,	{0}},
+	{eSelfCheckResult,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		48,	0,	{0}},
 #ifdef MIDMENU
 	{eSelfCheckState1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		85,	0,	{0}},
 	{eSelfCheckState2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		117,	0,	{0}},
@@ -1631,7 +1631,10 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%c%c%c%c-35%c:			%s",191,246,226,192,211,Posd[eSelfCheckState9]);//); 	//�����ŷ�-35��:��-�쳣
 			break;	
 		case eCalibZero_D:		
-			sprintf(pStr,"D:%04d",LaserDistance);	
+			if(isMeasureManual())
+				sprintf(pStr,"D:%04d",DistanceManual);	
+			else 
+				sprintf(pStr,"D:%04d",LaserDistance);	
 			//sprintf(pStr,"D:%04d",500);				//ju li:500
 			break;
 		case eCalibZero_Fx:

@@ -303,6 +303,8 @@ void startSelfCheckTimer();
 float getAimOffsetX();
 float getAimOffsetY();
 bool isBeyondDerection(Derection_Type type);
+void processCMD_MODE_ATTACK_SIGLE(long lParam);
+void processCMD_MODE_ATTACK_MULTI(long lParam);
 
 
 
