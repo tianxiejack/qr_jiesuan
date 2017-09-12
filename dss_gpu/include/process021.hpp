@@ -178,7 +178,6 @@ protected:
         static void processCMD_MODE_ENHANCE_SWITCH(LPARAM lParam);
         static void processCMD_MODE_SHOT_SHORT(LPARAM lParam);
         static void processCMD_MODE_SHOT_LONG(LPARAM lParam);
-        static void processCMD_SCHEDULE_GUN(LPARAM lParam);
         static void processCMD_SCHEDULE_STRONG(LPARAM lParam);
         static void processCMD_SCHEDULE_RESET(LPARAM lParam);
         static void processCMD_TRACE_SENDFRAME0(LPARAM lParam);
