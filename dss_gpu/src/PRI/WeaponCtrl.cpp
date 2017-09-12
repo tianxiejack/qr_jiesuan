@@ -349,12 +349,15 @@ void resetGrenadeInPositionFlag(void)
 {
 	CANSendbuf[3] = (CANSendbuf[3]&0x0F);
 }
+
 void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 {
-//	absPosRequest(CODE_GRENADE);
-//	absPosRequest(CODE_MACHGUN);
-//	absPosRequest(CODE_TURRET);
+	absPosRequest(CODE_GRENADE);
+	absPosRequest(CODE_MACHGUN);
+	absPosRequest(CODE_TURRET);
+	return ;
 }
+
 void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 {
 	short TempAngle;

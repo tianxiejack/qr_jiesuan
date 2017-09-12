@@ -195,7 +195,7 @@ protected:
         static void processCMD_IDENTIFY_KILL(LPARAM lParam);
         static void processCMD_IDENTIFY_GAS(LPARAM lParam);
         static void processCMD_SERVO_INIT(LPARAM lParam);
-        static void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam);
+		
         static void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam);
         static void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam);
         static void processCMD_MACHSERVO_STOP(LPARAM lParam);

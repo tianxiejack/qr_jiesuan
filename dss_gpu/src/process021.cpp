@@ -4708,16 +4708,6 @@ void CProcess021::processCMD_SERVO_INIT(LPARAM lParam)
  }
 
 
-void CProcess021::processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
- {
-	//absPosRequest(CODE_GRENADE);
-	//absPosRequest(CODE_MACHGUN);
-	//absPosRequest(CODE_TURRET);
-	//OSA_printf("%s,line:%d ... processCMD_SERVOTIMER_MACHGUN",__func__,__LINE__);
-	return ;
- }
-
-
 void CProcess021::processCMD_MACHSERVO_MOVESPEED(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_MACHSERVO_MOVESPEED",__func__,__LINE__);
