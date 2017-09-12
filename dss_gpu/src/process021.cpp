@@ -4589,12 +4589,6 @@ void CProcess021::processCMD_MODE_SHOT_LONG(LPARAM lParam)
  }
 
 
-void CProcess021::processCMD_SCHEDULE_GUN(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_SCHEDULE_GUN",__func__,__LINE__);
-	return ;
- }
-
 
 void CProcess021::processCMD_SCHEDULE_STRONG(LPARAM lParam)
  {

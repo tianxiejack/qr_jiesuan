@@ -677,8 +677,11 @@ static Int32 APP_onTimer( Int32 timerId )
 				sendCommand(CMD_TRACE_SENDFRAME0);
 		}
 
-
-
+		
+		if(timerId == eSchedule_Timer)
+		{
+			SCHEDULE_cbFxn(NULL);
+		}	
 
 		
 	

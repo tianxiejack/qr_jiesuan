@@ -1417,7 +1417,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				//Distance = 100;
 				if(isMeasureOsdNormal())
 				{
-					sprintf(pStr,"%s:%d",Posd[eMeasureType],Distance); //laser
+					sprintf(pStr,"%s:%04d",Posd[eMeasureType],Distance); //laser
 					//OSDCTRL_ItemShow(eMeasureDis);
 				}
 				else
@@ -1441,19 +1441,19 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			//unit = (DistanceManual%10);
 
 		case eMeasureDis_Value1 :
-				sprintf(pStr,"%d", DistanceManual/1000);
+				sprintf(pStr,"%01d", DistanceManual/1000);
 				break;
 
 		case eMeasureDis_Value2 :
-				sprintf(pStr,"%d",(DistanceManual%1000)/100);
+				sprintf(pStr,"%01d",(DistanceManual%1000)/100);
 				break;
 
 		case eMeasureDis_Value3 :
-				sprintf(pStr,"%d",(DistanceManual/10)%10);
+				sprintf(pStr,"%01d",(DistanceManual/10)%10);
 				break;
 
 		case eMeasureDis_Value4 :
-				sprintf(pStr,"%d",(DistanceManual%10));
+				sprintf(pStr,"%01d",(DistanceManual%10));
 				break;	
 		
 		case eLaserState:

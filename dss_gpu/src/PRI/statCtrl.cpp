@@ -32,8 +32,11 @@ bool isGrenadeSensorOK=FALSE,isGrenadeServoOK=FALSE,isMachineGunServoOK=FALSE;
 bool isDetendClose=TRUE,isMaintPortOpen=TRUE;
 static bool isVideoOK=FALSE;
 static bool FOVSHINE = FALSE;
+static bool SCHEDULE_GUN=FALSE,SCHEDULE_RESET=FALSE,SCHEDULE_STRONG=FALSE;
 Derection_Type SHINE_DERECTION=DERECTION_NULL;//DERECTION_DOWN;
 bool isfixingMeasure = FALSE;
+static int COUNTER=0;
+
 extern void setJoyStickStat(BOOL stat);
 extern void setServoControlObj();
 extern void setPicEnhance(BOOL context);
@@ -1137,6 +1140,95 @@ void processCMD_MODE_ATTACK_MULTI(LPARAM lParam)
 		gShotType = SHOTTYPE_LONG;
 	return ;
  }
+
+void startSCHEDULEtimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eSchedule_Timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eSchedule_Timer,SCHEDULE_TIMER);	
+	}
+}
+
+
+void killSCHEDULEtimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eSchedule_Timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eSchedule_Timer);
+	}
+}
+
+
+void SCHEDULE_cbFxn(void* cbParam)
+{
+	//	killSCHEDULEtimer();
+	#if 1
+		float x=0.0,y=0.0;
+		if(SCHEDULE_GUN/*not timeout and angle not ok*/){
+			float tempX = (getpanoAngleV()<180)?(getpanoAngleV()):(getpanoAngleV()-360);
+			x = (tempX - getTurretTheta());
+			y = (getpanoAngleH() - getMachGunAngle());
+			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER)){
+	//			getPelcoServoContrlObj()->stop();
+				killSCHEDULEtimer();
+				releaseServoContrl();
+				SCHEDULE_GUN = FALSE;
+				OSDCTRL_ItemHide(eSuperOrder);
+				return;
+			}
+	//		getPelcoServoContrlObj()->moveOffset(x,y);
+			startSCHEDULEtimer();
+		}else if(SCHEDULE_STRONG/*not timeout and angle not ok*/){
+			float tempX = (getpanoAngleV()<180)?(getpanoAngleV()-180):(getpanoAngleV()-180);
+			x = (tempX - getTurretTheta());
+			y = (getpanoAngleH() - getMachGunAngle());
+			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER)){
+	//			getPelcoServoContrlObj()->stop();
+				killSCHEDULEtimer();
+				releaseServoContrl();
+				SCHEDULE_STRONG = FALSE;
+				OSDCTRL_ItemHide(eSuperOrder);
+				return;
+			}
+	//		getPelcoServoContrlObj()->moveOffset(x,y);
+			startSCHEDULEtimer();
+		}else if(SCHEDULE_RESET/*not timeout and angle not ok*/){
+			x = (getTurretTheta());
+			y = (getMachGunAngle());
+			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER)){
+	//			getPelcoServoContrlObj()->stop();
+				killSCHEDULEtimer();
+				releaseServoContrl();
+				SCHEDULE_RESET = FALSE;
+				OSDCTRL_ItemHide(eSuperOrder);
+				return;
+			}
+	//		getPelcoServoContrlObj()->moveOffset(x,y);
+			startSCHEDULEtimer();
+		}
+		COUNTER++;
+	#endif
+}
+
+
+void processCMD_SCHEDULE_GUN(long lParam)
+ {
+	if(isCalibrationMode())
+		return;
+	// tiao qiang ta
+	Posd[eSuperOrder] = SuperOsd[0];
+	OSDCTRL_ItemShow(eSuperOrder);
+	requstServoContrl();
+	SCHEDULE_GUN = TRUE;
+	COUNTER = 0;
+	startSCHEDULEtimer();
+	
+	return ;
+ }
+
+
 
 
 

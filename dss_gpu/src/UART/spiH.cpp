@@ -307,6 +307,8 @@ int SPI_mirror_send_requst()  //发送测距请求
 	startLaserTimer();
 	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
 
+	printf("###spi_mirror_buf_sent = %02x%02x%02x%02x\n",buf[0],buf[1],buf[2],buf[3]);
+
 	 return 0;
 }
 
@@ -319,6 +321,7 @@ int SPI_mirror_send_ack()  //激光数据确认
 
 	killLaserTimer();
 	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
+	printf("###SPI_mirror_send_ack = %02x%02x%02x%02x\n",buf[0],buf[1],buf[2],buf[3]);
 
 	return 0;
 }

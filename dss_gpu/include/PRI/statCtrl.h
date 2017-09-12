@@ -305,7 +305,7 @@ float getAimOffsetY();
 bool isBeyondDerection(Derection_Type type);
 void processCMD_MODE_ATTACK_SIGLE(long lParam);
 void processCMD_MODE_ATTACK_MULTI(long lParam);
-
+void processCMD_SCHEDULE_GUN(long lParam);
 
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
