@@ -23,7 +23,7 @@
 #include "permanentStorage.h"
 #include "MachGunPort.h"
 #include "msgDriv.h"
-
+#include "statCtrl.h"
 
 #if 1
 #define COUNT_DIP_VELO 200
@@ -49,30 +49,29 @@ extern void computeMeanVar( double *src, double *mean, double *var, int size );
 
 void killSelfCheckMachGunAngleTimer()
 {
-#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eMachGunAngle_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(eMachGunAngle_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(pCtrlTimer,eMachGunAngle_Timer);
+		pCtrlTimer->KillTimer(eMachGunAngle_Timer);
 	}
-#endif
+	return ;
 }
+
 void SelfCheckMachGunAngleTimer_cbFxn(void* cbParam)
 {
-//	killSelfCheckMachGunAngleTimer();
-//	sendCommand(CMD_MACHINEGUN_SENSOR_ERR);
+	killSelfCheckMachGunAngleTimer();
+	printf("CMD_MACHINEGUN_SENSOR_ERR\n\n");
+	MSGDRIV_send(CMD_MACHINEGUN_SENSOR_ERR,0);
 }
 
 void startSelfCheckMachGunAngle_Timer()
 {
-#if 0
-	CTimerCtrl * pCtrlTimer;
-	pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eMachGunAngle_Timer)==eTimer_Stat_Stop)
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eMachGunAngle_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(pCtrlTimer,eMachGunAngle_Timer,SELFCHECK_TIMER,SelfCheckMachGunAngleTimer_cbFxn,(void*)(0x01));	
+		pCtrlTimer->startTimer(eMachGunAngle_Timer,SELFCHECK_TIMER);	
 	}
-#endif
+	return ;
 }
 
 void markMeasure_dip_Time()

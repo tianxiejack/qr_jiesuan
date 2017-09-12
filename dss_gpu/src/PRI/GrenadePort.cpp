@@ -42,6 +42,7 @@ void killSelfCheckGrenadeAngleTimer()
 		pCtrlTimer->KillTimer(eGrenadeAngle_Timer);
 	}
 }
+
 void SelfCheckGrenadeAngleTimer_cbFxn(void* cbParam)
 {
 	//killSelfCheckGrenadeAngleTimer();

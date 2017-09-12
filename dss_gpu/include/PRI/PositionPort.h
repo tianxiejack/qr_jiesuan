@@ -26,7 +26,9 @@ double getPlatformPositionY();
 
 int PositionPORT_PhraseBye(BYTE* pRecv);
 
-
+void SelfCheckDipAngleTimer_cbFxn(void* cbParam);
+void killSelfCheckDipAngleTimer();
+void startSelfCheckDipAngle_Timer();
 
 
 extern double hPositionX,hPositionY,Tempre;

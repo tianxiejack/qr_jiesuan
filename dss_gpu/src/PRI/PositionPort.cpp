@@ -36,7 +36,7 @@
 //#include "main.h"
 //#include "PVEMsgfunsTab.h"
 #include "PositionPort.h"
-//#include "byteParser_util.h"
+#include "statCtrl.h"
 #include "msgDriv.h"
 
 #define abs(a) (((a)>0)?(a):(0-(a)))
@@ -56,30 +56,28 @@ double hPositionX=0.0,hPositionY=0.0;
 
 void killSelfCheckDipAngleTimer()
 {
-#if 0
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eDipAngle_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(eDipAngle_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(pCtrlTimer,eDipAngle_Timer);
+		pCtrlTimer->KillTimer(eDipAngle_Timer);
 	}
-#endif
+	return ;
 }
+
 void SelfCheckDipAngleTimer_cbFxn(void* cbParam)
 {
-//	killSelfCheckDipAngleTimer();
-//	sendCommand(CMD_DIP_ANGLE_ERR);
+	killSelfCheckDipAngleTimer();
+	MSGDRIV_send(CMD_DIP_ANGLE_ERR,0);
 }
 
 void startSelfCheckDipAngle_Timer()
 {
-#if 0
-	CTimerCtrl * pCtrlTimer;
-	pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,eDipAngle_Timer)==eTimer_Stat_Stop)
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eDipAngle_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(pCtrlTimer,eDipAngle_Timer,SELFCHECK_TIMER,SelfCheckDipAngleTimer_cbFxn,(void*)(0x01));	
+		pCtrlTimer->startTimer(eDipAngle_Timer,SELFCHECK_TIMER);	
 	}
-#endif
+	return ;
 }
 
 double getPlatformPositionX()

@@ -77,12 +77,11 @@ static 	unsigned short panoAngleV=0,panoAngleH=0;
 
 void absPosRequest(BYTE code)
 {
-#if 1
 	char SERVOPOS[6]   ={0x03,0x00,0x50,0x58,0x00,0x00};
 	SERVOPOS[1] = code;
 	SendCANBuf(SERVOPOS, sizeof(SERVOPOS));
 	usleep(500);
-#endif
+	return ;
 }
 
 void startServo(BYTE code)
@@ -90,11 +89,11 @@ void startServo(BYTE code)
 	char start[6] = {0x03,0x00,0x42,0x47,0x00,0x00};
 	start[1] = code;
 	SendCANBuf(start, sizeof(start));
+	return ;
 }
 
 void startServoServer(BYTE code)
 {
-#if 1
 	char buf[4] = {0x00,0x00,0x01,0x00};
 	char MOTOR0[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x00,0x00,0x00,0x00};
 	char MOTOR1[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x01,0x00,0x00,0x00};
@@ -114,7 +113,7 @@ void startServoServer(BYTE code)
 	usleep(WAIT_DELAY);
 	startServo(code);
 	usleep(WAIT_DELAY);
-#endif
+	return ;
 }
 
 
@@ -1269,10 +1268,12 @@ static int WeaponCtrlPORT_ParseFrame_type4(UartObj*pUartObj)
 #endif
 	return 0;
 }
+
 void WeaponCtrlPORT_ParseFrameByte_test(unsigned char* buf)
 {
-//		case Frame_TEST://���Է��洫��������
-#if 0
+//		case Frame_TEST:
+	printf("###A5  A5  !!!\n");
+
 	if(0x00 == BIT0(BYTE3(buf)))
 		sendCommand(CMD_GENERADE_SERVO_OK);
 	if(0x00 == BIT1(BYTE3(buf)))
@@ -1289,9 +1290,8 @@ void WeaponCtrlPORT_ParseFrameByte_test(unsigned char* buf)
 		sendCommand(CMD_DIP_ANGLE_OK);
 	if(0x00 == BIT7(BYTE3(buf)))
 		sendCommand(CMD_JOYSTICK_OK);
-//			break;
-#endif
 }
+
 static int WeaponCtrlPORT_ParseFrame_test(UartObj*pUartObj)
 {
 	unsigned char *buf = pUartObj->recvBuf; 
@@ -1372,82 +1372,82 @@ static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 }
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 {
-#if 1
 	if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
 		sendCommand(CMD_WEAPONCTRL_OK);
-
+printf("WeaponCtrlPORT_ParseBytePanel \n\n\n");
 	switch(buf[2])
 	{
-	case Frame_Type0:
-		if(uart_open_close_flag)
-			return ;
-		WeaponCtrlPORT_ParseFrameByte_type0(buf);
-		break;
-	case Frame_Type1:
-		if(uart_open_close_flag)
-			return ;
-		WeaponCtrlPORT_ParseFrameByte_type1(buf);
-		break;
-	case Frame_Type2:
-		WeaponCtrlPORT_ParseFrameByte_type2(buf);
-		break;
-	case Frame_Type3:
-		WeaponCtrlPORT_ParseFrameByte_type3(buf);
-		break;
-	case Frame_Type4:
-		WeaponCtrlPORT_ParseFrameByte_type4(buf);
-		break;
-	case Frame_TEST:
-		//WeaponCtrlPORT_ParseFrameByte_test(buf);
-		break;
-	case 0xAC:
-		//if(!bPositionServoOK())
-			//sendCommand(CMD_POSITION_SERVO_OK);
-		//killSelfCheckPosServoTimer();
-		//startSelfCheckPosServo_Timer();
-		break;
-	case 0xB7:
-		//if(!bMachineGunServoOK())
-			//sendCommand(CMD_MACHINEGUN_SERVO_OK);
-		//killSelfCheckMachGunServoTimer();
-		//startSelfCheckMachGunServo_Timer();
-		break;
-	case 0xC2:
-		//if(!bGrenadeServoOK())
-			//sendCommand(CMD_GENERADE_SERVO_OK);
-		//killSelfCheckGrenadeServoTimer();
-		//startSelfCheckGrenadeServo_Timer();
-		break;
-	default:
-		break;
+		case Frame_Type0:
+			printf("A0  A0  A0 \n\n");
+			if(uart_open_close_flag)
+				return ;
+			WeaponCtrlPORT_ParseFrameByte_type0(buf);
+			break;
+		case Frame_Type1:
+			if(uart_open_close_flag)
+				return ;
+			WeaponCtrlPORT_ParseFrameByte_type1(buf);
+			break;
+		case Frame_Type2:
+			WeaponCtrlPORT_ParseFrameByte_type2(buf);
+			break;
+		case Frame_Type3:
+			WeaponCtrlPORT_ParseFrameByte_type3(buf);
+			break;
+		case Frame_Type4:
+			WeaponCtrlPORT_ParseFrameByte_type4(buf);
+			break;
+		case Frame_TEST:
+			printf("A5  A5  A5 \n\n");
+			WeaponCtrlPORT_ParseFrameByte_test(buf);
+			break;
+		case 0xAC:
+			if(!bPositionServoOK())
+				sendCommand(CMD_POSITION_SERVO_OK);
+			killSelfCheckPosServoTimer();
+			startSelfCheckPosServo_Timer();
+			break;
+		case 0xB7:
+			if(!bMachineGunServoOK())
+				sendCommand(CMD_MACHINEGUN_SERVO_OK);
+			killSelfCheckMachGunServoTimer();
+			startSelfCheckMachGunServo_Timer();
+			break;
+		case 0xC2:
+			if(!bGrenadeServoOK())
+				sendCommand(CMD_GENERADE_SERVO_OK);
+			killSelfCheckGrenadeServoTimer();
+			startSelfCheckGrenadeServo_Timer();
+			break;
+		default:
+			break;
 	}
-#endif
+
 }
+
 static void WeaponCtrlPORT_ParseTurret(UartObj*pUartObj)
 {
 
-	//if(!bPositionServoOK())
-	if(1)
+	if(!bPositionServoOK())
 		MSGDRIV_send(CMD_POSITION_SERVO_OK,0);
-#if 0
 	killSelfCheckPosServoTimer();
 	startSelfCheckPosServo_Timer();
-#endif
+	return ;
 }
+
 void WeaponCtrlPORT_ParseByteTurret(unsigned char *buf)
 {
 
 }
+
 static void WeaponCtrlPORT_ParseMachGun(UartObj*pUartObj)
 {
 
-	//if(!bMachineGunServoOK())
-	if(1)
+	if(!bMachineGunServoOK())
 		MSGDRIV_send(CMD_MACHINEGUN_SERVO_OK,0);
-#if 0
 	killSelfCheckMachGunServoTimer();
 	startSelfCheckMachGunServo_Timer();
-#endif
+	return ;
 }
 void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf)
 {
@@ -1457,14 +1457,14 @@ void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf)
 static void WeaponCtrlPORT_ParseGrenade(UartObj*pUartObj)
 {
 
-	//if(!bGrenadeServoOK())
-	if(1)
+	if(!bGrenadeServoOK())
 		MSGDRIV_send(CMD_GENERADE_SERVO_OK,0);
-#if 0
+
 	killSelfCheckGrenadeServoTimer();
 	startSelfCheckGrenadeServo_Timer();
-#endif
+	return ;
 }
+
 void WeaponCtrlPORT_ParseByteGrenade(unsigned char *buf)
 {
 
@@ -1499,7 +1499,6 @@ void* WeaponCtrlPORT_recvTask(void* prm)
 	int stat=0;
 	UartObj* pUartObj = &WeaponCtrlObj.UartPort;
 
-	//while (!pSysCtrlObj->tskArry[TSK_RECVTRACEMSG]) 
 	while (1) 
 	{	
 		WeaponCtrlObj.UartPort.recvLen = 0;	

@@ -105,7 +105,8 @@ void *testOsd(void* prm)
 int taskCreate(void * prm)
 {
 	int status = -1;
-	
+
+	/*
 	status = OSA_thrCreate(
 				&GrenadePORTHndl,
 				GrenadePORT_recvTask,
@@ -114,7 +115,9 @@ int taskCreate(void * prm)
 				0
 			);
 	OSA_assert(status==OSA_SOK);
+	*/
 	
+	/*
 	status = OSA_thrCreate(
 				&LaserPORTHndl,
 				LaserPORT_recvTask,
@@ -123,7 +126,8 @@ int taskCreate(void * prm)
 				0
 			);
 	OSA_assert(status==OSA_SOK);
-
+	*/
+	/*
 	status = OSA_thrCreate(
 				&PositionPORTHndl,
 				PositionPORT_recvTask,
@@ -132,57 +136,60 @@ int taskCreate(void * prm)
 				0
 			);
 	//OSA_assert(status==OSA_SOK);
+	*/
+	/*
+		status = OSA_thrCreate(
+					&TurretPosPORTHndl,
+					TurretPosPORT_recvTask,
+					0,
+					0,
+					0
+				);
+		OSA_assert(status==OSA_SOK);
+	*/
+	/*
+		status = OSA_thrCreate(
+					&MachGunPORTHndl,
+					MachGunPORT_recvTask,
+					0,
+					0,
+					0
+				);
+		OSA_assert(status==OSA_SOK);
+	*/
+	/*
+		status = OSA_thrCreate(
+					&WeaponPORTHndl,
+					WeaponCtrlPORT_recvTask,
+					0,
+					0,
+					0
+				);
+		OSA_assert(status==OSA_SOK);
+	*/
+	/*
+		status = OSA_thrCreate(
+					&TestHndl,
+					fdTest_open,
+					//testOsd,
+					0,
+					0,
+					0
+				);
+		OSA_assert(status==OSA_SOK);
+	*/
 
-	status = OSA_thrCreate(
-				&TurretPosPORTHndl,
-				TurretPosPORT_recvTask,
-				0,
-				0,
-				0
-			);
-	OSA_assert(status==OSA_SOK);
-	
-	status = OSA_thrCreate(
-				&MachGunPORTHndl,
-				MachGunPORT_recvTask,
-				0,
-				0,
-				0
-			);
-	OSA_assert(status==OSA_SOK);
-	
-	status = OSA_thrCreate(
-				&WeaponPORTHndl,
-				WeaponCtrlPORT_recvTask,
-				0,
-				0,
-				0
-			);
-	OSA_assert(status==OSA_SOK);
 
-/*
-	status = OSA_thrCreate(
-				&TestHndl,
-				fdTest_open,
-				//testOsd,
-				0,
-				0,
-				0
-			);
-	OSA_assert(status==OSA_SOK);
-*/
-
-
-/*
-	status = OSA_thrCreate(
-				&NetHandl,
-				tcpTestFunc,
-				0,
-				0,
-				prm
-			);
-	OSA_assert(status==OSA_SOK);
-*/
+	/*
+		status = OSA_thrCreate(
+					&NetHandl,
+					tcpTestFunc,
+					0,
+					0,
+					prm
+				);
+		OSA_assert(status==OSA_SOK);
+	*/
 
 	status = OSA_thrCreate(
 				&testCanHandl,

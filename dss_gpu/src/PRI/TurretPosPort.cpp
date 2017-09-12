@@ -1,6 +1,7 @@
 #include <osa.h>
 #include "TurretPosPort.h"
 #include "msgDriv.h"
+#include "statCtrl.h"
 
 /*
 	������λ�Ƕȴ���������
@@ -42,31 +43,31 @@ static void TurretPosPORT_close();
 
 
 void killSelfCheckPosAngleTimer()
-{
-#if 0
+{	
+	printf("killSelfCheckPosAngleTimer\n");
 	CTimerCtrl * pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,ePosAngle_Timer)!=eTimer_Stat_Stop)
+	if(pCtrlTimer->GetTimerStat(ePosAngle_Timer)!=eTimer_Stat_Stop)
 	{
-		pCtrlTimer->KillTimer(pCtrlTimer,ePosAngle_Timer);
+		pCtrlTimer->KillTimer(ePosAngle_Timer);
 	}
-#endif
+	return ;
 }
+
 void SelfCheckPosAngleTimer_cbFxn(void* cbParam)
 {
-//	killSelfCheckPosAngleTimer();
-//	sendCommand(CMD_POSITION_SENSOR_ERR);
+	killSelfCheckPosAngleTimer();
+	MSGDRIV_send(CMD_POSITION_SENSOR_ERR,0);
 }
 
 void startSelfCheckPosAngle_Timer()
 {
-#if 0
-	CTimerCtrl * pCtrlTimer;
-	pCtrlTimer = pTimerObj;
-	if(pCtrlTimer->GetTimerStat(pCtrlTimer,ePosAngle_Timer)==eTimer_Stat_Stop)
+	printf("startSelfCheckPosAngle_Timer\n");
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(ePosAngle_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->SetTimer(pCtrlTimer,ePosAngle_Timer,SELFCHECK_TIMER,SelfCheckPosAngleTimer_cbFxn,(void*)(0x01));	
+		pCtrlTimer->startTimer(ePosAngle_Timer,SELFCHECK_TIMER);	
 	}
-#endif
+	return ;
 }
 
 void markMeasure_dist_Time()
@@ -404,7 +405,7 @@ void * TurretPosPORT_recvTask(void * prm)
 		TurretPosPORT_send(pUartObj->recvBuf, 5);
 	#endif	
 		//TurretPosPORT_PhraseBye(pRecv);
-	TurretPosPORT_PhraseBye(NULL);
+	//TurretPosPORT_PhraseBye(NULL);
 	//	pUartObj->recvLen = 0;	
 	}
 	return NULL;

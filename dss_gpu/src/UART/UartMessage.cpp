@@ -37,7 +37,7 @@
 #define CODE_GRENADE 		(0x42)
 #define CODE_TURRET   		(0x2C)
 
-#define CAN_DEBUG 0
+#define CAN_DEBUG 1
 
 int globalflag = 1;
   OSA_SemHndl semSend;
@@ -2773,7 +2773,7 @@ int CanPort_parseByte(unsigned char* buf )
 			//WeaponCtrlPORT_ParseByteTurret(buf);
 			break;
 		case CAN_ID_MACHGUN:
-			//	WeaponCtrlPORT_ParseByteMachGun(buf);
+			//WeaponCtrlPORT_ParseByteMachGun(buf);
 			break;
 		case CAN_ID_GRENADE:
 			//WeaponCtrlPORT_ParseByteGrenade(buf);
@@ -2878,6 +2878,8 @@ void * SPI_CAN_process(void * prm)
 																dataLength=6;  break;
 													case 0xA4 :
 																dataLength=4; break;
+													case 0xA5 :
+																dataLength =4; break;
 													default :
 																memcpy(buf, buf+2, length-2);
 																memset(buf+length-2, 0, sizeof(buf)-(length-2)  );

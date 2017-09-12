@@ -21,6 +21,7 @@
 #include "GrenadePort.h"
 #include "osdPort.h"
 #include "LaserPort.h"
+#include "WeaponCtrl.h"
 
 
 static int fd0;
@@ -104,9 +105,16 @@ int process_decode(struct RS422_data * pRS422_data)
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
-			}else{
-
-				//解析数据
+			}
+			else
+			{
+				if(!bDipAngleSensorOK())
+				{
+					MSGDRIV_send(CMD_DIP_ANGLE_OK,0);
+				}
+				killSelfCheckDipAngleTimer();
+				startSelfCheckDipAngle_Timer();
+				
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
@@ -393,8 +401,14 @@ int Process_vcode(struct RS422_data * pRS422_data)
 			}
 			else
 			{
-				//解析数据
-				  positive=1;
+				if( !bMachineGunSensorOK())
+				{
+					MSGDRIV_send(CMD_MACHINEGUN_SENSOR_OK,0);
+				}
+				killSelfCheckMachGunAngleTimer();
+				startSelfCheckMachGunAngle_Timer();
+
+		       	 positive=1;
 
 #if SPI_DEBUG
 				 printf( "buf[2]=%02x buf[3]=%02x \n" , buf[2], buf[3]);
@@ -488,9 +502,16 @@ int Process_grenade(struct RS422_data * pRS422_data)
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
 
-			}else{
+			}
+			else
+			{
 
-				//解析数据
+				if(!bGrenadeSensorOK())
+				{
+					MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
+				}
+				killSelfCheckGrenadeAngleTimer();
+				startSelfCheckGrenadeAngle_Timer();
 
 				positive=1;
 
@@ -568,6 +589,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 
 		while(have_data)
 		{
+			printf("whileing!!!!\n");
 			index=0;
 			ret = SPI_hcode_recvFlg(buf, length, &index);
 			length -= index;
@@ -580,7 +602,8 @@ int Process_hcode(struct RS422_data * pRS422_data)
 
 			parse_length = 5;
 
-			if(length<parse_length){
+			if(length<parse_length)
+			{
 
 				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
@@ -591,24 +614,31 @@ int Process_hcode(struct RS422_data * pRS422_data)
 			{
 
 				//解析数据
+				if(!bPositionSensorOK())
+				{
+					printf("### send CMD_POSITION_SENSOR_OK\n\n");
+					sendCommand(CMD_POSITION_SENSOR_OK);
+				}
+				killSelfCheckPosAngleTimer();
+				startSelfCheckPosAngle_Timer();
 
-				  positive=1;
+				positive=1;
 
-					angle = buf[2]<<8|buf[3];
-					positive = buf[4] ==0 ? 1: -1;	
+				angle = buf[2]<<8|buf[3];
+				positive = buf[4] ==0 ? 1: -1;	
 #if SPI_DEBUG
-					printf(" positive=%d angle=%d  \n", positive, angle);
+				printf(" positive=%d angle=%d  \n", positive, angle);
 #endif
-					
-					tmp = (positive)*angle/100.00;
-					if(tmp>= -5 && tmp<=75)
-						gTurretTheta.theta = tmp;
-					
-					pFovCtrlObj->theta = (int)tmp;
-					
-					memcpy(buf, buf+parse_length, length-parse_length);
-					memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
-					length -= parse_length;
+				
+				tmp = (positive)*angle/100.00;
+				if(tmp>= -5 && tmp<=75)
+					gTurretTheta.theta = tmp;
+				
+				pFovCtrlObj->theta = (int)tmp;
+				
+				memcpy(buf, buf+parse_length, length-parse_length);
+				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+				length -= parse_length;
 			}
 
 		}

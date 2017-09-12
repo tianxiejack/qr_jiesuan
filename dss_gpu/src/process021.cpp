@@ -1650,8 +1650,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if (key == 'U' || key == 'u')
 	{
-		isWeaponCtrlOK = 1;
-		isJoyStickOK = 1;
+		isWeaponCtrlOK = 1;			//what
+		isJoyStickOK = 1;				//YES
 		isPositionSensorOK = 1;
 		isPositionServoOK = 1;
 		isDipAngleSensorOK = 1;
@@ -3202,7 +3202,6 @@ void CProcess021::onPositionSensorOK(LPARAM lParam)
 	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
 	       }
 	}
-
 	return ;
  }
 
@@ -3210,7 +3209,6 @@ void CProcess021::onPositionSensorOK(LPARAM lParam)
 void CProcess021::onPositionSensorERR(LPARAM lParam)
  {
  	isPositionSensorOK = FALSE;
-	
 	return ;
  }
 
@@ -4712,7 +4710,10 @@ void CProcess021::processCMD_SERVO_INIT(LPARAM lParam)
 
 void CProcess021::processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_SERVOTIMER_MACHGUN",__func__,__LINE__);
+	//absPosRequest(CODE_GRENADE);
+	//absPosRequest(CODE_MACHGUN);
+	//absPosRequest(CODE_TURRET);
+	//OSA_printf("%s,line:%d ... processCMD_SERVOTIMER_MACHGUN",__func__,__LINE__);
 	return ;
  }
 

@@ -140,7 +140,7 @@ typedef enum _time_id
 	eF5_Timer,
 	eF3_Timer,
 	eDipAngle_Timer,
-eOSD_shine_Timer	,					// the max of the timer number  is 0x20
+	eOSD_shine_Timer	,					// the max of the timer number  is 0x20
 	ePosAngle_Timer,
 	eMachGunAngle_Timer,
 	eGrenadeAngle_Timer,

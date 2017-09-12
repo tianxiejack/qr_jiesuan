@@ -19,21 +19,17 @@ BOOL isTurretVelocityValid();
 void resetTurretVelocityCounter();
 int getAverageVelocity(double* value);
 double getTurretTheta();
-
-
+void SelfCheckPosAngleTimer_cbFxn(void* cbParam);
 
 
 TurretPosPORT_Handle TurretPosPORT_initial(int(*MuxPortRecvFun)(Enum_MuxPortType,BYTE*,int));
 void TurretPosPORT_unInitial(TurretPosPORT_Handle handle);
 int TurretPosPORT_send(BYTE* pSendBuf,int iLen);
-
 void * TurretPosPORT_recvTask(void * prm);
 void markMeasure_dist_Time();
-
-
 void TurretPosPORT_PhraseBye(unsigned char *pRecv);
-
-
+void killSelfCheckPosAngleTimer();
+void startSelfCheckPosAngle_Timer();
 
 
 extern C_Thetas gTurretTheta;

@@ -46,6 +46,7 @@
 #include "osdProcess.h"
 #include "GrenadePort.h"
 #include "WeaponCtrl.h"
+#include "TurretPosPort.h"
 
 
 static Int32 APP_loadDefCfg( int item);
@@ -565,13 +566,6 @@ static Int32 APP_onTimer( Int32 timerId )
 		OSDCTRL_NoShineShow();
 	  }
 
-	
-	   if(timerId == eGrenadeAngle_Timer)
-	   {
-			killSelfCheckGrenadeAngleTimer();
-			MSGDRIV_send(CMD_GENERADE_SENSOR_ERR,0);
-	   }
-
 	   if(timerId == eRGQ_Timer)
 	   {
 			pTimerObj->KillTimer(eRGQ_Timer);
@@ -682,6 +676,29 @@ static Int32 APP_onTimer( Int32 timerId )
 		{
 			SCHEDULE_cbFxn(NULL);
 		}	
+
+		if(timerId == ePosAngle_Timer)
+		{
+			SelfCheckPosAngleTimer_cbFxn(NULL);
+		}
+
+		if(timerId == eDipAngle_Timer)
+		{
+			SelfCheckDipAngleTimer_cbFxn(NULL);
+		}
+
+		if(timerId == eMachGunAngle_Timer)
+		{
+			SelfCheckMachGunAngleTimer_cbFxn(NULL);
+		}
+
+		
+		 if(timerId == eGrenadeAngle_Timer)
+		 {
+			killSelfCheckGrenadeAngleTimer();
+			MSGDRIV_send(CMD_GENERADE_SENSOR_ERR,0);
+		 }
+		
 
 		
 	
