@@ -348,13 +348,14 @@ static void setNextZeroData(ZeroCorrectionItem *Item)
 
 void initilZeroParam(int type)
 {
-	if(PROJECTILE_BULLET == type /*isMachineGun()*/){
+	if(PROJECTILE_BULLET == type)
+	{
 		setNextZeroData(&gMachineGun_ZCTable);
-	}else if(PROJECTILE_GRENADE_KILL == type/*isGrenadeGas()*/){
+	}
+	else if(PROJECTILE_GRENADE_KILL == type)
+	{
 		setNextZeroData(&gGrenadeKill_ZCTable);
 	}
-//	AngleGun = gMachineGun_ZCTable.Angle;
-//	AngleGrenade = gGrenadeKill_ZCTable.Angle;
 }
 
 

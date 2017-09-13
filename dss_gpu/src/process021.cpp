@@ -4232,7 +4232,7 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_ZERO(LPARAM lParam)
 	{
 		gLevel2CalibrationState = STATE_CALIBRATION_ZERO;
 		// update OSDdisplay
-	//	initilZeroParam(gProjectileType);
+		initilZeroParam(gProjectileType);
 		OSDCTRL_EnterCalibMode();
 	}
 	return ;
