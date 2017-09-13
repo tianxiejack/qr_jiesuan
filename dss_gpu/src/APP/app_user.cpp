@@ -642,7 +642,7 @@ static Int32 APP_onTimer( Int32 timerId )
 		if(timerId == eBootUp_Timer)
 		{
 			CTimerCtrl * pCtrlTimer = pTimerObj;
-			if(pCtrlTimer->GetTimerStat(eDynamic_Timer)!=eTimer_Stat_Stop)
+			if(pCtrlTimer->GetTimerStat(eBootUp_Timer)!=eTimer_Stat_Stop)
 			{
 				pCtrlTimer->KillTimer(eBootUp_Timer);
 			}

@@ -3137,6 +3137,7 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
 		OSDCTRL_ItemShow(eSelfCheckResult);
 	}
 	//ReadParamsFlash();//read data from flash
+	printf("###read read \n");
 	button_to_read();
 	
 	return ;
