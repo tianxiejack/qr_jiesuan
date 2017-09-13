@@ -1578,12 +1578,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if (key == 'J')
 	{
-		//MSGDRIV_send(CMD_MODE_AIM_SKY,NULL);
-		printf("DistanceManual = %d\n",DistanceManual);
-		printf("qianwei = %d\n",DistanceManual/1000 );
-		printf("baiwei = %d\n",(DistanceManual%1000)/100);
-		printf("shiwei = %d\n",(DistanceManual/10)%10 );
-		printf("gewei = %d\n",(DistanceManual%10));
+
 	}
 
 		
@@ -1611,31 +1606,14 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'Q' || key == 'q')
 	{
-		gLevel3CalculatorState = Auto_LoadFiringTable;
-		if(MachGunAngle.theta>75)
-			MachGunAngle.theta = 0;
-		MachGunAngle.theta += 18;
-
-		hPositionX+= 50;
-		hPositionY+= 60;
-		
-		loadFiringTable_Enter();
+	
 	}
 
 	if(key == 'R' || key == 'r')
 	{
-		gLevel3CalculatorState = Auto_LoadFiringTable;
-		if(MachGunAngle.theta>75)
-			MachGunAngle.theta = 0;
-		MachGunAngle.theta += 18;
-
-		hPositionX+= 50;
-		hPositionY+= 60;
-		DistanceManual += 10;
-		loadFiringTable();
+	
 	}
 	
-
 		
 	if (key == 't' || key == 'T')
 	{
@@ -1659,6 +1637,10 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		isGrenadeSensorOK = 1;
 		isMachineGunServoOK = 1;
 		isGrenadeServoOK = 1;
+		if(Is9stateOK())
+	       {
+	   	   sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);
+	       }
 	}
 		
 
@@ -2513,7 +2495,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
  void CProcess021::MSGAPI_picp(long lParam )
 {
-	#if 0
+	#if 1
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 		if(pIStuts->PicpSensorStat == 0xFF)
 			pIStuts->PicpSensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
@@ -2530,7 +2512,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
  void CProcess021::MSGAPI_croppicp(long lParam )
 {
-	#if 0
+	#if 1
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	//	if(pIStuts->PicpSensorStat == 0xFF)
 	//		pIStuts->PicpSensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
@@ -2647,11 +2629,11 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
 void CProcess021::MSGAPI_inpuenhance(long lParam )
 {
-	//	CMD_EXT *pIStuts = &pThis->extInCtrl;
-	//	if(pIStuts->ImgEnhStat[pIStuts->SensorStat])
+	//CMD_EXT *pIStuts = &pThis->extInCtrl;
+	//if(pIStuts->ImgEnhStat[pIStuts->SensorStat])
 	//		pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Disable;
-	//	else
-	//		pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Enable;
+	//else
+	//	pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Enable;
 	//sThis->msgdriv_event(MSGID_EXT_INPUT_ENENHAN,NULL);
 	OSA_printf("%s,line:%d ... MSGAPI_inpuenhance",__func__,__LINE__);
 	return ;
@@ -3146,6 +3128,8 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
  
 void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
  {
+ 	OSDCTRL_NoShine();
+	
 	gLevel1Mode = gLevel1LastMode;
 	//update OSD elements.
 
