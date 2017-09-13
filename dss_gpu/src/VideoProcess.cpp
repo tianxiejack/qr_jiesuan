@@ -323,7 +323,7 @@ int CVideoProcess::init()
 	dsInit.timerfunc_value = 0;
 	dsInit.timerInterval = 10;//ms
 	dsInit.closefunc = close_event;
-	dsInit.bFullScreen = true;
+	dsInit.bFullScreen = false;//true;
 	dsInit.winPosX = 200;
 	dsInit.winPosY = 100;
 	dsInit.winWidth = 720;//720;

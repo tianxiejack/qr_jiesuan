@@ -174,8 +174,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,	10,	0,	{0}},
 	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,	470,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,	460,	0,	{0}},
-	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	455+LOFFSET,	505,	0,	{0}},
-	{eWeather2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	455+LOFFSET,	540,	0,	{0}},
+	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	440+LOFFSET,	505,	0,	{0}},
+	{eWeather2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	440+LOFFSET,	540,	0,	{0}},
 	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		500,	0,	{0}},
 	{eAngleV,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		540,	0,	{0}},
 	{eDynamicZone,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,	520,	0,	{0}},
@@ -259,7 +259,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibGeneral_YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	521+LOFFSET,		220,	0,	{0}},
 	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	532+LOFFSET,		220,	0,	{0}},
 
-	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		490,	0,	{0}},
+	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	280+LOFFSET,		490,	0,	{0}},
 	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		490,	0,	{0}},
 	{eCalibHorizen_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		100,	0,	{0}},
 	{eCalibHorizen_Pos,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		135-3,	0,	{0}},
@@ -669,7 +669,7 @@ void OSDCTRL_CalibMenuShow()
 	{
 		OSDCTRL_ItemShow(i);
 	}
-	
+	Posd[eSaveYesNo] = SaveYesNoOsd[1];
 	for(i=eCursorX; i<=eSaveYesNo; i++)
 	{
 		OSDCTRL_ItemShow(i);
