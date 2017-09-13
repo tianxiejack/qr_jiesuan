@@ -72,8 +72,8 @@ GeneralCorrectionItem gGrenadeGas_GCTable[]=
 		{364, {0,0}}
 };
 
-ZeroCorrectionItem gMachineGun_ZCTable = {500,	{352,288}};
-ZeroCorrectionItem gGrenadeKill_ZCTable = {500,	{352,288}};//{500,	{352,288}};
+ZeroCorrectionItem gMachineGun_ZCTable = {500,	{360,288}};
+ZeroCorrectionItem gGrenadeKill_ZCTable  = {500,{360,288}};//{500,	{352,288}};
 WeatherItem gWeatherTable={15,101325};
 
 
@@ -250,7 +250,7 @@ int angleToOffset(double angleMil)
 			break;
 	// large FOV=16x12 degree; 704x576
 		case FOV_LARGE:
-			ret = MIL2DEGREE(angleMil)*704/16;
+			ret = MIL2DEGREE(angleMil)*720/16;
 			break;
 		default:
 
@@ -268,11 +268,11 @@ double offsetToAngle(double pixels)
 	{
 	// small FOV=5.6x4.2 degree; 720x576
 		case FOV_SMALL:
-			ret = DEGREE2MIL(pixels*56/7040);
+			ret = DEGREE2MIL(pixels*56/7200);
 			break;
 	// large FOV=16x12 degree; 720x576
 		case FOV_LARGE:
-			ret = DEGREE2MIL(pixels*16/704);
+			ret = DEGREE2MIL(pixels*16/720);
 			break;
 		default:
 

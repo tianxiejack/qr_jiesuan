@@ -3137,6 +3137,7 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
 		OSDCTRL_ItemShow(eSelfCheckResult);
 	}
 	//ReadParamsFlash();//read data from flash
+	button_to_read();
 	
 	return ;
  }
@@ -3571,12 +3572,12 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 		releaseServoContrl();
 		OSDCTRL_ItemHide(ePlatFormX);
 		resetGrenadeInPositionFlag();
-		moveCrossAbs(352, 288);
+		moveCrossAbs(360, 288);
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&&(isAutoReady()||isAutoLoadFiringTable()))
 	{
 		//ce ju zhi hou jiu jin dao zhe li 
-		moveCrossAbs(352, 288);
+		moveCrossAbs(360, 288);
 		gLevel3CalculatorState = Auto_Idle;
 	}
 	else if(isBattleMode()&& isStatBattleAuto())

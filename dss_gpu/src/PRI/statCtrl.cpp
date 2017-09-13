@@ -739,12 +739,12 @@ void loadFiringTable()
 			borY = gGrenadeKill_ZCTable.data.deltaY;
 		}
 		if(isFovSmall()){
-			FOVSIZE_V = FOVDEGREE_VSMALL*(704-borX)/352; 
+			FOVSIZE_V = FOVDEGREE_VSMALL*(720-borX)/360; 
 			FOVSIZE_H = FOVDEGREE_VSMALL*(576-borY)/288; 
 		}
 		else
 		{
-			FOVSIZE_V = FOVDEGREE_VLARGE*(704-borX)/352;
+			FOVSIZE_V = FOVDEGREE_VLARGE*(720-borX)/360;
 			FOVSIZE_H = FOVDEGREE_HLARGE*(576-borY)/288;
 		}
 
@@ -763,7 +763,7 @@ void loadFiringTable()
 		else
 		{
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
-printf("loadFiringTable loadFiringTable loadFiringTable\n\n");
+
 			//AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
 			if(isMachineGun())
 				;//AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);
