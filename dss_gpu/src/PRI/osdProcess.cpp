@@ -1569,9 +1569,9 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		case eSelfCheckState1:
 			if(bWeaponCtrlOK())
-				Posd[eSelfCheckState1] = ResultOsd[0];
+				Posd[eSelfCheckState1] = ResultOsd[0];	//normal
 			else
-				Posd[eSelfCheckState1] = ResultOsd[1];
+				Posd[eSelfCheckState1] = ResultOsd[1]; 	//abnormal
 			sprintf(pStr,"%c %c:        %s",244,207,Posd[eSelfCheckState1]);//); 			//�Կ�:��-�쳣
 			break;
 		case eSelfCheckState2:

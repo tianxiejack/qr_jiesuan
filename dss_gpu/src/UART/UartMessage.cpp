@@ -2888,10 +2888,10 @@ void * SPI_CAN_process(void * prm)
 																break;
 											}
 
-
+   
 											//����֮��,������ݳ���
 											if(dataLength > 0)
-											{
+											{	
 													//��ӡҪ���������
 													for(i=0; i<dataLength; i++)
 													{
@@ -2899,8 +2899,8 @@ void * SPI_CAN_process(void * prm)
 															printf("%02x ", buf[i]);
 														#endif
 													}
-													#if CAN_DEBUG		
-														printf("length=%d, dataLength=%d\n", length, dataLength);
+													#if CAN_DEBUG	
+														printf("\n length=%d, dataLength=%d\n", length, dataLength);
 													#endif
 													
 													if(length<dataLength)

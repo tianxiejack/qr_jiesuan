@@ -1275,8 +1275,7 @@ static int WeaponCtrlPORT_ParseFrame_type4(UartObj*pUartObj)
 void WeaponCtrlPORT_ParseFrameByte_test(unsigned char* buf)
 {
 //		case Frame_TEST:
-	printf("###A5  A5  !!!\n");
-
+	//sendCommand(MSG_ID);
 	if(0x00 == BIT0(BYTE3(buf)))
 		sendCommand(CMD_GENERADE_SERVO_OK);
 	if(0x00 == BIT1(BYTE3(buf)))
@@ -1376,12 +1375,10 @@ static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 {
 	if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
-		sendCommand(CMD_WEAPONCTRL_OK);
-printf("WeaponCtrlPORT_ParseBytePanel \n\n\n");
+			sendCommand(CMD_WEAPONCTRL_OK);
 	switch(buf[2])
 	{
 		case Frame_Type0:
-			printf("A0  A0  A0 \n\n");
 			if(uart_open_close_flag)
 				return ;
 			WeaponCtrlPORT_ParseFrameByte_type0(buf);
@@ -1401,7 +1398,6 @@ printf("WeaponCtrlPORT_ParseBytePanel \n\n\n");
 			WeaponCtrlPORT_ParseFrameByte_type4(buf);
 			break;
 		case Frame_TEST:
-			printf("A5  A5  A5 \n\n");
 			WeaponCtrlPORT_ParseFrameByte_test(buf);
 			break;
 		case 0xAC:
