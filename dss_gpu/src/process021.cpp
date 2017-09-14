@@ -3964,6 +3964,13 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 	{
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
+			if(isfixingMeasure)
+			{
+			    //if(isMeasureManual())
+				gLevel3CalculatorState = Auto_Preparation;
+				processCMD_LASER_OK(0);
+			}
+			
 		
 			if(SHINE &&(/*eMeasureDis == ShinId*/eMeasureDis_Value2 == ShinId ||eMeasureDis_Value3 == ShinId ||eMeasureDis_Value4 == ShinId))
 			{
@@ -3984,6 +3991,9 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				else
 					OSDCTRL_ItemHide(eDynamicZone);
 			}
+
+			
+			
 			//loadFiringTable_Enter();
 			//updateMoveCross();
 		}
