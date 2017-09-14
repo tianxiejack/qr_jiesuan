@@ -132,6 +132,62 @@ Id(/*devId*/0)
 	alloc_split_buffer();
 }
 
+
+
+//#define DISABLE_NEON_DEI
+#undef DISABLE_NEON_DEI
+
+#define _min2(a, b)	 	((a)<(b))?(a):(b)
+#define _max2(a, b) 		((a)>(b))?(a):(b)
+
+void DeinterlaceYUV_Neon(unsigned char *lpYUVFrame, int ImgWidth, int ImgHeight, int ImgStride)
+{
+	int	y;
+#ifndef DISABLE_NEON_DEI
+	int stride8x8 = ImgWidth*2/8;
+#pragma omp parallel for
+	for(y = 0; y < (ImgHeight-2); y+=2)
+	{
+		uint8x8_t * __restrict__ pSrc08x8_t, * __restrict__ pSrc28x8_t, * __restrict__ pOdd8x8_t, * __restrict__ pDst8x8_t;
+		int i;
+
+		pSrc08x8_t = (uint8x8_t *)(lpYUVFrame + y*ImgStride*2);
+		pSrc28x8_t = (uint8x8_t *)(lpYUVFrame + (y+2)*ImgStride*2);
+		pOdd8x8_t = (uint8x8_t *)(lpYUVFrame + (y+1)*ImgStride*2);
+		pDst8x8_t = (uint8x8_t *)(lpYUVFrame + (y+1)*ImgStride*2);
+		for(i=0; i < stride8x8;  i++)
+		{
+			uint8x8_t a = pSrc08x8_t[i];
+			uint8x8_t d = pOdd8x8_t[i];
+			uint8x8_t b = pSrc28x8_t[i];
+			pDst8x8_t[i]= vsub_u8(vsub_u8(vadd_u8(vadd_u8(a,b), d), vmin_u8( vmin_u8(a,b),d)), vmax_u8( vmax_u8(a,b),d));
+		}
+	}
+#else
+#pragma omp parallel for
+	for(y = 0; y < (ImgHeight-2); y+=2)
+	{
+		register unsigned char *pSrc0,  *pSrc2, *pOdd, *pDst;
+		int x;
+
+		pSrc0 = lpYUVFrame + y*ImgStride*2;
+		pSrc2 = lpYUVFrame + (y+2)*ImgStride*2;
+		pOdd = lpYUVFrame + (y+1)*ImgStride*2;
+		pDst = lpYUVFrame + (y+1)*ImgStride*2;
+		for(x = 0; x < ImgWidth*2; x++)
+		{
+			register int a = pSrc0[x];
+			register int d = pOdd[x];
+			register int b = pSrc2[x];
+
+			pDst[x] = a + b + d- _min2(_min2(a, b), d) - _max2(_max2(a, b), d);//medthr(a, b, d);
+		}
+	}
+#endif
+}
+
+
+
 v4l2_camera::~v4l2_camera()
 {
 	destroy();
@@ -283,7 +339,7 @@ void v4l2_camera::parse_line_header2(int channels, unsigned char *p)
 			chFlag |= (1<<chId);
 			fieldmask[chId] |= (1<<fieldId);
 			if(fieldmask[chId] == 0x03){
-				//DeinterlaceYUV_Neon(split_buffer_ch[chId], IMAGE_WIDTH/2, IMAGE_HEIGHT, IMAGE_WIDTH/2);
+				DeinterlaceYUV_Neon(split_buffer_ch[chId], IMAGE_WIDTH/2, IMAGE_HEIGHT, IMAGE_WIDTH/2);
 				putFullBuffer(split_buffer_ch[chId]);
 				split_buffer_ch[chId] = getEmptyBuffer(chId);
 				fieldmask[chId] = 0;

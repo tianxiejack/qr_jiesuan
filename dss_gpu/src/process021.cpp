@@ -1098,16 +1098,6 @@ void CProcess021::DrawdashCross(int x,int y,int fcolour ,bool bShow /*= true*/)
 
 bool CProcess021::OnProcess(int chId, Mat &frame)
 {
-
-
-
-
-
-
-
-
-
-	
 	//track
 	int frcolor=extInCtrl.DispColor[extInCtrl.SensorStat];
 	int startx=0;
@@ -1163,7 +1153,6 @@ osdindex++;
 			extInCtrl.unitAimX=rcResult.x+rcResult.width/2;
 			extInCtrl.unitAimY=rcResult.y+rcResult.height/2;
 		 }
-		 
 		 
 		// printf("rcResult.x =%f rcResult.y=%f w=%f h=%f\n",rcResult.x,rcResult.y,rcResult.width,rcResult.height);
 		 #else
@@ -1262,7 +1251,6 @@ osdindex++;
 	}
 
 
-	return 0;
 	//mtd
 osdindex++;
 	{
@@ -1298,8 +1286,8 @@ osdindex++;
 		}
 	}
 osdindex++;
-//return true;
 
+//return true;
 	{
 		if(Osdflag[osdindex]==1)
 			{
@@ -1397,6 +1385,8 @@ osdindex++;
 
 	}
 ///fov
+// hui duo hua dong xi ,zan shi ping bi
+/*
 	osdindex++;
 //  
 	if(Osdflag[osdindex]==1)
@@ -1443,6 +1433,22 @@ osdindex++;
 			rectfovBak.y=fovh;
 		}
 	}
+*/
+	osdindex++;
+	{
+		if(Osdflag[osdindex]==1)
+		{
+				DrawjsRect(frame, detect_recBak,0);	
+				Osdflag[osdindex]=0;
+		}
+		if(m_bMoveDetect)
+		{
+			DrawjsRect(frame, detect_rec,2);
+			memcpy(&detect_recBak,&detect_rec,sizeof(UTC_Rect));
+			Osdflag[osdindex]=1;
+		}		
+	}
+	
 	
 	//process_osd_test(NULL);
 	
@@ -1487,8 +1493,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	if(key == 'b' || key == 'B')
 	{
 		pIStuts->PicpSensorStat = (pIStuts->PicpSensorStat + 1) % (eSen_Max+1);
-		//msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
-		MSGDRIV_send(MSGID_EXT_INPUT_ENPICP,NULL);
+		msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
+		//MSGDRIV_send(MSGID_EXT_INPUT_ENPICP,NULL);
 	}
 
 	if(key == 'c'|| key == 'C')
@@ -1579,6 +1585,12 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	if (key == 'J')
 	{
 
+	}
+
+	
+	if (key == 'k' || key == 'K')
+	{
+		msgdriv_event(MSGID_EXT_MVDETECT, NULL);
 	}
 
 		
@@ -1725,17 +1737,15 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 		if(pIStuts->PicpSensorStat==0||pIStuts->PicpSensorStat==1)
 			{
 				if(pIStuts->SensorStat==0)
-					{
+				{
 						pIStuts->PicpSensorStat=1;
-					}
+				}
 				else
-					{
+				{
 						pIStuts->PicpSensorStat=0;
-					}
+				}
 				if(pIStuts->ImgPicp[pIStuts->SensorStat]==1||pIStuts->ImgPicp[pIStuts->SensorStat^1]==1)
-					pIStuts->PicpSensorStatpri=pIStuts->PicpSensorStat;
-				
-				
+					pIStuts->PicpSensorStatpri=pIStuts->PicpSensorStat;					
 			}
 #endif
 
@@ -1773,9 +1783,6 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 				pIStuts->ImgPixelX[pIStuts->SensorStat] =WindowstoPiexlx( pIStuts->ImgPixelX[pIStuts->SensorStat^1],pIStuts->SensorStat);
 				pIStuts->ImgPixelY[pIStuts->SensorStat] =WindowstoPiexly( pIStuts->ImgPixelY[pIStuts->SensorStat^1],pIStuts->SensorStat);
 			}
-
-
-	
 
  			//pIStuts->ImgPixelX[pIStuts->SensorStat^1] = pIStuts->ImgPixelX[pIStuts->SensorStat];
 			//pIStuts->ImgPixelY[pIStuts->SensorStat^1] = pIStuts->ImgPixelY[pIStuts->SensorStat] ;
@@ -2255,25 +2262,29 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
 		}
 	if(msgId ==MSGID_EXT_INPUT_COAST)
-		{
-			m_castTm=OSA_getCurTimeInMsec();
-			m_bCast=true;
-			
+	{
+		m_castTm=OSA_getCurTimeInMsec();
+		m_bCast=true;
+		
 
-		}
+	}
+	
 	if(msgId ==MSGID_EXT_INPUT_VIDEOEN)
-		{
-			int status=pIStuts->unitFaultStat&0x01;
-			status^=1;
-			m_display.dynamic_config(CDisplayer::DS_CFG_VideodetEnable, 0, &status);
-			printf("MSGID_EXT_INPUT_VIDEOEN status0=%d\n",status);
-			 status=(pIStuts->unitFaultStat>1)&0x01;
-			 status^=1;
-			m_display.dynamic_config(CDisplayer::DS_CFG_VideodetEnable, 1, &status);
-			printf("MSGID_EXT_INPUT_VIDEOEN status1=%d\n",status);
-			
+	{
+		int status=pIStuts->unitFaultStat&0x01;
+		status^=1;
+		m_display.dynamic_config(CDisplayer::DS_CFG_VideodetEnable, 0, &status);
+		printf("MSGID_EXT_INPUT_VIDEOEN status0=%d\n",status);
+		 status=(pIStuts->unitFaultStat>1)&0x01;
+		 status^=1;
+		m_display.dynamic_config(CDisplayer::DS_CFG_VideodetEnable, 1, &status);
+		printf("MSGID_EXT_INPUT_VIDEOEN status1=%d\n",status);
+	}
 
-		}
+	if(msgId == MSGID_EXT_MVDETECT)
+	{	
+		dynamic_config(VP_CFG_MvDetect, 1,NULL);	
+	}
 	
 	/*if(msgId == MSGID_EXT_INPUT_DISPGRADE)
 	{
@@ -3080,6 +3091,8 @@ void CProcess021::MSGAPI_settrackBreakLock(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
  {
+ 		OSDCTRL_NoShine();
+		
 	 	if(!isBootUpMode())
 		{
 			if(isCalibrationMode()&&!isCalibrationMainMenu())
@@ -3127,9 +3140,7 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
 
  
 void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
- {
- 	OSDCTRL_NoShine();
-	
+ {	
 	gLevel1Mode = gLevel1LastMode;
 	//update OSD elements.
 

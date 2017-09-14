@@ -1369,7 +1369,7 @@ void OSDCTRL_draw(Mat frame,OSDCTRL_Handle pCtrlObj)
 int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 {
 
-   //	int index=0;
+   	//int index=0;
 	OSDCTRL_OBJ * pCtrlObj = (OSDCTRL_OBJ * )hOsdCtrl;
 	OSDText_Obj * pTextObj = NULL;
 	char * pStr = NULL;
@@ -1464,9 +1464,9 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		case eShotType:
 			if(isMachineGun())
-				Posd[eShotType] = ShotOsd[getGunShotType()];
+				Posd[eShotType] = ShotGunOsd[getShotType()];		//ShotOsd[getGunShotType()];
 			else
-				Posd[eShotType] = ShotGunOsd[getShotType()];		
+				Posd[eShotType] = ShotOsd[getGunShotType()];//ShotGunOsd[getShotType()];		
 			sprintf(pStr,"%s",Posd[eShotType]);
 			break;
 		case eFovType:

@@ -523,6 +523,8 @@ typedef enum
     CMD_MACHSERVO_STOP,
     CMD_MACHSERVO_MOVEOFFSET,
     CMD_GRENADESERVO_MOVEOFFSET,
+    //addtion ext cmd mvdetect
+    MSGID_EXT_MVDETECT,
     MAX_MSG_NUM,
 
 }MSG_PROC_ID;

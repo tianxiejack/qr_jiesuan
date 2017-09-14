@@ -10,6 +10,8 @@
 //#include "grpFont.h"
 #include "arm_neon.h"
 
+#include "osd_cv.h"
+
 using namespace vmath;
 
 int CVideoProcess::m_mouseEvent = 0;
@@ -19,9 +21,11 @@ CVideoProcess * CVideoProcess::pThis = NULL;
 bool CVideoProcess::m_bTrack = false;
 bool CVideoProcess::m_bMtd = false;
 bool CVideoProcess::m_bBlobDetect = false;
+bool CVideoProcess::m_bMoveDetect = false;
 int CVideoProcess::m_iTrackStat = 0;
 int64 CVideoProcess::tstart = 0;
 static int count=0;
+
 
 int CVideoProcess::MAIN_threadCreate(void)
 {
@@ -40,8 +44,6 @@ int CVideoProcess::MAIN_threadCreate(void)
 	
 
 
-
-
 	//OSA_waitMsecs(2);
 
 	return iRet;
@@ -50,6 +52,8 @@ int CVideoProcess::MAIN_threadCreate(void)
 void CVideoProcess::main_proc_func()
 {
 	OSA_printf("%s: Main Proc Tsk Is Entering...\n",__func__);
+
+	std::vector<TRK_RECT_INFO> detect_vect(1);
 
 	while(mainProcThrObj.exitProcThread ==  false)
 	{
@@ -62,6 +66,7 @@ void CVideoProcess::main_proc_func()
 		bool bTrack = mainProcThrObj.cxt[mainProcThrObj.pp^1].bTrack;
 		bool bMtd = mainProcThrObj.cxt[mainProcThrObj.pp^1].bMtd;
 		bool bBlobDetect = mainProcThrObj.cxt[mainProcThrObj.pp^1].bBlobDetect;
+		bool bMoveDetect = mainProcThrObj.cxt[mainProcThrObj.pp^1].bMoveDetect;
 		int chId = mainProcThrObj.cxt[mainProcThrObj.pp^1].chId;
 		int iTrackStat = mainProcThrObj.cxt[mainProcThrObj.pp^1].iTrackStat;
 		
@@ -73,7 +78,9 @@ void CVideoProcess::main_proc_func()
 		if(!OnPreProcess(chId, frame))
 			continue;
 
-		if(!m_bTrack && !m_bMtd && !m_bBlobDetect){
+
+		if(!m_bTrack && !m_bMtd && !m_bBlobDetect && !m_bMoveDetect)
+		{
 			OnProcess(chId, frame);
 			continue;
 		}
@@ -83,7 +90,7 @@ void CVideoProcess::main_proc_func()
 
 		frame_gray = Mat(frame.rows, frame.cols, CV_8UC1);
 
-//		OSA_printf("%s:chId = %d , w=%d, h=%d \n",__func__, chId, frame.cols, frame.rows);
+		//OSA_printf("%s:chId = %d , w=%d, h=%d \n",__func__, chId, frame.cols, frame.rows);
 
 		if(channel == 2)
 		{
@@ -94,11 +101,13 @@ void CVideoProcess::main_proc_func()
 			//extractYUYV2Gray(frame, frame_gray);
 
 		//	OSA_printf("chId = %d, YUV2GRAY: time = %f sec \n", chId, ( (getTickCount() - tstart)/getTickFrequency()) );
-		}else{
+		}
+		else
+		{
 			memcpy(frame_gray.data, frame.data, frame.cols * frame.rows*channel*sizeof(unsigned char));
 		}
-		
 
+		
 		if(bTrack)
 		{
 			iTrackStat = ReAcqTarget();
@@ -107,7 +116,7 @@ void CVideoProcess::main_proc_func()
 		
 			//
 			if(m_iTrackStat==2)
-				{
+			{
 				//m_searchmod=1;
 				#if 0
 					switch( m_searchmod)
@@ -127,12 +136,11 @@ void CVideoProcess::main_proc_func()
 						}
 				#endif
 
-				}
+			}
 			else
-				{
+			{
 					m_searchmod=0;
-
-				}
+			}
 			m_iTrackStat = process_track(iTrackStat, frame_gray, m_dc, m_rcTrack);
 			//printf("********m_iTrackStat=%d\n",m_iTrackStat);
 //			OSA_printf("ALL-Trk: time = %f sec \n", ( (getTickCount() - tstart)/getTickFrequency()) );
@@ -156,6 +164,22 @@ void CVideoProcess::main_proc_func()
 //			tstart = getTickCount();
 			BlobDetect(frame_gray, adaptiveThred, m_blobRect);
 //			OSA_printf("ALL-BlobDetect: time = %f sec \n", ( (getTickCount() - tstart)/getTickFrequency()) );
+		}
+		else if(bMoveDetect)
+		{
+			if(m_pMovDetector != NULL)
+					m_pMovDetector->setFrame(frame_gray, chId);				
+			m_pMovDetector->getMoveTarget(detect_vect,0);
+
+			detect_rec.x 		= detect_vect[0].targetRect.x;
+			detect_rec.y 		= detect_vect[0].targetRect.y;
+			detect_rec.width	= detect_vect[0].targetRect.width;
+			detect_rec.height	 = detect_vect[0].targetRect.height;	
+
+			printf(" x  =%d \n", detect_vect[0].targetRect.x);
+			printf(" y  =%d \n", detect_vect[0].targetRect.y);
+			printf(" width  =%d \n", detect_vect[0].targetRect.width);
+			printf(" height  =%d \n", detect_vect[0].targetRect.height);
 		}
 
 		if(chId != m_curChId)
@@ -201,6 +225,7 @@ CVideoProcess::CVideoProcess()
 	m_bakChId = m_curChId;
 	trackchange=0;
 	m_searchmod=0;
+	m_pMovDetector = NULL;
 }
 
 CVideoProcess::~CVideoProcess()
@@ -235,6 +260,12 @@ int CVideoProcess::creat()
 	
 
 	OnCreate();
+
+	//mov detect init
+	if(m_pMovDetector == NULL)
+		m_pMovDetector = MvDetector_Create();
+	OSA_assert(m_pMovDetector != NULL);
+	
 	
 	
 	return 0;
@@ -251,6 +282,7 @@ int CVideoProcess::destroy()
 	m_display.destroy();
 
 	OnDestroy();
+	DeInitMvDetect();
 
 /*	if(m_grayMem[0] != NULL){
 			cudaFreeHost(m_grayMem[0]);
@@ -335,6 +367,7 @@ int CVideoProcess::init()
 	m_dc = m_display.m_imgOsd[0];
 	m_dccv=m_display.m_imgOsd[1];
 	OnInit();
+	initMvDetect();
 
 	return 0;
 }
@@ -352,49 +385,52 @@ int CVideoProcess::dynamic_config(int type, int iPrm, void* pPrm)
 
 	switch(type)
 	{
-	case VP_CFG_MainChId:
-		m_curChId = iPrm;
-		m_iTrackStat = 0;
-		mainProcThrObj.bFirst = true;
-		m_display.dynamic_config(CDisplayer::DS_CFG_ChId, 0, &m_curChId);
-		break;
-	case VP_CFG_SubChId:
-		m_curSubChId = iPrm;
-		m_display.dynamic_config(CDisplayer::DS_CFG_ChId, 1, &m_curSubChId);
-		break;
-	case VP_CFG_TrkEnable:
-		m_bTrack = iPrm;
-		m_bakChId = m_curChId;
-		m_iTrackStat = 0;
-		mainProcThrObj.bFirst = true;
-		if(pPrm == NULL)
-		{
-			UTC_RECT_float rc;
-			//rc.x = (int)(m_mousex*frame.cols/m_display.m_mainWinWidth) - 20;
-			//rc.y = (int)(m_mousey*frame.rows/m_display.m_mainWinHeight) - 15;
-			rc.x = m_ImageAxisx - 30;
-			rc.y = m_ImageAxisx - 30;
-			rc.width = 60;
-			rc.height = 60;
-			m_rcTrack = rc;
-			m_rcAcq = rc;
-			printf("*****************************************************\n");
-		}
-		else
-		{
-			m_rcTrack = *(UTC_RECT_float*)pPrm;
-			printf("**********************************************@@@@@@@\n");
-			//m_rcAcq = *(UTC_RECT_float*)pPrm;
-		}
-		break;
-	case VP_CFG_MtdEnable:
-		m_bMtd = iPrm;
-		break;
-	case VP_CFG_BlobEnable:
-		m_bBlobDetect = iPrm;
-		break;
-	default:
-		break;
+		case VP_CFG_MainChId:
+			m_curChId = iPrm;
+			m_iTrackStat = 0;
+			mainProcThrObj.bFirst = true;
+			m_display.dynamic_config(CDisplayer::DS_CFG_ChId, 0, &m_curChId);
+			break;
+		case VP_CFG_SubChId:
+			m_curSubChId = iPrm;
+			m_display.dynamic_config(CDisplayer::DS_CFG_ChId, 1, &m_curSubChId);
+			break;
+		case VP_CFG_TrkEnable:
+			m_bTrack = iPrm;
+			m_bakChId = m_curChId;
+			m_iTrackStat = 0;
+			mainProcThrObj.bFirst = true;
+			if(pPrm == NULL)
+			{
+				UTC_RECT_float rc;
+				//rc.x = (int)(m_mousex*frame.cols/m_display.m_mainWinWidth) - 20;
+				//rc.y = (int)(m_mousey*frame.rows/m_display.m_mainWinHeight) - 15;
+				rc.x = m_ImageAxisx - 30;
+				rc.y = m_ImageAxisx - 30;
+				rc.width = 60;
+				rc.height = 60;
+				m_rcTrack = rc;
+				m_rcAcq = rc;
+				printf("*****************************************************\n");
+			}
+			else
+			{
+				m_rcTrack = *(UTC_RECT_float*)pPrm;
+				printf("**********************************************@@@@@@@\n");
+				//m_rcAcq = *(UTC_RECT_float*)pPrm;
+			}
+			break;
+		case VP_CFG_MtdEnable:
+			m_bMtd = iPrm;
+			break;
+		case VP_CFG_BlobEnable:
+			m_bBlobDetect = iPrm;
+			break;
+		case VP_CFG_MvDetect:
+			m_bMoveDetect = iPrm;
+			break;
+		default:
+			break;
 	}
 
 	if(iret == 0)
@@ -580,13 +616,16 @@ int CVideoProcess::process_frame(int chId, Mat frame)
 		mainProcThrObj.cxt[mainProcThrObj.pp].bTrack = m_bTrack;
 		mainProcThrObj.cxt[mainProcThrObj.pp].bMtd = m_bMtd;
 		mainProcThrObj.cxt[mainProcThrObj.pp].bBlobDetect = m_bBlobDetect;
+		mainProcThrObj.cxt[mainProcThrObj.pp].bMoveDetect = m_bMoveDetect;
 		mainProcThrObj.cxt[mainProcThrObj.pp].iTrackStat = m_iTrackStat;
 		mainProcThrObj.cxt[mainProcThrObj.pp].chId = chId;
-		if(mainProcThrObj.bFirst){
+		if(mainProcThrObj.bFirst)
+		{
 			mainFrame[mainProcThrObj.pp^1] = frame;
 			mainProcThrObj.cxt[mainProcThrObj.pp^1].bTrack = m_bTrack;
 			mainProcThrObj.cxt[mainProcThrObj.pp^1].bMtd = m_bMtd;
 			mainProcThrObj.cxt[mainProcThrObj.pp^1].bBlobDetect = m_bBlobDetect;
+			mainProcThrObj.cxt[mainProcThrObj.pp^1].bMoveDetect = m_bMoveDetect;
 			mainProcThrObj.cxt[mainProcThrObj.pp^1].iTrackStat = m_iTrackStat;
 			mainProcThrObj.cxt[mainProcThrObj.pp^1].chId = chId;
 			mainProcThrObj.bFirst = false;
@@ -777,5 +816,41 @@ int CVideoProcess::process_mtd(ALGMTD_HANDLE pChPrm, Mat frame_gray, Mat frame_d
 	}
 
 	return 0;
+}
+
+
+void	CVideoProcess::initMvDetect()
+{
+	int	i;
+	OSA_printf("%s:mvDetect start ", __func__);
+	OSA_assert(m_pMovDetector != NULL);
+
+	m_pMovDetector->init(NULL/*NotifyFunc*/, (void*)this);
+	
+	std::vector<cv::Point> polyWarnRoi ;
+	polyWarnRoi.resize(4);
+	polyWarnRoi[0]	= cv::Point(200,100);
+	polyWarnRoi[1]	= cv::Point(520,100);
+	polyWarnRoi[2]	= cv::Point(520,476);
+	polyWarnRoi[3]	= cv::Point(200,476);
+	for(i=0; i<DETECTOR_NUM; i++){
+		m_pMovDetector->setWarningRoi(polyWarnRoi,	i);
+		m_pMovDetector->setDrawOSD(m_dc, i);
+		m_pMovDetector->enableSelfDraw(false, i);
+		m_pMovDetector->setWarnMode(WARN_MOVEDETECT_MODE, i);
+	} 
+}
+
+void	CVideoProcess::DeInitMvDetect()
+{
+	if(m_pMovDetector != NULL)
+		m_pMovDetector->destroy();
+}
+
+void CVideoProcess::NotifyFunc(void *context, int chId)
+{
+	CVideoProcess *pParent = (CVideoProcess*)context;
+	pParent->m_display.m_bOsd = true;
+	//pParent->m_display.UpDateOsd(0);
 }
 

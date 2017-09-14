@@ -17,12 +17,14 @@
 #include "app_osdgrp.h"
 #include "app_status.h"
 #include"osd_graph.h"
+#include "mvdectInterface.hpp"
 //#include "BigVideo.hpp"
 
 typedef struct _main_thr_obj_cxt{
 	bool bTrack;
 	bool bMtd;
 	bool bBlobDetect;
+	bool bMoveDetect;
 	int chId;
 	int iTrackStat;
 	
@@ -57,6 +59,7 @@ public:
 		VP_CFG_TrkEnable,
 		VP_CFG_MtdEnable,
 		VP_CFG_BlobEnable,
+		VP_CFG_MvDetect,
 		VP_CFG_Max
 	}VP_CFG;
 	int dynamic_config(int type, int iPrm, void* pPrm = NULL);
@@ -83,6 +86,7 @@ public:
 	int m_ImageAxisy;
 
 protected:
+	
 	MultiChVideo MultiCh;
 	//BigChVideo		BigChannel;
 	CDisplayer m_display;
@@ -96,6 +100,7 @@ protected:
 	static bool m_bTrack;
 	static bool m_bMtd;
 	static bool m_bBlobDetect;
+	static bool m_bMoveDetect;
 	static int m_iTrackStat;
 	Uint32 rememtime;
 	bool rememflag;
@@ -151,6 +156,13 @@ protected: //track
 	int			    m_intervalFrame;
 	int			  m_intervalFrame_change;
 	int 			    m_bakChId;
+
+protected:
+	CMvDectInterface *m_pMovDetector;
+	void	initMvDetect();
+	void	DeInitMvDetect();
+	static void NotifyFunc(void *context, int chId);
+	UTC_Rect detect_rec;
 };
 
 

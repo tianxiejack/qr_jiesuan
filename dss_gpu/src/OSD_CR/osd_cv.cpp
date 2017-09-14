@@ -944,6 +944,14 @@ void DrawjsBottomFrame(Mat frame,CFOV * fovOsdCtrl)
 	
 }
 
+void DrawjsRect(Mat frame,UTC_Rect rec,int frcolor)
+{
+	int x = rec.x,y = rec.y;
+	int width = rec.width;
+	int height = rec.height;
+	drawcvrect(frame,x,y,width,height,frcolor);
+	return ;
+}
 
 
 void Drawcvcross(Mat frame,Line_Param_fb *lineparm)
@@ -977,8 +985,7 @@ void drawcvrect(Mat frame,int x,int y,int width,int height,int frcolor)
 	
 	CvScalar colour=GetcvColour(frcolor);
 	rectangle( frame,Point( x,y ),Point( x+width, y+height),colour, 1, 8);
-								
-
+	return ;							
 }
 
 

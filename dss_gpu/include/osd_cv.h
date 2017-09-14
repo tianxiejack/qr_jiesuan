@@ -16,6 +16,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/legacy/compat.hpp>
 #include "app_osdgrp.h"
+#include "UtcTrack.h"
 using namespace cv;
 
 #include "basePort.h"
@@ -53,6 +54,7 @@ void DrawjsRightFrame(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsLeftFrame(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsBottomFrame(Mat frame,CFOV * fovOsdCtrl);
 
-
+void DrawjsRect(Mat frame,UTC_Rect rec,int frcolor);
+void drawcvrect(Mat frame,int x,int y,int width,int height,int frcolor);
 
 #endif /* OSD_CV_H_ */
