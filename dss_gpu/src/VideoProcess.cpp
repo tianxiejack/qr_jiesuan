@@ -835,7 +835,7 @@ void	CVideoProcess::initMvDetect()
 	for(i=0; i<DETECTOR_NUM; i++){
 		m_pMovDetector->setWarningRoi(polyWarnRoi,	i);
 		m_pMovDetector->setDrawOSD(m_dccv, i);
-		m_pMovDetector->enableSelfDraw(true, i);
+		m_pMovDetector->enableSelfDraw(false, i);
 		m_pMovDetector->setWarnMode(WARN_MOVEDETECT_MODE, i);
 	} 
 }  

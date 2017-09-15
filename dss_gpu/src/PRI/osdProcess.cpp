@@ -372,14 +372,14 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{ePlatFormX,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	100+LOFFSET,		400,	0,	{0}},
 	
 #ifdef MIDMENU
-	{eCalcNum_Visual,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		80,	0,	{0}},
-	{eCalcNum_Traject,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		115-3,	0,	{0}},
-	{eCalcNum_Trunion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		150-6,	0,	{0}},
-	{eCalcNum_General,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		185-9,	0,	{0}},
-	{eCalcNum_Weather,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		220-12,	0,	{0}},
-	{eCalcNum_Turret,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		255-15,	0,	{0}},
-	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		290-18,	0,	{0}},
-	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		325-21,	0,	{0}},
+	{eCalcNum_Visual,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		80,	0,	{0}},
+	{eCalcNum_Traject,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		115-3,	0,	{0}},
+	{eCalcNum_Trunion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		150-6,	0,	{0}},
+	{eCalcNum_General,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		185-9,	0,	{0}},
+	{eCalcNum_Weather,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		220-12,	0,	{0}},
+	{eCalcNum_Turret,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		255-15,	0,	{0}},
+	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		290-18,	0,	{0}},
+	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	10+LOFFSET,		325-21,	0,	{0}},
 
 	{eStateMaintD,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-165+LOFFSET,		80+100,	0,	{0}},
 	{eStateDetend,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,			80+100,	0,	{0}},
@@ -966,22 +966,22 @@ void OSDCTRL_ItemShow(LPARAM lParam)
 
 void OSDCTRL_CalcNumShow(void)
 {
-#if 0
 	int i=0;
-	for(i=eCalcNum_Visual; i<=eCalcNum_Posion; i++){
+	for(i=eCalcNum_Visual; i<=eCalcNum_Posion; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
-#endif	
+	return ;
 }
 
 void OSDCTRL_CalcNumHide(void)
 {
-#if 0
 	int i=0;
-	for(i=eCalcNum_Visual; i<=eCalcNum_Posion; i++){
+	for(i=eCalcNum_Visual; i<=eCalcNum_Posion; i++)
+	{
 		OSDCTRL_ItemHide(i);
 	}
-#endif	
+	return ;
 }
 
 void OSDCTRL_FulScrAngleShow()

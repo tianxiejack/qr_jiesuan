@@ -349,7 +349,13 @@ void CProcess021::process_osd(void *pPrm)
 			n = 0;
 		}
 	}
-	
+
+	if(flag)
+	{
+		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);
+	}
+	FOVCTRL_draw(frame,pFovCtrlObj);
+	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
 
 
 	if(flag)
@@ -364,12 +370,7 @@ void CProcess021::process_osd(void *pPrm)
 
 	//beside the text
 	//jiao zhun & ji jian --hide
-	if(flag)
-	{
-		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);
-	}
-	FOVCTRL_draw(frame,pFovCtrlObj);
-	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
+
 	
 	flag = 1;
 
@@ -1126,6 +1127,32 @@ osdindex++;
 			Point( startx, starty ),
 			Point( endx, endy),
 			cvScalar(0,0,0, 0), 1, 8 );
+
+		#if 1
+			osdindex++;
+			{
+				
+				if(Osdflag[osdindex]==1)
+				{
+					detect_num = detect_bak.size();
+					for(i=0;i<detect_num;i++)
+					{
+						DrawjsRect(frame, detect_bak[i].targetRect,0);	
+					}			
+					Osdflag[osdindex]=0;
+				}
+				if(m_bMoveDetect)
+				{
+					detect_num = detect_vect.size();
+					for(i =0;i<detect_num;i++)
+					{
+						DrawjsRect(frame, detect_vect[i].targetRect,2);
+					}		
+					detect_bak = detect_vect;
+					Osdflag[osdindex]=1;
+				}		
+			}
+		#endif	
 		
 		 if(m_bTrack)
 		 {
@@ -1438,31 +1465,6 @@ osdindex++;
 		}
 	}
 */
-#if 1
-	osdindex++;
-	{
-		
-		if(Osdflag[osdindex]==1)
-		{
-			detect_num = detect_bak.size();
-			for(i=0;i<detect_num;i++)
-			{
-				DrawjsRect(frame, detect_bak[i].targetRect,0);	
-			}			
-			Osdflag[osdindex]=0;
-		}
-		if(m_bMoveDetect)
-		{
-			detect_num = detect_vect.size();
-			for(i =0;i<detect_num;i++)
-			{
-				DrawjsRect(frame, detect_vect[i].targetRect,2);
-			}		
-			detect_bak = detect_vect;
-			Osdflag[osdindex]=1;
-		}		
-	}
-#endif	
 	
 	//process_osd_test(NULL);
 	
@@ -1610,6 +1612,18 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		
 	if (key == 'L')
 		MSGDRIV_send(CMD_EXIT_SELF_CHECK,NULL);
+
+
+	if (key == 'm' || key == 'M')
+	{
+		MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
+	}
+
+	if (key == 'n' || key == 'N')
+	{
+		MSGDRIV_send(CMD_CALCNUM_HIDE, NULL);
+	}
+	
 
 	if (key == 'o' || key == 'O')
 	{
@@ -4661,14 +4675,14 @@ void CProcess021::processCMD_GRENADE_LOAD_IN_POSITION(LPARAM lParam)
 
 void CProcess021::processCMD_CALCNUM_SHOW(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_CALCNUM_SHOW",__func__,__LINE__);
+	OSDCTRL_CalcNumShow();
 	return ;
  }
 
 
 void CProcess021::processCMD_CALCNUM_HIDE(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_CALCNUM_HIDE",__func__,__LINE__);
+	OSDCTRL_CalcNumHide();	
 	return ;
  }
 
