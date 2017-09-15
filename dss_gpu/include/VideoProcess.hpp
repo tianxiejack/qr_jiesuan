@@ -147,7 +147,7 @@ private:
 		printf("****************************************************\n");
 		return NULL;
 	}
-	static void extractYUYV2Gray2(Mat src, Mat dst);
+	static void extractUYVY2Gray(Mat src, Mat dst);
 	static int64 tstart;
 
 protected: //track

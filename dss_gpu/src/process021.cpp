@@ -1437,6 +1437,7 @@ osdindex++;
 		}
 	}
 */
+#if 0
 	osdindex++;
 	{
 		if(Osdflag[osdindex]==1)
@@ -1451,7 +1452,7 @@ osdindex++;
 			Osdflag[osdindex]=1;
 		}		
 	}
-	
+#endif	
 	
 	//process_osd_test(NULL);
 	
@@ -1526,8 +1527,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 			pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Disable;
 		else
 			pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Enable;
-		//msgdriv_event(MSGID_EXT_INPUT_ENENHAN, NULL);
-		MSGDRIV_send(MSGID_EXT_INPUT_ENENHAN,NULL);
+		msgdriv_event(MSGID_EXT_INPUT_ENENHAN, NULL);
+		//MSGDRIV_send(MSGID_EXT_INPUT_ENENHAN,NULL);
 	}
 
 

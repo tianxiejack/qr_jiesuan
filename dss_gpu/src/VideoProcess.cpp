@@ -53,7 +53,7 @@ void CVideoProcess::main_proc_func()
 {
 	OSA_printf("%s: Main Proc Tsk Is Entering...\n",__func__);
 
-	std::vector<TRK_RECT_INFO> detect_vect(1);
+//	std::vector<TRK_RECT_INFO> detect_vect;
 
 	while(mainProcThrObj.exitProcThread ==  false)
 	{
@@ -97,7 +97,7 @@ void CVideoProcess::main_proc_func()
 		//	tstart = getTickCount();
 			//frame_gray = Mat(frame.rows, frame.cols, CV_8UC1, m_grayMem[0]);
 			//cutColor(frame, frame_gray, CV_YUV2GRAY_YUYV);
-			extractYUYV2Gray2(frame, frame_gray);
+			extractUYVY2Gray(frame, frame_gray);
 			//extractYUYV2Gray(frame, frame_gray);
 
 		//	OSA_printf("chId = %d, YUV2GRAY: time = %f sec \n", chId, ( (getTickCount() - tstart)/getTickFrequency()) );
@@ -168,8 +168,9 @@ void CVideoProcess::main_proc_func()
 		else if(bMoveDetect)
 		{
 			if(m_pMovDetector != NULL)
-					m_pMovDetector->setFrame(frame_gray, chId);				
-			m_pMovDetector->getMoveTarget(detect_vect,0);
+				m_pMovDetector->setFrame(frame_gray, chId);	
+			OSA_assert(chId == 0);
+/*			m_pMovDetector->getMoveTarget(detect_vect,0);
 
 			detect_rec.x 		= detect_vect[0].targetRect.x;
 			detect_rec.y 		= detect_vect[0].targetRect.y;
@@ -179,7 +180,7 @@ void CVideoProcess::main_proc_func()
 			printf(" x  =%d \n", detect_vect[0].targetRect.x);
 			printf(" y  =%d \n", detect_vect[0].targetRect.y);
 			printf(" width  =%d \n", detect_vect[0].targetRect.width);
-			printf(" height  =%d \n", detect_vect[0].targetRect.height);
+			printf(" height  =%d \n", detect_vect[0].targetRect.height);*/
 		}
 
 		if(chId != m_curChId)
@@ -353,7 +354,7 @@ int CVideoProcess::init()
 	//dsInit.idlefunc = call_run;
 	dsInit.visibilityfunc = visibility_event;
 	dsInit.timerfunc_value = 0;
-	dsInit.timerInterval = 10;//ms
+	dsInit.timerInterval = 20;//ms
 	dsInit.closefunc = close_event;
 	dsInit.bFullScreen = false;//true;
 	dsInit.winPosX = 200;
@@ -536,7 +537,7 @@ static void extractYUYV2Gray(Mat src, Mat dst)
 	}
 }
 
-void CVideoProcess::extractYUYV2Gray2(Mat src, Mat dst)
+void CVideoProcess::extractUYVY2Gray(Mat src, Mat dst)
 {
 	int ImgHeight, ImgWidth,ImgStride;
 
@@ -552,7 +553,7 @@ void CVideoProcess::extractYUYV2Gray2(Mat src, Mat dst)
 //#pragma omp parallel for
 	for(int y = 0; y < ImgHeight*ImgWidth; y++)
 	{
-		pDst8_t[y] = pSrc8_t[y*2];
+		pDst8_t[y] = pSrc8_t[y*2+1];
 	}
 }
 
@@ -825,7 +826,7 @@ void	CVideoProcess::initMvDetect()
 	OSA_printf("%s:mvDetect start ", __func__);
 	OSA_assert(m_pMovDetector != NULL);
 
-	m_pMovDetector->init(NULL/*NotifyFunc*/, (void*)this);
+	m_pMovDetector->init(NotifyFunc, (void*)this);
 	
 	std::vector<cv::Point> polyWarnRoi ;
 	polyWarnRoi.resize(4);
@@ -835,11 +836,11 @@ void	CVideoProcess::initMvDetect()
 	polyWarnRoi[3]	= cv::Point(200,476);
 	for(i=0; i<DETECTOR_NUM; i++){
 		m_pMovDetector->setWarningRoi(polyWarnRoi,	i);
-		m_pMovDetector->setDrawOSD(m_dc, i);
-		m_pMovDetector->enableSelfDraw(false, i);
+		m_pMovDetector->setDrawOSD(m_dccv, i);
+		m_pMovDetector->enableSelfDraw(true, i);
 		m_pMovDetector->setWarnMode(WARN_MOVEDETECT_MODE, i);
 	} 
-}
+}  
 
 void	CVideoProcess::DeInitMvDetect()
 {
@@ -851,6 +852,6 @@ void CVideoProcess::NotifyFunc(void *context, int chId)
 {
 	CVideoProcess *pParent = (CVideoProcess*)context;
 	pParent->m_display.m_bOsd = true;
-	//pParent->m_display.UpDateOsd(0);
+	pParent->m_display.UpDateOsd(1);
 }
 

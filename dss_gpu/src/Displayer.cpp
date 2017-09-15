@@ -929,7 +929,7 @@ void CDisplayer::gl_textureLoad(void)
 		for(int i=0; i<DS_DC_CNT;  i++)
 		{
 			if(updata_osd[i])
-				{
+			{
 				glBindTexture(GL_TEXTURE_2D, textureId_osd[i]);
 				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_imgOsd[i].cols, m_imgOsd[i].rows, GL_BGRA_EXT, GL_UNSIGNED_BYTE, m_imgOsd[i].data);
 				updata_osd[i] = false;
