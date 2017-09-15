@@ -19,6 +19,7 @@
 #include"osd_graph.h"
 #include "mvdectInterface.hpp"
 //#include "BigVideo.hpp"
+#include <vector>
 
 typedef struct _main_thr_obj_cxt{
 	bool bTrack;
@@ -81,6 +82,8 @@ public:
 	virtual void OnMouseRightDwn(int x, int y){};
 	virtual void OnMouseRightUp(int x, int y){};
 	virtual void OnKeyDwn(unsigned char key){};
+
+
 
 	int m_ImageAxisx;
 	int m_ImageAxisy;
@@ -162,8 +165,10 @@ protected:
 	void	initMvDetect();
 	void	DeInitMvDetect();
 	static void NotifyFunc(void *context, int chId);
-	UTC_Rect detect_rec;
+	std::vector<TRK_RECT_INFO> detect_vect;
+	std::vector<TRK_RECT_INFO> detect_bak;
 };
+
 
 
 

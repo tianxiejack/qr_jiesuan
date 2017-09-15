@@ -54,7 +54,7 @@ void DrawjsRightFrame(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsLeftFrame(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsBottomFrame(Mat frame,CFOV * fovOsdCtrl);
 
-void DrawjsRect(Mat frame,UTC_Rect rec,int frcolor);
+void DrawjsRect(Mat frame,cv::Rect rec,int frcolor);//UTC_Rect rec
 void drawcvrect(Mat frame,int x,int y,int width,int height,int frcolor);
 
 #endif /* OSD_CV_H_ */

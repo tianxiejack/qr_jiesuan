@@ -53,7 +53,6 @@ void CVideoProcess::main_proc_func()
 {
 	OSA_printf("%s: Main Proc Tsk Is Entering...\n",__func__);
 
-//	std::vector<TRK_RECT_INFO> detect_vect;
 
 	while(mainProcThrObj.exitProcThread ==  false)
 	{
@@ -171,7 +170,6 @@ void CVideoProcess::main_proc_func()
 				m_pMovDetector->setFrame(frame_gray, chId);	
 			OSA_assert(chId == 0);
 /*			m_pMovDetector->getMoveTarget(detect_vect,0);
-
 			detect_rec.x 		= detect_vect[0].targetRect.x;
 			detect_rec.y 		= detect_vect[0].targetRect.y;
 			detect_rec.width	= detect_vect[0].targetRect.width;
@@ -850,8 +848,25 @@ void	CVideoProcess::DeInitMvDetect()
 
 void CVideoProcess::NotifyFunc(void *context, int chId)
 {
+	//int num;
 	CVideoProcess *pParent = (CVideoProcess*)context;
 	pParent->m_display.m_bOsd = true;
+
+	pThis->m_pMovDetector->getMoveTarget(pThis->detect_vect,0);
+/*
+	num = detect_vect.size();
+	for(int i = 0;i<num;i++)
+	{
+		detect_rec.x 		= detect_vect[i].targetRect.x;
+		detect_rec.y 		= detect_vect[i].targetRect.y;
+		detect_rec.width	= detect_vect[i].targetRect.width;
+		detect_rec.height	= detect_vect[i].targetRect.height;	
+		
+		DrawjsRect(frame, detect_recBak,0);	
+		DrawjsRect(frame, detect_rec,2);
+		memcpy(&detect_recBak,&detect_rec,sizeof(UTC_Rect));
+	}
+*/		
 	pParent->m_display.UpDateOsd(1);
 }
 

@@ -944,7 +944,7 @@ void DrawjsBottomFrame(Mat frame,CFOV * fovOsdCtrl)
 	
 }
 
-void DrawjsRect(Mat frame,UTC_Rect rec,int frcolor)
+void DrawjsRect(Mat frame,cv::Rect rec,int frcolor)  //UTC_Rect rec
 {
 	int x = rec.x,y = rec.y;
 	int width = rec.width;

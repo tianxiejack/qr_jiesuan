@@ -23,7 +23,6 @@ class CProcess021 : public CVideoProcess
 	UTC_RECT_float rcTrackBak;
 	TARGET tgBak[MAX_TARGET_NUMBER];
 	BlobRect blob_rectBak;
-	UTC_Rect detect_recBak;
 	Osd_cvPoint crossBak;
 	Osd_cvPoint freezecrossBak;
 	Osd_cvPoint crosspicpBak;

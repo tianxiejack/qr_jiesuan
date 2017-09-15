@@ -1106,6 +1106,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 	int endy=0;
 	int crossshiftx=cvRound(vdisWH[0][0]/3);
 	int crossshifty=cvRound(vdisWH[0][1]/3);
+	int detect_num = 0,i=0;
 	
 	CvScalar colour=GetcvColour(2);
 //putText(frame,"heolo",Point(200,200),CV_FONT_HERSHEY_COMPLEX,1.0,Scalar(0,0,255),3,8);
@@ -1437,18 +1438,27 @@ osdindex++;
 		}
 	}
 */
-#if 0
+#if 1
 	osdindex++;
 	{
+		
 		if(Osdflag[osdindex]==1)
 		{
-				DrawjsRect(frame, detect_recBak,0);	
-				Osdflag[osdindex]=0;
+			detect_num = detect_bak.size();
+			for(i=0;i<detect_num;i++)
+			{
+				DrawjsRect(frame, detect_bak[i].targetRect,0);	
+			}			
+			Osdflag[osdindex]=0;
 		}
 		if(m_bMoveDetect)
 		{
-			DrawjsRect(frame, detect_rec,2);
-			memcpy(&detect_recBak,&detect_rec,sizeof(UTC_Rect));
+			detect_num = detect_vect.size();
+			for(i =0;i<detect_num;i++)
+			{
+				DrawjsRect(frame, detect_vect[i].targetRect,2);
+			}		
+			detect_bak = detect_vect;
 			Osdflag[osdindex]=1;
 		}		
 	}
