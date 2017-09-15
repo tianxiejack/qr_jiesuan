@@ -1285,7 +1285,9 @@ osdindex++;
 			Osdflag[osdindex]=1;
 		}
 	}
-osdindex++;
+
+	
+	osdindex++;
 
 //return true;
 	{
@@ -1297,7 +1299,8 @@ osdindex++;
 		DrawdashCross(0,0,frcolor,true);
 		
 	}
-
+	
+	/*
 	osdindex++;	
 
 	//printf("!!!!!!osdflag[%d] = %d\n",osdindex,Osdflag[osdindex]);	//osdindex =5 ;osdflag[5] =0,1,1,1,1...... ;
@@ -1325,7 +1328,7 @@ osdindex++;
 		//OSA_printf("unitAxisX=%d  unitAxisY=%d\n",extInCtrl.unitAxisX,extInCtrl.unitAxisY);
 		//memcpy(&crossBak, &m_blobRect, sizeof(BlobRect));
 	}
-
+	*/
 	osdindex++;
 	
 	{
