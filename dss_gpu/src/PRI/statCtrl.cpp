@@ -562,9 +562,30 @@ void loadFiringTable_Enter()
 	
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
 
+	printf("\n--------------------------INPUT-----------------------------------\n");
+	printf("PlatformXTheta = %f\n",input.PlatformXTheta);
+	printf("PlatformYTheta = %f\n",input.PlatformYTheta);
+	printf("MachineGunYTheta = %f\n",input.MachineGunYTheta);
+	printf("GrenadeYTheta = %f\n",input.GrenadeYTheta);
+	printf("TargetDistance = %f\n",input.TargetDistance);
+	printf("Temperature = %f\n",input.Temperature);
+	printf("AirPressure = %f\n",input.AirPressure);
+	printf("TargetAngularVelocityX = %f\n",input.TargetAngularVelocityX);
+	printf("TurretDirectionTheta = %f\n",input.TurretDirectionTheta);
+	printf("TargetAngularVelocityY = %f\n",input.TargetAngularVelocityY);
+	printf("DipAngle = %f\n",input.DipAngle);
+	printf("\n------------------------------------------------------------------\n");
+
 	ret = FiringCtrl(&input, &output);
 	//output_prm_print(input, output);
+	printf("\n--------------------------OUTPUT-----------------------------------\n");
+	printf("AimOffsetThetaX = %f\n",output.AimOffsetThetaX);
+	printf("AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
+	printf("AimOffsetX = %f\n",output.AimOffsetX);
+	printf("AimOffsetY = %f\n",output.AimOffsetY);
 
+	printf("\n------------------------------------------------------------------\n");
+	
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
 		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());

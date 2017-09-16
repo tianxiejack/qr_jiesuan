@@ -25,6 +25,7 @@
 #include "Tasklist.h"
 #include "statCtrl.h"
 #include "osdPort.h"
+#include "firingCtrl.h"
 
 #define ARGSCALE	 0.0054931640625
 #define ARGSPEEDSCAL 0.00274658203125
@@ -2085,20 +2086,16 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"Px:%+06.2f,Py:%+06.2f,Spx:%+06.2f,Spy:%+06.2f",1.1,2.2,3.3,4.4); 
 			break;
 		case eCalcNum_Visual:
-			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",172,173,getSumCalibX(),172,173,getSumCalibY()); //��Ԫ:���� ��
-			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",172,173,1.1,172,173,2.2);
+			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",172,173,getSumCalibX(),172,173,getSumCalibY()); //��Ԫ:���� ��
 			break;
 		case eCalcNum_Traject:
-			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",205,168,getTrajectCalcX(),205,168,getTrajectCalcY()); //������� 
-			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",205,168,1.1,205,168,2.2);
+			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",205,168,getTrajectCalcX(),205,168,getTrajectCalcY()); //������� 
 			break;
 		case eCalcNum_Trunion:
-			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",169,170,getTrunionCalibX(),169,170,getTrunionCalibY()); //���������� 
-			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",169,170,1.1,169,170,2.2);
+			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",169,170,getTrunionCalibX(),169,170,getTrunionCalibY()); //���������� 
 			break;
 		case eCalcNum_General:
-			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",253,243,getCorrectionCalibX(),253,243,getCorrectionCalibY()); 		//���޲���
-			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",253,243,1.1,253,243,2.2); 
+			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2f  mil",253,243,getCorrectionCalibX(),253,243,getCorrectionCalibY()); 		//���޲���
 			break;
 		case eCalcNum_Weather:
 			sprintf(pStr,"%c%c  = %+03d   %c %c%c  = %+08.3f  Kpa",219,238,gWeatherTable.Temparature,174,219,247,gWeatherTable.Pressure/1000.0); //���� = +15 ����ѹ = +101.325 Kpa:

@@ -1601,7 +1601,6 @@ void button_to_read()
 	gMachineGun_ZCTable.Angle 		= 	gDXD_info.sysConfig[CFGID_Gun_ZC_Angle]*0.01;
 	gMachineGun_ZCTable.data.deltaX	= 	gDXD_info.sysConfig[CFGID_Gun_ZC_deltaX]*0.01;
 	gMachineGun_ZCTable.data.deltaY 	= 	gDXD_info.sysConfig[CFGID_Gun_ZC_deltaY]*0.01;
-printf("###gMachineGun_ZCTable.data.deltaX = %d\n",gMachineGun_ZCTable.data.deltaX);
 
 	gGrenadeKill_ZCTable.distance 	=	gDXD_info.sysConfig[CFGID_Kill_ZC_distance]*0.01;
 	gGrenadeKill_ZCTable.Angle	 	=	gDXD_info.sysConfig[CFGID_Kill_ZC_Angle]*0.01;
@@ -1610,7 +1609,6 @@ printf("###gMachineGun_ZCTable.data.deltaX = %d\n",gMachineGun_ZCTable.data.delt
 
 	gWeatherTable.Temparature		=	gDXD_info.sysConfig[CFGID_Weather_Temparature];
 	gWeatherTable.Pressure			=	gDXD_info.sysConfig[CFGID_Weather_Pressure];
-printf("###gWeatherTable.Temparature = %d\n",gWeatherTable.Temparature);
 
 	gMachineGun_GCParam.distance	=	gDXD_info.sysConfig[CFGID_Gun_GC_distance]*0.01;
 	gMachineGun_GCParam.data.deltaX	=	gDXD_info.sysConfig[CFGID_Gun_GC_deltaX]*0.01;

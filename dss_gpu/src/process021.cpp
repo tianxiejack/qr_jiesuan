@@ -352,30 +352,20 @@ void CProcess021::process_osd(void *pPrm)
 
 	if(flag)
 	{
-		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);
-	}
-	FOVCTRL_draw(frame,pFovCtrlObj);
-	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
-
-
-	if(flag)
-	{
 		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
+		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);
 	}
 	//OSDCTRL_ItemShow(eErrorZone);
 	//OSDCTRL_AllHide();
+
+	FOVCTRL_draw(frame,pFovCtrlObj);
+	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
 	
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
-	//beside the text
-	//jiao zhun & ji jian --hide
-
-	
 	flag = 1;
-
 	sThis->m_display.UpDateOsd(0);
-	
 	return ;
 }
 
@@ -3160,7 +3150,6 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
 		OSDCTRL_ItemShow(eSelfCheckResult);
 	}
 	//ReadParamsFlash();//read data from flash
-	printf("###read read \n");
 	button_to_read();
 	
 	return ;

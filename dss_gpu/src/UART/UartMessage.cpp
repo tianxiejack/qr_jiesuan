@@ -37,7 +37,7 @@
 #define CODE_GRENADE 		(0x42)
 #define CODE_TURRET   		(0x2C)
 
-#define CAN_DEBUG 1
+#define CAN_DEBUG 0
 
 int globalflag = 1;
   OSA_SemHndl semSend;
