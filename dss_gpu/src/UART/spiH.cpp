@@ -38,7 +38,7 @@ static uint16_t delay = 0;
 bool uart_open_close_flag = 0;
 //bool laser_fail_flag = 0;
 
-#define   SPI_DEBUG   0
+#define   SPI_DEBUG   1
 
 /****************************************************************************/
 //decode 倾斜角头的解析
