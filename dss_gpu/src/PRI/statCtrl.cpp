@@ -581,8 +581,8 @@ void loadFiringTable_Enter()
 	printf("\n--------------------------OUTPUT-----------------------------------\n");
 	printf("AimOffsetThetaX = %f\n",output.AimOffsetThetaX);
 	printf("AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
-	printf("AimOffsetX = %f\n",output.AimOffsetX);
-	printf("AimOffsetY = %f\n",output.AimOffsetY);
+	printf("AimOffsetX = %d\n",output.AimOffsetX);
+	printf("AimOffsetY = %d\n",output.AimOffsetY);
 
 	printf("\n------------------------------------------------------------------\n");
 	

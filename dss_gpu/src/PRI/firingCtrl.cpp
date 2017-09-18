@@ -417,28 +417,21 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 	ParamInMid.correctionCalib.x= output->correctionData.deltaX;
 	ParamInMid.correctionCalib.y= output->correctionData.deltaY;
 	
-// 计算视差修正
 	visualCorrection(input, &visualCalib);
 	ParamInMid.visualCalib.x 	= visualCalib.DeltaThetaX;
 	ParamInMid.visualCalib.y  	= visualCalib.DeltaThetaY;
 
-//计算火炮耳轴倾斜修正
 	trunnionCorrection(input, output, &trunnionCalib);
 
-//保存中间计算诸元，用于串口发送
 	ParamInMid.trajectoryCalc.x	= output->AimOffsetThetaX;
 	ParamInMid.trajectoryCalc.y	= output->AimOffsetThetaY;
 	ParamInMid.trunnionCalib.x 	= trunnionCalib.DeltaThetaX;
 	ParamInMid.trunnionCalib.y 	= trunnionCalib.DeltaThetaY;
-	
-//计算总的射击诸元
+
 	output->AimOffsetThetaX = visualCalib.DeltaThetaX + output->AimOffsetThetaX + trunnionCalib.DeltaThetaX;
 	output->AimOffsetThetaY = visualCalib.DeltaThetaY + output->AimOffsetThetaY + trunnionCalib.DeltaThetaY;
 
 	
-	//榴弹修正高低角：Q实 = Q + r
-	// Q : 计算得到瞄准角度
-	// r: 修正量
 	if(PROJECTILE_GRENADE_KILL == input->ProjectileType || PROJECTILE_GRENADE_GAS == input->ProjectileType)
 	{
 		output->AimOffsetThetaY = output->AimOffsetThetaY + getGrenadeDipAngleCorrection(thetaDip);

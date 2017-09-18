@@ -179,9 +179,6 @@ void setGeneralCorrection(double distance, PROJECTILE_TYPE type, GeneralCorrecti
 			break;		
 		}
 	}
-	//if i==TableSize todo 
-	
-//to do: save data to permanant storage
 
 }
 
