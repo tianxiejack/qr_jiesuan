@@ -2437,7 +2437,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,					processCMD_MODE_ATTACK_MULTI,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_SMALL,					processCMD_MODE_FOV_SMALL,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u5c0f\u951f\u63a5\u7b79\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_LARGE,					processCMD_MODE_FOV_LARGE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u63a5\u7b79\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,				processCMD_MODE_SCALE_SWITCH,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u811a\u8fbe\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,					processCMD_MODE_SCALE_SWITCH,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u811a\u8fbe\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_PIC_COLOR_SWITCH,			processCMD_MODE_PIC_COLOR_SWITCH,		0); // \u951f\u53eb\u4f19\u62f7\u56fe\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ENHANCE_SWITCH,				processCMD_MODE_ENHANCE_SWITCH,		0); // \u951f\u65a4\u62f7\u9891\u951f\u65a4\u62f7\u5f3a\u951f\u53eb\u4f19\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_SHORT,					processCMD_MODE_SHOT_SHORT,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u6559\u7889\u62f7\u951f\u6212\u3001\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
@@ -4576,7 +4576,17 @@ void CProcess021::processCMD_MODE_SCALE_SWITCH(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_PIC_COLOR_SWITCH(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_PIC_COLOR_SWITCH",__func__,__LINE__);
+	if(isBlackColor())
+	{
+		BackColor = WHITECOLOR;
+		pFovCtrlObj->frcolor = 2;
+	}
+	else
+	{
+		BackColor = BLACKCOLOR;
+ 		pFovCtrlObj->frcolor = 1;//  one  three four five six
+	}
+	//OSA_printf("%s,line:%d ... processCMD_MODE_PIC_COLOR_SWITCH",__func__,__LINE__);
 	return ;
  }
 

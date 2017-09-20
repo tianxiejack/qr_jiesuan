@@ -917,7 +917,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		if(BIT7(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
 			MSGDRIV_send(CMD_MODE_SCALE_SWITCH,0);
 	}
-	if(BIT6(BYTE3(FrameBuf1)) != BIT6(BYTE5(buf)))  //ͼɫ
+	if(BIT6(BYTE3(FrameBuf1)) != BIT6(BYTE5(buf)))  //ͼɫF2
 	{    
 		if(BIT6(BYTE5(buf)) == 0x01)	
 			MSGDRIV_send(CMD_MODE_PIC_COLOR_SWITCH,0);
