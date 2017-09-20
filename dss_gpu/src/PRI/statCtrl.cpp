@@ -1253,5 +1253,23 @@ void processCMD_SCHEDULE_GUN(long lParam)
 
 
 
+void startRGQtimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eRGQ_Timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eRGQ_Timer,RGQ_TIMER);	
+	}
+}
+
+
+void killRGQtimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eRGQ_Timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eRGQ_Timer);
+	}
+}
 
 

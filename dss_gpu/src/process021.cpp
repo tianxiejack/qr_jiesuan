@@ -4162,7 +4162,7 @@ void CProcess021::processCMD_BUTTON_BATTLE_ALERT(LPARAM lParam)
 
 void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 {
-	pTimerObj->KillTimer(eRGQ_Timer);
+	killRGQtimer();
 	if(isBattleMode()&& isStatBattleAuto()&&isBattleReady())
 	{
 		OSDCTRL_ItemHide(eCorrectionTip);
@@ -4170,7 +4170,7 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 		{
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
 			OSDCTRL_ItemShow(eCorrectionTip);
-			pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
+			startRGQtimer();
 		}
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&&isAutoReady())
@@ -4181,7 +4181,7 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 		{
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
 			OSDCTRL_ItemShow(eCorrectionTip);
-			pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
+			startRGQtimer();
 		}
 
 	}
@@ -4189,7 +4189,7 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 	{
 		Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_NGQ];
 		OSDCTRL_ItemShow(eCorrectionTip);
-		pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
+		startRGQtimer();
 	}
 
 	return ;
@@ -4593,7 +4593,36 @@ void CProcess021::processCMD_MODE_PIC_COLOR_SWITCH(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_ENHANCE_SWITCH(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_MODE_ENHANCE_SWITCH",__func__,__LINE__);
+	static BOOL ENHANCE=FALSE;
+	ENHANCE = !ENHANCE;
+	
+	CMD_EXT *pIStuts = &extInCtrl;
+	if(pIStuts->ImgEnhStat[pIStuts->SensorStat])
+		pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Disable;
+	else
+		pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Enable;
+	msgdriv_event(MSGID_EXT_INPUT_ENENHAN, NULL);
+		
+	if(ENHANCE)
+	{
+//		Posd[eEnhance] = EnhanceOsd[1];
+		//setPicEnhance(TRUE);
+		Posd[eSuperOrder] = SuperOsd[3];
+		OSDCTRL_ItemShow(eSuperOrder);
+		killRGQtimer();
+		startRGQtimer();
+	}
+	else
+	{
+//		Posd[eEnhance] = EnhanceOsd[0];
+		//setPicEnhance(FALSE);
+		Posd[eSuperOrder] = SuperOsd[4];
+		OSDCTRL_ItemShow(eSuperOrder);
+		killRGQtimer();
+		startRGQtimer();
+	}
+
+	//OSA_printf("%s,line:%d ... processCMD_MODE_ENHANCE_SWITCH",__func__,__LINE__);
 	return ;
  }
 
