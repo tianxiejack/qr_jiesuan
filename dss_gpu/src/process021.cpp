@@ -4700,7 +4700,14 @@ void CProcess021::processCMD_GRENADE_LOAD_IN_POSITION(LPARAM lParam)
 
 void CProcess021::processCMD_CALCNUM_SHOW(LPARAM lParam)
  {
-	OSDCTRL_CalcNumShow();
+ 	static BOOL ENHANCE=FALSE;
+	ENHANCE = !ENHANCE;
+
+	if(ENHANCE)
+		OSDCTRL_CalcNumShow();
+	else
+		OSDCTRL_CalcNumHide();
+	
 	return ;
  }
 

@@ -949,7 +949,8 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			//if(isTimerAlive(eF5_Timer)/*״ֵ̬*/)
 			{
 				//killF5Timer();
-				MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
+				//MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
+				MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
 			}
 		}
 		else if(BIT3(BYTE5(buf)) == 0x00)
