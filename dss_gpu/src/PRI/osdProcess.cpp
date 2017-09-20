@@ -157,8 +157,8 @@ SEM_ID osdSem;
   //FIRST  
 OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 {
-	{eModeId,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,			40,	0,	{0}},
-	{eWorkMode,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,			30,	0,	{0}},
+	{eModeId,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		40,	0,	{0}},
+	{eWorkMode,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		30,	0,	{0}},
 	{eAimType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	140+LOFFSET,		30,	0,	{0}},
 	{eGunType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		30,	0,	{0}},
 	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		30,	0,	{0}},
@@ -169,12 +169,12 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eMeasureDis,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,		30,	0,	{0}},
 
 	{eMeasureDis_Value1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	30,	0,	{0}},
-	{eMeasureDis_Value2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	458+LOFFSET,	30,	0,	{0}},
-	{eMeasureDis_Value3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	481+LOFFSET,	30,	0,	{0}},
-	{eMeasureDis_Value4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	504+LOFFSET,	30,	0,	{0}},
+	{eMeasureDis_Value2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	446+LOFFSET,	30,	0,	{0}},//+23
+	{eMeasureDis_Value3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	457+LOFFSET,	30,	0,	{0}},
+	{eMeasureDis_Value4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	468+LOFFSET,	30,	0,	{0}},
 
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		30,	0,	{0}},
-	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
+	{eSuperOrder,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		436,	0,	{0}},
 	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET,		468,	0,	{0}},
 	{eWeather2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET,		500,	0,	{0}},
@@ -743,20 +743,19 @@ BOOL isMultiChanged()
 static void OSDCTRL_OsdInitial()
 {
 	sprintf(WorkOsd[0],"%c%c",249,185);//zi dong
-	sprintf(WorkOsd[1],"%c%c",198,199);//
+	sprintf(WorkOsd[1],"%c%c",198,199);//alert
 	sprintf(WorkOsd[2],"%c%c",197,250);//У׼
-	sprintf(WorkOsd[3],"%c%c",197,209);//У��
-	sprintf(WorkOsd[4],"%c%c",253,243);//����
-	sprintf(WorkOsd[5],"%c%c",219,242);//����
-	sprintf(WorkOsd[6],"%c%c",161,162);//����
-	sprintf(WorkOsd[7],"%c%c",253,180);//�۲�
-	sprintf(WorkOsd[8],"%c%c",186,153);//��ƽ
-	sprintf(WorkOsd[9],"%c%c",201,144);//����
+	sprintf(WorkOsd[3],"%c%c",197,250);//jiao ling
+	sprintf(WorkOsd[4],"%c%c",197,250);//zong xiu
+	sprintf(WorkOsd[5],"%c%c",197,250);//qi xiang
+	sprintf(WorkOsd[6],"%c%c",249,185);//gen zong
+	sprintf(WorkOsd[7],"%c%c",253,180);//zong can
+	sprintf(WorkOsd[8],"%c%c",186,153);//di ping
+	sprintf(WorkOsd[9],"%c%c",201,144);//ji guang
 
-	sprintf(AimOsd[0],"%c",186);//��
-	sprintf(AimOsd[1],"%c",206);//��
+	sprintf(AimOsd[0],"%c",186);//land
+	sprintf(AimOsd[1],"%c",206);//sky
 
-	//sprintf(MeasureTypeOsd[0],"");//��
 	sprintf(MeasureTypeOsd[0],"%c",201);//laser
 	sprintf(MeasureTypeOsd[1],"%c",222);//manual
 	sprintf(MeasureTypeOsd[2],"LSBG");//LSBG
@@ -1694,7 +1693,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eMeasureType:
 			if(isMeasureManual())
 			{
-				sprintf(pStr,"%s",Posd[eMeasureType]); //manual
+				sprintf(pStr,"%s:          ",Posd[eMeasureType]); //manual
 			}
 			else
 			{	
