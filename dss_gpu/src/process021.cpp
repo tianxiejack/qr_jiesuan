@@ -2433,8 +2433,8 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u7686\ue036\u5e2e\u62f7\u951f\u7ede\u044d\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				      		processCMD_MODE_AIM_LAND,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u7686\u7889\u62f7\u76ee\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_SKY,						processCMD_MODE_AIM_SKY,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u7686\u5321\u62f7\u76ee\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,				processCMD_MODE_ATTACK_SIGLE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,				processCMD_MODE_ATTACK_MULTI,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,					processCMD_MODE_ATTACK_SIGLE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,					processCMD_MODE_ATTACK_MULTI,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_SMALL,					processCMD_MODE_FOV_SMALL,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u5c0f\u951f\u63a5\u7b79\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_LARGE,					processCMD_MODE_FOV_LARGE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u63a5\u7b79\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,				processCMD_MODE_SCALE_SWITCH,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u811a\u8fbe\u62f7

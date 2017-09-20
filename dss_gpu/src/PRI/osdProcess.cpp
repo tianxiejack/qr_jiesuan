@@ -77,7 +77,7 @@ volatile unsigned char g_FilrBack=0;
 char WorkOsd[10][8];	//����ģʽ
 char AimOsd[2][8];
 char GunOsd[6][8];	//ǹ������
-char ShotOsd[2][8];//���ģʽ:��
+char ShotOsd[4][8];//���ģʽ:��
 char ShotGunOsd[2][8];//���ģʽ:��ǹ
 char LaserOsd[2][8];
 
@@ -774,9 +774,9 @@ static void OSDCTRL_OsdInitial()
 
 
 	sprintf(ShotOsd[0],"%c",188);//duan 	liu dan
-	sprintf(ShotOsd[1],"%c",210);//lian
+	sprintf(ShotOsd[1],"%c",210);//lian	liu dan
 
-	sprintf(ShotGunOsd[0],"%c",171);//DAN 	JI QIANG
+	sprintf(ShotGunOsd[0],"");//DAN 	JI QIANG
 	sprintf(ShotGunOsd[1],"%c",210);//LIAN
 	
 	sprintf(FovTypeOsd[0],"%c",187);//big
@@ -845,7 +845,7 @@ static void OSDCTRL_OsdInitial()
 	Posd[eEnhance] = EnhanceOsd[0];
 	Posd[eMeasureType] = MeasureTypeOsd[0];
 	Posd[eErrorZone] = ErrorOsd[15];
-	Posd[eGunTip] = GunOsd[3];
+	Posd[eGunTip] = ShotGunOsd[0];
 	Posd[eLaserSelect] = LaserOsd[0];
 	Posd[eCalibMenu_Child] = GenPramMenu[0];
 	
@@ -1752,9 +1752,9 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		case eShotType:
 			if(isMachineGun())
-				Posd[eShotType] = ShotGunOsd[getShotType()];		//ShotOsd[getGunShotType()];
+				Posd[eShotType] = ShotGunOsd[getGunShotType()];		//ShotOsd[getGunShotType()];
 			else
-				Posd[eShotType] = ShotOsd[getGunShotType()];//ShotGunOsd[getShotType()];		
+				Posd[eShotType] = ShotOsd[getShotType()];//ShotGunOsd[getShotType()];		
 			sprintf(pStr,"%s",Posd[eShotType]);
 			break;
 		case eFovType:

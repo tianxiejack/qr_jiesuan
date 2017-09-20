@@ -25,7 +25,7 @@ PROJECTILE_TYPE gProjectileType=PROJECTILE_BULLET;
 PROJECTILE_TYPE gProjectileTypeBefore=PROJECTILE_BULLET;
 int BackColor=WHITECOLOR;
 DIS_MEASURE_TYPE gMeasureType=MEASURETYPE_LASER;
-SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_SHORT;
+SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_DAN;
 bool isWeaponCtrlOK=FALSE,isPositionSensorOK=FALSE, isPositionServoOK=FALSE;
 bool isJoyStickOK=FALSE,isDipAngleSensorOK=FALSE,isMachineGunSensorOK=FALSE;
 bool isGrenadeSensorOK=FALSE,isGrenadeServoOK=FALSE,isMachineGunServoOK=FALSE;
