@@ -25,17 +25,17 @@ PROJECTILE_TYPE gProjectileType=PROJECTILE_BULLET;
 PROJECTILE_TYPE gProjectileTypeBefore=PROJECTILE_BULLET;
 int BackColor=WHITECOLOR;
 DIS_MEASURE_TYPE gMeasureType=MEASURETYPE_LASER;
-SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_DAN;
+SHOT_TYPE gShotType=SHOTTYPE_SHORT,gGunShotType=SHOTTYPE_SHORT;
 bool isWeaponCtrlOK=FALSE,isPositionSensorOK=FALSE, isPositionServoOK=FALSE;
 bool isJoyStickOK=FALSE,isDipAngleSensorOK=FALSE,isMachineGunSensorOK=FALSE;
 bool isGrenadeSensorOK=FALSE,isGrenadeServoOK=FALSE,isMachineGunServoOK=FALSE;
 bool isDetendClose=TRUE,isMaintPortOpen=TRUE;
 static bool isVideoOK=FALSE;
 static bool FOVSHINE = FALSE;
-static bool SCHEDULE_GUN=FALSE,SCHEDULE_RESET=FALSE,SCHEDULE_STRONG=FALSE;
+bool SCHEDULE_GUN=FALSE,SCHEDULE_RESET=FALSE,SCHEDULE_STRONG=FALSE;
 Derection_Type SHINE_DERECTION=DERECTION_NULL;//DERECTION_DOWN;
 bool isfixingMeasure = FALSE;
-static int COUNTER=0;
+int COUNTER=0;
 
 extern void setJoyStickStat(BOOL stat);
 extern void setServoControlObj();
@@ -1217,10 +1217,13 @@ void SCHEDULE_cbFxn(void* cbParam)
 			}
 	//		getPelcoServoContrlObj()->moveOffset(x,y);
 			startSCHEDULEtimer();
-		}else if(SCHEDULE_RESET/*not timeout and angle not ok*/){
+		}
+		else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
+		{			
 			x = (getTurretTheta());
 			y = (getMachGunAngle());
-			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER)){
+			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
+			{
 	//			getPelcoServoContrlObj()->stop();
 				killSCHEDULEtimer();
 				releaseServoContrl();

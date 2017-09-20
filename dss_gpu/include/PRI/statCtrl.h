@@ -16,7 +16,7 @@ extern "C" {
 #define YELLO 		0xFFFFFF00
 #define BLACKCOLOR	0xFF000000
 #define WHITECOLOR	0xFFFFFFFF
-#define BGCOLOR 		0x00000000
+#define BGCOLOR 	0x00000000
 
 #define FOVDEGREE_VLARGE 8
 #define FOVDEGREE_HLARGE 6
@@ -307,6 +307,10 @@ void processCMD_MODE_ATTACK_SIGLE(long lParam);
 void processCMD_MODE_ATTACK_MULTI(long lParam);
 void processCMD_SCHEDULE_GUN(long lParam);
 void SCHEDULE_cbFxn(void* cbParam);
+void startSCHEDULEtimer();
+void killSCHEDULEtimer();
+void startRGQtimer();
+void killRGQtimer();
 
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
@@ -321,7 +325,8 @@ extern SHOT_TYPE gGunShotType;
 extern bool bUnlock,AUTOCATCH,isDetendClose;
 extern volatile bool finish_laser_measure;
 extern WeatherItem gWeatherTable;
-
+extern int BackColor,COUNTER;
+extern bool SCHEDULE_GUN,SCHEDULE_RESET,SCHEDULE_STRONG;
 extern CTimerCtrl * pTimerObj;
 
 

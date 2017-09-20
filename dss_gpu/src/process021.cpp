@@ -43,6 +43,7 @@ int n=0,ShinId=eCalibGeneral_XPole;
 
 
 UInt32 interfaceflag;
+static bool tiaolingwei_flag = 0;
 	
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
@@ -360,7 +361,15 @@ void CProcess021::process_osd(void *pPrm)
 
 	FOVCTRL_draw(frame,pFovCtrlObj);
 	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
-	
+
+	if(isMachineGun() && (!getGunShotType()))
+	{
+		OSDCTRL_ItemHide(eShotType);
+	}
+	else
+		OSDCTRL_ItemShow(eShotType);
+
+		
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
@@ -3978,7 +3987,20 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 		}
 	}
 	else if(isBattleMode())
-	{
+	{	
+		if(tiaolingwei_flag)
+		{
+			OSDCTRL_NoShine();
+			Posd[eSuperOrder] = SuperOsd[2];
+			OSDCTRL_ItemShow(eSuperOrder);
+			requstServoContrl();
+			COUNTER = 0;
+			SCHEDULE_RESET = TRUE;
+			startSCHEDULEtimer();
+			
+			tiaolingwei_flag = 0;
+		}
+		
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
 			if(isfixingMeasure)
@@ -4051,11 +4073,12 @@ void CProcess021::processCMD_BULLET_SWITCH0(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
  {
- 	OSDCTRL_ItemShine(eGunTip);
-	
+ 	//OSDCTRL_ItemShine(eGunTip);
+	OSDCTRL_NoShine();
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
-
+	gProjectileType = PROJECTILE_BULLET;
+	Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
 	//gProjectileType = (PROJECTILE_TYPE)(PROJECTILE_BULLET+5);
 	//Posd[eGunTip] = GunOsd[5];
 	EnterCMD_BULLET_SWITCH1();
@@ -4593,15 +4616,16 @@ void CProcess021::processCMD_MODE_PIC_COLOR_SWITCH(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_ENHANCE_SWITCH(LPARAM lParam)
  {
+ 	CMD_EXT *pIStuts = &(sThis->extInCtrl);
 	static BOOL ENHANCE=FALSE;
 	ENHANCE = !ENHANCE;
 	
-	CMD_EXT *pIStuts = &extInCtrl;
+	
 	if(pIStuts->ImgEnhStat[pIStuts->SensorStat])
 		pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Disable;
 	else
 		pIStuts->ImgEnhStat[pIStuts->SensorStat] = eImgAlg_Enable;
-	msgdriv_event(MSGID_EXT_INPUT_ENENHAN, NULL);
+	sThis->msgdriv_event(MSGID_EXT_INPUT_ENENHAN, NULL);
 		
 	if(ENHANCE)
 	{
@@ -4633,6 +4657,7 @@ void CProcess021::processCMD_MODE_SHOT_SHORT(LPARAM lParam)
 	{
 		gGunShotType = SHOTTYPE_SHORT;
 	}	
+	//OSDCTRL_ItemHide(eShotType);
 	return ;
  }
 
@@ -4643,6 +4668,7 @@ void CProcess021::processCMD_MODE_SHOT_LONG(LPARAM lParam)
 	{
 		gGunShotType = SHOTTYPE_LONG;
 	}
+	//OSDCTRL_ItemShow(eShotType);
 	return ;
  }
 
@@ -4650,14 +4676,39 @@ void CProcess021::processCMD_MODE_SHOT_LONG(LPARAM lParam)
 
 void CProcess021::processCMD_SCHEDULE_STRONG(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_SCHEDULE_STRONG",__func__,__LINE__);
+	if(isCalibrationMode())
+		return;
+	//tiao qiang sheng
+	Posd[eSuperOrder] = SuperOsd[1];
+	OSDCTRL_ItemShow(eSuperOrder);
+	requstServoContrl();
+	SCHEDULE_STRONG = TRUE;
+	COUNTER = 0;
+	startSCHEDULEtimer();
+
+ 	//OSA_printf("%s,line:%d ... processCMD_SCHEDULE_STRONG",__func__,__LINE__);
 	return ;
  }
 
 
 void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_SCHEDULE_RESET",__func__,__LINE__);
+	if(isCalibrationMode() || tiaolingwei_flag == 1)
+		return;
+	
+	tiaolingwei_flag = 1;
+	Posd[eDynamicZone] = DynamicOsd[9];
+	OSDCTRL_ItemShine(eDynamicZone);
+	//tiao ling wei
+	#if 0
+		Posd[eSuperOrder] = SuperOsd[2];
+		OSDCTRL_ItemShow(eSuperOrder);
+		requstServoContrl();
+		COUNTER = 0;
+		SCHEDULE_RESET = TRUE;
+		startSCHEDULEtimer();
+ 	#endif
+ 	//OSA_printf("%s,line:%d ... processCMD_SCHEDULE_RESET",__func__,__LINE__);
 	return ;
  }
 

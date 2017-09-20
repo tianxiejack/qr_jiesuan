@@ -44,7 +44,6 @@ static void TurretPosPORT_close();
 
 void killSelfCheckPosAngleTimer()
 {	
-	printf("killSelfCheckPosAngleTimer\n");
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(ePosAngle_Timer)!=eTimer_Stat_Stop)
 	{
@@ -61,7 +60,6 @@ void SelfCheckPosAngleTimer_cbFxn(void* cbParam)
 
 void startSelfCheckPosAngle_Timer()
 {
-	printf("startSelfCheckPosAngle_Timer\n");
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(ePosAngle_Timer)==eTimer_Stat_Stop)
 	{

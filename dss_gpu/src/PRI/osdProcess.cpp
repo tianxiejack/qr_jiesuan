@@ -77,7 +77,7 @@ volatile unsigned char g_FilrBack=0;
 char WorkOsd[10][8];	//����ģʽ
 char AimOsd[2][8];
 char GunOsd[6][8];	//ǹ������
-char ShotOsd[4][8];//���ģʽ:��
+char ShotOsd[2][8];//���ģʽ:��
 char ShotGunOsd[2][8];//���ģʽ:��ǹ
 char LaserOsd[2][8];
 
@@ -117,7 +117,7 @@ char GenPramMenu[4][12]={
 };
 char FovTypeOsd[2][8];	//�ӳ�����
 char SuperOsd[7][8];
-char DynamicOsd[9][8];
+char DynamicOsd[10][8];
 char ResultOsd[2][8];
 char OpenCloseOsd[2][8];
 char CalibZeroOsd[3][8];
@@ -773,11 +773,11 @@ static void OSDCTRL_OsdInitial()
 
 
 
-	sprintf(ShotOsd[0],"%c",188);//duan 	liu dan
+	sprintf(ShotOsd[0],"%c",188);//dan 	liu dan
 	sprintf(ShotOsd[1],"%c",210);//lian	liu dan
 
-	sprintf(ShotGunOsd[0],"");//DAN 	JI QIANG
-	sprintf(ShotGunOsd[1],"%c",210);//LIAN
+	sprintf(ShotGunOsd[0]," ");//DAN 	JI QIANG
+	sprintf(ShotGunOsd[1],"%c",143);//sao
 	
 	sprintf(FovTypeOsd[0],"%c",187);//big
 	sprintf(FovTypeOsd[1],"%c",241);//little
@@ -800,6 +800,7 @@ static void OSDCTRL_OsdInitial()
 	sprintf(DynamicOsd[6],"%c%c%c%c",209,239,203,184);//LING WEI JIAN CHA
 //	sprintf(DynamicOsd[7],"%c%c%c%c",163,164,166,167);//MU BIAO SHI BAI
 	sprintf(DynamicOsd[8],"%c%c%c%c",163,164,165,166);//MU BIAO DIU SHI
+	sprintf(DynamicOsd[9],"%c%c?",209,239);//s f 209 239
 
 	sprintf(ResultOsd[0],"%c%c",254,183);//zheng chang
 	sprintf(ResultOsd[1],"%c%c",245,183);//yi chang
@@ -1752,7 +1753,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		case eShotType:
 			if(isMachineGun())
-				Posd[eShotType] = ShotGunOsd[getGunShotType()];		//ShotOsd[getGunShotType()];
+				Posd[eShotType] = ShotGunOsd[getGunShotType()];	//ShotOsd[getGunShotType()];
 			else
 				Posd[eShotType] = ShotOsd[getShotType()];//ShotGunOsd[getShotType()];		
 			sprintf(pStr,"%s",Posd[eShotType]);

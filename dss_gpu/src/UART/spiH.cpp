@@ -38,7 +38,7 @@ static uint16_t delay = 0;
 bool uart_open_close_flag = 0;
 //bool laser_fail_flag = 0;
 
-#define   SPI_DEBUG   1
+#define   SPI_DEBUG   0
 
 /****************************************************************************/
 //decode 倾斜角头的解析
@@ -589,7 +589,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 
 		while(have_data)
 		{
-			printf("whileing!!!!\n");
+	//		printf("whileing!!!!\n");
 			index=0;
 			ret = SPI_hcode_recvFlg(buf, length, &index);
 			length -= index;

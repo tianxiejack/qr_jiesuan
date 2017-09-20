@@ -907,9 +907,13 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf)))  //5.8ǹʽ
 	{   
 		if(BIT0(BYTE4(buf)) == 0x00)
+		{
 			MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);
+		}
 		else if(BIT0(BYTE4(buf)) == 0x01)
+		{
 			MSGDRIV_send(CMD_MODE_SHOT_LONG,0);
+		}			
 	}
 	
 	if(BIT7(BYTE3(FrameBuf1)) != BIT7(BYTE5(buf)))  //Ŵʾ

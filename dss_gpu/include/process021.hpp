@@ -34,6 +34,8 @@ class CProcess021 : public CVideoProcess
 	int Mmtsendtime;
 	int prisensorstatus;
 	int Fovpri[2];
+	
+
 public:
 	CProcess021();
 	~CProcess021();
@@ -58,8 +60,8 @@ public:
 	static CProcess021 *sThis;
 	static void process_osd(void *pPrm);
 	void process_osd_test(void *pPrm);
-
-
+	
+	
 protected:
 	void msgdriv_event(MSG_PROC_ID msgId, void *prm);
 	void osd_mtd_show(TARGET tg[], bool bShow = true);

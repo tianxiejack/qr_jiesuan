@@ -9,6 +9,7 @@
 #include"dx.h"
 #include"app_ctrl.h"
 #include "msgDriv.h"
+#include "statCtrl.h"
 
 
 //#include "opencv2/opencv.hpp"
@@ -31,7 +32,7 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	UInt32 frcolor,bgcolor;
 
 	//OSDCTRL_ItemHide(eMeasureDis);
-	
+		
 	for(i=eModeId;i<eBoreSightLinId;i++)
 	{
 			pTextObj = &pCtrlObj->pTextList[i]; 

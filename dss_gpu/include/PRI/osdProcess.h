@@ -446,7 +446,7 @@ extern int Pressure,DistanceManual,Temparature;//������� ѹ�� 
 extern double AngleGun, AngleGrenade,PositionX,PositionY;
 extern char MeasureErrOsd[3][8];
 extern char SuperOsd[7][8];
-extern char DynamicOsd[9][8];
+extern char DynamicOsd[10][8];
 extern char *Posd[OSD_TEXT_SIZE];
 extern char ResultOsd[2][8];
 extern char GunOsd[6][8];
