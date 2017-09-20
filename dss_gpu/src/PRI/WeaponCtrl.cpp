@@ -851,19 +851,22 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 						else
 							MSGDRIV_send(CMD_MODE_AIM_LAND,0);				
 					}
+					MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);	//5.8 default dian she ,no display
 					MSGDRIV_send(CMD_MODE_FOV_SMALL,0);	//5.8  default small fov
 					break;
 				case 0x02:	//
 					MSGDRIV_send(CMD_BULLET_SWITCH2,0);
 					MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 
-					MSGDRIV_send(CMD_MODE_FOV_LARGE,0);			//grenade default large fov
+					MSGDRIV_send(CMD_MODE_ATTACK_SIGLE,0);	 //grenade default shottype dan		
+					MSGDRIV_send(CMD_MODE_FOV_LARGE,0);	//grenade default large fov
 					break;
 				case 0x03:
 					MSGDRIV_send(CMD_BULLET_SWITCH3,0);
 					MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 
-					MSGDRIV_send(CMD_MODE_FOV_LARGE,0);			//grenade default large fov
+					MSGDRIV_send(CMD_MODE_ATTACK_SIGLE,0);		//grenade default shottype dan
+					MSGDRIV_send(CMD_MODE_FOV_LARGE,0);		//grenade default large fov
 					break;
 				default:
 				break;

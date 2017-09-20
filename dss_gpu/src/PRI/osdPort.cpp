@@ -128,12 +128,10 @@ void UpdataBoreSight()
 	if(isMachineGun())
 	{
 		setNextZeroData(&gMachineGun_ZCTable);
-		//AVTCTRL_SwitchFOV(0);
 	}
 	else if(isGrenadeGas()||isGrenadeKill())
 	{
 		setNextZeroData(&gGrenadeKill_ZCTable);
-		//AVTCTRL_SwitchFOV(1);
 	}
 	return ;
 }

@@ -4056,12 +4056,9 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
 
-	gProjectileType = (PROJECTILE_TYPE)(PROJECTILE_BULLET+5);
-	//Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
-	Posd[eGunTip] = GunOsd[5];
-	//EnterCMD_BULLET_SWITCH1();
-
- 	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH1",__func__,__LINE__);
+	//gProjectileType = (PROJECTILE_TYPE)(PROJECTILE_BULLET+5);
+	//Posd[eGunTip] = GunOsd[5];
+	EnterCMD_BULLET_SWITCH1();
 	return ;
  }
 
@@ -4912,14 +4909,15 @@ bool CProcess021::ValidateGunType()
 	}
 	else
 		OSDCTRL_NoShine();
+	
 	if(gProjectileType > PROJECTILE_GRENADE_GAS)
 	{		
 		if(gProjectileType == QUESTION_GRENADE_KILL)
 			gProjectileType = PROJECTILE_GRENADE_KILL;
 		else if(gProjectileType == QUESTION_GRENADE_GAS)
 			gProjectileType = PROJECTILE_GRENADE_GAS;	
-		else if(gProjectileType == QUESTION_BULLET)
-			gProjectileType = PROJECTILE_BULLET;
+		//else if(gProjectileType == QUESTION_BULLET)
+			//gProjectileType = PROJECTILE_BULLET;
 		//gProjectileType -=2;
 		Posd[eGunType] = GunOsd[gProjectileType];
 		updateCMD_BUTTON_SWITCH(gProjectileType);

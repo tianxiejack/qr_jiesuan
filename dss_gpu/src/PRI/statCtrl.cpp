@@ -866,12 +866,14 @@ void EnterCMD_BULLET_SWITCH1()
 			saveLastAndGetNewGeneralParam(PROJECTILE_BULLET);
 			updateBulletType(PROJECTILE_BULLET);
 		}
+		#if 0
 		else if(isBattleMode()&&isMeasureManual()&&isBeyondDistance())
 		{
 			Posd[eDynamicZone] = DynamicOsd[5];
 			OSDCTRL_ItemShow(eDynamicZone);
 			startDynamicTimer();
 		}
+		#endif
 	}
 	
 	UpdataBoreSight();
