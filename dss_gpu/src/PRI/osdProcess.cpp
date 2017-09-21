@@ -256,13 +256,13 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eSelfCheckState8,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		345-24,	0,	{0}},
 	{eSelfCheckState9,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		380-27,	0,	{0}},
 #endif
-	{eCalibZero_D,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	285+LOFFSET+80,		490,	0,	{0}},
-	{eCalibZero_D_d,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	310+LOFFSET+80,		490,	0,	{0}},
-	{eCalibZero_D_mh,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	321+LOFFSET+80,		490,	0,	{0}},
-	{eCalibZero_D_s1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	332+LOFFSET+80,		490,	0,	{0}},
-	{eCalibZero_D_s2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	343+LOFFSET+80,		490,	0,	{0}},
-	{eCalibZero_D_s3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	354+LOFFSET+80,		490,	0,	{0}},
-	{eCalibZero_D_s4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	365+LOFFSET+80,		490,	0,	{0}},
+	{eCalibZero_D,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	285+LOFFSET+83,		490,	0,	{0}},
+	{eCalibZero_D_d,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	310+LOFFSET+83,		490,	0,	{0}},
+	{eCalibZero_D_mh,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	321+LOFFSET+83,		490,	0,	{0}},
+	{eCalibZero_D_s1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	332+LOFFSET+83,		490,	0,	{0}},
+	{eCalibZero_D_s2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	343+LOFFSET+83,		490,	0,	{0}},
+	{eCalibZero_D_s3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	354+LOFFSET+83,		490,	0,	{0}},
+	{eCalibZero_D_s4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	365+LOFFSET+83,		490,	0,	{0}},
 
 	{eCalibZero_Fx,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	379+LOFFSET+80,		490,	0,	{0}},
 	{eCalibZero_Fx_F,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	390+LOFFSET+80,		490,	0,	{0}},
@@ -282,13 +282,37 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibZero_Fy_s2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	546+LOFFSET+80,		490,	0,	{0}},
 	{eCalibZero_Fy_s3,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	557+LOFFSET+80,		490,	0,	{0}},
 	{eCalibZero_Fy_s4,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	568+LOFFSET+80,		490,	0,	{0}},
-
-
-
 	{eCalibZero_Fy,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	540+LOFFSET,		490,	0,	{0}},
-	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		150,	0,	{0}},
-	{eCalibZero_AngleGrenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
-	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
+
+	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		500+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGun_c,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGun_m,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGun_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	572+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGun_s1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	584+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGun_s2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	596+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGun_d,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	607+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGun_s3,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	614+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGun_s4,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	625+LOFFSET,		150,	0,	{0}},
+
+	{eCalibZero_AngleGrenade,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_AngleGrenade_c,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_AngleGrenade_m,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_AngleGrenade_pole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	572+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_AngleGrenade_s1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	584+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_AngleGrenade_s2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	596+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_AngleGrenade_d,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	607+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_AngleGrenade_s3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	614+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_AngleGrenade_s4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	625+LOFFSET,		185,	0,	{0}},
+
+	{eCalibZero_Angle_c1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		60+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	85+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		98+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		109+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle_c2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		130+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	155+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		168+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		179+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		60+LOFFSET,		490,	0,	{0}},
 
 	{eCalibWeather_Tep,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		100,	0,	{0}},
 	{eCalibWeather_Pre,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		135,	0,	{0}},
@@ -303,9 +327,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibWeather_PreVal6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	571+LOFFSET,		135,	0,	{0}},
 	{eCalibWeather_PreVal7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	582+LOFFSET,		135,	0,	{0}},
 
-	{eCalibGeneral_Dis,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	480+LOFFSET,		150,	0,	{0}},
-	{eCalibGeneral_X,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	480+LOFFSET,		185,	0,	{0}},
-	{eCalibGeneral_Y,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	480+LOFFSET,		220,	0,	{0}},
+	{eCalibGeneral_Dis,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		150,	0,	{0}},
+	{eCalibGeneral_X,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		185,	0,	{0}},
+	{eCalibGeneral_Y,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		220,	0,	{0}},
 	{eCalibGeneral_DisValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	466+LOFFSET+80,		150,	0,	{0}},
 	{eCalibGeneral_DisValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	477+LOFFSET+80,		150,	0,	{0}},
 	{eCalibGeneral_DisValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	488+LOFFSET+80,		150,	0,	{0}},
@@ -322,26 +346,26 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	527+LOFFSET+80,		220,	0,	{0}},
 
 	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_R,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_x,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	331+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_m,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	342+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_s1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	364+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_s2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	375+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_d,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	386+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_s3,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	397+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Rx_s4,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		490,	0,	{0}},
+	{eCalibGeneral_Rx_R,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Rx_x,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	331+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Rx_m,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	342+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Rx_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Rx_s1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	364+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Rx_s2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	375+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Rx_d,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	386+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Rx_s3,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	397+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Rx_s4,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET+125,		490,	0,	{0}},
 
 
-	{eCalibGeneral_Ry_R,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry_x,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	441+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry_m,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	452+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	463+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry_s1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	474+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry_s2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	485+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry_d,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	496+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry_s3,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	507+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry_s4,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	518+LOFFSET,		490,	0,	{0}},
+	{eCalibGeneral_Ry_R,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Ry_x,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	441+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Ry_m,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	452+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Ry_pole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	463+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Ry_s1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	474+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Ry_s2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	485+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Ry_d,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	496+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Ry_s3,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	507+LOFFSET+125,		490,	0,	{0}},
+	{eCalibGeneral_Ry_s4,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	518+LOFFSET+125,		490,	0,	{0}},
 
 	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		490,	0,	{0}},
 	{eCalibHorizen_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		100,	0,	{0}},
@@ -515,7 +539,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		465,	0,	{0}},
 	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		500,	0,	{0}},
 
-	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		65,	0,	{0}},
+	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
 };
 
 //SECOND
@@ -850,7 +874,8 @@ static void OSDCTRL_OsdInitial()
 	sprintf(GunOsd[3],"%c%c%c%c?",223,224,216,193);//sha shang qiang guan
 	sprintf(GunOsd[4],"%c%c%c%c?",189,176,216,193);//fang bao qiang guan
 	sprintf(GunOsd[5],"%c%c%c%c?",200,216,216,193);//fang bao qiang guan
-
+	//printf(GunOsd[3],"%c%c?",223,224);
+	//printf(GunOsd[4],"%c%c?",189,176);
 
 
 	sprintf(ShotOsd[0],"%c",188);//dan 	liu dan
@@ -1928,8 +1953,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 
 		case eweather2_pole1:
-			//if(getAimOffsetX()>=0)
-			if(1)
+			if(getAimOffsetX()>=0)
 				sprintf(pStr,"+");
 			else
 				sprintf(pStr,"-");
@@ -1948,8 +1972,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 
 		case eweather2_pole2:
-			//if(getAimOffsetY()>=0)
-			if(1)
+			if(getAimOffsetY()>=0)
 				sprintf(pStr,"+");
 			else
 				sprintf(pStr,"-");
@@ -1994,8 +2017,8 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 			
 		case eAngleH:
-			//PositionX = getPlatformPositionX();
-			//PositionY = getPlatformPositionY();
+			PositionX = getPlatformPositionX();
+			PositionY = getPlatformPositionY();
 			//sprintf(pStr,"Q%+03.0f%+03.0f",(PositionX),(PositionY)); 
 			//sprintf(pStr,"%c%+03.0f%+03.0f",200,(PositionX),(PositionY)); 
 			//sprintf(pStr,"%c%+03.0f",200,getMachGunAngle()); 
@@ -2261,17 +2284,130 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			//sprintf(pStr,"Fy:%+05d",1.1);
 			break;
 		case eCalibZero_AngleGun:
-			value = getMachGunAngleAbs();
-			sprintf(pStr,"%c%cY:%+06.2f",200,216,value); 	//��ǹY 
+			//value = getMachGunAngleAbs();
+			//sprintf(pStr,"%c%cY:%+06.2f",200,216,value);
 			break;
+
+		case eCalibZero_AngleGun_c:
+			sprintf(pStr,"%c%cY",200,216);
+			break;
+
+		case eCalibZero_AngleGun_m:
+			sprintf(pStr,":");
+			break;
+
+		case eCalibZero_AngleGun_pole:
+			if(getMachGunAngleAbs() >= 0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalibZero_AngleGun_s1:
+			sprintf(pStr,"%01d",(int)(abs(getMachGunAngleAbs()))/10%10);
+			break;
+
+		case eCalibZero_AngleGun_s2:
+			sprintf(pStr,"%01d",(int)(abs(getMachGunAngleAbs()))%10);
+			break;
+
+		case eCalibZero_AngleGun_d:
+			sprintf(pStr,".");
+			break;
+
+		case eCalibZero_AngleGun_s3:
+			sprintf(pStr,"%01d",(int)(abs(getMachGunAngleAbs()*10))%10);
+		break;
+
+		case eCalibZero_AngleGun_s4:
+			sprintf(pStr,"%01d",(int)(abs(getMachGunAngleAbs()*100))%10);
+		break;
+
+		
 		case eCalibZero_AngleGrenade:
-			value = getGrenadeAngleAbs();
-			sprintf(pStr,"%c%cY:%+06.2f",211,214,value); 	//��Y
+			//value = getGrenadeAngleAbs();
+			//sprintf(pStr,"%c%cY:%+06.2f",211,214,value);
 			break;
-		case eCalibZero_Angle:
+
+		case eCalibZero_AngleGrenade_c:
+			sprintf(pStr,"%c%cY",211,214);
+			break;
+
+		case eCalibZero_AngleGrenade_m:
+			sprintf(pStr,":");
+			break;
+
+		case eCalibZero_AngleGrenade_pole:
+			if(getGrenadeAngleAbs() >= 0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalibZero_AngleGrenade_s1:
+			sprintf(pStr,"%01d",(int)(abs(getGrenadeAngleAbs()))/10%10);
+			break;
+
+		case eCalibZero_AngleGrenade_s2:
+			sprintf(pStr,"%01d",(int)(abs(getGrenadeAngleAbs()))%10);
+			break;
+
+		case eCalibZero_AngleGrenade_d:
+			sprintf(pStr,".");
+			break;
+
+		case eCalibZero_AngleGrenade_s3:
+			sprintf(pStr,"%01d",(int)(abs(getGrenadeAngleAbs()*10))%10);
+			break;
+
+		case eCalibZero_AngleGrenade_s4:
+			sprintf(pStr,"%01d",(int)(abs(getGrenadeAngleAbs()*100))%10);
+			break;
+
+		case eCalibZero_Angle_c1:
 			AngleGun = getMachGunAngle();
 			AngleGrenade = getGrenadeAngle();
-			sprintf(pStr,"%c%+03.0f%c%+03.0f",200,AngleGun,211,AngleGrenade); 	//��Y
+			sprintf(pStr,"%c",200);
+			break;
+
+		case eCalibZero_Angle_pole1:
+			if(AngleGun>=0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalibZero_Angle_s11:
+			sprintf(pStr,"%01d",(int)(abs(AngleGun))/10%10);
+			break;
+
+		case eCalibZero_Angle_s12:
+			sprintf(pStr,"%01d",(int)(abs(AngleGun))%10);
+			break;
+
+		case eCalibZero_Angle_c2:
+			sprintf(pStr,"%c",211);
+			break;
+
+		case eCalibZero_Angle_pole2:
+			if(AngleGrenade>=0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalibZero_Angle_s21:
+			sprintf(pStr,"%01d",(int)(abs(AngleGrenade))/10%10);
+			break;
+
+		case eCalibZero_Angle_s22:
+			sprintf(pStr,"%01d",(int)(abs(AngleGrenade))%10);
+			break;
+		
+		case eCalibZero_Angle:
+			//AngleGun = getMachGunAngle();
+			//AngleGrenade = getGrenadeAngle();
+			//sprintf(pStr,"%c%+03.0f%c%+03.0f",200,AngleGun,211,AngleGrenade);
 			break;
 		case eCalibWeather_Tep:
 			sprintf(pStr,"%c%c:  %c",219,238,174); 	

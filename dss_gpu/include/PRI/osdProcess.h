@@ -187,10 +187,37 @@ typedef enum _eOsdTypeId{
 	eCalibZero_Fy_s2,
 	eCalibZero_Fy_s3,
 	eCalibZero_Fy_s4,
-
 	eCalibZero_Fy	,//=	0x2C,
+	
 	eCalibZero_AngleGun	,//=0x2D,
+	eCalibZero_AngleGun_c,
+	eCalibZero_AngleGun_m,
+	eCalibZero_AngleGun_pole,
+	eCalibZero_AngleGun_s1,
+	eCalibZero_AngleGun_s2,
+	eCalibZero_AngleGun_d,
+	eCalibZero_AngleGun_s3,
+	eCalibZero_AngleGun_s4,
+	
 	eCalibZero_AngleGrenade,//=0x2E,
+	eCalibZero_AngleGrenade_c,
+	eCalibZero_AngleGrenade_m,
+	eCalibZero_AngleGrenade_pole,
+	eCalibZero_AngleGrenade_s1,
+	eCalibZero_AngleGrenade_s2,
+	eCalibZero_AngleGrenade_d,
+	eCalibZero_AngleGrenade_s3,
+	eCalibZero_AngleGrenade_s4,
+
+	eCalibZero_Angle_c1,
+	eCalibZero_Angle_pole1,
+	eCalibZero_Angle_s11,
+	eCalibZero_Angle_s12,
+	eCalibZero_Angle_c2,
+	eCalibZero_Angle_pole2,
+	eCalibZero_Angle_s21,
+	eCalibZero_Angle_s22,
+
 	eCalibZero_Angle,//=	0x2F,
 	eCalibWeather_Tep	,//=	0x30,
 	eCalibWeather_Pre	,//=	0x31,
@@ -477,7 +504,7 @@ struct _MuxPotrTran
 
 
 typedef struct _osd_text_obj{
-	unsigned char osdId;
+	unsigned int osdId;
 	volatile unsigned char osdState;
 	unsigned char osdUpdate;
 	unsigned char osdFColor;

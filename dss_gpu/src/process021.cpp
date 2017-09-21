@@ -4095,7 +4095,7 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
 	//Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_KILL+2];
-Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_KILL+2];
+	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_KILL+2];
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH2",__func__,__LINE__);
 	return ;
  }
@@ -4110,7 +4110,7 @@ void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_GAS+2);
 	//Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_GAS+2];
-Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_GAS+2];	
+	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_GAS+2];	
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH3",__func__,__LINE__);
 	return ;
  }
