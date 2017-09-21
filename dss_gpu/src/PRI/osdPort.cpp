@@ -670,9 +670,9 @@ void saveGeneralParam()
 	else if(isMachineGun())
 	{
 		saveLastGeneralParam(&gMachineGun_GCParam);
-		putchar(10);
-		printf("gMachineGun_GCParam.data.x=%d\n",getLastGeneralDataX());
-		printf("gMachineGun_GCParam.data.y=%d\n",getLastGeneralDataY());
+		//putchar(10);
+		//printf("gMachineGun_GCParam.data.x=%d\n",getLastGeneralDataX());
+		//printf("gMachineGun_GCParam.data.y=%d\n",getLastGeneralDataY());
 		
 	}
 }
