@@ -4259,13 +4259,12 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 		}
 		else
 		{
-			for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-				OSDCTRL_ItemHide(i);
-			OSDCTRL_ItemShow(eMeasureDis);
-			
 			SHINE = FALSE;
 			ShinId = 0;
 			isfixingMeasure = FALSE;
+			for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+				OSDCTRL_ItemShow(i);
+			//OSDCTRL_ItemShow(eMeasureDis);				
 		}
 	}
  	return ;

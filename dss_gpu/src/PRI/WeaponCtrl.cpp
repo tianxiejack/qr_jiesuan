@@ -977,12 +977,12 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			//startF6_Timer();
 		}
 	}
-	if(BIT1(BYTE3(FrameBuf1)) != BIT1(BYTE5(buf)))//Զť״̬
+	if(BIT1(BYTE3(FrameBuf1)) != BIT1(BYTE5(buf)))//shou bing shang zi dong bu huo an jian
 	{    
-		if(BIT1(BYTE5(buf)) == 0x01)
+		if((BIT1(BYTE5(buf)) == 0x01) && (STATE_BATTLE_ALERT == gLevel2BattleState))
 			MSGDRIV_send(CMD_BUTTON_AUTOCATCH,0);
 	}
-	if(BIT0(BYTE3(FrameBuf1)) != BIT0(BYTE5(buf)))//ఴť״̬
+	if(BIT0(BYTE3(FrameBuf1)) != BIT0(BYTE5(buf)))//ji guang ce ju
 	{     
 		if(BIT0(BYTE5(buf)) == 0x00)// down button to test the velocity
 			MSGDRIV_send(CMD_MEASURE_VELOCITY,0);
@@ -1217,10 +1217,10 @@ void WeaponCtrlPORT_ParseFrameByte_type3(unsigned char* buf)
 	}
 	if(BIT3(BYTE3(FrameBuf3)) != BIT3(BYTE5(buf)))
 	{
-		if(BIT3(BYTE5(buf)) == 0x00)//���-35����״̬�쳣
+		if(BIT3(BYTE5(buf)) == 0x00)
 		{
 			MSGDRIV_send(CMD_GRENADEMOTOR_ERR, 0);
-		}else if(BIT3(BYTE5(buf)) == 0x01)//���-35����״̬��
+		}else if(BIT3(BYTE5(buf)) == 0x01)
 		{
 			MSGDRIV_send(CMD_GRENADEMOTOR_OK, 0);
 		}

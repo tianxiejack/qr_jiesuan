@@ -13,7 +13,7 @@ static int ibInit=0;
 //static PVE_MSG *pOutMsg=NULL;
 //static BYTE g_bSendBuf[256]={0};
 
-int LaserDistance=-1;
+int LaserDistance=0;
 static BOOL LaserPORT_open();
 static void LaserPORT_close();
 
