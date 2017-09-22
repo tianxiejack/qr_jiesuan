@@ -33,6 +33,7 @@
 #define LOFFSET	 0
 #define ROFFSET  15
 #define WOFFSET 140
+#define CALCOFFSET 20
 //extern volatile int msgLight;
 #define MIDMENU
 
@@ -479,129 +480,176 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{ePlatFormX,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	100+LOFFSET,		400,	0,	{0}},
 	
 #ifdef MIDMENU
-	{eCalcNum_Visual,			       eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	25+LOFFSET,		100,	0,	{0}},
-	{eCalcNum_Visual_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	110+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s11,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	124+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s12,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	135+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s13,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	146+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s14,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	157+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_d1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	168+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s15,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	175+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s16,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	186+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_c2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	295+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s21,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	306+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s22,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	317+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s23,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	328+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s24,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	339+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_d2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s25,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	357+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_s26,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	368+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	388+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	399+LOFFSET,		85,	0,	{0}},
-	{eCalcNum_Visual_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	405+LOFFSET,		85,	0,	{0}},
+	{eCalcNum_Visual,			       eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	25+LOFFSET,		100+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	113+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s11,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	127+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s12,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	138+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s13,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	149+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s14,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_d1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	171+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s15,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	178+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s16,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	189+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_c2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	213+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	298+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s21,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	309+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s22,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s23,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	331+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s24,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	342+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_d2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s25,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_s26,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	371+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	391+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		85+CALCOFFSET,	0,	{0}},
 
-	{eCalcNum_Traject,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		135-3,	0,	{0}},
+	{eCalcNum_Traject,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		132+CALCOFFSET,	0,	{0}},
 
-       {eCalcNum_Traject_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	24+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	110+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	124+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	135+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s13,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	146+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s14,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	157+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_d1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	168+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s15,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	175+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s16,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	186+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_c2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	206+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	295+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	306+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	317+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	328+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	339+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_d2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	357+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	368+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	388+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	399+LOFFSET,		117,	0,	{0}},
-	{eCalcNum_Traject_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	405+LOFFSET,		117,	0,	{0}},
+       {eCalcNum_Traject_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	113+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	127+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	138+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s13,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	149+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s14,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_d1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	171+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s15,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	178+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s16,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	189+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_c2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	209+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	298+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	309+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	331+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	342+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_d2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	371+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	391+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		117+CALCOFFSET,	0,	{0}},
 
-	{eCalcNum_Trunion,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	25+LOFFSET,		170-6,	0,	{0}},
-       {eCalcNum_Trunion_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	110+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	124+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	135+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s13,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	146+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s14,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	157+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_d1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	168+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s15,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	175+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s16,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	186+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_c2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	208+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	292+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	306+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	317+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	328+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	339+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_d2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	357+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	368+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	388+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	399+LOFFSET,		149,	0,	{0}},
-	{eCalcNum_Trunion_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	405+LOFFSET,		149,	0,	{0}},
+	{eCalcNum_Trunion,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	25+LOFFSET,		164+CALCOFFSET,	0,	{0}},
+       {eCalcNum_Trunion_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	113+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	127+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	138+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s13,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	149+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s14,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_d1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	171+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s15,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	178+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s16,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	189+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_c2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	211+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	295+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	309+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	331+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	342+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_d2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	371+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	391+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Trunion_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		149+CALCOFFSET,	0,	{0}},
 
-	{eCalcNum_General,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	24+LOFFSET,		181,	0,	{0}},
+	{eCalcNum_General,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	24+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	113+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	127+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	138+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s13,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	149+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s14,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_d1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	171+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s15,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	178+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s16,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	189+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_c2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	209+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	295+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	309+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	331+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	342+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_d2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	371+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	391+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+	{eCalcNum_General_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		181+CALCOFFSET,	0,	{0}},
 
-	{eCalcNum_General_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	24+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	110+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	124+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	135+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s13,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	146+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s14,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	157+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_d1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	168+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s15,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	175+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s16,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	186+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_c2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	206+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	292+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	306+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	317+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	328+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	339+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_d2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	357+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	368+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	388+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	399+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_General_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	405+LOFFSET,		181,	0,	{0}},
+	{eCalcNum_Weather,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		228+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_c11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	114+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	128+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	139+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_c12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_c21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	211+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_pole2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	296+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	310+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	321+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	332+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_d,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	343+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	361+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	372+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_c22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	387+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_c23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	398+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Weather_c24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		213+CALCOFFSET,	0,	{0}},
 
+	{eCalcNum_Turret,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_c,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	114+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_s1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	128+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_s2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	139+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_s3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	150+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_s4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	161+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_d,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	172+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_s5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	179+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_s6,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	190+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret_blank,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		245+CALCOFFSET,	0,	{0}},
 
-	{eCalcNum_Weather,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		240-12,	0,	{0}},
-	{eCalcNum_Weather_c11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	24+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_pole11,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	110+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	124+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	135+LOFFSET,		213,	0,	{0}},
-	//{,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	146+LOFFSET,		181,	0,	{0}},
-	//{,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	157+LOFFSET,		181,	0,	{0}},
-	//{,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	168+LOFFSET,		181,	0,	{0}},
-	{eCalcNum_Weather_c12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	175+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_c23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	186+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_pole22,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	206+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	292+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	306+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	317+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_d21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	328+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	339+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_s27,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_s28,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	357+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_c24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	368+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_c25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	388+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_c26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		213,	0,	{0}},
-	{eCalcNum_Weather_c27,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	413+LOFFSET,		213,	0,	{0}},
-
-
-	{eCalcNum_Turret,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	25+LOFFSET,		275-15,	0,	{0}},
-	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		310-18,	0,	{0}},
-	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		345-21,	0,	{0}},
-
+	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_c11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_pole1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	114+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	128+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	139+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s13,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	150+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s14,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	161+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_d1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	172+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s15,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	179+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s16,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	190+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_c21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	212+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_pole2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	297+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	309+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	331+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	342+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_d2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	371+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_c22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	386+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_c23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	397+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD_c24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	
+	{eCalcNum_Posion_c11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		27+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_pole1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		114+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	128+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	139+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s13,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	150+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s14,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	161+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_d1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		172+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s15,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	179+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s16,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	190+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_c21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		209+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_pole2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		294+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s21,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	306+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	317+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	328+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	339+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_d2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		350+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s25,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	357+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_s26,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	368+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_c22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		386+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_c23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		397+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion_c24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		408+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		23+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	
 	{eStateMaintD,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-165+LOFFSET,		80+100,	0,	{0}},
 	{eStateDetend,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,			80+100,	0,	{0}},
 	{eStateClutch,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-165+LOFFSET,		115-3+100,	0,	{0}},
@@ -3180,7 +3228,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%01d",(int)(abs(getTrajectCalcY())/1000));
 			break;
 		case eCalcNum_Traject_d2:
-			sprintf(pStr,",");
+			sprintf(pStr,".");
 			break;
 		case eCalcNum_Traject_s25:
 			sprintf(pStr,"%01d",(int)(abs(getTrajectCalcY())*10%10));
@@ -3253,7 +3301,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%01d",(int)(abs(getTrunionCalibY())/1000));
 			break;
 		case eCalcNum_Trunion_d2:
-			sprintf(pStr,",");
+			sprintf(pStr,".");
 			break;
 		case eCalcNum_Trunion_s25:
 			sprintf(pStr,"%01d",(int)(abs(getTrunionCalibY())*10%10));
@@ -3275,7 +3323,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_General:
 			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2fmil",253,243,getCorrectionCalibX(),253,243,getCorrectionCalibY()); 		//���޲���
 			break;
-			
+	
 		case eCalcNum_General_c1:
 			sprintf(pStr,"%c%cX=",253,243); 
 			break;
@@ -3328,7 +3376,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibY())/1000));
 			break;
 		case eCalcNum_General_d2:
-			sprintf(pStr,",");
+			sprintf(pStr,".");
 			break;
 		case eCalcNum_General_s25:
 			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibY())*10%10));
@@ -3345,92 +3393,302 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_General_c5:
 			sprintf(pStr,"l");
 			break;
-		
+	
 		case eCalcNum_Weather:
 			//sprintf(pStr,"%c%c  = %+03d   %c  %c%c  = %+08.3fKpa",219,238,gWeatherTable.Temparature,174,219,247,gWeatherTable.Pressure/1000.0); //���� = +15 ����ѹ = +101.325 Kpa:
 			break;
-/*
-		case eCalcNum_General_c1:
-			sprintf(pStr,"%c%cX=",219,238); 
-			break;
-		case eCalcNum_General_pole1:
-			if(getCorrectionCalibX()>=0)
-				sprintf(pStr,"+"); 
-			else
-				sprintf(pStr,"-"); 	
-			break;
-		case eCalcNum_General_s11:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibX())/1000));
-			break;
-			*/
+
 		case eCalcNum_Weather_c11:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibX())/100%10));
+			sprintf(pStr,"%c%c =      ",219,238);
 			break;
-		case eCalcNum_Weather_pole11:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibX())/10%10));
+		case eCalcNum_Weather_pole1:
+			if(gWeatherTable.Temparature >= 0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
 			break;
 		case eCalcNum_Weather_s11:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibX())%10));
+			sprintf(pStr,"%01d",(int)(abs(gWeatherTable.Temparature)/10%10));
 			break;
 		case eCalcNum_Weather_s12:
-			sprintf(pStr,".");
+			sprintf(pStr,"%01d",(int)(abs(gWeatherTable.Temparature)%10));
 			break;
 		case eCalcNum_Weather_c12:
 			sprintf(pStr,"%c",174);
 			break;
-		case eCalcNum_Weather_c23:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibX())*100%10));
+		case eCalcNum_Weather_c21:
+			sprintf(pStr,"%c%c =   ",219,247);
 			break;
-		case eCalcNum_Weather_pole22:
-			sprintf(pStr,"%c%cY=",253,243); 
-			break;
-		case eCalcNum_Weather_s23:
-			if(getCorrectionCalibY()>=0)
+		case eCalcNum_Weather_pole2:
+			if(gWeatherTable.Pressure >= 0)
 				sprintf(pStr,"+"); 
 			else
-				sprintf(pStr,"-"); 	
+				sprintf(pStr,"-"); 
+			break;
+		case eCalcNum_Weather_s21:
+			sprintf(pStr,"%01d",gWeatherTable.Pressure/1000/1000%10);
+			break;
+		case eCalcNum_Weather_s22:
+			sprintf(pStr,"%01d",gWeatherTable.Pressure/1000/100%10);
+			break;
+		case eCalcNum_Weather_s23:
+			sprintf(pStr,"%01d",gWeatherTable.Pressure/1000/10%10);
+			break;
+		case eCalcNum_Weather_d:
+			sprintf(pStr,".");
 			break;
 		case eCalcNum_Weather_s24:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibY())/1000));
+			sprintf(pStr,"%01d",gWeatherTable.Pressure/100%10);
 			break;
 		case eCalcNum_Weather_s25:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibY())/1000));
-			break;
-		case eCalcNum_Weather_d21:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibY())/1000));
+			sprintf(pStr,"%01d",gWeatherTable.Pressure/10%10);
 			break;
 		case eCalcNum_Weather_s26:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibY())/1000));
-			break;
-		case eCalcNum_Weather_s27:
-			sprintf(pStr,",");
-			break;
-		case eCalcNum_Weather_s28:
-			sprintf(pStr,"%01d",(int)(abs(getCorrectionCalibY())*10%10));
-			break;
-		case eCalcNum_Weather_c24:
 			sprintf(pStr,"%01d",gWeatherTable.Pressure%10);
 			break;
-		case eCalcNum_Weather_c25:
+		case eCalcNum_Weather_c22:
 			sprintf(pStr,"K");
 			break;
-		case eCalcNum_Weather_c26:
+		case eCalcNum_Weather_c23:
 			sprintf(pStr,"p");
 			break;
-		case eCalcNum_Weather_c27:
+		case eCalcNum_Weather_c24:
 			sprintf(pStr,"a");
 			break;
-
-
-			
+		
 		case eCalcNum_Turret:
-			sprintf(pStr,"%c%cX = %+08.2f                      ",190,239,getTurretTheta()); //��λX
+			//sprintf(pStr,"%c%cX = %+08.2f                      ",190,239,getTurretTheta()); //��λX
 			break;
+
+		case eCalcNum_Turret_c:
+			sprintf(pStr,"%c%c =              ",190,239);
+			break;
+
+		case eCalcNum_Turret_pole:
+			if(getTurretTheta()>=0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalcNum_Turret_s1:
+			sprintf(pStr,"%01d",(int)getTurretTheta()/1000);
+			break;
+
+		case eCalcNum_Turret_s2:
+			sprintf(pStr,"%01d",(int)getTurretTheta()/100%10);
+			break;
+
+		case eCalcNum_Turret_s3:
+			sprintf(pStr,"%01d",(int)getTurretTheta()/10%10);
+			break;
+
+		case eCalcNum_Turret_s4:
+			sprintf(pStr,"%01d",(int)getTurretTheta()%10);
+			break;
+
+		case eCalcNum_Turret_d:
+			sprintf(pStr,".");
+			break;
+
+		case eCalcNum_Turret_s5:
+			sprintf(pStr,"%01d",(int)getTurretTheta()*10%10);
+			break;
+
+		case eCalcNum_Turret_s6:
+			sprintf(pStr,"%01d",(int)getTurretTheta()*100%10);
+			break;
+
+		case eCalcNum_Turret_blank:
+			sprintf(pStr," ");
+			break;
+	
 		case eCalcNum_AlgleD:
-			sprintf(pStr,"%c%cY = %+08.2f %c%cY = %+08.2fdeg",200,216,getMachGunAngle(),211,214,getGrenadeAngle()); //��ǹY=.. ��Y=..
+			//sprintf(pStr,"%c%cY = %+08.2f %c%cY = %+08.2fdeg",200,216,getMachGunAngle(),211,214,getGrenadeAngle()); //��ǹY=.. ��Y=..
 			break;
+
+		case eCalcNum_AlgleD_c11:
+			sprintf(pStr,"%c%cY=     ",200,216);
+			break;
+
+		case eCalcNum_AlgleD_pole1:
+			if(getMachGunAngle()>=0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalcNum_AlgleD_s11:
+			sprintf(pStr,"%01d",(int)getMachGunAngle()/1000);
+			break;
+	
+		case eCalcNum_AlgleD_s12:
+			sprintf(pStr,"%01d",(int)getMachGunAngle()/100);
+			break;
+
+		case eCalcNum_AlgleD_s13:
+			sprintf(pStr,"%01d",(int)getMachGunAngle()/10);
+			break;
+		
+		case eCalcNum_AlgleD_s14:
+			sprintf(pStr,"%01d",(int)getMachGunAngle()%10);
+			break;
+	
+		case eCalcNum_AlgleD_d1:
+			sprintf(pStr,".");
+			break;
+		
+		case eCalcNum_AlgleD_s15:
+			sprintf(pStr,"%01d",(int)getMachGunAngle()*10%10);
+			break;
+		
+		case eCalcNum_AlgleD_s16:
+			sprintf(pStr,"%01d",(int)getMachGunAngle()*100%10);
+			break;
+
+		case eCalcNum_AlgleD_c21:
+			sprintf(pStr,"%c%cY=     ",211,214);
+			break;
+
+		case eCalcNum_AlgleD_pole2:
+			if(getGrenadeAngle()>=0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalcNum_AlgleD_s21:
+			sprintf(pStr,"%01d",(int)getGrenadeAngle()/1000);
+			break;
+	
+		case eCalcNum_AlgleD_s22:
+			sprintf(pStr,"%01d",(int)getGrenadeAngle()/100);
+			break;
+
+		case eCalcNum_AlgleD_s23:
+			sprintf(pStr,"%01d",(int)getGrenadeAngle()/10);
+			break;
+		
+		case eCalcNum_AlgleD_s24:
+			sprintf(pStr,"%01d",(int)getGrenadeAngle()%10);
+			break;
+	
+		case eCalcNum_AlgleD_d2:
+			sprintf(pStr,".");
+			break;
+		
+		case eCalcNum_AlgleD_s25:
+			sprintf(pStr,"%01d",(int)getGrenadeAngle()*10%10);
+			break;
+		
+		case eCalcNum_AlgleD_s26:
+			sprintf(pStr,"%01d",(int)getGrenadeAngle()*100%10);
+			break;
+
+		case eCalcNum_AlgleD_c22:
+			sprintf(pStr,"d");
+			break;
+
+		case eCalcNum_AlgleD_c23:
+			sprintf(pStr,"e");
+			break;
+
+		case eCalcNum_AlgleD_c24:
+			sprintf(pStr,"g");
+			break;
+
 		case eCalcNum_Posion:
-			sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2fdeg",220,204,getPlatformPositionX(),220,204,getPlatformPositionY()); //���X=.. ���Y=..
+			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2fdeg",220,204,getPlatformPositionX(),220,204,getPlatformPositionY()); //���X=.. ���Y=..
+			break;
+
+		case eCalcNum_Posion_c11:
+			sprintf(pStr,"%c%cX=      ",220,204);
+			break;
+
+		case eCalcNum_Posion_pole1:
+			if(getPlatformPositionX()>=0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalcNum_Posion_s11:
+			sprintf(pStr,"%01d",(int)getPlatformPositionX()/1000);
+			break;
+	
+		case eCalcNum_Posion_s12:
+			sprintf(pStr,"%01d",(int)getPlatformPositionX()/100);
+			break;
+
+		case eCalcNum_Posion_s13:
+			sprintf(pStr,"%01d",(int)getPlatformPositionX()/10);
+			break;
+		
+		case eCalcNum_Posion_s14:
+			sprintf(pStr,"%01d",(int)getPlatformPositionX()%10);
+			break;
+	
+		case eCalcNum_Posion_d1:
+			sprintf(pStr,".");
+			break;
+		
+		case eCalcNum_Posion_s15:
+			sprintf(pStr,"%01d",(int)getPlatformPositionX()*10%10);
+			break;
+		
+		case eCalcNum_Posion_s16:
+			sprintf(pStr,"%01d",(int)getPlatformPositionX()*100%10);
+			break;
+
+		case eCalcNum_Posion_c21:
+			sprintf(pStr,"%c%cY=      ",220,204);
+			break;
+
+		case eCalcNum_Posion_pole2:
+			if(getPlatformPositionY()>=0)
+				sprintf(pStr,"+");
+			else
+				sprintf(pStr,"-");
+			break;
+
+		case eCalcNum_Posion_s21:
+			sprintf(pStr,"%01d",(int)getPlatformPositionY()/1000);
+			break;
+	
+		case eCalcNum_Posion_s22:
+			sprintf(pStr,"%01d",(int)getPlatformPositionY()/100);
+			break;
+
+		case eCalcNum_Posion_s23:
+			sprintf(pStr,"%01d",(int)getPlatformPositionY()/10);
+			break;
+		
+		case eCalcNum_Posion_s24:
+			sprintf(pStr,"%01d",(int)getPlatformPositionY()%10);
+			break;
+	
+		case eCalcNum_Posion_d2:
+			sprintf(pStr,".");
+			break;
+		
+		case eCalcNum_Posion_s25:
+			sprintf(pStr,"%01d",(int)getPlatformPositionY()*10%10);
+			break;
+		
+		case eCalcNum_Posion_s26:
+			sprintf(pStr,"%01d",(int)getPlatformPositionY()*100%10);
+			break;
+
+		case eCalcNum_Posion_c22:
+			sprintf(pStr,"d");
+			break;
+
+		case eCalcNum_Posion_c23:
+			sprintf(pStr,"e");
+			break;
+
+		case eCalcNum_Posion_c24:
+			sprintf(pStr,"g");
 			break;
 
 		case eStateMaintD:
