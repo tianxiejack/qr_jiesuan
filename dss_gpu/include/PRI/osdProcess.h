@@ -81,15 +81,16 @@ typedef struct _weather_table{
 
 typedef enum _eOsdTypeId{
 	eModeId			=	0x00,
-	eWorkMode		=	0x01,
-	eAimType		=	0x02,
-	eGunType		=	0x03,
-	eMeasureType	=	0x04,
-	eVideoErr		=	0x05,
-	eShotType		=	0x06,
-	eFovType		=	0x07,
-	eEnhance		=	0x08,
-	eMeasureDis		=	0x09,
+	eWorkMode		,
+//	erase_guntip,
+	eAimType		,
+	eGunType		,
+	eMeasureType	,
+	eVideoErr		,
+	eShotType		,
+	eFovType		,
+	eEnhance		,
+	eMeasureDis		,
 
 	eMeasureDis_Value1,
 	eMeasureDis_Value2,
@@ -572,7 +573,8 @@ typedef enum _eOsdTypeId{
 	eAngleGred,
 	eGunTip,
 	
-
+	erase_shottype,
+	erase_guntip,
 #if 0
 	eWeather1_T,
 	eWeather1_pole,
@@ -596,8 +598,6 @@ typedef enum _eOsdTypeId{
 	eweather2_offy_4,
 #endif
 	eBoreSightLinId,
-	erase_shottype,
-	erase_guntip,
 	OSD_TEXT_SIZE
 }eOsdId;
 
@@ -735,6 +735,10 @@ extern char LaserOsd[2][8];
 extern char GenPramMenu[4][12];
 extern char WorkOsd[10][8];	//����ģʽ
 
+extern volatile char globalShoweErrorZone;
+extern WeatherItem gWeatherTable;
+
+extern OSDText_Obj g_Text[OSD_TEXT_SIZE];
 
 
 void OSDCTRL_AlgSelect();
@@ -810,9 +814,6 @@ void moveRightServoYPram();
 
 
 
-extern volatile char globalShoweErrorZone;
-extern WeatherItem gWeatherTable;
-extern unsigned char osdflag_shottype_offsetx;
 
 
 

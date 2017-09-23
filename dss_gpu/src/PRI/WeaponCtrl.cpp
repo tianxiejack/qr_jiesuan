@@ -842,8 +842,6 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			{
 				case 0x00:
 				case 0x01:	//5.8
-					osdflag_shottype_offsetx = 30;
-					MSGDRIV_send(CMD_BULLET_SWITCH1,0);
 					if(BIT7_6(BYTE2(FrameBuf1)) != BIT7_6(BYTE4(buf)))	 //switch bullet
 					{    
 						if(BIT7_6(BYTE4(buf)) == 0x00)
@@ -853,16 +851,15 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 					}
 					MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);	//5.8 default dian she ,no display
 					MSGDRIV_send(CMD_MODE_FOV_SMALL,0);	//5.8  default small fov
+					MSGDRIV_send(CMD_BULLET_SWITCH1,0);
 					break;
 				case 0x02:	//
-					osdflag_shottype_offsetx = 0;
 					MSGDRIV_send(CMD_BULLET_SWITCH2,0);
 					MSGDRIV_send(CMD_MODE_AIM_LAND,0);					
 					MSGDRIV_send(CMD_MODE_ATTACK_SIGLE,0);	 //grenade default shottype dan		
 					MSGDRIV_send(CMD_MODE_FOV_LARGE,0);	//grenade default large fov
 					break;
 				case 0x03:
-					osdflag_shottype_offsetx = 0;
 					MSGDRIV_send(CMD_BULLET_SWITCH3,0);
 					MSGDRIV_send(CMD_MODE_AIM_LAND,0);	
 					MSGDRIV_send(CMD_MODE_ATTACK_SIGLE,0);		//grenade default shottype dan

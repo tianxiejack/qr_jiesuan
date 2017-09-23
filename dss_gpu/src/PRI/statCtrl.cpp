@@ -851,6 +851,7 @@ void EnterCMD_BULLET_SWITCH(int i)
 
 void EnterCMD_BULLET_SWITCH1()
 {
+	//g_Text[eShotType].osdInitX = 545;
 	if(isCalibrationMode() && isCalibrationMainMenu())
 	{
 		OSDCTRL_updateMainMenu(PROJECTILE_BULLET);
@@ -884,6 +885,7 @@ void EnterCMD_BULLET_SWITCH1()
 
 void EnterCMD_BULLET_SWITCH2( )
 {
+	//g_Text[eShotType].osdInitX = 545;
 	if(isCalibrationMode()&& isCalibrationMainMenu())
 	{
 		OSDCTRL_updateMainMenu(PROJECTILE_GRENADE_KILL);
@@ -914,6 +916,7 @@ void EnterCMD_BULLET_SWITCH2( )
 
 void EnterCMD_BULLET_SWITCH3( )
 {
+	//g_Text[eShotType].osdInitX = 545;
 	if(isCalibrationMode()&& isCalibrationMainMenu())
 	{
 		OSDCTRL_updateMainMenu(PROJECTILE_GRENADE_GAS);

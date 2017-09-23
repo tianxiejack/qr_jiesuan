@@ -37,7 +37,10 @@ using namespace cv;
 
 extern OSDCTRL_Handle pCtrlObj;
 OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
+OSDCTRL_Handle pCtrlObjLocal = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
+
 FOVCTRL_Handle  pFovCtrlBeforObj = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ));	
+FOVCTRL_Handle  pFovCtrlLocal = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ));	
 
 int n=0,ShinId=eCalibGeneral_XPole;
 
@@ -333,13 +336,21 @@ void CProcess021::process_osd(void *pPrm)
 	lineParam.width = 60;
 	lineParam.height = 60;
 	lineParam.frcolor = 2;
-
-
 	Osd_cvPoint start,end;
+	
+	if(isMachineGun() && (!getGunShotType()))
+	{
+		OSDCTRL_ItemHide(eShotType);
+	}
+	else
+		OSDCTRL_ItemShow(eShotType);
+	memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
+	memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
+
+	
 	//erase
 	//if(!flag)
 		//memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
-	
 
 	if(SHINE)
 	{
@@ -358,19 +369,14 @@ void CProcess021::process_osd(void *pPrm)
 	}
 	//OSDCTRL_ItemShow(eErrorZone);
 	//OSDCTRL_AllHide();
-
-	FOVCTRL_draw(frame,pFovCtrlObj);
-	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
-
-	//if(isMachineGun() && (!getGunShotType()))
-	//{
-	//	OSDCTRL_ItemHide(eShotType);
-	//}
-	//else
-	//	OSDCTRL_ItemShow(eShotType);
 	
-	OSDCTRL_draw_text(frame,pCtrlObj);
-	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
+	FOVCTRL_draw(frame,pFovCtrlLocal);
+	memcpy(pFovCtrlBeforObj,pFovCtrlLocal,sizeof(FOVCTRL_OBJ));
+
+	
+	
+	OSDCTRL_draw_text(frame,pCtrlObjLocal);
+	memcpy(pCtrlObjbefore,pCtrlObjLocal,sizeof(OSDCTRL_OBJ));
 
 	flag = 1;
 	sThis->m_display.UpDateOsd(0);
@@ -2457,7 +2463,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_LONG,					processCMD_MODE_SHOT_LONG,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u6212\u3001\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_GUN,						processCMD_SCHEDULE_GUN,		0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_STRONG,					processCMD_SCHEDULE_STRONG,		0); // \u951f\u65a4\u62f7\u5f3a\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_RESET,					processCMD_SCHEDULE_RESET,		0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u4f4d
+    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_RESET,						processCMD_SCHEDULE_RESET,		0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u4f4d
     
     MSGDRIV_attachMsgFun(handle,	CMD_TIMER_SENDFRAME0,					processCMD_TIMER_SENDFRAME0,		0); //send frame0 through CAN
     MSGDRIV_attachMsgFun(handle,	CMD_TRACE_SENDFRAME0,					processCMD_TRACE_SENDFRAME0,		0); //send frame0 through TracePort
@@ -4001,7 +4007,6 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			COUNTER = 0;
 			SCHEDULE_RESET = TRUE;
 			startSCHEDULEtimer();
-			
 			tiaolingwei_flag = 0;
 		}
 		
@@ -4096,9 +4101,10 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 	
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
-
+	//g_Text[eGunTip].osdInitX = 240; 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
 	//Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_KILL+2];
+	//Posd[eGunTip] = GunOsd[5];
 	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_KILL+2];
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH2",__func__,__LINE__);
 	return ;
@@ -4111,7 +4117,7 @@ void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
 
  	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
-
+	//g_Text[eGunTip].osdInitX = 243; 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_GAS+2);
 	//Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_GAS+2];
 	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_GAS+2];	
@@ -4658,6 +4664,7 @@ void CProcess021::processCMD_MODE_SHOT_SHORT(LPARAM lParam)
  {
  	if(isMachineGun())
 	{
+		//g_Text[eShotType].osdInitX = 540;
 		gGunShotType = SHOTTYPE_SHORT;
 	}	
 	//OSDCTRL_ItemHide(eShotType);
@@ -4669,6 +4676,7 @@ void CProcess021::processCMD_MODE_SHOT_LONG(LPARAM lParam)
  {
  	if(isMachineGun())
 	{
+		//g_Text[eShotType].osdInitX = 540;
 		gGunShotType = SHOTTYPE_LONG;
 	}
 	//OSDCTRL_ItemShow(eShotType);

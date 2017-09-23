@@ -49,18 +49,17 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 				}
 		
 	}
-#if 0
-	//if(memcmp((void*)Posd[eShotType],(void *)ShotGunOsd[0]),sizeof(ShotGunOsd[0]))
-	{
-		pTextObj = &pCtrlObj->pTextList[erase_shottype]; 
-		if(pTextObj)
+#if 1
+	{	
+		pTextObj = &pCtrlObj->pTextList[erase_guntip]; 
+		//if(pTextObj)
 			OSDCTRL_genOsdContext(pCtrlObj,i);
 		startx   = pTextObj->osdInitX;
 		starty   = pTextObj->osdInitY;
 		frcolor  = WHITECOLOR;
 		bgcolor = BGCOLOR;
 		ptr   = (char*)pTextObj->osdContext;
-		osd_chtext(frame, startx, starty, ptr, frcolor, bgcolor);
+		osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
 	}
 #endif
 }
