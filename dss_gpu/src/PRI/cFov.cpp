@@ -108,7 +108,45 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		return;
 
 	cthis->frcolor = 0;
+
+	DrawjsAngleFrame(frame,cthis,last_angle);
+	if(isCalibrationMode() && isBootUpMode())
+	{
+		//no draw
+	}
+	else if(isCalibrationMode())//&&(isCalibrationGeneral()||isCalibrationWeather()))
+	{
+		if(isCalibrationZero())
+		{
+			DrawjsCompass(frame,cthis);
+			DrawjsCross(frame, cthis);		
+		}	
+	}
+	else if(isBattleMode())//&&isStatBattleAlert())
+	{
+		if(isStatBattleAuto())
+		{
+			DrawjsCompass(frame,cthis);
+			DrawjsCross(frame, cthis);
+			DrawjsRuler(frame,cthis);
+		}
+		else if(isStatBattleAlert())
+		{		
+		}		
+	}	
 	
+	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
+		DrawjsGrenadeLoadOK(frame,cthis);
+	
+	if(isStatBattleAlert() && isAutoCatching())
+	{
+		DrawjsAlertFrame(frame,cthis);
+	}
+	DrawjsLeftFrame(frame,cthis);
+	DrawjsRightFrame(frame,cthis);
+	DrawjsBottomFrame(frame,cthis);
+
+#if 0
 	DrawjsCompass(frame,cthis);
 	DrawjsCross(frame,cthis);
 	DrawjsRuler(frame,cthis);
@@ -118,6 +156,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	DrawjsLeftFrame(frame,cthis);
 	DrawjsRightFrame(frame,cthis);
 	DrawjsBottomFrame(frame,cthis);
+#endif
 	return ;
 }
 

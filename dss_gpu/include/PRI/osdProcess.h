@@ -595,8 +595,9 @@ typedef enum _eOsdTypeId{
 	eweather2_offy_3,
 	eweather2_offy_4,
 #endif
-
 	eBoreSightLinId,
+	erase_shottype,
+	erase_guntip,
 	OSD_TEXT_SIZE
 }eOsdId;
 
@@ -811,7 +812,7 @@ void moveRightServoYPram();
 
 extern volatile char globalShoweErrorZone;
 extern WeatherItem gWeatherTable;
-
+extern unsigned char osdflag_shottype_offsetx;
 
 
 

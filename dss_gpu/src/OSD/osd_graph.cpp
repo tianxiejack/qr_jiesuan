@@ -49,10 +49,20 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 				}
 		
 	}
-	//CDC_drawCircle(hIMG,NULL);
-	//CDC_drawSLine(hIMG,(HANDLE)pFont);
-	//CDC_drawTest(hIMG,(HANDLE)pFont);
-
+#if 0
+	//if(memcmp((void*)Posd[eShotType],(void *)ShotGunOsd[0]),sizeof(ShotGunOsd[0]))
+	{
+		pTextObj = &pCtrlObj->pTextList[erase_shottype]; 
+		if(pTextObj)
+			OSDCTRL_genOsdContext(pCtrlObj,i);
+		startx   = pTextObj->osdInitX;
+		starty   = pTextObj->osdInitY;
+		frcolor  = WHITECOLOR;
+		bgcolor = BGCOLOR;
+		ptr   = (char*)pTextObj->osdContext;
+		osd_chtext(frame, startx, starty, ptr, frcolor, bgcolor);
+	}
+#endif
 }
 
 
@@ -65,13 +75,15 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	char *ptr;
 	UInt32 frcolor,bgcolor;
 
-	for(i=eModeId;i<eBoreSightLinId;i++)
+	for(i=eModeId;i<=eBoreSightLinId;i++)
 	{
 		pTextObj = &pCtrlObj->pTextList[i]; 
-	//	if (pTextObj->osdState==eOsd_Disp)
+		if (pTextObj->osdState==eOsd_Hide)
 		{
 			if(pTextObj)
-			OSDCTRL_genOsdContext(pCtrlObj,i);
+				OSDCTRL_genOsdContext(pCtrlObj,i);
+			else
+				continue;	
 			startx   = pTextObj->osdInitX;
 			starty   = pTextObj->osdInitY;
 			frcolor  = WHITECOLOR;
@@ -80,6 +92,25 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 			osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
 		}
 	}
+#if 0
+	for(i=erase_guntip;i<OSD_TEXT_SIZE;i++)
+	{
+		pTextObj = &pCtrlObj->pTextList[i]; 
+		//if (pTextObj->osdState==eOsd_Hide)
+		{
+			if(pTextObj)
+				OSDCTRL_genOsdContext(pCtrlObj,i);
+			else
+				continue;	
+			startx   = pTextObj->osdInitX;
+			starty   = pTextObj->osdInitY;
+			frcolor  = WHITECOLOR;
+			bgcolor = BGCOLOR;
+			ptr   = (char*)pTextObj->osdContext;
+			osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
+		}
+	}
+#endif
 
 }
 

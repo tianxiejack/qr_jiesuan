@@ -362,14 +362,13 @@ void CProcess021::process_osd(void *pPrm)
 	FOVCTRL_draw(frame,pFovCtrlObj);
 	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
 
-	if(isMachineGun() && (!getGunShotType()))
-	{
-		OSDCTRL_ItemHide(eShotType);
-	}
-	else
-		OSDCTRL_ItemShow(eShotType);
-
-		
+	//if(isMachineGun() && (!getGunShotType()))
+	//{
+	//	OSDCTRL_ItemHide(eShotType);
+	//}
+	//else
+	//	OSDCTRL_ItemShow(eShotType);
+	
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
@@ -1507,7 +1506,13 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'b' || key == 'B')
 	{
-		pIStuts->PicpSensorStat = (pIStuts->PicpSensorStat + 1) % (eSen_Max+1);
+		//pIStuts->PicpSensorStat = (pIStuts->PicpSensorStat + 1) % (eSen_Max+1);
+		
+		if(pIStuts->PicpSensorStat==0xff)
+			pIStuts->PicpSensorStat=1;
+		else 
+			pIStuts->PicpSensorStat=0xff;
+		
 		msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
 		//MSGDRIV_send(MSGID_EXT_INPUT_ENPICP,NULL);
 	}
@@ -1607,7 +1612,6 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	{
 		msgdriv_event(MSGID_EXT_MVDETECT, NULL);
 	}
-
 		
 	if (key == 'L')
 		MSGDRIV_send(CMD_EXIT_SELF_CHECK,NULL);
@@ -1760,7 +1764,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 		itmp = pIStuts->SensorStat;
 		dynamic_config(VP_CFG_MainChId, itmp, NULL);
 
-#if 1//change the sensor picp change too
+#if 0//change the sensor picp change too
 		if(pIStuts->PicpSensorStat==0||pIStuts->PicpSensorStat==1)
 			{
 				if(pIStuts->SensorStat==0)

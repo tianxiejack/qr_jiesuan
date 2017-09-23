@@ -42,6 +42,7 @@
 OSDCTRL_OBJ * pCtrlObj = NULL;
 
 char tmparray[12] = "abcdef";
+unsigned char osdflag_shottype_offsetx = 0;
 
 #if 1
 const char ModeOsd[9][8]=
@@ -165,7 +166,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eGunType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		30,	0,	{0}},
 	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		30,	0,	{0}},
 	{eVideoErr,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	334+LOFFSET,		200,	0,	{0}},
-	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	540+LOFFSET,		30,	0,	{0}},
+	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET+osdflag_shottype_offsetx,	30,	0,	{0}},
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,		30,	0,	{0}},
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,		30,	0,	{0}},
 	{eMeasureDis,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,		30,	0,	{0}},
@@ -702,8 +703,11 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		500,	0,	{0}},
 	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		465,	0,	{0}},
 	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		500,	0,	{0}},
-
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
+
+	{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
+	{erase_guntip,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	0,		70,	0,	{0}},
+
 };
 
 //SECOND
@@ -1037,7 +1041,7 @@ static void OSDCTRL_OsdInitial()
 	sprintf(GunOsd[2],"%c%c",189,176);//fang bao
 	sprintf(GunOsd[3],"%c%c%c%c?",223,224,216,193);//sha shang qiang guan
 	sprintf(GunOsd[4],"%c%c%c%c?",189,176,216,193);//fang bao qiang guan
-	sprintf(GunOsd[5],"%c%c%c%c?",200,216,216,193);//fang bao qiang guan
+	sprintf(GunOsd[5],"         ");//fang bao qiang guan
 	//printf(GunOsd[3],"%c%c?",223,224);
 	//printf(GunOsd[4],"%c%c?",189,176);
 
@@ -2045,9 +2049,9 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		case eShotType:
 			if(isMachineGun())
-				Posd[eShotType] = ShotGunOsd[getGunShotType()];	//ShotOsd[getGunShotType()];
+				Posd[eShotType] = ShotGunOsd[getGunShotType()];
 			else
-				Posd[eShotType] = ShotOsd[getShotType()];//ShotGunOsd[getShotType()];		
+				Posd[eShotType] = ShotOsd[getShotType()];	
 			sprintf(pStr,"%s",Posd[eShotType]);
 			break;
 		case eFovType:
@@ -2236,7 +2240,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr," %c ",206); 			//��
 			break;
 		case eCalibMenu_Weather:
-			sprintf(pStr,"%c%c%c%c  ",219,242,180,225); 			//�������
+			sprintf(pStr,"%c%c%c%c   ",219,242,180,225); 			//�������
 			break;
 		case eCalibMenu_Zero:
 			sprintf(pStr,"%s",Posd[eCalibMenu_Zero]);//); 			//У��-5.8��
@@ -2245,7 +2249,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%s",Posd[eCalibMenu_General]);//); 			//���-5.8��
 			break;
 		case eCalibMenu_Save:
-			sprintf(pStr,"%c%c%c%c  ",180,225,181,182); 			//����洢
+			sprintf(pStr,"%c%c%c%c   ",180,225,181,182); 			//����洢
 			break;
 		case eCalibMenu_GenPram:
 			sprintf(pStr,"%c%c%c%c  ",253,180,197,250); 			//�۲�У׼
@@ -3772,6 +3776,15 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eGunTip:
 			sprintf(pStr,"%s",Posd[eGunTip]); //����ȷ����ʾ
 			break;
+			
+		case erase_shottype:
+			sprintf(pStr,"  ");
+			break;
+
+		case erase_guntip:
+			sprintf(pStr,"                                                                      ");
+			break;
+		
 		default:
 			break;
 		}
