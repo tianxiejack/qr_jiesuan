@@ -3143,19 +3143,19 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 
 		case eCalcNum_Turret_s1:
-			sprintf(pStr,"%01d",(int)getTurretTheta()/1000);
+			sprintf(pStr,"%01d",(int)fabs(getTurretTheta())/1000);
 			break;
 
 		case eCalcNum_Turret_s2:
-			sprintf(pStr,"%01d",(int)getTurretTheta()/100%10);
+			sprintf(pStr,"%01d",(int)fabs(getTurretTheta())/100%10);
 			break;
 
 		case eCalcNum_Turret_s3:
-			sprintf(pStr,"%01d",(int)getTurretTheta()/10%10);
+			sprintf(pStr,"%01d",(int)fabs(getTurretTheta())/10%10);
 			break;
 
 		case eCalcNum_Turret_s4:
-			sprintf(pStr,"%01d",(int)getTurretTheta()%10);
+			sprintf(pStr,"%01d",(int)fabs(getTurretTheta())%10);
 			break;
 
 		case eCalcNum_Turret_d:
@@ -3163,11 +3163,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 
 		case eCalcNum_Turret_s5:
-			sprintf(pStr,"%01d",(int)getTurretTheta()*10%10);
+			sprintf(pStr,"%01d",abs((int)(getTurretTheta()*10))%10);
 			break;
 
 		case eCalcNum_Turret_s6:
-			sprintf(pStr,"%01d",(int)getTurretTheta()*100%10);
+			sprintf(pStr,"%01d",abs((int)(getTurretTheta()*100))%10);
 			break;
 
 		case eCalcNum_Turret_blank:
@@ -3210,11 +3210,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		
 		case eCalcNum_AlgleD_s15:
-			sprintf(pStr,"%01d",(int)getMachGunAngle()*10%10);
+			sprintf(pStr,"%01d",abs((int)(getMachGunAngle()*10))%10);
 			break;
 		
 		case eCalcNum_AlgleD_s16:
-			sprintf(pStr,"%01d",(int)getMachGunAngle()*100%10);
+			sprintf(pStr,"%01d",abs((int)(getMachGunAngle()*100))%10);
 			break;
 
 		case eCalcNum_AlgleD_c21:
@@ -3249,11 +3249,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		
 		case eCalcNum_AlgleD_s25:
-			sprintf(pStr,"%01d",(int)getGrenadeAngle()*10%10);
+			sprintf(pStr,"%01d",abs((int)(getGrenadeAngle()*10))%10);
 			break;
 		
 		case eCalcNum_AlgleD_s26:
-			sprintf(pStr,"%01d",(int)getGrenadeAngle()*100%10);
+			sprintf(pStr,"%01d",abs((int)(getGrenadeAngle()*100))%10);
 			break;
 
 		case eCalcNum_AlgleD_c22:
@@ -3296,7 +3296,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		
 		case eCalcNum_Posion_s14:
-			sprintf(pStr,"%01d",(int)getPlatformPositionX()%10);
+			sprintf(pStr,"%01d",abs((int)getPlatformPositionX())%10);
 			break;
 	
 		case eCalcNum_Posion_d1:
@@ -3304,11 +3304,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		
 		case eCalcNum_Posion_s15:
-			sprintf(pStr,"%01d",(int)getPlatformPositionX()*10%10);
+			sprintf(pStr,"%01d",abs((int)(getPlatformPositionX()*10))%10);
 			break;
 		
 		case eCalcNum_Posion_s16:
-			sprintf(pStr,"%01d",(int)getPlatformPositionX()*100%10);
+			sprintf(pStr,"%01d",abs((int)(getPlatformPositionX()*100))%10);
 			break;
 
 		case eCalcNum_Posion_c21:
@@ -3335,7 +3335,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		
 		case eCalcNum_Posion_s24:
-			sprintf(pStr,"%01d",(int)getPlatformPositionY()%10);
+			sprintf(pStr,"%01d",abs((int)getPlatformPositionY())%10);
 			break;
 	
 		case eCalcNum_Posion_d2:
@@ -3343,11 +3343,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		
 		case eCalcNum_Posion_s25:
-			sprintf(pStr,"%01d",(int)getPlatformPositionY()*10%10);
+			sprintf(pStr,"%01d",abs((int)(getPlatformPositionY()*10))%10);
 			break;
 		
 		case eCalcNum_Posion_s26:
-			sprintf(pStr,"%01d",(int)getPlatformPositionY()*100%10);
+			sprintf(pStr,"%01d",abs((int)(getPlatformPositionY()*100))%10);
 			break;
 
 		case eCalcNum_Posion_c22:

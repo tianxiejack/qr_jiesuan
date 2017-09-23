@@ -275,7 +275,8 @@ void saveWeatherParam()
 				+Weather[6]*1000 +Weather[7]*100 +Weather[8]*10 +Weather[9];
 	
 	Temparature = (Weather[0])?(Weather[1]*10 +Weather[2]):(-(Weather[1]*10 +Weather[2]));
-	
+	printf("Temparature=%d\n",Temparature);
+	printf("gWeatherTable.Temparature=%d\n",gWeatherTable.Temparature);
 	gWeatherTable.Temparature = Temparature;
 	gWeatherTable.Pressure	  = Pressure;
 }

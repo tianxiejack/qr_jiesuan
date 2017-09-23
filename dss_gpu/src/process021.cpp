@@ -43,6 +43,7 @@ FOVCTRL_Handle  pFovCtrlBeforObj = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OB
 FOVCTRL_Handle  pFovCtrlLocal = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ));	
 
 int n=0,ShinId=eCalibGeneral_XPole;
+int shine_table[10] = {0};
 
 
 UInt32 interfaceflag;
@@ -357,7 +358,9 @@ void CProcess021::process_osd(void *pPrm)
 		n++;
 		if(n%3 == 0)
 		{
-			Osd_shinItem(ShinId);//\u951f\u65a4\u62f7\u70c1
+			Osd_shinItem(ShinId);
+			for(i = 0;i<10;i++)
+				Osd_shinItem(shine_table[i]);
 			n = 0;
 		}
 	}
@@ -3512,15 +3515,15 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 		{
 			if(isCalibrationZero())
 			{
-				//saveZeroParam();
+				saveZeroParam();
 			}
 			else if(isCalibrationGeneral())
 			{
-				//saveGeneralParam();
+				saveGeneralParam();
 			}
 			else if(isCalibrationWeather())
 			{
-				//saveWeatherParam();
+				saveWeatherParam();
 			}
 			else if(isCalibrationGenPram())
 			{
@@ -3907,8 +3910,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 	if(isCalibrationMode())
 	{
 		if(isCalibrationMainMenu())
-		{
-			
+		{		
 			int cmdId;//,i;
 			// assign cmdId according to XPosition
 			cmdId = CMD_CALIBRATION_SWITCH_TO_WEATHER + getXPosition();
@@ -3971,12 +3973,12 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 						break;
 				}
 			}
-			gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
-			OSDCTRL_updateMainMenu(gProjectileType);
-			OSDCTRL_NoShine();
+			//gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
+			//OSDCTRL_updateMainMenu(gProjectileType);
+			//OSDCTRL_NoShine();
 			// update OSDdisplay
-			OSDCTRL_CalibMenuShow();
-			Posd[eGunType] = GunOsd[getBulletType()-1];
+			//OSDCTRL_CalibMenuShow();
+			//Posd[eGunType] = GunOsd[getBulletType()-1];
 		}
 		else if(isCalibrationSave())
 		{
@@ -4246,7 +4248,11 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 			#endif
 			
 			for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-				OSDCTRL_ItemShow(i);
+			{
+				
+				//shine_table
+			}
+			//OSDCTRL_ItemShow(i);
 			
 			switch(getDisLen())
 			{
@@ -4664,7 +4670,6 @@ void CProcess021::processCMD_MODE_SHOT_SHORT(LPARAM lParam)
  {
  	if(isMachineGun())
 	{
-		//g_Text[eShotType].osdInitX = 540;
 		gGunShotType = SHOTTYPE_SHORT;
 	}	
 	//OSDCTRL_ItemHide(eShotType);

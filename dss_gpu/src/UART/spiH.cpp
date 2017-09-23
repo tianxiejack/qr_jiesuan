@@ -631,7 +631,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 #endif
 				
 				tmp = (positive)*angle/100.00;
-				if(tmp>= -5 && tmp<=75)
+				if(tmp>= -180 && tmp<= 180)
 					gTurretTheta.theta = tmp;
 				
 				pFovCtrlObj->theta = (int)tmp;
