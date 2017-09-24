@@ -1759,15 +1759,16 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 
 		case eweather1_qiya1:
-			sprintf(pStr,"%01d",Pressure/100000%10);
+			printf("Pressure = %d\n",Pressure);
+			sprintf(pStr,"%01d",Pressure/1000/1000%10);
 			break;
 
 		case eweather1_qiya2:
-			sprintf(pStr,"%01d",Pressure/10000%10);
+			sprintf(pStr,"%01d",Pressure/1000/100%10);
 			break;
 
 		case eweather1_qiya3:
-			sprintf(pStr,"%01d",Pressure/1000%10);
+			sprintf(pStr,"%01d",Pressure/1000/10%10);
 			break;
 
 		case eweather1_qiya4:
@@ -2787,11 +2788,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 
 		case eCalcNum_Visual_s15:
-			sprintf(pStr,"%01d",(int)(abs(getSumCalibX()))*10%10);		
+			sprintf(pStr,"%01d",abs((int)(getSumCalibX()*10))%10);		
 			break;
 
 		case eCalcNum_Visual_s16:
-			sprintf(pStr,"%01d",(int)(abs(getSumCalibX()))*100%10);	
+			sprintf(pStr,"%01d",abs((int)(getSumCalibX()*100))%10);	
 			break;
 
 		case eCalcNum_Visual_c2:
@@ -3109,7 +3110,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,".");
 			break;
 		case eCalcNum_Weather_s24:
-			sprintf(pStr,"%01d",gWeatherTable.Pressure/100%10);
+			sprintf(pStr,"%01d",gWeatherTable.Pressure%1000/1000%10);
 			break;
 		case eCalcNum_Weather_s25:
 			sprintf(pStr,"%01d",gWeatherTable.Pressure/10%10);

@@ -3173,7 +3173,7 @@ void CProcess021::processCMD_BOOT_UP_CHECK_COMPLETE(LPARAM lParam)
 	}
 	//ReadParamsFlash();//read data from flash
 	button_to_read();
-	
+	initilWeatherParam();	
 	return ;
  }
 

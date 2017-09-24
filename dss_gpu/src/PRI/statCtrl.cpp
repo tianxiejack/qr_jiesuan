@@ -563,17 +563,17 @@ void loadFiringTable_Enter()
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
 
 	printf("\n--------------------------INPUT-----------------------------------\n");
-	printf("PlatformXTheta = %f\n",input.PlatformXTheta);
-	printf("PlatformYTheta = %f\n",input.PlatformYTheta);
-	printf("MachineGunYTheta = %f\n",input.MachineGunYTheta);
-	printf("GrenadeYTheta = %f\n",input.GrenadeYTheta);
-	printf("TargetDistance = %f\n",input.TargetDistance);
-	printf("Temperature = %f\n",input.Temperature);
+	printf("PlatformXTheta = %f\n",(input.PlatformXTheta));
+	printf("PlatformYTheta = %f\n",(input.PlatformYTheta));
+	printf("MachineGunYTheta = %f\n",(input.MachineGunYTheta));
+	printf("GrenadeYTheta = %f\n",(input.GrenadeYTheta));
+	printf("TargetDistance = %f\n",(input.TargetDistance));
+	printf("Temperature = %f\n",(input.Temperature));
 	printf("AirPressure = %f\n",input.AirPressure);
-	printf("TargetAngularVelocityX = %f\n",input.TargetAngularVelocityX);
-	printf("TurretDirectionTheta = %f\n",input.TurretDirectionTheta);
-	printf("TargetAngularVelocityY = %f\n",input.TargetAngularVelocityY);
-	printf("DipAngle = %f\n",input.DipAngle);
+	printf("TargetAngularVelocityX = %f\n",(input.TargetAngularVelocityX));
+	printf("TurretDirectionTheta = %f\n",(input.TurretDirectionTheta));
+	printf("TargetAngularVelocityY = %f\n",(input.TargetAngularVelocityY));
+	//printf("DipAngle = %f\n",input.DipAngle);
 	printf("\n------------------------------------------------------------------\n");
 
 	ret = FiringCtrl(&input, &output);
