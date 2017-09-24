@@ -3639,9 +3639,8 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		}
 		else if(isCalibrationZero())
 		{
-			
-
-
+			if(distancefirst)
+				increaseMeasureDis();
 		
 			if(isGrenadeGas())
 				return ;

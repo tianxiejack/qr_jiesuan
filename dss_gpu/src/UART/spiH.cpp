@@ -22,6 +22,7 @@
 #include "osdPort.h"
 #include "LaserPort.h"
 #include "WeaponCtrl.h"
+#include "record_log.h"
 
 
 static int fd0;
@@ -1045,10 +1046,12 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 {
 	uint8_t* receiveDataTmp;
 	int comNumTemp,fdTmp,ret,lengthTmp;
+	int record_can_id = 0;
 	if(comNum<0||comNum>7)
 	{
 		return 1;
 	}
+	record_can_id = comNum;
 	switch(comNum)
 	{
 		case 0:
@@ -1101,6 +1104,7 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 		lengthTmp=RS422_data_buff->length;
 	}
 
+	
 	for(int i=0;i<length;i++)
 	{
 		RS422_data_buff->receiveData[lengthTmp+i]=transfer_readOneData(comNum);
@@ -1111,6 +1115,8 @@ int transfer_readData(int comNum,int length,struct RS422_data* RS422_data_buff)
 #else
     }
 #endif
+
+	record_log_send_data(record_can_id, length, (unsigned char * )&(RS422_data_buff->receiveData[lengthTmp]) );
 
 	pthread_mutex_unlock(&RS422_data_buff->mutex);
 	return 0;
