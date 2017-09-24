@@ -48,6 +48,7 @@ int shine_table[10] = {0};
 
 UInt32 interfaceflag;
 static bool tiaolingwei_flag = 0;
+static bool distancefirst = 0;
 	
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
@@ -3638,6 +3639,10 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		}
 		else if(isCalibrationZero())
 		{
+			
+
+
+		
 			if(isGrenadeGas())
 				return ;
 			//moveCrossUp();  //move the axis up
@@ -3974,8 +3979,8 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				}
 			}
 			//gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
-			//OSDCTRL_updateMainMenu(gProjectileType);
-			//OSDCTRL_NoShine();
+			OSDCTRL_updateMainMenu(gProjectileType);
+			OSDCTRL_NoShineShow();
 			// update OSDdisplay
 			//OSDCTRL_CalibMenuShow();
 			//Posd[eGunType] = GunOsd[getBulletType()-1];
@@ -4040,10 +4045,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				}
 				else
 					OSDCTRL_ItemHide(eDynamicZone);
-			}
-
-			
-			
+			}		
 			//loadFiringTable_Enter();
 			//updateMoveCross();
 		}
@@ -5016,12 +5018,12 @@ void CProcess021::updateCMD_BUTTON_SWITCH(int param)
 
 bool CProcess021::ValidateGunType()
 {
-	if(ShinId == eMeasureDis_Value1 ||ShinId == eMeasureDis_Value2 ||ShinId == eMeasureDis_Value3 ||ShinId == eMeasureDis_Value4)
+	if((ShinId >= eMeasureDis_Value1 &&ShinId <= eMeasureDis_Value4))
 	{
 		//do nothing
 	}
 	else
-		OSDCTRL_NoShine();
+		OSDCTRL_NoShineShow();
 	
 	if(gProjectileType > PROJECTILE_GRENADE_GAS)
 	{		

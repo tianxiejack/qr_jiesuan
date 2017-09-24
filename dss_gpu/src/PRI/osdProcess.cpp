@@ -847,7 +847,7 @@ void OSDCTRL_AllHide()
 void OSDCTRL_NoShine()
 {
 	SHINE = FALSE;
-	if(isMeasureManual()&&(eMeasureDis == ShinId))
+	if(isMeasureManual()&&(eMeasureDis < ShinId && ShinId <= eMeasureDis_Value4))
 		OSDCTRL_ItemShow(ShinId);
 	else if(isCalibrationSave()&&(eSaveYesNo==ShinId))
 		OSDCTRL_ItemShow(ShinId);
@@ -1759,7 +1759,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 
 		case eweather1_qiya1:
-			printf("Pressure = %d\n",Pressure);
+			//printf("Pressure = %d\n",Pressure);
 			sprintf(pStr,"%01d",Pressure/1000/1000%10);
 			break;
 
@@ -3110,13 +3110,13 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,".");
 			break;
 		case eCalcNum_Weather_s24:
-			sprintf(pStr,"%01d",gWeatherTable.Pressure%1000/1000%10);
+			sprintf(pStr,"%01d",gWeatherTable.Pressure%10000/1000%10);
 			break;
 		case eCalcNum_Weather_s25:
-			sprintf(pStr,"%01d",gWeatherTable.Pressure/10%10);
+			sprintf(pStr,"%01d",gWeatherTable.Pressure%1000%10);
 			break;
 		case eCalcNum_Weather_s26:
-			sprintf(pStr,"%01d",gWeatherTable.Pressure%10);
+			sprintf(pStr,"%01d",gWeatherTable.Pressure%100%10);
 			break;
 		case eCalcNum_Weather_c22:
 			sprintf(pStr,"K");

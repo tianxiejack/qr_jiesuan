@@ -343,38 +343,28 @@ static int visualCorrection(FiringInputs *input, CorrectionDelta* output)
 		expectedThetaY = YGapLaser_to_grenade/input->TargetDistance;
 		
 	}
-	//水平补偿(delta ng1=F1x-F2x) 密位
+	
 	output->DeltaThetaX = RADIAN2MIL(zeroPointThetaX - expectedThetaX);
-	//垂直补偿(Delta e1=F1y-F2y)
 	output->DeltaThetaY = RADIAN2MIL(zeroPointThetaY - expectedThetaY);
 
 	return 0;
 }
 
-//火炮耳轴倾斜的修正
 static int trunnionCorrection(FiringInputs *input, FiringOutputs *inputOffsets, CorrectionDelta* output)
 {
-	//double thetaX;
-	//未倾斜时水平角度(ng=ng(w)+z+delta ng4)
-	//横风ng(w)没有
-	//偏流z
-	//delta ng4人工装订水平综合修正量
 	double ng =  inputOffsets->BiasAngle + inputOffsets->correctionData.deltaX;
 
 	//epselon =  a + delta e4
-	// 火炮瞄准角 a
-	//人工装订垂直综修量 e4
+
 	double epselon = inputOffsets->correctionData.deltaY + inputOffsets->AimElevationAngle;
 	
-	//坦克倾角Tht_x, Tht_y 
-	//耳轴倾角(x) 密位=acos(cos(Tht_x)*cos(Tht_y))
+
 	TankTheta tankTht = getTankTheta();
-	//todo: 也许theta=MIL2RADIAN(tankTht.deltaX) ?现场试验一把?
-	//theta是坦克法线的倾角
+
 	double theta = acos(cos(MIL2RADIAN(tankTht.deltaX))*cos(MIL2RADIAN(tankTht.deltaY)));
 	
 	output->DeltaThetaX = ng*cos(theta) + epselon*sin(theta);
-	output->DeltaThetaY = epselon*cos(theta) + ng*sin(theta);
+	output->DeltaThetaY = epselon*cos(theta) - ng*sin(theta);		//+
 
 	return 0;
 }
