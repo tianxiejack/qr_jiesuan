@@ -40,7 +40,7 @@
 #define CODE_MACHGUN 	(0x37)
 #define CODE_GRENADE 	(0x42)
 #define CODE_TURRET   	(0x2C)
-#define WAIT_DELAY		20*5000
+#define WAIT_DELAY		500
 
 extern int turretTimer;
 
@@ -84,6 +84,23 @@ void absPosRequest(BYTE code)
 	return ;
 }
 
+void TestabsPosRequest(BYTE code)
+{
+	char SERVOPOS[6]   ={0x03,0x00,0x50,0x58,0x00,0x00};
+	SERVOPOS[1] = code;
+	TestSendCANBuf(SERVOPOS, sizeof(SERVOPOS));
+	usleep(500);
+	return ;
+}
+
+void startServo(BYTE code)
+{
+	char start[6] = {0x03,0x00,0x42,0x47,0x00,0x00};
+	start[1] = code;
+	SendCANBuf(start, sizeof(start));
+	return ;
+}
+
 void startServo(BYTE code)
 {
 	char start[6] = {0x03,0x00,0x42,0x47,0x00,0x00};
@@ -115,6 +132,31 @@ void startServoServer(BYTE code)
 	usleep(WAIT_DELAY);
 	return ;
 }
+
+void TeststartServoServer(BYTE code)
+{
+	char buf[4] = {0x00,0x00,0x01,0x00};
+	char MOTOR0[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x00,0x00,0x00,0x00};
+	char MOTOR1[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x01,0x00,0x00,0x00};
+	char MODE[10]	={0x03,0x00,0x55,0x4D,0x00,0x00,0x05,0x00,0x00,0x00};
+	TestSendCANBuf(buf, sizeof(buf));
+	usleep(WAIT_DELAY);
+	MOTOR0[1] = code;
+	TestSendCANBuf(MOTOR0, sizeof(MOTOR0));
+	usleep(WAIT_DELAY);
+	MODE[1] = code;
+	TestSendCANBuf(MODE, sizeof(MODE));
+	usleep(WAIT_DELAY);
+	MOTOR1[1] = code;
+	TestSendCANBuf(MOTOR1, sizeof(MOTOR1));
+	usleep(WAIT_DELAY);
+	TestabsPosRequest(BYTE code)(code);
+	usleep(WAIT_DELAY);
+	teststartServo(code);
+	usleep(WAIT_DELAY);
+	return ;
+}
+
 
 
 void killServoCheckTimer()
@@ -354,7 +396,7 @@ void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 {
 	absPosRequest(CODE_GRENADE);
 	absPosRequest(CODE_MACHGUN);
-	absPosRequest(CODE_TURRET);
+	//absPosRequest(CODE_TURRET);
 	return ;
 }
 
@@ -452,7 +494,7 @@ void processCMD_TRACE_SENDFRAME0(LPARAM lParam)
 }
 void processCMD_SERVO_INIT(LPARAM lParam)
 {
-#if 0
+#if 1
 	startServoServer(CODE_GRENADE);
 	startServoServer(CODE_MACHGUN);
 	startServoServer(CODE_TURRET);

@@ -133,6 +133,11 @@ void killSelfCheckPosServoTimer();
  void startCANSendTimer();
  void startServoCheck_Timer();
 
+ void TeststartServoServer(unsigned char code);
+int TestSendCANBuf(char *buf, int length);
+void TestabsPosRequest(BYTE code);
+void teststartServo(BYTE code);
+
 
 extern BOOL bTraceSend;
 extern int servoInit;

@@ -353,6 +353,22 @@ int ReadCANBuf(char *buf, int length)
 
 int SendCANBuf(char *buf, int length)
 {
+	#if 0
+		int nwrite= 0 ;
+
+		pthread_mutex_lock(&can_mutex);
+		
+		nwrite = write(fd_can, buf, length);
+
+		pthread_mutex_unlock(&can_mutex);
+		
+		return nwrite;	
+	#endif
+}
+
+
+int TestSendCANBuf(char *buf, int length)
+{
 		int nwrite= 0 ;
 
 		pthread_mutex_lock(&can_mutex);
@@ -363,7 +379,6 @@ int SendCANBuf(char *buf, int length)
 		
 		return nwrite;	
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //\u951f\u65a4\u62f7\u53d6\u951f\u65a4\u62f7\u951f\u8f7f\u4f19\u62f7\u951f?

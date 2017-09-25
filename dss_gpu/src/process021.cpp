@@ -25,6 +25,7 @@
 #include "app_user.h"
 
 #include "spiH.h"
+#include "servo_control_obj.h"
 //extern Level_one_state gLevel1Mode;
 //extern Level_one_state gLevel1LastMode;
 
@@ -32,6 +33,9 @@
 
 using namespace std;
 using namespace cv;
+
+#define CODE_MACHGUN 		(0x37)
+#define CODE_GRENADE 		(0x42)
 
 //extern OSDCTRL_Handle pOsdCtrlObj;
 
@@ -49,6 +53,7 @@ int shine_table[10] = {0};
 UInt32 interfaceflag;
 static bool tiaolingwei_flag = 0;
 static bool distancefirst = 0;
+
 	
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
@@ -1539,12 +1544,15 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'd'|| key == 'D')
 	{
-		if(pIStuts->ImgMtdStat[pIStuts->SensorStat])
-			pIStuts->ImgMtdStat[pIStuts->SensorStat] = eImgAlg_Disable;
-		else
-			pIStuts->ImgMtdStat[pIStuts->SensorStat] = eImgAlg_Enable;
-		//msgdriv_event(MSGID_EXT_INPUT_ENMTD, NULL);
-		MSGDRIV_send(MSGID_EXT_INPUT_ENMTD,NULL);
+		testjiqiangjiansu();
+		#if 0
+			if(pIStuts->ImgMtdStat[pIStuts->SensorStat])
+				pIStuts->ImgMtdStat[pIStuts->SensorStat] = eImgAlg_Disable;
+			else
+				pIStuts->ImgMtdStat[pIStuts->SensorStat] = eImgAlg_Enable;
+			//msgdriv_event(MSGID_EXT_INPUT_ENMTD, NULL);
+			MSGDRIV_send(MSGID_EXT_INPUT_ENMTD,NULL);
+		#endif
 	}
 
 	if (key == 'e' || key == 'E')
@@ -1561,13 +1569,16 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	
 	if (key == 'f' || key == 'F')
 	{
-		if(pIStuts->ImgFrezzStat[pIStuts->SensorStat])
-			pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Disable;
-		else
-			pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Enable;
-		
-		//msgdriv_event(MSGID_EXT_INPUT_ENFREZZ, NULL);
-		MSGDRIV_send(MSGID_EXT_INPUT_ENFREZZ,NULL);
+		testjiqiangjiasu();
+		#if 0
+			if(pIStuts->ImgFrezzStat[pIStuts->SensorStat])
+				pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Disable;
+			else
+				pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Enable;
+			
+			//msgdriv_event(MSGID_EXT_INPUT_ENFREZZ, NULL);
+			MSGDRIV_send(MSGID_EXT_INPUT_ENFREZZ,NULL);
+		#endif
 	}
 	
 	
@@ -1596,16 +1607,12 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		MSGDRIV_send(CMD_BUTTON_ENTER, NULL);
 	}
 
-	if (key == 'i')
+	if (key == 'I' ||key == 'i')
 	{	
-		MSGDRIV_send(CMD_BULLET_SWITCH0, NULL);
+		//init the server
+		testchushihua();
 	}
 
-	if (key == 'I')
-	{
-		
-		MSGDRIV_send(CMD_BUTTON_UNLOCK, NULL);
-	}
 		
 	if (key == 'j')
 	{
@@ -1623,18 +1630,20 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		msgdriv_event(MSGID_EXT_MVDETECT, NULL);
 	}
 		
-	if (key == 'L')
-		MSGDRIV_send(CMD_EXIT_SELF_CHECK,NULL);
-
+	if (key == 'L' || key == 'l')
+	{
+		testjiqiangqidong();
+	}
 
 	if (key == 'm' || key == 'M')
 	{
-		MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
+		testliudanqidong();
+		//MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
 	}
 
 	if (key == 'n' || key == 'N')
 	{
-		MSGDRIV_send(CMD_CALCNUM_HIDE, NULL);
+		//testliudanqidong();
 	}
 	
 
@@ -1658,13 +1667,18 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	}
 
 	if(key == 'Q' || key == 'q')
-	{
-	
+	{	
+		testliudanjiansu();
 	}
 
 	if(key == 'R' || key == 'r')
 	{
 	
+	}
+
+	if(key == 'S' || key == 's')
+	{
+		teststopserver();
 	}
 	
 		
@@ -1695,11 +1709,17 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	   	   sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);
 	       }
 	}
+
+	if (key == 'v'|| key == 'V')
+	{
+		button_to_save();
+	}
 		
 
 	if (key == 'w')
 	{
-		MSGDRIV_send(CMD_BUTTON_QUIT, NULL);
+		testliudanjiansu();
+		//MSGDRIV_send(CMD_BUTTON_QUIT, NULL);
 	}
 
 	if (key == 'x'|| key == 'X')
@@ -4832,13 +4852,6 @@ void CProcess021::processCMD_IDENTIFY_KILL(LPARAM lParam)
 void CProcess021::processCMD_IDENTIFY_GAS(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_IDENTIFY_GAS",__func__,__LINE__);
-	return ;
- }
-
-
-void CProcess021::processCMD_SERVO_INIT(LPARAM lParam)
- {
-
 	return ;
  }
 

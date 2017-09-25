@@ -20,5 +20,18 @@ void initAllServos();
 void setServoControlObj();
 extern long cmd_machservo_moveoffset_tmp;
 extern long cmd_grenadeservo_moveoffset_tmp;
+
+
+void testchushihua();
+void testjiqiangqidong();
+void testliudanqidong();
+void teststopserver();
+void testliudanjiasu();
+void testjiqiangjiasu();
+void testliudanjiansu();
+void testjiqiangjiansu();
+
+
+
 #endif
 

@@ -62,6 +62,13 @@ static unsigned char  Grenadebuf[]	 = {0x03,0x37,0x4A, 0x56, 0x00, 0x00,0x00,0x0
 static unsigned char Pos_Turretbuf[] 	= {0x03, 0x42, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
 static unsigned char Pos_Machbuf[] 		= {0x03, 0x2C, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
 static unsigned char Pos_Grenadebuf[] 	= {0x03,0x37,0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
+
+/*********************TEST buf ************************/
+static unsigned char  TestMachbuf[] 	 = {0x03, 0x2C, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static unsigned char  TestGrenadebuf[] = {0x03,0x37,0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
+
+
+
 #define MACH_SERVO_SPEED_RATE  1139
 #define MACH_SERVO_RESOLUTION  4096
 
@@ -530,3 +537,117 @@ void setServoControlObj()
 	else
 		pServoControlObj=getGrenadeServoContrlObj();
 }
+
+
+
+void testchushihua()
+{
+	TeststartServoServer(CODE_GRENADE);
+	TeststartServoServer(CODE_MACHGUN);
+	//TeststartServoServer(CODE_TURRET);
+	return ;
+}
+
+void testjiqiangqidong()
+{
+	TestMachbuf[7] = 0x05;
+	TestSendCANBuf(TestMachbuf,10);
+	usleep(500);
+	FILLBUFFBGIN(TestMachbuf);
+	TestSendCANBuf(TestMachbuf,6);
+	usleep(500);
+}
+
+void testliudanqidong()
+{
+	TestGrenadebuf[7] = 0x05;
+	TestSendCANBuf(TestGrenadebuf,10);
+	usleep(500);
+	FILLBUFFBGIN(TestGrenadebuf);
+	TestSendCANBuf(TestGrenadebuf,6);
+	usleep(500);
+}
+
+void teststopserver()
+{
+	FILLBUFFSTOP(TestMachbuf);
+	TestSendCANBuf((TestMachbuf), CAN_CMD_SIZE_SHORT);
+	usleep(500);
+
+	FILLBUFFSTOP(TestGrenadebuf);
+	TestSendCANBuf((TestGrenadebuf), CAN_CMD_SIZE_SHORT);
+	usleep(500);	
+}
+
+void testliudanjiasu()
+{
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	ymilsecond.value = 1000;
+	if(ymilsecond.value <= 112800)
+		ymilsecond.value +=2000;
+	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
+	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_LONG);
+	usleep(500);
+	FILLBUFFBGIN(TestGrenadebuf);
+	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_SHORT);	
+	usleep(500);	
+}
+
+void testjiqiangjiasu()
+{
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	ymilsecond.value = 1000;
+	if(ymilsecond.value <= 112800)
+		ymilsecond.value +=2000;
+	FILLBUFFSPEED(TestMachbuf, ymilsecond);
+	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
+	usleep(500);
+	FILLBUFFBGIN(TestMachbuf);
+	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_SHORT);	
+	usleep(500);	
+}
+
+void testliudanjiansu()
+{
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	ymilsecond.value = 1000;
+	if(ymilsecond.value >= 2000)
+		ymilsecond.value -=2000;
+	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
+	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_LONG);
+	usleep(500);
+	FILLBUFFBGIN(TestGrenadebuf);
+	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_SHORT);	
+	usleep(500);	
+}
+
+void testjiqiangjiansu()
+{
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	ymilsecond.value = 1000;
+	if(ymilsecond.value >= 2000)
+		ymilsecond.value -=2000;
+	FILLBUFFSPEED(TestMachbuf, ymilsecond);
+	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
+	usleep(500);
+	FILLBUFFBGIN(TestMachbuf);
+	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_SHORT);	
+	usleep(500);
+}
+
+
+
+
+
