@@ -31,6 +31,9 @@
 
 #include "UartCanMessage.h"
 #include "WeaponCtrl.h"
+#include "record_log.h"
+
+
 bool test_flag_uart = 0;
 static int fd_can;
 
@@ -374,6 +377,8 @@ int TestSendCANBuf(char *buf, int length)
 		pthread_mutex_lock(&can_mutex);
 		
 		nwrite = write(fd_can, buf, length);
+		record_log_send_data(record_log_can_send, length, (unsigned char*)buf);
+	
 
 		pthread_mutex_unlock(&can_mutex);
 		

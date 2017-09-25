@@ -200,8 +200,8 @@ int record_log_send_data(int com_id, int size, unsigned  char * buffer)
 			for(j=0; j<size; j++)
 			{
 				record_log[i].recv_data[index].recv[j] = buffer[j];
-				if(record_log_can == com_id)
-				     printf("record_log_can buffer=%02x \n",buffer[j]);
+				//if(record_log_can == com_id)
+				    // printf("record_log_can buffer=%02x \n",buffer[j]);
 			}
 
 
