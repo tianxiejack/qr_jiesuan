@@ -25,6 +25,7 @@
 #include  "spiH.h"
 
 #include "UartCanMessage.h"
+#include "record_log.h"
 
 
 #define SIZE		1024
@@ -2801,7 +2802,17 @@ void * SPI_CAN_process(void * prm)
 		int canfd = 0;
 		int haveData=0;
 
-		 InitDevice_spi();
+		init_record_log(record_log_roter,    "/config/log/record_log_roter.txt");
+		init_record_log(record_log_decode, "/config/log/record_log_decode.txt");
+		init_record_log(record_log_bak2,    "/config/log/record_log_bak2.txt");
+		init_record_log(record_log_mirror,   "/config/log/record_log_mirror.txt");
+		init_record_log(record_log_vcode,   "/config/log/record_log_vcode.txt");
+		init_record_log(record_log_bak1,    "/config/log/record_log_bak1.txt");
+		init_record_log(record_log_test,     "/config/log/record_log_test.txt");
+		init_record_log(record_log_hcode,   "/config/log/record_log_hcode.txt");
+		init_record_log(record_log_can,      "/config/log/record_log_can.txt");
+
+		InitDevice_spi();
 		
 		OpenCANDevice();
 
@@ -2824,7 +2835,7 @@ void * SPI_CAN_process(void * prm)
 							nread = 0;
 							length= 0;
 							nread =  ReadCANBuf(buf+length, bufLen-length);
-
+							
 							//if(uart_open_close_flag)
 								//nread = -1;
 						#if CAN_DEBUG
@@ -2832,6 +2843,10 @@ void * SPI_CAN_process(void * prm)
 						#endif
 							if(nread > 0)
 							{
+									char * record_buff = buf+length;
+									//printf("enter record_log_can=%d record_log_send_data\n ", record_log_can);
+									record_log_send_data(record_log_can, nread, (unsigned char*)record_buff);
+							
 									//CanPort_parseByte((unsigned char*)buf);
 									//continue;
 
