@@ -555,7 +555,12 @@ void testchushihua()
 
 void testjiqiangqidong()
 {
-	TestMachbuf[7] = 0x05;
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	ymilsecond.value = 500;
+	FILLBUFFSPEED(TestMachbuf, ymilsecond);
 	TestSendCANBuf(TestMachbuf,10);
 	usleep(500);
 	FILLBUFFBGIN(TestMachbuf);
@@ -565,7 +570,43 @@ void testjiqiangqidong()
 
 void testliudanqidong()
 {
-	TestGrenadebuf[7] = 0x05;
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	ymilsecond.value = 500;
+	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
+	TestSendCANBuf(TestGrenadebuf,10);
+	usleep(500);
+	FILLBUFFBGIN(TestGrenadebuf);
+	TestSendCANBuf(TestGrenadebuf,6);
+	usleep(500);
+}
+
+
+void testFjiqiangqidong()
+{
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	ymilsecond.value = -500;
+	FILLBUFFSPEED(TestMachbuf, ymilsecond);
+	TestSendCANBuf(TestMachbuf,10);
+	usleep(500);
+	FILLBUFFBGIN(TestMachbuf);
+	TestSendCANBuf(TestMachbuf,6);
+	usleep(500);
+}
+
+void testFliudanqidong()
+{
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	ymilsecond.value = -500;
+	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
 	TestSendCANBuf(TestGrenadebuf,10);
 	usleep(500);
 	FILLBUFFBGIN(TestGrenadebuf);
@@ -590,7 +631,6 @@ void testliudanjiasu()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	ymilsecond.value = 1000;
 	if(ymilsecond.value <= 112800)
 		ymilsecond.value +=2000;
 	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
@@ -608,7 +648,7 @@ void testjiqiangjiasu()
 		int value;
 	}ymilsecond;
 	ymilsecond.value = 1000;
-	if(ymilsecond.value <= 112800)
+	if(ymilsecond.value <= 192800)
 		ymilsecond.value +=2000;
 	FILLBUFFSPEED(TestMachbuf, ymilsecond);
 	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
@@ -625,7 +665,7 @@ void testliudanjiansu()
 		int value;
 	}ymilsecond;
 	ymilsecond.value = 1000;
-	if(ymilsecond.value >= 2000)
+	if(ymilsecond.value >= -192800)
 		ymilsecond.value -=2000;
 	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
 	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_LONG);

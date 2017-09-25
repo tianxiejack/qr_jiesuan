@@ -30,6 +30,8 @@ void testliudanjiasu();
 void testjiqiangjiasu();
 void testliudanjiansu();
 void testjiqiangjiansu();
+void testFliudanqidong();
+void testFjiqiangqidong();
 
 
 
