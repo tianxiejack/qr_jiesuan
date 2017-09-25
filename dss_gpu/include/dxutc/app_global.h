@@ -31,7 +31,7 @@
 /*
 * *VAR TYPE REDEFINED
  */
-#define BYTE   unsigned char
+#define BYTE		unsigned char
 #define UINT   unsigned int
 #define UINT32 unsigned int
 #define BOOL   Bool

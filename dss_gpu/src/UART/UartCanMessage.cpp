@@ -381,7 +381,7 @@ int TestSendCANBuf(char *buf, int length)
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//\u951f\u65a4\u62f7\u53d6\u951f\u65a4\u62f7\u951f\u8f7f\u4f19\u62f7\u951f?
+
 void ServoAbsPosRequest( char code)
 {
 	 char servoPos[6]={ 0x03, 0x00, 0x50, 0x58, 0x00, 0x00  };

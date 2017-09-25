@@ -34,9 +34,6 @@
 using namespace std;
 using namespace cv;
 
-#define CODE_MACHGUN 		(0x37)
-#define CODE_GRENADE 		(0x42)
-
 //extern OSDCTRL_Handle pOsdCtrlObj;
 
 extern OSDCTRL_Handle pCtrlObj;

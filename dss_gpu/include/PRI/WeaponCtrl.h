@@ -134,7 +134,7 @@ void killSelfCheckPosServoTimer();
  void startServoCheck_Timer();
 
  void TeststartServoServer(unsigned char code);
-int TestSendCANBuf(char *buf, int length);
+//int TestSendCANBuf(char *buf, int length);
 void TestabsPosRequest(BYTE code);
 void teststartServo(BYTE code);
 

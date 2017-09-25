@@ -25,6 +25,7 @@
 #include "statCtrl.h"
 #include "msgDriv.h"
 #include "UartCanMessage.h"
+
 #if 0
 #include "MachGunPort.h"
 #include "GrenadePort.h"
@@ -77,6 +78,7 @@ static 	unsigned short panoAngleV=0,panoAngleH=0;
 
 void absPosRequest(BYTE code)
 {
+	
 	char SERVOPOS[6]   ={0x03,0x00,0x50,0x58,0x00,0x00};
 	SERVOPOS[1] = code;
 	SendCANBuf(SERVOPOS, sizeof(SERVOPOS));
@@ -101,11 +103,11 @@ void startServo(BYTE code)
 	return ;
 }
 
-void startServo(BYTE code)
+void teststartServo(BYTE code)
 {
 	char start[6] = {0x03,0x00,0x42,0x47,0x00,0x00};
 	start[1] = code;
-	SendCANBuf(start, sizeof(start));
+	TestSendCANBuf(start, sizeof(start));
 	return ;
 }
 
@@ -150,7 +152,7 @@ void TeststartServoServer(BYTE code)
 	MOTOR1[1] = code;
 	TestSendCANBuf(MOTOR1, sizeof(MOTOR1));
 	usleep(WAIT_DELAY);
-	TestabsPosRequest(BYTE code)(code);
+	TestabsPosRequest(code);
 	usleep(WAIT_DELAY);
 	teststartServo(code);
 	usleep(WAIT_DELAY);
