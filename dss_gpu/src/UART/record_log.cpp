@@ -92,6 +92,7 @@ void* thread_record_log_data(void * prm)
 				 record_log[i].recv_data[j].size=0;
 				 fputc('\n', record_log[i].fp);
 				 record_log[i].record_r_index++;
+				 fflush( record_log[i].fp );
 			}
 
 
@@ -139,7 +140,7 @@ int init_record_log(int com_id, char *filename)
 
     fprintf(fp, "\n//..................start record..................//\n");
     fprintf(fp, "record time: %s\n\n", ctime(&timep));
-
+    fflush(fp);
     //初始化只创建一个线程
     if(index_record_log == 0)
     {
