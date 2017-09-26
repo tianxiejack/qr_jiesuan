@@ -420,7 +420,8 @@ void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 	CANSendbuf[8] = ((TempAngle>>8)&0xFF);
 	CANSendbuf[9] = (TempAngle&0xFF);
 	
-	SendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
+	//SendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
+	TestSendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
 	
 }
 void processCMD_TIMER_SENDFRAME1(LPARAM lParam)//����֡1
