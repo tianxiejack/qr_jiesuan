@@ -4057,9 +4057,9 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			}
 			
 		
-			if(SHINE &&(/*eMeasureDis == ShinId*/eMeasureDis_Value2 == ShinId ||eMeasureDis_Value3 == ShinId ||eMeasureDis_Value4 == ShinId))
+			if(SHINE &&eMeasureDis_Value1 == shine_table[0])
 			{
-				OSDCTRL_NoShineShow();
+				OSDCTRL_NoShine();
 				isfixingMeasure = FALSE;
 				if(0 == DistanceManual)
 				{
@@ -4418,6 +4418,7 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_LASER(LPARAM lParam)
 
 void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
  {	
+ 	int i;
 	//printf("Iparam = %d\n",lParam);
 	killDynamicTimer();
  
@@ -4434,6 +4435,8 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 	}
 	else if(isBattleMode()&&isStatBattleAuto()&&isAutoPreparation())
 	{
+		for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+			OSDCTRL_ItemHide(i);
 		gLevel3CalculatorState = Auto_Idle;
 		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
 		OSDCTRL_ItemShow(eDynamicZone);
@@ -4513,6 +4516,7 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 
 void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
  {	
+ 	int i;
  	//finish_laser_measure = 1;
 	//printf(" processCMD_MEASURE_DISTANCE   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
 	
@@ -4527,7 +4531,6 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			
 			Posd[eMeasureType] = MeasureTypeOsd[2];	//LSBG
 			OSDCTRL_ItemShine(eMeasureType);
-			
 			//todo: trigger Laser and AVT
 			gLevel3CalculatorState = Battle_Preparation;
 			gLevel4subCalculatorState = WaitForFeedBack;
@@ -4545,10 +4548,11 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 		if(!isTurretVelocityValid())
 			processCMD_VELOCITY_FAIL(0);
 			//sendCommand(CMD_VELOCITY_FAIL);
-		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG
-		
-
+		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG			
 		OSDCTRL_ItemShine(eMeasureType);
+		for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+			OSDCTRL_ItemHide(i);
+		
 		if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
 		{
 			pTimerObj->startTimer(eOSD_shine_Timer,2000);

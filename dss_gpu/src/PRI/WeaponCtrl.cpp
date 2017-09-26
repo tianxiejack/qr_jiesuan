@@ -59,7 +59,7 @@ BYTE FrameBuf3[4]={0xA3,0x0F,0x00,0x00};
 static WeaponCtrlPort_t WeaponCtrlObj;
 static int ibInit=0;
 int servoInit=1;
-SIGNAL signal;
+SIGNAL jssignal;
 static BOOL WeaponCtrlPORT_open();
 static void WeaponCtrlPORT_close();
 
@@ -817,7 +817,7 @@ int WeaponCtrlPORT_ParseFrameByte_type0(unsigned char* buf)
 	}
 
 	if((BYTE6(FrameBuf0)) != (BYTE8(buf))){
-		signal.byte = BYTE8(buf);
+		jssignal.byte = BYTE8(buf);
 	}
 	
 	memcpy(FrameBuf0,&buf[2],sizeof(FrameBuf0));

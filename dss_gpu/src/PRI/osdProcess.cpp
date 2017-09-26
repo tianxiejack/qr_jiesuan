@@ -37,6 +37,7 @@
 //extern volatile int msgLight;
 #define MIDMENU
 
+extern int shine_table[10];
 //OSDCTRL_Handle  pOsdCtrlObj		= NULL;
 //CVideoDev* pVideoCapObj				=NULL;
 OSDCTRL_OBJ * pCtrlObj = NULL;
@@ -169,10 +170,10 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,		30,	0,	{0}},
 	{eMeasureDis,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,		30,	0,	{0}},
 
-	{eMeasureDis_Value1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	30,	0,	{0}},
-	{eMeasureDis_Value2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	446+LOFFSET,	30,	0,	{0}},//+23
-	{eMeasureDis_Value3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	457+LOFFSET,	30,	0,	{0}},
-	{eMeasureDis_Value4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	468+LOFFSET,	30,	0,	{0}},
+	{eMeasureDis_Value1,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	30,	0,	{0}},
+	{eMeasureDis_Value2,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	446+LOFFSET,	30,	0,	{0}},//+23
+	{eMeasureDis_Value3,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	457+LOFFSET,	30,	0,	{0}},
+	{eMeasureDis_Value4,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	468+LOFFSET,	30,	0,	{0}},
 
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		30,	0,	{0}},
 	{eSuperOrder,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
@@ -846,9 +847,13 @@ void OSDCTRL_AllHide()
 
 void OSDCTRL_NoShine()
 {
+	int i;
 	SHINE = FALSE;
-	if(isMeasureManual()&&(eMeasureDis < ShinId && ShinId <= eMeasureDis_Value4))
-		OSDCTRL_ItemShow(ShinId);
+	if(isMeasureManual()&&(eMeasureDis_Value1 == shine_table[0]&& shine_table[3] == eMeasureDis_Value4))
+	{
+		for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+			OSDCTRL_ItemShow(i);		
+	}
 	else if(isCalibrationSave()&&(eSaveYesNo==ShinId))
 		OSDCTRL_ItemShow(ShinId);
 	else
@@ -858,8 +863,15 @@ void OSDCTRL_NoShine()
 
 void OSDCTRL_NoShineShow()
 {
+	int i;
 	SHINE = FALSE;
 	OSDCTRL_ItemShow(ShinId);
+	for(i=0;i<10;i++)
+	{
+		if(shine_table[i])
+			OSDCTRL_ItemShow(i);
+	}
+	memset(shine_table,0,10);
 	ShinId = 0;
 }
 
@@ -1167,12 +1179,17 @@ void OSDCTRL_updateMainMenu(int i)
 
 void OSDCTRL_updateDistanceValue()
 {
-#if 1
+	int i;
 	if(isMeasureManual())
-		OSDCTRL_ItemShow(eMeasureDis);
+	{
+		for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+			OSDCTRL_ItemShow(i);
+	}	
 	else
-		OSDCTRL_ItemHide(eMeasureDis);
-#endif
+	{
+		for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+			OSDCTRL_ItemHide(i);
+	}
 }
 
 void OSDCTRL_CheckResultsShow()
@@ -1641,8 +1658,6 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			if(isMeasureManual())
 			{
 				sprintf(pStr,"%s:",Posd[eMeasureType]); //manual
-				//for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-					//OSDCTRL_ItemShow(i);
 			}
 			else
 			{	
@@ -1656,23 +1671,20 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				{
 					//sprintf(pStr,"%s:%04d",Posd[eMeasureType],Distance); //laser
 					sprintf(pStr,"%s:",Posd[eMeasureType]); //laser
-					for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-						OSDCTRL_ItemShow(i);
 				}
 				else
 					//sprintf(pStr,"%s:%s",Posd[eMeasureType],Posd[eMeasureType]); //shou  mo
 					sprintf(pStr,"%s",Posd[eMeasureType]); //laser
-					for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-						OSDCTRL_ItemShow(i);
-				   	OSDCTRL_ItemHide(eMeasureDis);			
+				   	//OSDCTRL_ItemHide(eMeasureDis);	
+
 			}
 			break;
 		case eMeasureDis:
 
-			if(isMultiChanged())
-				sprintf(pStr,"x%03d",getDisLen()); //����
-			else
-				sprintf(pStr,"%04d",DistanceManual);
+			//if(isMultiChanged())
+				//sprintf(pStr,"x%03d",getDisLen()); //����
+			//else
+				//sprintf(pStr,"%04d",DistanceManual);
 			break;
 			
 			//thousand = DistanceManual/1000;

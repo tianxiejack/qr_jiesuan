@@ -52,7 +52,6 @@ int CanPort_parseByte(unsigned char* buf );
 
 
 
-
 #ifdef __cplusplus
 }
 #endif
