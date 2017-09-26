@@ -37,6 +37,10 @@
 #define CODE_MACHGUN 		(0x37)
 #define CODE_GRENADE 		(0x42)
 #define CODE_TURRET   		(0x2C)
+#define CAN_ID_TUREET_SERVO		(0x0342)
+#define CAN_ID_MACHGUN_SERVO   	(0x032C)
+#define CAN_ID_GRENADE_SERVO 	(0x0337)
+
 
 #define CAN_DEBUG 0
 
@@ -2742,20 +2746,24 @@ int CanPort_recvFlg(char * buf, int iLen, int * index)
 	int i=0;
 	while(1)
 	{
-			if( 0x0002 == stoh2(pCur) )		//�жϿ�ͷ��־
-					break;
-			else{
-					//printf("move one data..%d\n",i++);
-					memcpy(pCur, pCur+1, length-1);
-					length--;
-					(*index) +=1 ;
+		if( CAN_ID_PANEL == stoh2(pCur)  || 
+		     CAN_ID_TURRET == stoh2(pCur)  ||
+		     CAN_ID_MACHGUN == stoh2(pCur)  ||
+		     CAN_ID_GRENADE == stoh2(pCur) )		//�жϿ�ͷ��־
+		{
+			break;
+		}else{
+			//printf("move one data..%d\n",i++);
+			memcpy(pCur, pCur+1, length-1);
+			length--;
+			(*index) +=1 ;
 
-					if(length<2)
-					{
-						//printf(" length<2 \n");
-						return -1;
-					}
+			if(length<2)
+			{
+				return -1;
 			}
+		}
+	
 	}
 
 	return 0;
@@ -2834,7 +2842,7 @@ void * SPI_CAN_process(void * prm)
 							}
 							//�����
 							nread = 0;
-							length= 0;
+							length = 0;
 							nread =  ReadCANBuf(buf+length, bufLen-length);
 							
 							//if(uart_open_close_flag)
@@ -2845,11 +2853,7 @@ void * SPI_CAN_process(void * prm)
 							if(nread > 0)
 							{
 									char * record_buff = buf+length;
-									//printf("enter record_log_can=%d record_log_send_data\n ", record_log_can);
 									record_log_send_data(record_log_can, nread, (unsigned char*)record_buff);
-							
-									//CanPort_parseByte((unsigned char*)buf);
-									//continue;
 
 									length += nread;  //��������ݣ�������ݳ���
 									haveData = 1;
@@ -2882,8 +2886,10 @@ void * SPI_CAN_process(void * prm)
 											//�ж�Ҫ������ݵĳ���
 											dataLength =0;
 
-											switch(buf[2])
+											if(CAN_ID_PANEL == stoh2(pCur))
 											{
+												switch(buf[2])
+												{
 													case 0xA0 :
 																dataLength=9;  break;
 													case 0xA1 :
@@ -2902,12 +2908,11 @@ void * SPI_CAN_process(void * prm)
 																dataLength =0;
 																haveData=0;
 																break;
-											}
+												}
 
-   
-											//����֮��,������ݳ���
-											if(dataLength > 0)
-											{	
+												//����֮��,������ݳ���
+												if(dataLength > 0)
+												{	
 													//��ӡҪ���������
 													for(i=0; i<dataLength; i++)
 													{
@@ -2924,20 +2929,25 @@ void * SPI_CAN_process(void * prm)
 														printf(" length<dataLength ...\n");
 														memset(buf+length, 0, sizeof(buf)-length);
 														haveData=0;
-													}
-													else
-													{
-
+													}else{
 														//�������
 														CanPort_parseByte((unsigned char*)buf);
-
 														memcpy(buf, buf+dataLength, length-dataLength);
 														memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
 														length -= dataLength;
 													}
+												}
 											}
-
-											//usleep(10*1000);
+ 											else if( CAN_ID_TURRET == stoh2(pCur)  ||
+												     CAN_ID_MACHGUN == stoh2(pCur)  ||
+												     CAN_ID_GRENADE == stoh2(pCur) )
+											{
+												dataLength = 2;
+												CanPort_parseByte((unsigned char*)buf);
+												memcpy(buf, buf+dataLength, length-dataLength);
+												memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
+												length -= dataLength;
+											}
 									}
 							}
 				}
