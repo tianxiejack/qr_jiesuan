@@ -2710,13 +2710,13 @@ int NetPort_ParseByte(unsigned char* buf)
 			WeaponCtrlPORT_ParseBytePanel(buf);
 			break;
 		case CAN_ID_TURRET:
-			//WeaponCtrlPORT_ParseByteTurret(buf);
+			WeaponCtrlPORT_ParseByteTurret(buf);
 			break;
 		case CAN_ID_MACHGUN:
-		//	WeaponCtrlPORT_ParseByteMachGun(buf);
+			WeaponCtrlPORT_ParseByteMachGun(buf);
 			break;
 		case CAN_ID_GRENADE:
-			//WeaponCtrlPORT_ParseByteGrenade(buf);
+			WeaponCtrlPORT_ParseByteGrenade(buf);
 			break;
 		default:
 			break;
@@ -2771,13 +2771,13 @@ int CanPort_parseByte(unsigned char* buf )
 			WeaponCtrlPORT_ParseBytePanel(buf);
 			break;
 		case CAN_ID_TURRET:
-			//WeaponCtrlPORT_ParseByteTurret(buf);
+			WeaponCtrlPORT_ParseByteTurret(buf);
 			break;
 		case CAN_ID_MACHGUN:
-			//WeaponCtrlPORT_ParseByteMachGun(buf);
+			WeaponCtrlPORT_ParseByteMachGun(buf);
 			break;
 		case CAN_ID_GRENADE:
-			//WeaponCtrlPORT_ParseByteGrenade(buf);
+			WeaponCtrlPORT_ParseByteGrenade(buf);
 			break;
 		default:
 			break;

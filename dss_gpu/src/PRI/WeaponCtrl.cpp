@@ -45,8 +45,6 @@
 
 extern int turretTimer;
 
-
-
 enum {
 	CAN_DEVIC_PANEL,
 	CAN_DEVICE_TURRET,
@@ -61,6 +59,7 @@ BYTE FrameBuf3[4]={0xA3,0x0F,0x00,0x00};
 static WeaponCtrlPort_t WeaponCtrlObj;
 static int ibInit=0;
 int servoInit=1;
+SIGNAL signal;
 static BOOL WeaponCtrlPORT_open();
 static void WeaponCtrlPORT_close();
 
@@ -797,7 +796,7 @@ static int WeaponCtrlPORT_recvCfg(UartObj*pUartObj,int iLen)
 }
 int WeaponCtrlPORT_ParseFrameByte_type0(unsigned char* buf)
 {
-#if 0
+#if 1
 	unsigned char *pbuf=NULL;
 
 //case Frame_Type0: //֡0����
@@ -1491,7 +1490,10 @@ static void WeaponCtrlPORT_ParseTurret(UartObj*pUartObj)
 
 void WeaponCtrlPORT_ParseByteTurret(unsigned char *buf)
 {
-
+	if(!bPositionServoOK())
+		sendCommand(CMD_POSITION_SERVO_OK);
+	killSelfCheckPosServoTimer();
+	startSelfCheckPosServo_Timer();
 }
 
 static void WeaponCtrlPORT_ParseMachGun(UartObj*pUartObj)
@@ -1505,7 +1507,10 @@ static void WeaponCtrlPORT_ParseMachGun(UartObj*pUartObj)
 }
 void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf)
 {
-	
+	if(!bMachineGunServoOK())
+		sendCommand(CMD_MACHINEGUN_SERVO_OK);
+	killSelfCheckMachGunServoTimer();
+	startSelfCheckMachGunServo_Timer();
 }
 
 static void WeaponCtrlPORT_ParseGrenade(UartObj*pUartObj)
@@ -1521,7 +1526,10 @@ static void WeaponCtrlPORT_ParseGrenade(UartObj*pUartObj)
 
 void WeaponCtrlPORT_ParseByteGrenade(unsigned char *buf)
 {
-
+	if(!bGrenadeServoOK())
+		sendCommand(CMD_GENERADE_SERVO_OK);
+	killSelfCheckGrenadeServoTimer();
+	startSelfCheckGrenadeServo_Timer();
 }
 
 int WeaponCtrlPort_ParseByte(BYTE* buf)

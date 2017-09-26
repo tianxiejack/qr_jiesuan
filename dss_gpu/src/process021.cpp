@@ -3221,8 +3221,6 @@ void CProcess021::processCMD_EXIT_SELF_CHECK(LPARAM lParam)
 		OSDCTRL_ItemShow(eDynamicZone);
 		startDynamicTimer();
 	}
-
- 	//OSA_printf("%s,line:%d ... processCMD_EXIT_SELF_CHECK",__func__,__LINE__);
 	return ;
  }
 
@@ -3241,7 +3239,6 @@ void CProcess021::processCMD_BUTTON_CALIBRATION(LPARAM lParam)
 	else
 	{
 		return ;
-		//assert(FALSE);
 	}
 	OSDCTRL_EnterCalibMode();
 	return ;
@@ -3424,8 +3421,6 @@ void CProcess021::onPositionServoOK(LPARAM lParam)
 	   	   MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
 	       }
 	}
-	
- 	//OSA_printf("%s,line:%d ... onPositionServoOK",__func__,__LINE__);
 	return ;
  }
 
@@ -3434,8 +3429,6 @@ void CProcess021::onPositionServoOK(LPARAM lParam)
 void CProcess021::onPositionServoERR(LPARAM lParam)
  {
  	isPositionServoOK = FALSE;
-	
- 	//OSA_printf("%s,line:%d ... onPositionServoERR",__func__,__LINE__);
 	return ;
  }
 
