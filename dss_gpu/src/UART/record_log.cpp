@@ -108,7 +108,7 @@ void* thread_record_log_data(void * prm)
 
 
 //初始化日记记录，返回串口id号。
-int init_record_log(int com_id, char *filename)
+int init_record_log(int com_id, const char *filename)
 {
 	FILE * fp = NULL;
     time_t timep;

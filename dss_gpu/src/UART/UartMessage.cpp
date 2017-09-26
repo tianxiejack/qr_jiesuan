@@ -2886,7 +2886,7 @@ void * SPI_CAN_process(void * prm)
 											//�ж�Ҫ������ݵĳ���
 											dataLength =0;
 
-											if(CAN_ID_PANEL == stoh2(pCur))
+											if(CAN_ID_PANEL == stoh2(buf))
 											{
 												switch(buf[2])
 												{
@@ -2938,9 +2938,9 @@ void * SPI_CAN_process(void * prm)
 													}
 												}
 											}
- 											else if( CAN_ID_TURRET == stoh2(pCur)  ||
-												     CAN_ID_MACHGUN == stoh2(pCur)  ||
-												     CAN_ID_GRENADE == stoh2(pCur) )
+ 											else if( CAN_ID_TURRET == stoh2(buf)  ||
+												     CAN_ID_MACHGUN == stoh2(buf)  ||
+												     CAN_ID_GRENADE == stoh2(buf) )
 											{
 												dataLength = 2;
 												CanPort_parseByte((unsigned char*)buf);

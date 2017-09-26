@@ -113,8 +113,7 @@ int process_decode(struct RS422_data * pRS422_data)
 					MSGDRIV_send(CMD_DIP_ANGLE_OK,0);
 				}
 				killSelfCheckDipAngleTimer();
-				startSelfCheckDipAngle_Timer();
-				
+				startSelfCheckDipAngle_Timer();				
 #if 1
 				PlatformThetaX = buf[1]<<8|buf[2];
 				PlatformThetaY = buf[3]<<8|buf[4];
