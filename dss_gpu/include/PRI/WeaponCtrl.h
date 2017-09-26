@@ -6,21 +6,21 @@ extern "C"{
 #endif
 #include "basePort.h"
 
-/** ËÅ·þÏÞÎ»ÐÅºÅ: 0 Î´ÏÞÎ» , 1 ÏÞÎ»**/
+/** ï¿½Å·ï¿½ï¿½ï¿½Î»ï¿½Åºï¿½: 0 Î´ï¿½ï¿½Î» , 1 ï¿½ï¿½Î»**/
 typedef union SIGNAL_TAG {
 	unsigned char byte;
 	struct bit_tag{
-	unsigned  MachGunB:1;//»úÇ¹¸©½Ç
-	unsigned  MachGunE:1;//»úÇ¹Ñö½Ç
-	unsigned  MachGunZ:1;//»úÇ¹¹éÁã
-	unsigned  MachGunP:1;//»úÇ¹·½Ïò
-	unsigned  GrenadeB:1;//Áñµ¯¸©½Ç
-	unsigned  GrenadeE:1;//Áñµ¯Ñö½Ç
-	unsigned  GrenadeZ:1;//Áñµ¯¹éÁã
-	unsigned  GrenadeP:1;//Áñµ¯·½Ïò
+	unsigned  MachGunB:1;//ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½
+	unsigned  MachGunE:1;//ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½
+	unsigned  MachGunZ:1;//ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½
+	unsigned  MachGunP:1;//ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½
+	unsigned  GrenadeB:1;//ï¿½ñµ¯¸ï¿½ï¿½ï¿½
+	unsigned  GrenadeE:1;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	unsigned  GrenadeZ:1;//ï¿½ñµ¯¹ï¿½ï¿½ï¿½
+	unsigned  GrenadeP:1;//ï¿½ñµ¯·ï¿½ï¿½ï¿½
 	}bit;
 }SIGNAL;
-extern SIGNAL signal;
+//extern SIGNAL signal;
 
 
 typedef struct _WeaponCtrlPort
@@ -138,7 +138,9 @@ void killSelfCheckPosServoTimer();
 //int TestSendCANBuf(char *buf, int length);
 void TestabsPosRequest(BYTE code);
 void teststartServo(BYTE code);
-
+void WeaponCtrlPORT_ParseByteGrenade(unsigned char *buf);
+void WeaponCtrlPORT_ParseByteTurret(unsigned char *buf);
+void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf);
 
 extern BOOL bTraceSend;
 extern int servoInit;

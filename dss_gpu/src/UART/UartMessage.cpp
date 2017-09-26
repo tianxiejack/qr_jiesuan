@@ -2721,7 +2721,7 @@ int NetPort_ParseByte(unsigned char* buf)
 		default:
 			break;
 	}
-	
+
 	return 0;
 }
 

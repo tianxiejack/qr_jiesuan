@@ -529,7 +529,7 @@ static Int32 APP_control( Int32 cmd )
  *******************************************************************************/
 static Int32 APP_onTimer( Int32 timerId )
 {
-
+	int i;
 	    //printf("**********************************\n");
 	    if( timerId == SYS_INFOR_SHOW_TIMER)
 	    {
@@ -593,7 +593,7 @@ static Int32 APP_onTimer( Int32 timerId )
      			//printf("eOSD_shine_Timer eOSD_shine_Timer eOSD_shine_Timer\n");
      			pTimerObj->KillTimer(eOSD_shine_Timer);
 			//Posd[eMeasureType] = MeasureTypeOsd[0];
-			OSDCTRL_NoShineShow();
+			OSDCTRL_NoShineShow();	
 	     }
 
 		if(timerId == eGrenadeServo_Timer)

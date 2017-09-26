@@ -584,7 +584,8 @@ void increaseMeasureDis()
 	int i ;//= ShinId;
 	int flag =0;
 	for(i = 0;i<10;i++)
-	{	if(shine_table[i] == eMeasureDis_Value1)
+	{	
+		if(shine_table[i] == eMeasureDis_Value1)
 			flag = 1;
 	}
 	
