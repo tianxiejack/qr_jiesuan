@@ -247,7 +247,6 @@ static Int32 uart_port_set(uart_port_handle *port)
 		case 'e':
 		case 'E':
 		{
-			printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@fun=%s\n",__func__);
 			new_cfg.c_cflag |= PARENB;
 			new_cfg.c_cflag &= ~PARODD;
 			new_cfg.c_cflag |= INPCK;

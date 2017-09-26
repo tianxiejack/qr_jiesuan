@@ -871,7 +871,11 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		if(BIT7(BYTE3(buf)) != 0x00) 
 			MSGDRIV_send(CMD_FIRING_DISABLE,0);
 		else
+		{
+			if(uart_open_close_flag)
+				return ;
 			MSGDRIV_send(CMD_FIRING_ENABLE,0);
+		}
 	}
 	
 	if(BIT6_4(BYTE1(FrameBuf1)) != BIT6_4(BYTE3(buf)))	//  л
@@ -1064,13 +1068,7 @@ static int WeaponCtrlPORT_ParseFrame_type1(UartObj*pUartObj)
 }
 void WeaponCtrlPORT_ParseFrameByte_type2(unsigned char* buf)
 {
-#if 1
-	if(uart_open_close_flag)
-	{
-		if(BIT3_0(BYTE3(buf)) != Button_AutoCheck)
-				return ;
-	}
-		
+#if 1		
 	switch (BIT3_0(BYTE3(buf)))
 	{
 		case Button_Left:
@@ -1434,13 +1432,11 @@ void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 	switch(buf[2])
 	{
 		case Frame_Type0:
-			if(uart_open_close_flag)
-				return ;
 			WeaponCtrlPORT_ParseFrameByte_type0(buf);
 			break;
 		case Frame_Type1:
-			if(uart_open_close_flag)
-				return ;
+			//if(uart_open_close_flag)
+			//	return ;
 			WeaponCtrlPORT_ParseFrameByte_type1(buf);
 			break;
 		case Frame_Type2:

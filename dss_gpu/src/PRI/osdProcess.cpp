@@ -1964,63 +1964,63 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				Posd[eSelfCheckState1] = ResultOsd[0];	//normal
 			else
 				Posd[eSelfCheckState1] = ResultOsd[1]; 	//abnormal
-			sprintf(pStr,"%c %c:        %s",244,207,Posd[eSelfCheckState1]);//); 			//�Կ�:��-�쳣
+			sprintf(pStr,"%c %c:     %s",244,207,Posd[eSelfCheckState1]);//); 			//�Կ�:��-�쳣
 			break;
 		case eSelfCheckState2:
 			if(bJoyStickOK())
 				Posd[eSelfCheckState2] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState2] = ResultOsd[1];
-			sprintf(pStr,"%c %c:        %s",227,177,Posd[eSelfCheckState2]);//); 			//�ֱ�:��-�쳣
+			sprintf(pStr,"%c %c:     %s",227,177,Posd[eSelfCheckState2]);//); 			//�ֱ�:��-�쳣
 			break;
 		case eSelfCheckState3:
 			if(bDipAngleSensorOK())
 				Posd[eSelfCheckState3] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState3] = ResultOsd[1];
-			sprintf(pStr,"%c %c:        %s",220,204,Posd[eSelfCheckState3]);//); 			//���:��-�쳣
+			sprintf(pStr,"%c %c:     %s",220,204,Posd[eSelfCheckState3]);//); 			//���:��-�쳣
 			break;
 		case eSelfCheckState4:
 			if(bPositionSensorOK())
 				Posd[eSelfCheckState4] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState4] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c: 	      %s",190,239,204,Posd[eSelfCheckState4]);//); 		//��λ��:��-�쳣
+			sprintf(pStr,"%c%c%c: 	   %s",190,239,204,Posd[eSelfCheckState4]);//); 		//��λ��:��-�쳣
 			break;
 		case eSelfCheckState5:
 			if(bMachineGunSensorOK())
 				Posd[eSelfCheckState5] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState5] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c-%c%c: 			%s",191,246,204,200,216,Posd[eSelfCheckState5]);//); //������-��ǹ:��-�쳣
+			sprintf(pStr,"%c%c%c-%c%c: 	%s",191,246,204,200,216,Posd[eSelfCheckState5]);//); //������-��ǹ:��-�쳣
 			break;
 		case eSelfCheckState6:
 			if(bGrenadeSensorOK())
 				Posd[eSelfCheckState6] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState6] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c-35%c: 		 %s",191,246,204,211,Posd[eSelfCheckState6]);//); 	//������-35��:��-�쳣
+			sprintf(pStr,"%c%c%c-35%c: %s",191,246,204,211,Posd[eSelfCheckState6]);//); 	//������-35��:��-�쳣
 			break;
 		case eSelfCheckState7:
 			if(bPositionServoOK())
 				Posd[eSelfCheckState7] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState7] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c%c:    		 %s",190,239,226,192,Posd[eSelfCheckState7]);//); 		//��λ�ŷ�:��-�쳣
+			sprintf(pStr,"%c%c%c%c:    %s",190,239,226,192,Posd[eSelfCheckState7]);//); 		//��λ�ŷ�:��-�쳣
 			break;
 		case eSelfCheckState8:
 			if(bMachineGunServoOK())
 				Posd[eSelfCheckState8] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState8] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c%c-%c%c:				%s",191,246,226,192,200,216,Posd[eSelfCheckState8]);//); //�����ŷ�-��ǹ:��-�쳣
+			sprintf(pStr,"%c%c%c%c-%c%c:	%s",191,246,226,192,200,216,Posd[eSelfCheckState8]);//); //�����ŷ�-��ǹ:��-�쳣
 			break;
 		case eSelfCheckState9:
 			if(bGrenadeServoOK())
 				Posd[eSelfCheckState9] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState9] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c%c-35%c:			%s",191,246,226,192,211,Posd[eSelfCheckState9]);//); 	//�����ŷ�-35��:��-�쳣
+			sprintf(pStr,"%c%c%c%c-35%c:%s",191,246,226,192,211,Posd[eSelfCheckState9]);//); 	//�����ŷ�-35��:��-�쳣
 			break;	
 		case eCalibZero_D:		
 			//if(isMeasureManual())

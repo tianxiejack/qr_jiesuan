@@ -157,7 +157,7 @@ typedef enum _time_id
 #define 	PICP_TIMER   			9
 #define 	TRACK_TIMER  			200
 #define 	TRACK_REFINE_TIMER 	2000
-#define 	BOOTUP_TIMER 			10000
+#define 	BOOTUP_TIMER 			5000
 #define 	LASER_TIMER 			6000
 #define 	RGQ_TIMER 				6000//3000
 #define 	CAN_TIMER 				500

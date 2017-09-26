@@ -357,7 +357,7 @@ void CProcess021::process_osd(void *pPrm)
 		//memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
 	if(SHINE)
-	{printf("@@@@@@@@aaaafaaaaa\n");
+	{
 		n++;
 		if(n%3 == 0)
 		{
@@ -3513,7 +3513,8 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
  {
  	if(ShinId == eGunTip)
 		OSDCTRL_NoShine();
- 
+ printf("isBootUpMode=%d\n",isBootUpMode());
+  printf("isBootUpSelfCheckFinished=%d\n",isBootUpSelfCheckFinished());
 	if(isBootUpMode()&& isBootUpSelfCheckFinished())
 	{
 		processCMD_EXIT_SELF_CHECK(0);

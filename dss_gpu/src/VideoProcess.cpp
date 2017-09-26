@@ -415,7 +415,6 @@ int CVideoProcess::dynamic_config(int type, int iPrm, void* pPrm)
 			else
 			{
 				m_rcTrack = *(UTC_RECT_float*)pPrm;
-				printf("**********************************************@@@@@@@\n");
 				//m_rcAcq = *(UTC_RECT_float*)pPrm;
 			}
 			break;
