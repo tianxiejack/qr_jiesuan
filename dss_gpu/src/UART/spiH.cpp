@@ -98,14 +98,13 @@ int process_decode(struct RS422_data * pRS422_data)
 				continue;
 			}
 
-			parse_length = 8;
+			parse_length = 7;
 
 			if(length<parse_length){
 
 				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
-
 			}
 			else
 			{
@@ -116,12 +115,38 @@ int process_decode(struct RS422_data * pRS422_data)
 				killSelfCheckDipAngleTimer();
 				startSelfCheckDipAngle_Timer();
 				
+#if 1
+				PlatformThetaX = buf[1]<<8|buf[2];
+				PlatformThetaY = buf[3]<<8|buf[4];
+				Temperature =  buf[5]<<8|buf[6];
+
+				#if SPI_DEBUG
+					printf(" PlatformThetaX=%d PlatformThetaY=%d weather=%d \n", PlatformThetaX, PlatformThetaY, Temperature);
+				#endif
+
+				if((abs(PlatformThetaX) > 30000)||(abs(PlatformThetaY) >30000))
+				{
+					// do nothing
+				}
+				else
+				{
+					hPositionX = PlatformThetaX*0.001;		
+					hPositionY = PlatformThetaY*0.001;
+					Temparature = (int)Temperature*0.01; 
+				}
+				
+				memcpy(buf, buf+parse_length, length-parse_length);
+				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
+				length -= parse_length;
+					
+#else			
 				sum_xor=0;
 				for(i=0; i<parse_length-1; i++){
 					sum_xor ^= buf[i];
 				}
 
-				if( sum_xor ==  buf[parse_length-1] ){
+				if( sum_xor ==  buf[parse_length-1] )
+				{
 					PlatformThetaX = buf[1]<<8|buf[2];
 					PlatformThetaY =  buf[3]<<8|buf[4];
 					Temperature =  buf[5]<<8|buf[6];
@@ -151,6 +176,8 @@ int process_decode(struct RS422_data * pRS422_data)
 					memcpy(buf, buf+1, length-1);
 					length--;
 				}
+
+#endif
 			}
 
 		}
@@ -498,15 +525,12 @@ int Process_grenade(struct RS422_data * pRS422_data)
 			parse_length = 5;
 
 			if(length<parse_length){
-
 				//printf(" length<dataLength ...\n");
 				memset(buf+length, 0, sizeof(buf)-length);
 				have_data=0;
-
 			}
 			else
 			{
-
 				if(!bGrenadeSensorOK())
 				{
 					MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
@@ -516,7 +540,7 @@ int Process_grenade(struct RS422_data * pRS422_data)
 
 				positive=1;
 
-				angle = buf[2]<<8|buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
+				angle = buf[2]<<8 |buf[3];  //不应该把所有的数据都删除掉。，对超出范围的数据如何处理
 				positive = buf[4] ==0 ? 1: -1;
 #if SPI_DEBUG
 				printf(" about the GrenadeAngle  !!!!!! positive=%d angle=%d  \n", positive, angle);
