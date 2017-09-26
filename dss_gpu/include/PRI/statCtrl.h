@@ -161,7 +161,7 @@ typedef enum _time_id
 #define 	LASER_TIMER 			6000
 #define 	RGQ_TIMER 				6000//3000
 #define 	CAN_TIMER 				500
-#define 	DYNAMIC_TIMER 			6000
+#define 	DYNAMIC_TIMER 		6000
 #define 	AVT_TIMER 				2000
 #define 	SCHEDULE_TIMER 		500
 #define 	FN_TIMER 				2000

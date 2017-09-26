@@ -83,7 +83,7 @@ CProcess021::CProcess021()
 	pIStuts->unitAimH = 64;
 	pIStuts->unitAimX=360;
 	pIStuts->unitAimY=288;
-	pIStuts->SensorStat     = eSen_TV;
+	pIStuts->SensorStat     = 1;//eSen_TV;
 	pIStuts->PicpSensorStatpri=pIStuts->PicpSensorStat = 0xFF;
 
 	pIStuts->DispGrp[0] = 1;//(eDisp_show_rect | eDisp_show_text/* | eDisp_show_dbg*/);
@@ -241,6 +241,7 @@ int  CProcess021::PiexltoWindowsy(int y,int channel)
 
 void CProcess021::OnCreate()
 {
+	
 	osdgraph_init(process_osd,sThis->m_dc);
 	
        //pCtrlObj = OSDCTRL_create();
@@ -249,25 +250,25 @@ void CProcess021::OnCreate()
 	MSGDRIV_create();
 	MSGAPI_initial();
 	//App_dxmain();
-
+	
 	//MSGDRIV_send(CMD_BOOT_UP_CHECK_COMPLETE,0);
 	
 	#if 1
 	CMD_EXT *pIStuts = &extInCtrl;
 
-	#if 0
-	CFGID_FIELD_GET(pIStuts->unitAxisX ,CFGID_IMAGE_AXIX1);
-	CFGID_FIELD_GET(pIStuts->unitAxisY ,CFGID_IMAGE_AXIY1);
-	if(pIStuts->unitAxisX<0||pIStuts->unitAxisX>1280)
-		pIStuts->unitAxisX      = 640;
-	if(pIStuts->unitAxisY<0||pIStuts->unitAxisY>1024)
-		pIStuts->unitAxisY      = 512;
+		#if 0
+		CFGID_FIELD_GET(pIStuts->unitAxisX ,CFGID_IMAGE_AXIX1);
+		CFGID_FIELD_GET(pIStuts->unitAxisY ,CFGID_IMAGE_AXIY1);
+		if(pIStuts->unitAxisX<0||pIStuts->unitAxisX>1280)
+			pIStuts->unitAxisX      = 640;
+		if(pIStuts->unitAxisY<0||pIStuts->unitAxisY>1024)
+			pIStuts->unitAxisY      = 512;
 
-	pIStuts->unitAimX=pIStuts->unitAxisX ;
-	pIStuts->unitAimY=pIStuts->unitAxisY ;
-	m_ImageAxisx=pIStuts->unitAxisX ;
-	m_ImageAxisy=pIStuts->unitAxisY;
-	#endif
+		pIStuts->unitAimX=pIStuts->unitAxisX ;
+		pIStuts->unitAimY=pIStuts->unitAxisY ;
+		m_ImageAxisx=pIStuts->unitAxisX ;
+		m_ImageAxisy=pIStuts->unitAxisY;
+		#endif
 
 	CFGID_FIELD_GET(pIStuts->DispColor[0] ,CFGID_RTS_TV_SEN_COLOR);
 	CFGID_FIELD_GET(pIStuts->DispColor[1] ,CFGID_RTS_FR_SEN_COLOR);
@@ -276,8 +277,10 @@ void CProcess021::OnCreate()
 
 	CFGID_FIELD_GET(pIStuts->PicpPosStat,CFGID_SENSOR_TV_PICP_POS);
 	if(pIStuts->PicpPosStat<0||pIStuts->PicpPosStat>3)
-		pIStuts->PicpPosStat=0;
+		pIStuts->PicpPosStat=1;
 	//pIStuts->PicpPosStat=0;
+
+
 	#endif
 
 
@@ -1515,7 +1518,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'a' || key == 'A')
 	{
-		pIStuts->SensorStat = (pIStuts->SensorStat + 1)%3;
+		printf("pIStuts->SensorStat= %d\n",pIStuts->SensorStat);
+		pIStuts->SensorStat = (pIStuts->SensorStat + 1)%2;
 		//msgdriv_event(MSGID_EXT_INPUT_SENSOR, NULL);
 		MSGDRIV_send(MSGID_EXT_INPUT_SENSOR,NULL);
 	}
@@ -1611,6 +1615,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	if (key == 'I' ||key == 'i')
 	{	
 		//init the server
+		requstServoContrl();
 		testchushihua();
 	}
 
@@ -1680,6 +1685,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	if(key == 'S' || key == 's')
 	{
 		teststopserver();
+		releaseServoContrl();
 	}
 	
 		
@@ -2373,7 +2379,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     memset(handle->msgTab, 0, sizeof(MSGTAB_Class) * MAX_MSG_NUM);
 //MSGID_EXT_INPUT_MTD_SELECT
     MSGDRIV_attachMsgFun(handle,    MSGID_SYS_INIT,           				   MSGAPI_init_device,       		    0);
-    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_SENSOR,           	   MSGAPI_inputsensor,       		    0);
+    MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_SENSOR,           	 	   MSGAPI_inputsensor,       		    0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_PICPCROP,      		   MSGAPI_croppicp,       		    0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_TRACK,          		   MSGAPI_inputtrack,     		    0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_ENMTD,                      MSGAPI_inpumtd,       		    0);

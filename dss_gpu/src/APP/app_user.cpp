@@ -434,9 +434,8 @@ static Int32 APP_start( int nType )
 
     gAPP_Started = TRUE;
 
-	
 
-	
+
 	//	Dx_setTimer(OSD_SHOW_TIMER, OSD_SHOW_TIMER_TICKS);
 	Dx_setTimer(GRPX_SHOW_TIMER,GRPX_SHOW_TIME_TICKS);
 	
@@ -448,7 +447,7 @@ static Int32 APP_start( int nType )
 	Dx_setTimer(GPIO_INSPECT_TIMER,GPIO_INSPECT_TICKS);
 	Dx_sendMsg( NULL, DX_MSGID_CTRL, (void*)( DX_CTL_ALG_LINK_INIT ), sizeof( Int32 ), FALSE );
 
-
+	
 	startSelfCheckTimer();
 	startCANSendTimer();
 	
