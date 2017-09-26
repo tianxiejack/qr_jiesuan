@@ -349,7 +349,7 @@ int SPI_vcode_recvFlg(char * buf, int iLen, int * index)
 
 		while(1){
 
-				if( 0x5FF5 == ((pCur[0]<<8)|(pCur[1])) )	{	//判断开头标志
+				if( 0x8FF8 == ((pCur[0]<<8)|(pCur[1])) )	{	//判断开头标志
 						break;
 				}else{
 						memcpy(pCur, pCur+1, length-1);
@@ -450,7 +450,7 @@ int SPI_grenade_recvFlg(char * buf, int iLen, int * index)
 
 		while(1){
 
-				if( 0x5FF5 == ((pCur[0]<<8)|(pCur[1])) )	{	//判断开头标志
+				if( 0x8FF8 == ((pCur[0]<<8)|(pCur[1])) )	{	//判断开头标志
 						break;
 				}else{
 						memcpy(pCur, pCur+1, length-1);

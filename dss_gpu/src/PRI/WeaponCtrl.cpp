@@ -637,6 +637,7 @@ static void WeaponCtrlPORT_close()
  */
 int WeaponCtrlPORT_send(BYTE* pSendBuf,int iLen)
 {
+	SendCANBuf((char *)pSendBuf, iLen);
 #if 0
 	UartObj* pUartObj=&WeaponCtrlObj.UartPort;
 	int iSendlen=0, iCur;

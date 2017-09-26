@@ -11,6 +11,7 @@
 #define STEPLEN 4
 
 extern OSDCTRL_OBJ * pCtrlObj;
+extern int shine_table[10];
 
 
 FOVCTRL_Handle	 pFovCtrlObj = NULL;	
@@ -580,12 +581,17 @@ void decreaseMeasureMul()
 
 void increaseMeasureDis()
 {
-	int i = ShinId;
-
+	int i ;//= ShinId;
+	int flag =0;
+	for(i = 0;i<10;i++)
+	{	if(shine_table[i] == eMeasureDis_Value1)
+			flag = 1;
+	}
+	
 	if(!SHINE)
 		return;
 
-	if( /*eMeasureDis == i || */eMeasureDis_Value2 == i || eMeasureDis_Value3 == i || eMeasureDis_Value4 == i)
+	if(flag)
 	{
 		DistanceManual+= DISLEN;
 		if(isMachineGun())
@@ -603,7 +609,6 @@ void increaseMeasureDis()
 			if(DistanceManual >= 360)
 				DistanceManual = 360;
 		}
-		//printf("@@@@@DistanceManual = %d\n\n", DistanceManual);
 	}
 }
 

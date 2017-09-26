@@ -49,7 +49,7 @@ int shine_table[10] = {0};
 
 UInt32 interfaceflag;
 static bool tiaolingwei_flag = 0;
-static bool distancefirst = 0;
+static bool distancefirst = 1;
 
 	
 CProcess021 * CProcess021::sThis = NULL;
@@ -357,13 +357,17 @@ void CProcess021::process_osd(void *pPrm)
 		//memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
 	if(SHINE)
-	{
+	{printf("@@@@@@@@aaaafaaaaa\n");
 		n++;
 		if(n%3 == 0)
 		{
+			
 			Osd_shinItem(ShinId);
 			for(i = 0;i<10;i++)
-				Osd_shinItem(shine_table[i]);
+			{
+				if(shine_table[i])
+					Osd_shinItem(shine_table[i]);
+			}
 			n = 0;
 		}
 	}
@@ -2632,7 +2636,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 	
 	sThis->msgdriv_event(MSGID_EXT_INPUT_TRACK,NULL);
 	#endif
-	OSA_printf("%s,line:%d ... MSGAPI_inputtrack",__func__,__LINE__);
+	//OSA_printf("%s,line:%d ... MSGAPI_inputtrack",__func__,__LINE__);
 	return ;
 }
 
@@ -3653,12 +3657,16 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		else if(isCalibrationZero())
 		{
 			if(distancefirst)
-				increaseMeasureDis();
-		
-			if(isGrenadeGas())
-				return ;
-			//moveCrossUp();  //move the axis up
-			moveCrossDown();
+			{
+				if(isMeasureManual())
+					increaseMeasureDis();
+			}	
+			else
+			{
+				if(isGrenadeGas())
+					return ;
+				moveCrossDown();
+			}
 		}
 		else if(isCalibrationWeather())
 		{
@@ -3921,6 +3929,7 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 {
+	int i;
 	if(!ValidateGunType())
 		return;
 	
@@ -3960,6 +3969,14 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 		{
 			if(isCalibrationZero())
 			{
+				if(distancefirst)
+				{			
+					distancefirst = 0;
+					SHINE =0;
+					memset(shine_table,0,10);
+					for(i =0;i<4;i++)
+						OSDCTRL_ItemShow(shine_table[i]);
+				}
 				saveZeroParam();
 			}
 			else if(isCalibrationGeneral())
@@ -3991,8 +4008,9 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				}
 			}
 			//gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
-			OSDCTRL_updateMainMenu(gProjectileType);
-			OSDCTRL_NoShineShow();
+
+			//OSDCTRL_updateMainMenu(gProjectileType);
+			OSDCTRL_NoShine();
 			// update OSDdisplay
 			//OSDCTRL_CalibMenuShow();
 			//Posd[eGunType] = GunOsd[getBulletType()-1];
@@ -4248,7 +4266,7 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
  {
  	int i = 0;
-	if(isBattleMode()&&isStatBattleAuto())
+	if(isBattleMode()&&isStatBattleAuto() || isCalibrationZero())
 	{
 		gMeasureType =(DIS_MEASURE_TYPE)(MEASURETYPE_MANUAL - gMeasureType);
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
@@ -4263,11 +4281,10 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 			
 			for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
 			{
-				
-				//shine_table
+				shine_table[i-eMeasureDis_Value1] = i;
 			}
-			//OSDCTRL_ItemShow(i);
-			
+			SHINE =1 ;
+		#if 0
 			switch(getDisLen())
 			{
 				case 100: 
@@ -4282,8 +4299,8 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 				default :
 					break;
 			}
-			OSDCTRL_ItemShine(i);		
-
+			//OSDCTRL_ItemShine(i);		
+		#endif
 			isfixingMeasure = TRUE;
 			finish_laser_measure = 0;
 		}
@@ -4316,7 +4333,8 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_SAVE(LPARAM lParam)
 void CProcess021::processCMD_CALIBRATION_SWITCH_TO_ZERO(LPARAM lParam)
  {
 	if(isCalibrationMode())
-	{
+	{	
+		distancefirst = 1;
 		gLevel2CalibrationState = STATE_CALIBRATION_ZERO;
 		// update OSDdisplay
 		initilZeroParam(gProjectileType);
@@ -5027,6 +5045,10 @@ bool CProcess021::ValidateGunType()
 	{
 		//do nothing
 	}
+	else if(ShinId == eGunTip)
+	{
+		OSDCTRL_NoShine();
+	}	
 	else
 		OSDCTRL_NoShineShow();
 	

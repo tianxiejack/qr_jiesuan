@@ -1641,8 +1641,8 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			if(isMeasureManual())
 			{
 				sprintf(pStr,"%s:",Posd[eMeasureType]); //manual
-				for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-					OSDCTRL_ItemShow(i);
+				//for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+					//OSDCTRL_ItemShow(i);
 			}
 			else
 			{	
@@ -1908,7 +1908,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr," %c ",206); 			//��
 			break;
 		case eCalibMenu_Weather:
-			sprintf(pStr,"%c%c%c%c   ",219,242,180,225); 			//�������
+			sprintf(pStr,"%c%c%c%c  ",219,242,180,225); 			//�������
 			break;
 		case eCalibMenu_Zero:
 			sprintf(pStr,"%s",Posd[eCalibMenu_Zero]);//); 			//У��-5.8��
@@ -1917,7 +1917,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%s",Posd[eCalibMenu_General]);//); 			//���-5.8��
 			break;
 		case eCalibMenu_Save:
-			sprintf(pStr,"%c%c%c%c   ",180,225,181,182); 			//����洢
+			sprintf(pStr,"%c%c%c%c  ",180,225,181,182); 			//����洢
 			break;
 		case eCalibMenu_GenPram:
 			sprintf(pStr,"%c%c%c%c  ",253,180,197,250); 			//�۲�У׼

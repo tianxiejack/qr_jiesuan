@@ -19,6 +19,7 @@ enum record_id{
 	record_log_test,
 	record_log_hcode,
 	record_log_can,
+	record_log_can_send,
 	record_log_max,
 };
 
