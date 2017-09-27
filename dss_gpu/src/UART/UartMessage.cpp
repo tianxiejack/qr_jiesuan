@@ -2851,11 +2851,14 @@ void * SPI_CAN_process(void * prm)
 				if(FD_ISSET(canfd,&readfds))
 				{
 							//���û�����ߣ�������
-							if(bufLen < length || length >sizeof(buf))
+							if(bufLen < length || length >sizeof(buf) )
 							{
-									printf("bufLen < length, length=0");
+									printf("warning : bufLen < length, length=0");
 									length = 0;
 							}
+							if(length<0)
+								length = 0;
+							
 							//�����
 							nread = 0;
 							//length = 0;
@@ -2961,10 +2964,18 @@ void * SPI_CAN_process(void * prm)
 												     CAN_ID_GRENADE == stoh2(buf) )
 											{
 												dataLength = 10;
-												CanPort_parseByte((unsigned char*)buf);
-												memcpy(buf, buf+dataLength, length-dataLength);
-												memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
-												length -= dataLength;
+
+												if(length<dataLength)
+												{
+													printf(" length<dataLength ...\n");
+													memset(buf+length, 0, sizeof(buf)-length);
+													haveData=0;
+												}else{
+													CanPort_parseByte((unsigned char*)buf);
+													memcpy(buf, buf+dataLength, length-dataLength);
+													memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
+													length -= dataLength;
+												}
 											}
 									}
 							}
