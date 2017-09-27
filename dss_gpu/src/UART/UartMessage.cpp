@@ -2902,18 +2902,6 @@ void * SPI_CAN_process(void * prm)
 											//�ж�Ҫ������ݵĳ���
 											dataLength =0;
 
-
-											if( CAN_ID_TURRET == stoh23(buf)  ||
-												     CAN_ID_MACHGUN == stoh23(buf)  ||
-												     CAN_ID_GRENADE == stoh23(buf) )
-											{
-												dataLength = 2;
-												CanPort_parseByte((unsigned char*)buf);
-												memcpy(buf, buf+dataLength, length-dataLength);
-												memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
-												length -= dataLength;
-											}
-
 											if(CAN_ID_PANEL == stoh2(buf))
 											{
 												if(buf[2]<<8 |buf[3])
@@ -2972,7 +2960,7 @@ void * SPI_CAN_process(void * prm)
 												     CAN_ID_MACHGUN == stoh2(buf)  ||
 												     CAN_ID_GRENADE == stoh2(buf) )
 											{
-												dataLength = 2;
+												dataLength = 10;
 												CanPort_parseByte((unsigned char*)buf);
 												memcpy(buf, buf+dataLength, length-dataLength);
 												memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
