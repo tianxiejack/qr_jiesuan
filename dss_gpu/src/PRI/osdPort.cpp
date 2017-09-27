@@ -555,12 +555,13 @@ void increaseMeasureMul()
 		return;
 	if(DISLEN<100)
 		DISLEN *= 10;
-
+	/*
 	if(ShinId > eMeasureDis_Value2)
 	{
 		OSDCTRL_ItemShow(ShinId);
 		ShinId -- ;
 	}
+	*/
 	resetTickNum();
 }
 
@@ -570,29 +571,31 @@ void decreaseMeasureMul()
 		return;
 	if(DISLEN>1)
 		DISLEN /= 10;
-
+	/*
 	if(ShinId < eMeasureDis_Value4)
 	{
 		OSDCTRL_ItemShow(ShinId);
 		ShinId ++;
 	}
+	*/
 	resetTickNum();
 }
 
 void increaseMeasureDis()
 {
-	int i ;//= ShinId;
+	int i = ShinId;
+	/*
 	int flag =0;
 	for(i = 0;i<10;i++)
 	{	
 		if(shine_table[i] == eMeasureDis_Value1)
 			flag = 1;
 	}
-	
+	*/
 	if(!SHINE)
 		return;
 
-	if(flag)
+	if(eMeasureDis == i)
 	{
 		DistanceManual+= DISLEN;
 		if(isMachineGun())
@@ -621,29 +624,11 @@ void decreaseMeasureDis()
 	if(!SHINE)
 		return;
 
-	if( /*eMeasureDis == i || */ eMeasureDis_Value2 == i || eMeasureDis_Value3 == i || eMeasureDis_Value4 == i)
+	if(eMeasureDis == i)	
 	{
 		DistanceManual -= DISLEN;
 		if(DistanceManual <= 0)
 			DistanceManual = 0;
-
-		#if 0
-			if(isMachineGun())
-			{
-				if(DistanceManual <= 100)
-					DistanceManual = 100;
-			}
-			else if(isGrenadeKill())
-			{
-				if(DistanceManual <= 100)
-					DistanceManual = 100;
-			}
-			else if(isGrenadeGas())
-			{
-				if(DistanceManual <= 50)
-					DistanceManual = 50;
-			}
-		#endif
 	}
 }
 

@@ -1008,10 +1008,6 @@ void DynamicTimer_cbFxn()
 	{
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
 	}
-
-	if(!OSDCTRL_IsOsdDisplay(eMeasureDis_Value1))
-		for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-			OSDCTRL_ItemShow(i);
 	
 
 	if(isFovShine())

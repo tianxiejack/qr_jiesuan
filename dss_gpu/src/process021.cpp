@@ -328,6 +328,7 @@ void CProcess021::process_osd(void *pPrm)
    
 	//int devId=0;
 	Mat frame=sThis->m_dc;//.m_imgOsd;
+	Mat frame_graph=sThis->m_dccv;
 	//D_EXT *pIStuts = &sThis->extInCtrl;
 	//int winId;
 	//Text_Param_fb * textParam = NULL;
@@ -378,12 +379,12 @@ void CProcess021::process_osd(void *pPrm)
 	if(flag)
 	{
 		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
-		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);
+		FOVCTRL_erase_draw(frame_graph, pFovCtrlBeforObj);
 	}
 	//OSDCTRL_ItemShow(eErrorZone);
 	//OSDCTRL_AllHide();
 	
-	FOVCTRL_draw(frame,pFovCtrlLocal);
+	FOVCTRL_draw(frame_graph,pFovCtrlLocal);
 	memcpy(pFovCtrlBeforObj,pFovCtrlLocal,sizeof(FOVCTRL_OBJ));
 
 	
@@ -4059,7 +4060,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			}
 			
 		
-			if(SHINE &&eMeasureDis_Value1 == shine_table[0])
+			if(SHINE &&(eMeasureDis == ShinId))//eMeasureDis_Value1 == shine_table[0])
 			{
 				OSDCTRL_NoShine();
 				isfixingMeasure = FALSE;
@@ -4274,18 +4275,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
-			#if 0
-				OSDCTRL_ItemShine(eMeasureDis);
-				isfixingMeasure = TRUE;
-				
-				finish_laser_measure = 0;
-			#endif
-			
-			for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-			{
-				shine_table[i-eMeasureDis_Value1] = i;
-			}
-			SHINE =1 ;
+			OSDCTRL_ItemShine(eMeasureDis);
 		#if 0
 			switch(getDisLen())
 			{
@@ -4311,9 +4301,9 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 			SHINE = FALSE;
 			ShinId = 0;
 			isfixingMeasure = FALSE;
-			for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-				OSDCTRL_ItemShow(i);
-			//OSDCTRL_ItemShow(eMeasureDis);				
+			//for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+			//	OSDCTRL_ItemShow(i);
+			OSDCTRL_ItemShow(eMeasureDis);				
 		}
 	}
  	return ;
@@ -4437,8 +4427,8 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 	}
 	else if(isBattleMode()&&isStatBattleAuto()&&isAutoPreparation())
 	{
-		for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-			OSDCTRL_ItemHide(i);
+		//for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+			OSDCTRL_ItemHide(eMeasureDis);
 		gLevel3CalculatorState = Auto_Idle;
 		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
 		OSDCTRL_ItemShow(eDynamicZone);
@@ -4552,8 +4542,8 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			//sendCommand(CMD_VELOCITY_FAIL);
 		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG			
 		OSDCTRL_ItemShine(eMeasureType);
-		for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-			OSDCTRL_ItemHide(i);
+		//for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
+			OSDCTRL_ItemHide(eMeasureDis);
 		
 		if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
 		{
@@ -5047,7 +5037,7 @@ void CProcess021::updateCMD_BUTTON_SWITCH(int param)
 
 bool CProcess021::ValidateGunType()
 {
-	if((ShinId >= eMeasureDis_Value1 &&ShinId <= eMeasureDis_Value4))
+	if(ShinId == eMeasureDis)
 	{
 		//do nothing
 	}

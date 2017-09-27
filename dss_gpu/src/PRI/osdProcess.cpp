@@ -168,20 +168,19 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,	30,	0,	{0}},
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,		30,	0,	{0}},
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,		30,	0,	{0}},
-	{eMeasureDis,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,		30,	0,	{0}},
-
+	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		30,	0,	{0}},
+	/*
 	{eMeasureDis_Value1,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	30,	0,	{0}},
 	{eMeasureDis_Value2,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	446+LOFFSET,	30,	0,	{0}},//+23
 	{eMeasureDis_Value3,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	457+LOFFSET,	30,	0,	{0}},
 	{eMeasureDis_Value4,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	468+LOFFSET,	30,	0,	{0}},
-
+	*/
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		30,	0,	{0}},
 	{eSuperOrder,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		436,	0,	{0}},
-	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET+WOFFSET,		468,	0,	{0}},
-
-	{eWeather1_T,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET+WOFFSET,		468,	0,	{0}},
-	{eWeather1_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		468,	0,	{0}},
+	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		468,	0,	{0}},
+	{eWeather1_T,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	480+LOFFSET+WOFFSET,		468,	0,	{0}},
+/*	{eWeather1_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		468,	0,	{0}},
 	{eweather1_tmperature1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	432+LOFFSET+WOFFSET,		468,	0,	{0}},
 	{eweather1_tmperature2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	443+LOFFSET+WOFFSET,		468,	0,	{0}},
 	{eweather1_p,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	462+LOFFSET+WOFFSET,		468,	0,	{0}},
@@ -189,8 +188,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eweather1_qiya2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	484+LOFFSET+WOFFSET,		468,	0,	{0}},
 	{eweather1_qiya3,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	495+LOFFSET+WOFFSET,		468,	0,	{0}},
 	{eweather1_qiya4,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	506+LOFFSET+WOFFSET,		468,	0,	{0}},
-
-	{eWeather2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET+WOFFSET,		500,	0,	{0}},
+*/
+	{eWeather2,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		500,	0,	{0}},
+/*
 	{eweather2_R,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET+WOFFSET,		500,	0,	{0}},
 	{eweather2_maohao,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	423+LOFFSET+WOFFSET,		500,	0,	{0}},
 	{eweather2_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	434+LOFFSET+WOFFSET,		500,	0,	{0}},
@@ -201,7 +201,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eweather2_offy_1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	487+LOFFSET+WOFFSET,		500,	0,	{0}},
 	{eweather2_offy_2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	498+LOFFSET+WOFFSET,		500,	0,	{0}},
 	{eweather2_offy_3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	506+LOFFSET+WOFFSET,		500,	0,	{0}},
-
+*/
 	{eAngleH_char,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		468,	0,	{0}},
 	{eAngleH_pole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	55+LOFFSET,		468,	0,	{0}},
 	{eAngleH_s1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	66+LOFFSET,		468,	0,	{0}},
@@ -849,11 +849,15 @@ void OSDCTRL_NoShine()
 {
 	int i;
 	SHINE = FALSE;
+	/*
 	if(isMeasureManual()&&(eMeasureDis_Value1 == shine_table[0]&& shine_table[3] == eMeasureDis_Value4))
 	{
 		for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
 			OSDCTRL_ItemShow(i);		
 	}
+	*/
+	if(isMeasureManual()&&(eMeasureDis == ShinId))
+		OSDCTRL_ItemShow(ShinId);
 	else if(isCalibrationSave()&&(eSaveYesNo==ShinId))
 		OSDCTRL_ItemShow(ShinId);
 	else
@@ -1180,6 +1184,7 @@ void OSDCTRL_updateMainMenu(int i)
 void OSDCTRL_updateDistanceValue()
 {
 	int i;
+	/*
 	if(isMeasureManual())
 	{
 		for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
@@ -1190,6 +1195,11 @@ void OSDCTRL_updateDistanceValue()
 		for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
 			OSDCTRL_ItemHide(i);
 	}
+	*/
+	if(isMeasureManual())
+		OSDCTRL_ItemShow(eMeasureDis);
+	else
+		OSDCTRL_ItemHide(eMeasureDis);
 }
 
 void OSDCTRL_CheckResultsShow()
@@ -1681,17 +1691,17 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		case eMeasureDis:
 
-			//if(isMultiChanged())
-				//sprintf(pStr,"x%03d",getDisLen()); //����
-			//else
-				//sprintf(pStr,"%04d",DistanceManual);
+			if(isMultiChanged())
+				sprintf(pStr,"x%03d",getDisLen()); //����
+			else
+				sprintf(pStr,"%04d",DistanceManual);
 			break;
 			
 			//thousand = DistanceManual/1000;
 			//hundred =  (DistanceManual%1000)/100;
 			//tens = (DistanceManual/10)%10;
 			//unit = (DistanceManual%10);
-
+	#if 0
 		case eMeasureDis_Value1 :
 				if(isMeasureManual())
 					sprintf(pStr,"%01d", DistanceManual/1000);
@@ -1719,7 +1729,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				else
 					sprintf(pStr,"%01d",(LaserDistance%10));
 				break;	
-		
+	#endif	
 		case eLaserState:
 			sprintf(pStr,"%s",Posd[eLaserState]); 	//��ĩѡͨ
 			break;
@@ -1743,14 +1753,15 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%s",Posd[eSuperOrder]);//); //��ǹ��
 			break;
 		case eWeather1:
-			//sprintf(pStr,"T%+02d P%03dk",Temparature,Pressure);//gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
+			//sprintf(pStr,"T%+02d P%03dk",Temparature,Pressure/10000);//gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
+			sprintf(pStr,"T%+02d",Temparature);
 			break;
-			
+		
 		case eWeather1_T:
-			sprintf(pStr,"T"); 
+			sprintf(pStr,"P%03dk",Pressure/10000); 
+			//sprintf(pStr,"T"); 
 			break;	
-#if 1
-
+#if 0	
 		case eWeather1_pole:
 			if(Temparature>=0)
 				sprintf(pStr,"+"); 
@@ -1789,9 +1800,9 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 
 #endif		
 		case eWeather2:
-			//sprintf(pStr,"R:%+05.2f%+05.2f",getAimOffsetX(),getAimOffsetY()); 
+			sprintf(pStr,"R:%+05.2f%+05.2f",getAimOffsetX(),getAimOffsetY()); 
 			break;
-
+#if 0
 		case eweather2_R:
 			sprintf(pStr,"R");
 			break;
@@ -1837,7 +1848,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eweather2_offy_3:
 			sprintf(pStr,"%01d",((int)abs(getAimOffsetY()*10))%10);
 			break;
-			
+#endif		
 		case eErrorZone:
 			sprintf(pStr,"%s",Posd[eErrorZone]); 
 			break;
@@ -1999,7 +2010,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				Posd[eSelfCheckState6] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState6] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c-35%c: %s",191,246,204,211,Posd[eSelfCheckState6]);//); 	//������-35��:��-�쳣
+			sprintf(pStr,"%c%c%c-35%c:  %s",191,246,204,211,Posd[eSelfCheckState6]);//); 	//������-35��:��-�쳣
 			break;
 		case eSelfCheckState7:
 			if(bPositionServoOK())

@@ -199,6 +199,8 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 	int number=0;
 	char *tmpt;
 	int lenctl=0;
+	int lastnumflag = 0;
+	int lastmhflag = 0;
 
 	fontWidth 	= 	OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814;
 	fontHeight 	= 	OSDUTIL_FONT_FLR_DEFAULT_HEIGHT_0814;
@@ -218,15 +220,59 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 		
 		for(k=0; k<numchar; k++)
 		{
-			index = (UInt32)pString[k];
+			index = (UInt32)pString[k];			
+			
 			//index=index-' ';
 			//index=128+index;
 			//printf("draw str:%c [%d]\n", pString[k], index);
-			if(index < 177)
+			//if(index < 177)
+			if(index >=48 && index <=57)
 			{
 				//number ++;
-				lenctl += fontWidth>>1;
-			}	
+				//lenctl += fontWidth>>1;
+				if(lastmhflag)
+				{
+					lenctl +=72;
+					lastnumflag =1;
+				}	
+				else if(lastnumflag == 0)
+					lastnumflag = 1;
+				else
+					lenctl +=48;	
+				lastmhflag = 0;
+			}
+			else if(index == 46)
+			{
+				lastmhflag = 1;
+				lenctl+=48;
+			}
+			else if((index>=33 && index <=47) | (index>=58 && index <=64))
+			{
+				if(lastmhflag)
+					lenctl +=72;
+				else if(lastnumflag)
+					lenctl +=48;
+				lastmhflag = 0;
+			}
+			else if((index>=65 && index<=90)|(index >=97 && index <122))
+			{
+				lenctl +=24;
+				lastmhflag = 0;
+			}
+			else
+			{
+				if(lastnumflag ==1)
+				{
+					lenctl +=48;
+					lastnumflag =0;
+				}
+				lastmhflag = 0;
+			}
+				
+
+
+
+			
 			
 					if(1)
 					{
@@ -247,7 +293,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 							
 							
 							//pixcolor		= (data&0x80)?frcolor:bgcolor;
-							*(pin+j*4-lenctl)	= pixcolor & 0xFF;
+							*(pin+j*4-lenctl)		= pixcolor & 0xFF;
 							*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
 							*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
 							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;

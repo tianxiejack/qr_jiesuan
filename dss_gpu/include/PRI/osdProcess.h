@@ -93,18 +93,18 @@ typedef enum _eOsdTypeId{
 	eFovType		,
 	eEnhance		,
 	eMeasureDis		,
-
+	/*
 	eMeasureDis_Value1,
 	eMeasureDis_Value2,
 	eMeasureDis_Value3,
 	eMeasureDis_Value4,
-	
+	*/
 	eLaserState	,//	=	0x0A,//��Ϊ�������ĩѡͨ��ʾʹ��
 	eSuperOrder	,//	=	0x0B,
 	eErrorZone	,//	=	0x0C,
 	eWeather1	,
 	eWeather1_T,
-	eWeather1_pole,
+/*	eWeather1_pole,
 	eweather1_tmperature1,
 	eweather1_tmperature2,
 	eweather1_p,
@@ -112,7 +112,9 @@ typedef enum _eOsdTypeId{
 	eweather1_qiya2,
 	eweather1_qiya3,
 	eweather1_qiya4,
+*/
 	eWeather2	,//	=	0x0E,
+/*
 	eweather2_R,
 	eweather2_maohao,
 	eweather2_pole1,
@@ -123,7 +125,7 @@ typedef enum _eOsdTypeId{
 	eweather2_offy_1,
 	eweather2_offy_2,
 	eweather2_offy_3,
-
+*/
 	eAngleH_char,
 	eAngleH_pole,
 	eAngleH_s1,
