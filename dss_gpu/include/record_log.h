@@ -24,7 +24,7 @@ enum record_id{
 };
 
 //初始化日记记录，返回串口id号。
-int init_record_log(int com_id, char *filename);
+int init_record_log(int com_id, const char *filename);
 
 //关闭日记记录
 int uninit_record_log();

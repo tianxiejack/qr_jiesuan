@@ -2,8 +2,8 @@
 #include "record_log.h"
 
 
-#define RECV_NUM_SIZE 	(50)
-#define LOG_SIZE		(20)
+#define RECV_NUM_SIZE 	(100)
+#define LOG_SIZE		(128)
 
 
 typedef struct

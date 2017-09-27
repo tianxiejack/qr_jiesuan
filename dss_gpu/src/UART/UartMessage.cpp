@@ -2798,7 +2798,7 @@ void * SPI_CAN_process(void * prm)
 
 		char buf[2048] = {0};
 		char tempBuf[2048] = {0};
-		int bufLen=2048;
+		const int bufLen=2048;
 
 		int length=0;
 		int nread=0;
@@ -2842,7 +2842,7 @@ void * SPI_CAN_process(void * prm)
 							}
 							//�����
 							nread = 0;
-							length = 0;
+							//length = 0;
 							nread =  ReadCANBuf(buf+length, bufLen-length);
 							
 							//if(uart_open_close_flag)
@@ -2893,7 +2893,7 @@ void * SPI_CAN_process(void * prm)
 													case 0xA0 :
 																dataLength=9;  break;
 													case 0xA1 :
-																dataLength=7;  break;
+																dataLength=6;  break;
 													case 0xA2 :
 																dataLength=4;  break;
 													case 0xA3 :
