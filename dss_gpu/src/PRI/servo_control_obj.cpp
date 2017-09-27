@@ -632,7 +632,7 @@ void testliudanjiasu()
 		int value;
 	}ymilsecond;
 	if(ymilsecond.value <= 112800)
-		ymilsecond.value +=2000;
+		ymilsecond.value +=5000;
 	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
 	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_LONG);
 	usleep(500);
@@ -649,7 +649,7 @@ void testjiqiangjiasu()
 	}ymilsecond;
 	ymilsecond.value = 1000;
 	if(ymilsecond.value <= 192800)
-		ymilsecond.value +=2000;
+		ymilsecond.value +=5000;
 	FILLBUFFSPEED(TestMachbuf, ymilsecond);
 	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
 	usleep(500);
@@ -666,7 +666,7 @@ void testliudanjiansu()
 	}ymilsecond;
 	ymilsecond.value = 1000;
 	if(ymilsecond.value >= -192800)
-		ymilsecond.value -=2000;
+		ymilsecond.value -=5000;
 	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
 	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_LONG);
 	usleep(500);
@@ -683,7 +683,7 @@ void testjiqiangjiansu()
 	}ymilsecond;
 	ymilsecond.value = 1000;
 	if(ymilsecond.value >= 2000)
-		ymilsecond.value -=2000;
+		ymilsecond.value -=5000;
 	FILLBUFFSPEED(TestMachbuf, ymilsecond);
 	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
 	usleep(500);
