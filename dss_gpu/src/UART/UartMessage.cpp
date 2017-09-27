@@ -2746,11 +2746,27 @@ int CanPort_recvFlg(char * buf, int iLen, int * index)
 	int i=0;
 	while(1)
 	{
-		if( CAN_ID_PANEL == stoh2(pCur)  || 
-		     CAN_ID_TURRET == stoh2(pCur)  ||
+		if( CAN_ID_PANEL == stoh2(pCur)  )		//�жϿ�ͷ��־
+		{		
+			if(CAN_ID_TURRET == stoh23(pCur)  ||
+			     	CAN_ID_MACHGUN == stoh23(pCur)  ||
+			    	 CAN_ID_GRENADE == stoh23(pCur) )
+			 {
+				memcpy(pCur, pCur+1, length-1);
+				length--;
+				(*index) +=1 ;
+
+				if(length<2)
+				{
+					return -1;
+				}
+			}	
+			break;
+			
+		}else if(CAN_ID_TURRET == stoh2(pCur)  ||
 		     CAN_ID_MACHGUN == stoh2(pCur)  ||
-		     CAN_ID_GRENADE == stoh2(pCur) )		//�жϿ�ͷ��־
-		{
+		     CAN_ID_GRENADE == stoh2(pCur) )	
+		{		
 			break;
 		}else{
 			//printf("move one data..%d\n",i++);
@@ -2886,8 +2902,22 @@ void * SPI_CAN_process(void * prm)
 											//�ж�Ҫ������ݵĳ���
 											dataLength =0;
 
+
+											if( CAN_ID_TURRET == stoh23(buf)  ||
+												     CAN_ID_MACHGUN == stoh23(buf)  ||
+												     CAN_ID_GRENADE == stoh23(buf) )
+											{
+												dataLength = 2;
+												CanPort_parseByte((unsigned char*)buf);
+												memcpy(buf, buf+dataLength, length-dataLength);
+												memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
+												length -= dataLength;
+											}
+
 											if(CAN_ID_PANEL == stoh2(buf))
 											{
+												if(buf[2]<<8 |buf[3])
+																						
 												switch(buf[2])
 												{
 													case 0xA0 :

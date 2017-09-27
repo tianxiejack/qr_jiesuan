@@ -39,6 +39,8 @@ extern "C"{
 #define sendCommand(MSG_ID) MSGDRIV_send(MSG_ID,0)//PostMessage(MSG_ID)
 
 #define stoh2(buf) ((buf[0]<<8)|(buf[1]))
+#define stoh23(buf) ((buf[1]<<8)|(buf[2]))
+
 #define STOH2 stoh2
 #define BYTE0(buf)   (buf[0])
 #define BYTE1(buf)   (buf[1])
