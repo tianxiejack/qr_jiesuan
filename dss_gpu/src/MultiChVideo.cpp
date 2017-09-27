@@ -31,7 +31,7 @@ int MultiChVideo::creat()
 	}*/
 	VCap[0] = new v4l2_camera(0);
 	VCap[0]->creat();
-//VCap[1] = new v4l2_camera(1);
+//	VCap[1] = new v4l2_camera(1);
 //	VCap[1]->creat();
 //	VCap[2] = new v4l2_camera(3);
 //	VCap[2]->creat();

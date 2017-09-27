@@ -53,7 +53,8 @@ enum {
 }CAN_DEVICE_TYPE;
 
 BYTE FrameBuf0[7]={0xA0,0x00,0xFF,0xFF,0xFF,0xFF,0x00};
-BYTE FrameBuf1[5]={0xA1,0x10,0x44,0xFF,0x00};
+//BYTE FrameBuf1[5]={0xA1,0x10,0x44,0xFF,0x00};
+BYTE FrameBuf1[5]={0xA1,0x10,0x44,0xFF};
 BYTE FrameBuf3[4]={0xA3,0x0F,0x00,0x00};
 //SIGNAL signal;
 static WeaponCtrlPort_t WeaponCtrlObj;
@@ -1038,7 +1039,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			MSGDRIV_send(CMD_MEASURE_DISTANCE,0);
 		}
 	}
-
+#if 0
 	if(BIT4(BYTE4(FrameBuf1)) != BIT4(BYTE6(buf)))
 	{
 		if(BIT4(BYTE6(buf)) == 0x00)
@@ -1046,7 +1047,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		else
 			MSGDRIV_send(CMD_IDENTIFY_GAS,0);
 	}
-	
+#endif	
 	memcpy(FrameBuf1,&buf[2],sizeof(FrameBuf1));
 
 #endif

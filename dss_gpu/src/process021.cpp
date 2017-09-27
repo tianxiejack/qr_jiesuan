@@ -1620,14 +1620,9 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	}
 
 		
-	if (key == 'j')
+	if (key == 'j' ||key == 'J')
 	{
-		MSGDRIV_send(CMD_MODE_AIM_LAND,NULL);
-	}
-
-	if (key == 'J')
-	{
-
+		SPI_mirror_send_requst();
 	}
 
 	
