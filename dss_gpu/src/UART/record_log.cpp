@@ -110,7 +110,7 @@ void* thread_record_log_data(void * prm)
 //初始化日记记录，返回串口id号。
 int init_record_log(int com_id, const char *filename)
 {
-	FILE * fp = NULL;
+    FILE * fp = NULL;
     time_t timep;
     int max_index = sizeof(record_log)/sizeof(RECORD_LOG);
     int pthread_rt = 0;
@@ -175,6 +175,8 @@ int record_log_send_data(int com_id, int size, unsigned  char * buffer)
     //发送信号
 	int i=0;
 	int j=0;
+	if(size<=0)
+		return 0;
 	
 	for(i=0; i<index_record_log ; i++)
 	{

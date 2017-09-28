@@ -2376,7 +2376,7 @@ int strToHex(char* ch,char* hex)
 		return -1;
 	if(strlen(ch) == 0)
 		return -2;
-printf("strlen(ch) = %d\n",strlen(ch));
+	printf("strlen(ch) = %d\n",(int)strlen(ch));
 	while(*ch)
 	{
 		tmp = (int)*ch;
@@ -2815,9 +2815,10 @@ void * SPI_CAN_process(void * prm)
 		char buf[2048] = {0};
 		char tempBuf[2048] = {0};
 		const int bufLen=2048;
+		char recvbuf[2048];
+		int recv_length=0;
 
-		int length=0;
-		int nread=0;
+		int offset=0;
 		int ret=0;
 		int index=0;
 		int dataLength=0;
@@ -2835,8 +2836,8 @@ void * SPI_CAN_process(void * prm)
 		init_record_log(record_log_test,     "/config/log/record_log_test.txt");
 		init_record_log(record_log_hcode,   "/config/log/record_log_hcode.txt");
 		init_record_log(record_log_can,      "/config/log/record_log_can.txt");
-		init_record_log(record_log_can_send,      "/config/log/record_log_can_send.txt");						
-		
+		init_record_log(record_log_can_send,      "/config/log/record_log_can_send.txt");								
+
 		InitDevice_spi();
 		
 		OpenCANDevice();
@@ -2850,138 +2851,152 @@ void * SPI_CAN_process(void * prm)
 				select(canfd+1,&readfds,NULL,NULL,NULL);
 				if(FD_ISSET(canfd,&readfds))
 				{
-							//���û�����ߣ�������
-							if(bufLen < length || length >sizeof(buf) )
+					//���û�����ߣ�������
+					if( offset >sizeof(buf) )
+					{
+						printf("warning : bufLen < length, length=0");
+						offset = 0;
+					}
+					if(offset < 0)
+						offset = 0;
+					
+					//�����	
+					//length = 0;
+					//nread =  ReadCANBuf(buf+length, bufLen-length);
+
+					recv_length = 0;
+					recv_length = ReadCANBuf(recvbuf, sizeof(recvbuf));
+					if(recv_length <= 0)
+						continue;
+					
+					record_log_send_data(record_log_can, recv_length, (unsigned char*)recvbuf);
+			
+					static int count=0;
+					//printf("%d ", offset);
+					if(count++>10)
+					{
+						count=0;
+						//printf("\nlength= ");
+					}
+
+					
+					//printf("recv_length=%d, offset=%d\n",recv_length, offset);
+					if( (recv_length+offset) >= sizeof(buf) )
+					{
+						printf("no enough space to record !! going to clean buffer !\n");
+						offset = 0;	
+					}
+					memcpy(buf+offset ,  recvbuf,  recv_length);
+					offset += recv_length;
+					
+				#if CAN_DEBUG
+				   	printf(" before parse --- length=%d  nread=%d...\n", offset, recv_length);
+				#endif
+									
+					if(recv_length > 0)
+					{
+						haveData = 1;
+
+						while(haveData)  //һ�����ܶ����
+						{
+							//�ж��Ƿ���can���ͷ��
+							#if CAN_DEBUG
+							printf("have data length=%d ...\n",  offset);
+							for(i=0; i<offset; i++)
+								printf("%02x ", buf[i]);
+							
+							printf("\n");
+							#endif
+							
+							index=0;
+							ret = CanPort_recvFlg(buf, offset, &index);
+							printf("index = %d ", index);
+							offset -= index;//����֮��ʵ����ݳ��ȸ���
+
+							if(ret != 0)
 							{
-									printf("warning : bufLen < length, length=0");
-									length = 0;
+								haveData=0;
+								continue;
 							}
-							if(length<0)
-								length = 0;
-							
-							//�����
-							nread = 0;
-							//length = 0;
-							nread =  ReadCANBuf(buf+length, bufLen-length);
-							
-							//if(uart_open_close_flag)
-								//nread = -1;
-						#if CAN_DEBUG
-						   	printf(" before parse --- length=%d  nread=%d...\n", length, nread);
-						#endif
-							if(nread > 0)
-							{
-									char * record_buff = buf+length;
-									record_log_send_data(record_log_can, nread, (unsigned char*)record_buff);
 
-									length += nread;  //��������ݣ�������ݳ���
-									haveData = 1;
+							//�ж�Ҫ������ݵĳ���
+							dataLength =0;
 
-									while(haveData)  //һ�����ܶ����
+							if(CAN_ID_PANEL == stoh2(buf))
+							{					
+																		
+								switch(buf[2])
+								{
+									case 0xA0 :
+												dataLength=9;  break;
+									case 0xA1 :
+												dataLength=6;  break;
+									case 0xA2 :
+												dataLength=4;  break;
+									case 0xA3 :
+												dataLength=6;  break;
+									case 0xA4 :
+												dataLength=4; break;
+									case 0xA5 :
+												dataLength =4; break;
+									default :
+												memcpy(buf, buf+2, offset-2);
+												memset(buf+offset-2, 0, sizeof(buf)-(offset-2)  );
+												dataLength =0;
+												offset -= 2;
+												break;
+								}
+
+								//����֮��,������ݳ���
+								if(dataLength > 0)
+								{	
+									//��ӡҪ���������
+									#if CAN_DEBUG
+									for(i=0; i<dataLength; i++)
+										printf("%02x ", buf[i]);
+										
+									printf("\n length=%d, dataLength=%d\n", offset, dataLength);
+									#endif
+									
+									if(offset<dataLength)
 									{
-											//�ж��Ƿ���can���ͷ��
-											#if CAN_DEBUG
-												printf("have data length=%d ...\n",  length);
-											#endif
-											for(i=0; i<length; i++)
-											{
-												#if CAN_DEBUG
-													printf("%02x ", buf[i]);
-												#endif
-											}
-											#if CAN_DEBUG
-												printf("\n");
-											#endif
-											index=0;
-											ret = CanPort_recvFlg(buf, length, &index);
-											length -= index;//����֮��ʵ����ݳ��ȸ���
-
-											if(ret != 0)
-											{
-												haveData=0;
-												continue;
-											}
-
-											//�ж�Ҫ������ݵĳ���
-											dataLength =0;
-
-											if(CAN_ID_PANEL == stoh2(buf))
-											{
-												//if(buf[2]<<8 |buf[3])
-																						
-												switch(buf[2])
-												{
-													case 0xA0 :
-																dataLength=9;  break;
-													case 0xA1 :
-																dataLength=6;  break;
-													case 0xA2 :
-																dataLength=4;  break;
-													case 0xA3 :
-																dataLength=6;  break;
-													case 0xA4 :
-																dataLength=4; break;
-													case 0xA5 :
-																dataLength =4; break;
-													default :
-																memcpy(buf, buf+2, length-2);
-																memset(buf+length-2, 0, sizeof(buf)-(length-2)  );
-																dataLength =0;
-																haveData=0;
-																break;
-												}
-
-												//����֮��,������ݳ���
-												if(dataLength > 0)
-												{	
-													//��ӡҪ���������
-													for(i=0; i<dataLength; i++)
-													{
-														#if CAN_DEBUG
-															printf("%02x ", buf[i]);
-														#endif
-													}
-													#if CAN_DEBUG	
-														printf("\n length=%d, dataLength=%d\n", length, dataLength);
-													#endif
-													
-													if(length<dataLength)
-													{
-														printf(" length<dataLength ...\n");
-														memset(buf+length, 0, sizeof(buf)-length);
-														haveData=0;
-													}else{
-														//�������
-														CanPort_parseByte((unsigned char*)buf);
-														memcpy(buf, buf+dataLength, length-dataLength);
-														memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
-														length -= dataLength;
-													}
-												}
-											}
- 											else if( CAN_ID_TURRET == stoh2(buf)  ||
-												     CAN_ID_MACHGUN == stoh2(buf)  ||
-												     CAN_ID_GRENADE == stoh2(buf) )
-											{
-												dataLength = 2;
-
-												if(length<dataLength)
-												{
-													printf(" length<dataLength ...\n");
-													memset(buf+length, 0, sizeof(buf)-length);
-													haveData=0;
-												}
-												else
-												{
-													CanPort_parseByte((unsigned char*)buf);
-													memcpy(buf, buf+dataLength, length-dataLength);
-													memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
-													length -= dataLength;
-												}
-											}
+										printf(" length<dataLength ...\n");
+										memset(buf+offset, 0, sizeof(buf)-offset);
+										haveData=0;
+									}else{
+										//�������
+										CanPort_parseByte((unsigned char*)buf);
+										memcpy(buf, buf+dataLength, offset-dataLength);
+										memset(buf+offset-dataLength, 0, sizeof(buf)-(offset-dataLength)  );
+										offset -= dataLength;
 									}
+								}
 							}
-				}
+							else if( CAN_ID_TURRET == stoh2(buf)  ||
+								     CAN_ID_MACHGUN == stoh2(buf)  ||
+								     CAN_ID_GRENADE == stoh2(buf) )
+							{
+								dataLength = 10;
+
+								if(offset<dataLength)
+								{
+									printf(" length<dataLength ...\n");
+									memset(buf+offset, 0, sizeof(buf)-offset);
+									haveData=0;
+								}
+								else
+								{
+									CanPort_parseByte((unsigned char*)buf);
+									memcpy(buf, buf+dataLength, offset-dataLength);
+									memset(buf+offset-dataLength, 0, sizeof(buf)-(offset-dataLength)  );
+									offset -= dataLength;
+								}
+							}
+
+						}
+						printf("recv_length=%d, offset=%d\n",recv_length, offset);						
+					}	
+			}
 
 		}
 
