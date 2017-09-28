@@ -19,9 +19,6 @@ static void MachServoStop();
 static void GrenadeServoStop();
 
 
-#define CODE_MACHGUN 		(0x37)
-#define CODE_GRENADE 		(0x42)
-
 static IF_servo_control gMachServoControlObj = {
 	MachServoMoveOffset,
 	MachServoMoveSpeed,
@@ -559,8 +556,10 @@ void testjiqiangqidong()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	ymilsecond.value = 500;
-	FILLBUFFSPEED(TestMachbuf, ymilsecond);
+	ymilsecond.value = 8000;
+	//FILLBUFFSPEED(TestMachbuf, ymilsecond);
+	ymilsecond.value = (2)*2*(4096/6000.0);
+	FILLBUFFOFFST(TestMachbuf,ymilsecond);
 	TestSendCANBuf(TestMachbuf,10);
 	usleep(500);
 	FILLBUFFBGIN(TestMachbuf);
@@ -574,8 +573,10 @@ void testliudanqidong()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	ymilsecond.value = 500;
-	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
+	ymilsecond.value = 3500;
+	ymilsecond.value = (2)*2*(4096/6000.0);
+	FILLBUFFOFFST(TestMachbuf,ymilsecond);
+	//FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
 	TestSendCANBuf(TestGrenadebuf,10);
 	usleep(500);
 	FILLBUFFBGIN(TestGrenadebuf);
@@ -590,7 +591,7 @@ void testFjiqiangqidong()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	ymilsecond.value = -500;
+	ymilsecond.value = -8000;
 	FILLBUFFSPEED(TestMachbuf, ymilsecond);
 	TestSendCANBuf(TestMachbuf,10);
 	usleep(500);
@@ -605,7 +606,7 @@ void testFliudanqidong()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	ymilsecond.value = -500;
+	ymilsecond.value = -10000;
 	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
 	TestSendCANBuf(TestGrenadebuf,10);
 	usleep(500);
@@ -618,11 +619,11 @@ void teststopserver()
 {
 	FILLBUFFSTOP(TestMachbuf);
 	TestSendCANBuf((TestMachbuf), CAN_CMD_SIZE_SHORT);
-	usleep(500);
+	usleep(5000);
 
 	FILLBUFFSTOP(TestGrenadebuf);
 	TestSendCANBuf((TestGrenadebuf), CAN_CMD_SIZE_SHORT);
-	usleep(500);	
+	usleep(5000);	
 }
 
 void testliudanjiasu()

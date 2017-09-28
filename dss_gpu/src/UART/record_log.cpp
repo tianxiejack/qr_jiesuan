@@ -175,8 +175,8 @@ int record_log_send_data(int com_id, int size, unsigned  char * buffer)
     //发送信号
 	int i=0;
 	int j=0;
-	if(size<=0)
-		return 0;
+	//if(size<=0)
+	//	return 0;
 	
 	for(i=0; i<index_record_log ; i++)
 	{

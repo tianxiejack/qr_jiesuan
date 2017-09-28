@@ -1,6 +1,11 @@
 #ifndef  _UART_CAN_MESSAGE_H
 #define _UART_CAN_MESSAGE_H
 
+
+#define CODE_MACHGUN 		(0x37)
+#define CODE_GRENADE 		(0x42)
+#define CODE_TURRET   		(0x2C)
+
 int OpenCANDevice();
 
 int GetCanfd();

@@ -40,9 +40,9 @@ static int fd_can;
 pthread_mutex_t can_mutex;
 
 //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u839e\u951f\u65a4\u62f7\u6b27\u951f\u65a4\u62f7\u6a21\u6851\u66ae\u62e7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u89d2?\u951f\u65a4\u62f7	\u951f\u65a4\u62f7\u53f0
-#define CODE_SERVO_MACHGUN   	(0x2C)
-#define CODE_SERVO_GRENADE	(0x37)
-#define CODE_SERVO_TURRET     	(0x42)
+#define CODE_SERVO_MACHGUN   	(0x37)
+#define CODE_SERVO_GRENADE	(0x42)
+#define CODE_SERVO_TURRET     	(0x2C)
 
 
 /* ========================================================================== */
@@ -356,7 +356,7 @@ int ReadCANBuf(char *buf, int length)
 
 int SendCANBuf(char *buf, int length)
 {
-	#if 0
+	#if 1
 		int nwrite= 0 ;
 
 		pthread_mutex_lock(&can_mutex);

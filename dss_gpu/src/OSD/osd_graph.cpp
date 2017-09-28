@@ -557,7 +557,7 @@ void osd_draw_cross_black_white(Mat frame, void *prm)
         iX = pObj->x - (pObj->width>>1);
         iY = pObj->y;
         DrawHLine(frame,iX,iY,width,len,BLACKCOLOR);
-	 DrawHLine(frame,iX,iY+width,width,len,WHITECOLOR);
+        DrawHLine(frame,iX,iY+width,width,len,WHITECOLOR);
         //middle horizonal line
         len = pObj->linePixels;
         iX = pObj->x;

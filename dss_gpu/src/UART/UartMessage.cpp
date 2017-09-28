@@ -34,9 +34,7 @@
 #define CAN_ID_TURRET 		(0x02AC)
 #define CAN_ID_MACHGUN 	(0x02B7)
 #define CAN_ID_GRENADE		(0x2C2)
-#define CODE_MACHGUN 		(0x37)
-#define CODE_GRENADE 		(0x42)
-#define CODE_TURRET   		(0x2C)
+
 #define CAN_ID_TUREET_SERVO		(0x0342)
 #define CAN_ID_MACHGUN_SERVO   	(0x032C)
 #define CAN_ID_GRENADE_SERVO 	(0x0337)
@@ -2910,7 +2908,7 @@ void * SPI_CAN_process(void * prm)
 							
 							index=0;
 							ret = CanPort_recvFlg(buf, offset, &index);
-							printf("index = %d ", index);
+							//printf("index = %d ", index);
 							offset -= index;//����֮��ʵ����ݳ��ȸ���
 
 							if(ret != 0)
@@ -2944,7 +2942,7 @@ void * SPI_CAN_process(void * prm)
 												memset(buf+offset-2, 0, sizeof(buf)-(offset-2)  );
 												dataLength =0;
 												offset -= 2;
-												break;
+		 										break;
 								}
 
 								//����֮��,������ݳ���
