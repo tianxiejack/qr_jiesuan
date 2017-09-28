@@ -2907,7 +2907,7 @@ void * SPI_CAN_process(void * prm)
 
 											if(CAN_ID_PANEL == stoh2(buf))
 											{
-												if(buf[2]<<8 |buf[3])
+												//if(buf[2]<<8 |buf[3])
 																						
 												switch(buf[2])
 												{
@@ -2963,14 +2963,16 @@ void * SPI_CAN_process(void * prm)
 												     CAN_ID_MACHGUN == stoh2(buf)  ||
 												     CAN_ID_GRENADE == stoh2(buf) )
 											{
-												dataLength = 10;
+												dataLength = 2;
 
 												if(length<dataLength)
 												{
 													printf(" length<dataLength ...\n");
 													memset(buf+length, 0, sizeof(buf)-length);
 													haveData=0;
-												}else{
+												}
+												else
+												{
 													CanPort_parseByte((unsigned char*)buf);
 													memcpy(buf, buf+dataLength, length-dataLength);
 													memset(buf+length-dataLength, 0, sizeof(buf)-(length-dataLength)  );
