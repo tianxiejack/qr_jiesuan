@@ -6,16 +6,19 @@
 CPP_SRCS += \
 ../src/UART/UartCanMessage.cpp \
 ../src/UART/UartMessage.cpp \
+../src/UART/record_log.cpp \
 ../src/UART/spiH.cpp 
 
 OBJS += \
 ./src/UART/UartCanMessage.o \
 ./src/UART/UartMessage.o \
+./src/UART/record_log.o \
 ./src/UART/spiH.o 
 
 CPP_DEPS += \
 ./src/UART/UartCanMessage.d \
 ./src/UART/UartMessage.d \
+./src/UART/record_log.d \
 ./src/UART/spiH.d 
 
 
