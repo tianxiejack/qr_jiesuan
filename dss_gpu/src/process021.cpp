@@ -352,8 +352,8 @@ void CProcess021::process_osd(void *pPrm)
 	}
 	else
 		OSDCTRL_ItemShow(eShotType);
-	memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
-	memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
+	//memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
+	//memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
 	
 	//erase
@@ -379,18 +379,18 @@ void CProcess021::process_osd(void *pPrm)
 	if(flag)
 	{
 		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
-		FOVCTRL_erase_draw(frame_graph, pFovCtrlBeforObj);
+		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);//frame_graph
 	}
 	//OSDCTRL_ItemShow(eErrorZone);
 	//OSDCTRL_AllHide();
 	
-	FOVCTRL_draw(frame_graph,pFovCtrlLocal);
-	memcpy(pFovCtrlBeforObj,pFovCtrlLocal,sizeof(FOVCTRL_OBJ));
+	FOVCTRL_draw(frame,pFovCtrlObj);
+	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
 
 	
 	
-	OSDCTRL_draw_text(frame,pCtrlObjLocal);
-	memcpy(pCtrlObjbefore,pCtrlObjLocal,sizeof(OSDCTRL_OBJ));
+	OSDCTRL_draw_text(frame,pCtrlObj);
+	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
 	flag = 1;
 	sThis->m_display.UpDateOsd(0);

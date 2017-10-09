@@ -119,7 +119,8 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		if(isCalibrationZero())
 		{
 			DrawjsCompass(frame,cthis);
-			DrawjsCross(frame, cthis);		
+			DrawjsCross(frame, cthis);	
+			DrawjsRuler(frame,cthis);
 		}	
 	}
 	else if(isBattleMode())//&&isStatBattleAlert())
@@ -129,6 +130,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 			DrawjsCompass(frame,cthis);
 			DrawjsCross(frame, cthis);
 			DrawjsRuler(frame,cthis);
+			printf("aaaaa\n");
 		}
 		else if(isStatBattleAlert())
 		{		
@@ -169,7 +171,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	SDK_ASSERT(cthis!=NULL);
 	if(cthis->bFovDraw==FALSE)
 		return;
-
+ 
 	last_angle = getGrenadeAngle()-getMachGunAngle();
 	DrawjsAngleFrame(frame,cthis,last_angle);
 
@@ -183,6 +185,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		{
 			DrawjsCompass(frame,cthis);
 			DrawjsCross(frame, cthis);		
+			DrawjsRuler(frame,cthis);
 		}
 	
 	}

@@ -474,12 +474,13 @@ void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 	int offlen = 0;
 	if(fovOsdCtrl == NULL)
 		return;
-	CFOV * cthis ;
-	cthis = fovOsdCtrl;
+	CFOV * cthis = fovOsdCtrl;
+	
 	Osd_cvPoint start;
 	Osd_cvPoint end;
 	int flag = 0 ;  // 0 jiguang  chang  1 ren duan
 
+printf("gMeasureType = %d\n",gMeasureType);
 	if(gMeasureType ||finish_laser_measure)
 		flag = 1;
 	

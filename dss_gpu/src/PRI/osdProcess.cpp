@@ -711,7 +711,7 @@ static void OSDCTRL_OsdInitial()
 	sprintf(GunOsd[2],"%c%c",189,176);//fang bao
 	sprintf(GunOsd[3],"%c%c%c%c?",223,224,216,193);//sha shang qiang guan//216,193
 	sprintf(GunOsd[4],"%c%c%c%c?",189,176,216,193);//fang bao qiang guan
-	sprintf(GunOsd[5],"             ");//fang bao qiang guan
+	sprintf(GunOsd[5],"       ");//fang bao qiang guan
 
 
 	sprintf(ShotOsd[0],"%c",188);//dan 	liu dan
