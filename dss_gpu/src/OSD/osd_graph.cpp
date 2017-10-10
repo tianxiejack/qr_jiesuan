@@ -290,10 +290,12 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 			}
 			else
 			{
-				if(lastnumflag |lastfhflag)
+				if(lastnumflag |lastfhflag |lastmhflag)
 				{
 					lenctl +=48;
 				}
+				
+				
 				lastmhflag = 0;
 				lastnumflag = 0;
 				lastcharacterflag = 0;
@@ -332,9 +334,10 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 						((index >=48  && index <=57) |
 						(index >=33  && index <=47) | 
 						//(index >=58  && index <=64) |
+						index == 58 |
 						(index >=65  && index <=90) |
 						(index >=97 && index <122))
-						)
+					  )
 					{
 						pixcolor	= 0x00000000;
 						for(j=startx+k*fontWidth+fontWidth-12; j<startx+k*fontWidth+fontWidth; j++)
@@ -342,8 +345,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 							*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
 							*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
 							*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
-							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
-							
+							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;						
 						}
 					}
 

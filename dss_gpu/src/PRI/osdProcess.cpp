@@ -168,7 +168,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,	30,	0,	{0}},
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,		30,	0,	{0}},
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,		30,	0,	{0}},
-	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		30,	0,	{0}},
+	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	436+LOFFSET,		30,	0,	{0}},
 	/*
 	{eMeasureDis_Value1,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	30,	0,	{0}},
 	{eMeasureDis_Value2,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	446+LOFFSET,	30,	0,	{0}},//+23
@@ -237,15 +237,24 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eSaveYesNo,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		170,	0,	{0}},
 	{eCalibMenu_SaveOK,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	150+LOFFSET,		65,	0,	{0}},
 	{eSelfCheckResult,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		65,	0,	{0}},
-	{eSelfCheckState1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		100-3+70,	0,	{0}},
-	{eSelfCheckState2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		135-6+70,	0,	{0}},
-	{eSelfCheckState3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		170-9+70,	0,	{0}},
-	{eSelfCheckState4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		205-12+70,	0,	{0}},
-	{eSelfCheckState5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		240-15+70,	0,	{0}},
-	{eSelfCheckState6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		275-18+70,	0,	{0}},
-	{eSelfCheckState7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		310-21+70,	0,	{0}},
-	{eSelfCheckState8,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		345-24+70,	0,	{0}},
-	{eSelfCheckState9,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		380-27+70,	0,	{0}},
+	{eSelfCheckState1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		97,	0,	{0}},
+	{eSelfCheckState1_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		97,	0,	{0}},
+	{eSelfCheckState2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		129,	0,	{0}},
+	{eSelfCheckState2_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		129,	0,	{0}},
+	{eSelfCheckState3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		161,	0,	{0}},
+	{eSelfCheckState3_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		161,	0,	{0}},
+	{eSelfCheckState4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		193,	0,	{0}},
+	{eSelfCheckState4_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		193,	0,	{0}},
+	{eSelfCheckState5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		225,	0,	{0}},
+	{eSelfCheckState5_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		225,	0,	{0}},
+	{eSelfCheckState6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		257,	0,	{0}},
+	{eSelfCheckState6_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		257,	0,	{0}},
+	{eSelfCheckState7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		289,	0,	{0}},
+	{eSelfCheckState7_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		289,	0,	{0}},
+	{eSelfCheckState8,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		321,	0,	{0}},
+	{eSelfCheckState8_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		321,	0,	{0}},
+	{eSelfCheckState9,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		353,	0,	{0}},
+	{eSelfCheckState9_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		353,	0,	{0}},
 
 	{eCalibZero_D,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	285+LOFFSET+83,		490,	0,	{0}},
 	{eCalibZero_D_d,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	310+LOFFSET+83,		490,	0,	{0}},
@@ -1209,7 +1218,7 @@ void OSDCTRL_CheckResultsShow()
 #if 1
 	int i;
 	OSDCTRL_AllHide();
-	for(i=eSelfCheckState1; i<=eSelfCheckState9; i++)
+	for(i=eSelfCheckState1; i<=eSelfCheckState9_status; i++)
 	{
 		OSDCTRL_ItemShow(i);
 	}
@@ -1686,13 +1695,12 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				}
 				else
 					//sprintf(pStr,"%s:%s",Posd[eMeasureType],Posd[eMeasureType]); //shou  mo
-					sprintf(pStr,"%s",Posd[eMeasureType]); //laser
+					sprintf(pStr,"%s:",Posd[eMeasureType]); //laser
 				   	//OSDCTRL_ItemHide(eMeasureDis);	
 
 			}
 			break;
 		case eMeasureDis:
-
 			if(isMultiChanged())
 				sprintf(pStr,"x%03d",getDisLen()); //����
 			else
@@ -1970,71 +1978,118 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 				Posd[eSelfCheckResult] = ResultOsd[0];
 			else
 				Posd[eSelfCheckResult] = ResultOsd[1];
-			sprintf(pStr,"%c%c:%s",249,203,Posd[eSelfCheckResult]);//); 					//�Լ�:��-�쳣
+			sprintf(pStr,"%c%c:%s",249,203,Posd[eSelfCheckResult]);					//�Լ�:��-�쳣
 			break;
+
+
 		case eSelfCheckState1:
+			sprintf(pStr,"%c %c:",244,207);
+			break;
+			
+		case eSelfCheckState1_status:
 			if(bWeaponCtrlOK())
 				Posd[eSelfCheckState1] = ResultOsd[0];	//normal
 			else
 				Posd[eSelfCheckState1] = ResultOsd[1]; 	//abnormal
-			sprintf(pStr,"%c %c:     %s",244,207,Posd[eSelfCheckState1]);//); 			//�Կ�:��-�쳣
+			sprintf(pStr,"%s",Posd[eSelfCheckState1]);	
 			break;
+			
 		case eSelfCheckState2:
+			sprintf(pStr,"%c %c:",227,177);
+			break;
+
+		case eSelfCheckState2_status:
 			if(bJoyStickOK())
 				Posd[eSelfCheckState2] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState2] = ResultOsd[1];
-			sprintf(pStr,"%c %c:     %s",227,177,Posd[eSelfCheckState2]);//); 			//�ֱ�:��-�쳣
+			sprintf(pStr,"%s",Posd[eSelfCheckState2]); 	
 			break;
-		case eSelfCheckState3:
+			
+		case eSelfCheckState3:	
+			sprintf(pStr,"%c %c:",220,204); 
+			break;
+			
+		case eSelfCheckState3_status:
 			if(bDipAngleSensorOK())
 				Posd[eSelfCheckState3] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState3] = ResultOsd[1];
-			sprintf(pStr,"%c %c:     %s",220,204,Posd[eSelfCheckState3]);//); 			//���:��-�쳣
+			sprintf(pStr,"%s",Posd[eSelfCheckState3]); 	
 			break;
+
 		case eSelfCheckState4:
+			sprintf(pStr,"%c%c%c:",190,239,204); 		//\u951f\u65a4\u62f7\u4f4d\u951f\u65a4\u62f7:\u951f\u65a4\u62f7-\u951f\u5c4a\u5e38
+			break;
+
+		case eSelfCheckState4_status:
 			if(bPositionSensorOK())
 				Posd[eSelfCheckState4] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState4] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c: 	   %s",190,239,204,Posd[eSelfCheckState4]);//); 		//��λ��:��-�쳣
+			sprintf(pStr,"%s",Posd[eSelfCheckState4]);	
 			break;
+			
 		case eSelfCheckState5:
+			sprintf(pStr,"%c%c%c-%c%c:",191,246,204,200,216); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7-\u951f\u65a4\u62f7\u67aa:\u951f\u65a4\u62f7-\u951f\u5c4a\u5e38
+			break;
+
+		case eSelfCheckState5_status:
 			if(bMachineGunSensorOK())
 				Posd[eSelfCheckState5] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState5] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c-%c%c: 	%s",191,246,204,200,216,Posd[eSelfCheckState5]);//); //������-��ǹ:��-�쳣
+			sprintf(pStr,"%s",Posd[eSelfCheckState5]);
 			break;
+			
 		case eSelfCheckState6:
+			sprintf(pStr,"%c%c%c-35%c:",191,246,204,211); 	//\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7-35\u951f\u65a4\u62f7:\u951f\u65a4\u62f7-\u951f\u5c4a\u5e38
+			break;
+
+		case eSelfCheckState6_status:
 			if(bGrenadeSensorOK())
 				Posd[eSelfCheckState6] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState6] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c-35%c:  %s",191,246,204,211,Posd[eSelfCheckState6]);//); 	//������-35��:��-�쳣
+			sprintf(pStr,"%s",Posd[eSelfCheckState6]);	
 			break;
-		case eSelfCheckState7:
+			
+		case eSelfCheckState7:		
+			sprintf(pStr,"%c%c%c%c:",190,239,226,192);		//\u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7:\u951f\u65a4\u62f7-\u951f\u5c4a\u5e38
+			break;
+
+		case eSelfCheckState7_status:
 			if(bPositionServoOK())
 				Posd[eSelfCheckState7] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState7] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c%c:    %s",190,239,226,192,Posd[eSelfCheckState7]);//); 		//��λ�ŷ�:��-�쳣
+			sprintf(pStr,"%s",Posd[eSelfCheckState7]);	
 			break;
-		case eSelfCheckState8:
+			
+		case eSelfCheckState8:	
+			sprintf(pStr,"%c%c%c%c-%c%c:",191,246,226,192,200,216); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7-\u951f\u65a4\u62f7\u67aa:\u951f\u65a4\u62f7-\u951f\u5c4a\u5e38
+			break;
+
+		case eSelfCheckState8_status:
 			if(bMachineGunServoOK())
 				Posd[eSelfCheckState8] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState8] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c%c-%c%c:	%s",191,246,226,192,200,216,Posd[eSelfCheckState8]);//); //�����ŷ�-��ǹ:��-�쳣
+			sprintf(pStr,"%s",Posd[eSelfCheckState8]); 	
 			break;
+
 		case eSelfCheckState9:
+			sprintf(pStr,"%c%c%c%c-35%c:",191,246,226,192,211); 	//\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7-35\u951f\u65a4\u62f7:\u951f\u65a4\u62f7-\u951f\u5c4a\u5e38
+			break;	
+
+		case eSelfCheckState9_status:
 			if(bGrenadeServoOK())
 				Posd[eSelfCheckState9] = ResultOsd[0];
 			else
 				Posd[eSelfCheckState9] = ResultOsd[1];
-			sprintf(pStr,"%c%c%c%c-35%c:%s",191,246,226,192,211,Posd[eSelfCheckState9]);//); 	//�����ŷ�-35��:��-�쳣
-			break;	
+			sprintf(pStr,"%s",Posd[eSelfCheckState9]);	
+			break;
+
 		case eCalibZero_D:		
 			//if(isMeasureManual())
 			//	sprintf(pStr,"D:%04d",DistanceManual);	
