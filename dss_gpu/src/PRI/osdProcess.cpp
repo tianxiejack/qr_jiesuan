@@ -177,9 +177,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	*/
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		30,	0,	{0}},
 	{eSuperOrder,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
-	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		436,	0,	{0}},
-	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		468,	0,	{0}},
-	{eWeather1_T,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	480+LOFFSET+WOFFSET,		468,	0,	{0}},
+	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		436,	0,	{0}},
+	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		470,	0,	{0}},
+	{eWeather1_T,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	472+LOFFSET+WOFFSET,		470,	0,	{0}},
 /*	{eWeather1_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		468,	0,	{0}},
 	{eweather1_tmperature1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	432+LOFFSET+WOFFSET,		468,	0,	{0}},
 	{eweather1_tmperature2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	443+LOFFSET+WOFFSET,		468,	0,	{0}},
@@ -201,18 +201,20 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eweather2_offy_1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	487+LOFFSET+WOFFSET,		500,	0,	{0}},
 	{eweather2_offy_2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	498+LOFFSET+WOFFSET,		500,	0,	{0}},
 	{eweather2_offy_3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	506+LOFFSET+WOFFSET,		500,	0,	{0}},
-*/
+
 	{eAngleH_char,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		468,	0,	{0}},
 	{eAngleH_pole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	55+LOFFSET,		468,	0,	{0}},
 	{eAngleH_s1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	66+LOFFSET,		468,	0,	{0}},
 	{eAngleH_s2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	77+LOFFSET,		468,	0,	{0}},
-	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		468,	0,	{0}},
-
+*/
+	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		468,	0,	{0}},
+/*
 	{eAngleV_char,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		500,	0,	{0}},
 	{eAngleV_pole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	55+LOFFSET,		500,	0,	{0}},
 	{eAngleV_s1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	66+LOFFSET,		500,	0,	{0}},
 	{eAngleV_s2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	77+LOFFSET,		500,	0,	{0}},
-	{eAngleV,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		500,	0,	{0}},
+*/
+	{eAngleV,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		500,	0,	{0}},
 
 	{eDynamicZone,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,		500,	0,	{0}},
 	{eCorrectionTip,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		500,	0,	{0}},
@@ -1800,7 +1802,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 
 #endif		
 		case eWeather2:
-			sprintf(pStr,"R:%+05.2f%+05.2f",getAimOffsetX(),getAimOffsetY()); 
+			sprintf(pStr,"R:%+02.1f%+02.1f",getAimOffsetX(),getAimOffsetY()); 
 			break;
 #if 0
 		case eweather2_R:
@@ -1848,14 +1850,14 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eweather2_offy_3:
 			sprintf(pStr,"%01d",((int)abs(getAimOffsetY()*10))%10);
 			break;
-#endif		
+#endif	
 		case eErrorZone:
 			sprintf(pStr,"%s",Posd[eErrorZone]); 
 			break;
 		case eDynamicZone:
 			sprintf(pStr,"%s",Posd[eDynamicZone]);//); //��������
 			break;
-
+#if 0
 		case eAngleH_char:
 			sprintf(pStr,"%c",200); 
 			break;
@@ -1874,15 +1876,15 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eAngleH_s2:
 			sprintf(pStr,"%01d",((int)abs(getMachGunAngle()))%10);; 
 			break;
-			
+#endif			
 		case eAngleH:
 			PositionX = getPlatformPositionX();
 			PositionY = getPlatformPositionY();
 			//sprintf(pStr,"Q%+03.0f%+03.0f",(PositionX),(PositionY)); 
 			//sprintf(pStr,"%c%+03.0f%+03.0f",200,(PositionX),(PositionY)); 
-			//sprintf(pStr,"%c%+03.0f",200,getMachGunAngle()); 
+			sprintf(pStr,"%c%+03.0f",200,getMachGunAngle()); 
 			break;
-
+#if 0
 		case eAngleV_char:
 			sprintf(pStr,"%c",211); 
 			break;
@@ -1901,13 +1903,13 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eAngleV_s2:
 			sprintf(pStr,"%01d",((int)abs(getGrenadeAngle()))%10); 
 			break;
-			
+#endif			
 		case eAngleV:
 			AngleGun = getMachGunAngle();
 			AngleGrenade = getGrenadeAngle();
 			//sprintf(pStr,"G%+03.0f%+03.0f",(AngleGun),(AngleGrenade)); //��λΪ��
 			//sprintf(pStr,"%c%+03.0f%+03.0f",211,(AngleGun),(AngleGrenade)); 		
-			//sprintf(pStr,"%c%+03.0f",211,getGrenadeAngle());//�� 
+			sprintf(pStr,"%c%+03.0f",211,getGrenadeAngle());
 			break;
 		case eCorrectionTip:
 			sprintf(pStr,"%s",Posd[eCorrectionTip]);

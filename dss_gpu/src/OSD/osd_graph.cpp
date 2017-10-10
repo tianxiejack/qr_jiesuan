@@ -199,8 +199,10 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 	int number=0;
 	char *tmpt;
 	int lenctl=0;
-	int lastnumflag = 0;
-	int lastmhflag = 0;
+	bool lastnumflag = 0;
+	bool lastmhflag = 0;
+	bool lastcharacterflag = 0;
+	bool lastfhflag = 0;
 
 	fontWidth 	= 	OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814;
 	fontHeight 	= 	OSDUTIL_FONT_FLR_DEFAULT_HEIGHT_0814;
@@ -228,60 +230,81 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 			//if(index < 177)
 			if(index >=48 && index <=57)
 			{
-				//number ++;
-				//lenctl += fontWidth>>1;
 				if(lastmhflag)
 				{
-					lenctl +=72;
-					lastnumflag =1;
+					lenctl +=48;
 				}	
-				else if(lastnumflag == 0)
-					lastnumflag = 1;
 				else
 					lenctl +=48;	
-				lastmhflag = 0;
+				
+				lastnumflag = 1;
+				lastmhflag   = 0;
+				lastcharacterflag = 0;
+				lastfhflag = 0;
 			}
-			else if(index == 46)
-			{
-				lastmhflag = 1;
+			else if(index == 46) //.
+			{	
 				lenctl+=48;
+				
+				lastmhflag   = 0;
+				lastnumflag = 0;
+				lastcharacterflag = 0;
+				lastfhflag = 0;
 			}
-			else if((index>=33 && index <=47) | (index>=58 && index <=64))
+			else if(index == 58)  //:
+			{
+				if(lastcharacterflag)
+					lenctl +=48;
+				
+				lastmhflag   = 1;
+				lastnumflag = 0;
+				lastcharacterflag = 0;
+				lastfhflag = 0;
+			}
+			else if((index>=33 && index <=47) | (index>58 && index <=64))
 			{
 				if(lastmhflag)
 					lenctl +=72;
-				else if(lastnumflag)
+				else if(lastcharacterflag)
 					lenctl +=48;
+				else if(lastnumflag)
+					lenctl +=36;
+
+		
 				lastmhflag = 0;
+				lastnumflag = 0;
+				lastcharacterflag = 0;
+				lastfhflag = 1;
 			}
 			else if((index>=65 && index<=90)|(index >=97 && index <122))
 			{
-				lenctl +=24;
+				if(lastnumflag)
+					lenctl +=48;
+				else
+					lenctl +=24;
+				
 				lastmhflag = 0;
+				lastnumflag = 0;
+				lastcharacterflag = 1;
+				lastfhflag = 0;
 			}
 			else
 			{
-				if(lastnumflag ==1)
+				if(lastnumflag |lastfhflag)
 				{
 					lenctl +=48;
-					lastnumflag =0;
 				}
 				lastmhflag = 0;
+				lastnumflag = 0;
+				lastcharacterflag = 0;
+				lastfhflag = 0;
 			}
-				
-
-
-
-			
-			
 					if(1)
 					{
 						pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
 						for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
 						{
-							
-
-							
+										
 							offset 	= j-startx-k*fontWidth;
 							data 	= *(pChar + offset/8);
 							data 	<<= (offset%8);
@@ -290,16 +313,39 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 								pixcolor 		= (data&0x80)?frcolor:bgcolor;
 							else						
 								pixcolor		= (data&0x80)?frcolor:0xff000000;//0x50000000;
-							
+
+							if(i == 0 && k == numchar-1)
+							{
+								pixcolor	= 0x000000000;
+							}
 							
 							//pixcolor		= (data&0x80)?frcolor:bgcolor;
-							*(pin+j*4-lenctl)		= pixcolor & 0xFF;
+							*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
 							*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
 							*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
 							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
 						}
+						
 					}
-					
+				
+					if(	k == numchar-1 && 
+						((index >=48  && index <=57) |
+						(index >=33  && index <=47) | 
+						//(index >=58  && index <=64) |
+						(index >=65  && index <=90) |
+						(index >=97 && index <122))
+						)
+					{
+						pixcolor	= 0x00000000;
+						for(j=startx+k*fontWidth+fontWidth-12; j<startx+k*fontWidth+fontWidth; j++)
+						{
+							*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
+							*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
+							*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
+							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
+							
+						}
+					}
 
 					#if 0
 						pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];

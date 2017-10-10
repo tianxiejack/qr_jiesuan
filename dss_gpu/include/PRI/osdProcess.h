@@ -125,17 +125,19 @@ typedef enum _eOsdTypeId{
 	eweather2_offy_1,
 	eweather2_offy_2,
 	eweather2_offy_3,
-*/
+
 	eAngleH_char,
 	eAngleH_pole,
 	eAngleH_s1,
 	eAngleH_s2,
+*/	
 	eAngleH		,//	=	0x0F,
-	
+/*
 	eAngleV_char,
 	eAngleV_pole,
 	eAngleV_s1,
 	eAngleV_s2,
+*/	
 	eAngleV		,//	=	0x10,
 	eDynamicZone,//	=	0x11,
 	eCorrectionTip,//	=	0x12,
