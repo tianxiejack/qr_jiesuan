@@ -4615,9 +4615,12 @@ void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
  {
+ 	CMD_EXT *pIStuts = &(sThis->extInCtrl);
 	Posd[eFovType] = FovTypeOsd[1];
 	pFovCtrlObj->fovElem=eFov_SmlFov_Stat;
 
+	pIStuts->SensorStat = (pIStuts->SensorStat + 1)%2;
+	MSGDRIV_send(MSGID_EXT_INPUT_SENSOR,NULL);
 	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
 	return ;
  }
@@ -4625,8 +4628,12 @@ void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
 
 void CProcess021::processCMD_MODE_FOV_LARGE(LPARAM lParam)
  {
+ 	CMD_EXT *pIStuts = &(sThis->extInCtrl);
  	Posd[eFovType] = FovTypeOsd[0];
 	pFovCtrlObj->fovElem=eFov_LarFov_Stat;
+	
+	pIStuts->SensorStat = (pIStuts->SensorStat + 1)%2;
+	MSGDRIV_send(MSGID_EXT_INPUT_SENSOR,NULL);
 	
  	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);
 	return ;

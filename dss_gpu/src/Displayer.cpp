@@ -146,7 +146,7 @@ int CDisplayer::destroy()
 
 int CDisplayer::initRender(bool bInitBind)
 {	
-	m_renders[0].video_chId = 0;
+	m_renders[0].video_chId = 1;
 	m_renders[0].displayrect.x = 0;
 	m_renders[0].displayrect.y = 0;
 	m_renders[0].displayrect.w = m_mainWinWidth;
