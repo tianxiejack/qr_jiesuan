@@ -14,6 +14,7 @@
 #include "servo_control_obj.h"
 #include "spiH.h"
 #include "dx.h"
+#include "osdProcess.h"
 
 float FOVSIZE_V=FOVDEGREE_VLARGE, FOVSIZE_H=FOVDEGREE_HLARGE;
 Level_one_state gLevel1Mode = MODE_BOOT_UP,gLevel1LastMode = MODE_BATTLE;
@@ -36,6 +37,10 @@ bool SCHEDULE_GUN=FALSE,SCHEDULE_RESET=FALSE,SCHEDULE_STRONG=FALSE;
 Derection_Type SHINE_DERECTION=DERECTION_NULL;//DERECTION_DOWN;
 bool isfixingMeasure = FALSE;
 int COUNTER=0;
+
+static bool MIDPARAMS=FALSE;
+static bool BASEMENU=FALSE;
+static bool CONNECT=FALSE;
 
 extern void setJoyStickStat(BOOL stat);
 extern void setServoControlObj();
@@ -1276,6 +1281,92 @@ void killRGQtimer()
 	if(pCtrlTimer->GetTimerStat(eRGQ_Timer)!=eTimer_Stat_Stop)
 	{
 		pCtrlTimer->KillTimer(eRGQ_Timer);
+	}
+}
+
+
+void processCMD_MIDPARAMS_SWITCH(long lParam)
+{
+	MIDPARAMS = !MIDPARAMS;
+	if(MIDPARAMS)
+	{
+		CONNECT = FALSE;
+		OSDCTRL_ConnectMenuHide();
+		OSDCTRL_CalcNumShow();
+		OSDCTRL_FulScrAngleShow();
+	}
+	else
+	{ 
+		OSDCTRL_CalcNumHide();
+		OSDCTRL_FulScrAngleHide();
+	}
+}
+
+
+void processCMD_LASERSELECT_SWITCH(long lParam)
+{
+	static bool SELECT = FALSE;
+	SELECT = !SELECT;
+	if(SELECT)
+	{
+		Posd[eLaserState] = LaserOsd[0];
+	}
+	else
+	{
+		Posd[eLaserState] = LaserOsd[1];
+	}
+}
+
+void processCMD_SENSOR_SWITCH(long lParam)
+{
+	
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	printf("pCtrlTimer->GetTimerStat(eFxbutton_Timer) = %d\n",pCtrlTimer->GetTimerStat(eFxbutton_Timer));
+	if(pCtrlTimer->GetTimerStat(eFxbutton_Timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eFxbutton_Timer,10000);	
+
+		OSDCTRL_ItemHide(eAngleV);
+		OSDCTRL_ItemHide(eWeather2);
+		OSDCTRL_BaseMenuShow();	
+	}
+	else
+	{
+		pCtrlTimer->KillTimer(eFxbutton_Timer);
+		pCtrlTimer->startTimer(eFxbutton_Timer,10000);
+	}
+
+	#if 0 
+		BASEMENU = !BASEMENU;
+		if(BASEMENU)
+		{
+			OSDCTRL_ItemHide(eAngleV);
+			OSDCTRL_ItemHide(eWeather2);
+			OSDCTRL_BaseMenuShow();
+		}
+		else
+		{
+			BASEMENU = FALSE;
+			//OSDCTRL_BaseMenuHide();
+	//		OSDCTRL_ConnectMenuHide();
+		}
+	#endif	
+}
+
+void processCMD_CONNECT_SWITCH(long lParam)
+{
+	CONNECT = !CONNECT;
+	if(CONNECT)
+	{
+		MIDPARAMS = FALSE;
+		OSDCTRL_CalcNumHide();
+		OSDCTRL_FulScrAngleHide();
+		OSDCTRL_ConnectMenuShow();
+	}
+	else
+	{
+		//OSDCTRL_BaseMenuHide();
+		OSDCTRL_ConnectMenuHide();
 	}
 }
 

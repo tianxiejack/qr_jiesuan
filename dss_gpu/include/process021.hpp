@@ -189,11 +189,7 @@ protected:
         static void processCMD_GRENADE_LOAD_IN_POSITION(LPARAM lParam);
         static void processCMD_CALCNUM_SHOW(LPARAM lParam);
         static void processCMD_CALCNUM_HIDE(LPARAM lParam);
-        static void processCMD_MIDPARAMS_SWITCH(LPARAM lParam);
-        static void processCMD_LASERSELECT_SWITCH(LPARAM lParam);
-        static void processCMD_STABLEVIDEO_SWITCH(LPARAM lParam);
-        static void processCMD_SENSOR_SWITCH(LPARAM lParam);
-        static void processCMD_CONNECT_SWITCH(LPARAM lParam);
+	 static void processCMD_STABLEVIDEO_SWITCH(LPARAM lParam);
         static void processCMD_IDENTIFY_KILL(LPARAM lParam);
         static void processCMD_IDENTIFY_GAS(LPARAM lParam);
 		

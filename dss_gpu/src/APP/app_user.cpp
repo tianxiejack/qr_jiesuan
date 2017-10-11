@@ -648,7 +648,18 @@ static Int32 APP_onTimer( Int32 timerId )
 			sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);
 		}
 
-
+		if(timerId == eFxbutton_Timer)
+		{
+			CTimerCtrl * pCtrlTimer = pTimerObj;
+			if(pCtrlTimer->GetTimerStat(eFxbutton_Timer)!=eTimer_Stat_Stop)
+			{
+				pCtrlTimer->KillTimer(eFxbutton_Timer);
+			}
+			
+			OSDCTRL_ItemShow(eAngleV);
+			OSDCTRL_ItemShow(eWeather2);
+			OSDCTRL_BaseMenuHide();
+		}
 		
 		if(timerId == eCAN_Timer)
 		{

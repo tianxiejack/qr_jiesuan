@@ -238,6 +238,7 @@ BOOL isTimerAlive(UINT id)
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	return (pCtrlTimer->GetTimerStat(id)==eTimer_Stat_Run);
 }
+
 void killSelfCheckPosServoTimer()
 {
 	CTimerCtrl * pCtrlTimer = pTimerObj;
@@ -976,15 +977,15 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	{ 
 		if(BIT5(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
 		{
-			//if(isTimerAlive(eF3_Timer)/*״ֵ̬*/)
+			if(isTimerAlive(eF3_Timer)/*״ֵ̬*/)
 			{
-				//killF3Timer();
+				killF3Timer();
 				MSGDRIV_send(CMD_MODE_ENHANCE_SWITCH,0);
 			}
 		}
 		else if(BIT5(BYTE5(buf)) == 0x00)
 		{
-			//startF3_Timer();
+			startF3_Timer();
 		}
 	}
 	if(BIT4(BYTE3(FrameBuf1)) != BIT4(BYTE5(buf)))	   //෽ʽ
@@ -996,31 +997,32 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	{	
 		if(BIT3(BYTE5(buf)) == 0x01)
 		{
-			//if(isTimerAlive(eF5_Timer)/*״ֵ̬*/)
+			if(isTimerAlive(eF5_Timer)/*״ֵ̬*/)
 			{
-				//killF5Timer();
-				//MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
-				MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
+				killF5Timer();
+				MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
+				//MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
 			}
 		}
 		else if(BIT3(BYTE5(buf)) == 0x00)
 		{
-			//startF5_Timer();
+			startF5_Timer();
 		}
 	}
 	if(BIT2(BYTE3(FrameBuf1)) != BIT2(BYTE5(buf)))	//F6
 	{		
 		if(BIT2(BYTE5(buf)) == 0x01)
 		{
-			//if(isTimerAlive(eF6_Timer)/*״ֵ̬*/)
+			if(isTimerAlive(eF6_Timer)/*״ֵ̬*/)
 			{
-				//killF6Timer();
+				killF6Timer();
 				MSGDRIV_send(CMD_SENSOR_SWITCH,0);
+				MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
 			}
 		}
 		else if(BIT2(BYTE5(buf)) == 0x00)
 		{
-			//startF6_Timer();
+			startF6_Timer();
 		}
 	}
 	if(BIT1(BYTE3(FrameBuf1)) != BIT1(BYTE5(buf)))//shou bing shang zi dong bu huo an jian

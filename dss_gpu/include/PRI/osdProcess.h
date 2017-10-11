@@ -829,7 +829,12 @@ void isBeyondServoY(int id);
 void moveRightServoYPram();
 
 
-
+void OSDCTRL_FulScrAngleShow();
+void OSDCTRL_FulScrAngleHide();
+void OSDCTRL_BaseMenuShow();
+void OSDCTRL_BaseMenuHide();
+void OSDCTRL_ConnectMenuShow();
+void OSDCTRL_ConnectMenuHide();
 
 
 

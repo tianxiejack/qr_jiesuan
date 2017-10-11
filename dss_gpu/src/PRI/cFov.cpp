@@ -130,7 +130,6 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 			DrawjsCompass(frame,cthis);
 			DrawjsCross(frame, cthis);
 			DrawjsRuler(frame,cthis);
-			printf("aaaaa\n");
 		}
 		else if(isStatBattleAlert())
 		{		

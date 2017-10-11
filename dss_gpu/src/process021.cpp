@@ -3515,8 +3515,8 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
  {
  	if(ShinId == eGunTip)
 		OSDCTRL_NoShine();
- printf("isBootUpMode=%d\n",isBootUpMode());
-  printf("isBootUpSelfCheckFinished=%d\n",isBootUpSelfCheckFinished());
+  //printf("isBootUpMode=%d\n",isBootUpMode());
+  //printf("isBootUpSelfCheckFinished=%d\n",isBootUpSelfCheckFinished());
 	if(isBootUpMode()&& isBootUpSelfCheckFinished())
 	{
 		processCMD_EXIT_SELF_CHECK(0);
@@ -4707,7 +4707,7 @@ void CProcess021::processCMD_MODE_SHOT_SHORT(LPARAM lParam)
 	{
 		gGunShotType = SHOTTYPE_SHORT;
 	}	
-	//OSDCTRL_ItemHide(eShotType);
+	
 	return ;
  }
 
@@ -4820,41 +4820,11 @@ void CProcess021::processCMD_CALCNUM_HIDE(LPARAM lParam)
 	return ;
  }
 
-
-void CProcess021::processCMD_MIDPARAMS_SWITCH(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_MIDPARAMS_SWITCH",__func__,__LINE__);
-	return ;
- }
-
-
-void CProcess021::processCMD_LASERSELECT_SWITCH(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_LASERSELECT_SWITCH",__func__,__LINE__);
-	return ;
- }
-
-
 void CProcess021::processCMD_STABLEVIDEO_SWITCH(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_STABLEVIDEO_SWITCH",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_STABLEVIDEO_SWITCH",__func__,__LINE__);
 	return ;
  }
-
-
-void CProcess021::processCMD_SENSOR_SWITCH(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_SENSOR_SWITCH",__func__,__LINE__);
-	return ;
- }
-
-
-void CProcess021::processCMD_CONNECT_SWITCH(LPARAM lParam)
- {
- 	OSA_printf("%s,line:%d ... processCMD_CONNECT_SWITCH",__func__,__LINE__);
-	return ;
- }
-
 
 void CProcess021::processCMD_IDENTIFY_KILL(LPARAM lParam)
  {

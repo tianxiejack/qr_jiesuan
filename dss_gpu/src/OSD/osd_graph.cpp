@@ -254,7 +254,9 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 			else if(index == 58)  //:
 			{
 				if(lastcharacterflag)
-					lenctl +=48;
+					lenctl += 48;
+				if(lastnumflag)
+					lenctl += 36;
 				
 				lastmhflag   = 1;
 				lastnumflag = 0;
@@ -280,8 +282,8 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 			{
 				if(lastnumflag)
 					lenctl +=48;
-				else
-					lenctl +=24;
+				else if(lastcharacterflag)
+					lenctl +=36;
 				
 				lastmhflag = 0;
 				lastnumflag = 0;
