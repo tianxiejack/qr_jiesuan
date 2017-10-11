@@ -330,14 +330,34 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 							}
 							
 							//pixcolor		= (data&0x80)?frcolor:bgcolor;
-							*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
-							*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
-							*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
-							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
+							if(	k == numchar-1 && 
+								((index >=48  && index <=57) |
+								(index >=33  && index <=47) | 
+								//(index >=58  && index <=64) |
+								index == 58 |
+								(index >=65  && index <=90) |
+								(index >=97 && index <122))
+							  )
+							{
+							  	if(j<startx+k*fontWidth+fontWidth-12)
+							  	{
+							  		*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
+									*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
+									*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
+									*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
+							  	}	
+							}	
+							else
+							{
+								*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
+								*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
+								*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
+								*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
+							}
 						}
 						
 					}
-				
+				#if 0
 					if(	k == numchar-1 && 
 						((index >=48  && index <=57) |
 						(index >=33  && index <=47) | 
@@ -356,7 +376,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;						
 						}
 					}
-
+				#endif
 					#if 0
 						pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
 						for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)

@@ -116,7 +116,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	}
 	else if(isCalibrationMode())//&&(isCalibrationGeneral()||isCalibrationWeather()))
 	{
-		if(isCalibrationZero())
+		//if(isCalibrationZero())
 		{
 			DrawjsCompass(frame,cthis);
 			DrawjsCross(frame, cthis);	
@@ -182,7 +182,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	{
 		if(isCalibrationZero())
 		{
-			DrawjsCompass(frame,cthis);
+			//DrawjsCompass(frame,cthis);
 			DrawjsCross(frame, cthis);		
 			DrawjsRuler(frame,cthis);
 		}
