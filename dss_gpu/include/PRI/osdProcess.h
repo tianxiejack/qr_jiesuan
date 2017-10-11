@@ -394,6 +394,7 @@ typedef enum _eOsdTypeId{
 	eCalibGenPram_ServoYValue9,
 	ePlatFormX,
 	eCalcNum_Visual,
+/*
 	eCalcNum_Visual_c1,
 	eCalcNum_Visual_pole1,
 	eCalcNum_Visual_s11,
@@ -415,10 +416,10 @@ typedef enum _eOsdTypeId{
 	eCalcNum_Visual_c3,
 	eCalcNum_Visual_c4,
 	eCalcNum_Visual_c5,
-
-	
+*/
 	eCalcNum_Traject,
-       eCalcNum_Traject_c1,
+/*
+	eCalcNum_Traject_c1,
 	eCalcNum_Traject_pole1,
 	eCalcNum_Traject_s11,
 	eCalcNum_Traject_s12,
@@ -439,8 +440,9 @@ typedef enum _eOsdTypeId{
 	eCalcNum_Traject_c3,
 	eCalcNum_Traject_c4,
 	eCalcNum_Traject_c5,
-	
+*/	
 	eCalcNum_Trunion,
+/*
 	eCalcNum_Trunion_c1,
 	eCalcNum_Trunion_pole1,
 	eCalcNum_Trunion_s11,
@@ -462,9 +464,9 @@ typedef enum _eOsdTypeId{
 	eCalcNum_Trunion_c3,
 	eCalcNum_Trunion_c4,
 	eCalcNum_Trunion_c5,
-	
+*/	
 	eCalcNum_General,
-
+/*
 	eCalcNum_General_c1,
 	eCalcNum_General_pole1,
 	eCalcNum_General_s11,
@@ -486,9 +488,9 @@ typedef enum _eOsdTypeId{
 	eCalcNum_General_c3,
 	eCalcNum_General_c4,
 	eCalcNum_General_c5,
-
-	
+*/	
 	eCalcNum_Weather,
+/*
 	eCalcNum_Weather_c11,
 	eCalcNum_Weather_pole1,
 	eCalcNum_Weather_s11,
@@ -506,8 +508,9 @@ typedef enum _eOsdTypeId{
 	eCalcNum_Weather_c22,
 	eCalcNum_Weather_c23,
 	eCalcNum_Weather_c24,
-	
+*/	
 	eCalcNum_Turret,
+/*
 	eCalcNum_Turret_c,
 	eCalcNum_Turret_pole,
 	eCalcNum_Turret_s1,
@@ -518,8 +521,9 @@ typedef enum _eOsdTypeId{
 	eCalcNum_Turret_s5,
 	eCalcNum_Turret_s6,
 	eCalcNum_Turret_blank,
-	
+*/	
 	eCalcNum_AlgleD,
+/*
 	eCalcNum_AlgleD_c11,
 	eCalcNum_AlgleD_pole1,
 	eCalcNum_AlgleD_s11,
@@ -563,6 +567,7 @@ typedef enum _eOsdTypeId{
 	eCalcNum_Posion_c22,
 	eCalcNum_Posion_c23,
 	eCalcNum_Posion_c24,
+*/
 	eCalcNum_Posion,
 
 	eStateMaintD,//ά����

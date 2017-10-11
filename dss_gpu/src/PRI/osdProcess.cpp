@@ -478,7 +478,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 
 	{ePlatFormX,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	100+LOFFSET,		400,	0,	{0}},
 	
-	{eCalcNum_Visual,			       eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	25+LOFFSET,		100+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Visual,			       eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		85+CALCOFFSET,	0,	{0}},
+/*
 	{eCalcNum_Visual_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		85+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Visual_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	113+LOFFSET,		85+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Visual_s11,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	127+LOFFSET,		85+CALCOFFSET,	0,	{0}},
@@ -500,9 +501,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_Visual_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	391+LOFFSET,		85+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Visual_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		85+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Visual_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		85+CALCOFFSET,	0,	{0}},
-
-	{eCalcNum_Traject,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		132+CALCOFFSET,	0,	{0}},
-
+*/
+	{eCalcNum_Traject,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+/*
        {eCalcNum_Traject_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		117+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Traject_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	113+LOFFSET,		117+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Traject_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	127+LOFFSET,		117+CALCOFFSET,	0,	{0}},
@@ -524,9 +525,10 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_Traject_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	391+LOFFSET,		117+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Traject_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		117+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Traject_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		117+CALCOFFSET,	0,	{0}},
-
-	{eCalcNum_Trunion,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	25+LOFFSET,		164+CALCOFFSET,	0,	{0}},
-       {eCalcNum_Trunion_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+*/
+	{eCalcNum_Trunion,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		149+CALCOFFSET,	0,	{0}},
+/*
+	{eCalcNum_Trunion_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		149+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Trunion_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	113+LOFFSET,		149+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Trunion_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	127+LOFFSET,		149+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Trunion_s12,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	138+LOFFSET,		149+CALCOFFSET,	0,	{0}},
@@ -547,8 +549,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_Trunion_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	391+LOFFSET,		149+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Trunion_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		149+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Trunion_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		149+CALCOFFSET,	0,	{0}},
-
-	{eCalcNum_General,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	24+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+*/
+	{eCalcNum_General,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		181+CALCOFFSET,	0,	{0}},
+/*
 	{eCalcNum_General_c1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		181+CALCOFFSET,	0,	{0}},
 	{eCalcNum_General_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	113+LOFFSET,		181+CALCOFFSET,	0,	{0}},
 	{eCalcNum_General_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	127+LOFFSET,		181+CALCOFFSET,	0,	{0}},
@@ -570,8 +573,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_General_c3,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	391+LOFFSET,		181+CALCOFFSET,	0,	{0}},
 	{eCalcNum_General_c4,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	402+LOFFSET,		181+CALCOFFSET,	0,	{0}},
 	{eCalcNum_General_c5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		181+CALCOFFSET,	0,	{0}},
-
-	{eCalcNum_Weather,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		228+CALCOFFSET,	0,	{0}},
+*/
+	{eCalcNum_Weather,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		213+CALCOFFSET,	0,	{0}},
+/*
 	{eCalcNum_Weather_c11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		213+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Weather_pole1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	114+LOFFSET,		213+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Weather_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	128+LOFFSET,		213+CALCOFFSET,	0,	{0}},
@@ -589,8 +593,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_Weather_c22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	387+LOFFSET,		213+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Weather_c23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	398+LOFFSET,		213+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Weather_c24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		213+CALCOFFSET,	0,	{0}},
-
-	{eCalcNum_Turret,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+*/
+	{eCalcNum_Turret,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	43+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+/*
 	{eCalcNum_Turret_c,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		245+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Turret_pole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	114+LOFFSET,		245+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Turret_s1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	128+LOFFSET,		245+CALCOFFSET,	0,	{0}},
@@ -601,8 +606,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_Turret_s5,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	179+LOFFSET,		245+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Turret_s6,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	190+LOFFSET,		245+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Turret_blank,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	408+LOFFSET,		245+CALCOFFSET,	0,	{0}},
-
-	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	23+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+*/
+	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+/*
 	{eCalcNum_AlgleD_c11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	27+LOFFSET,		277+CALCOFFSET,	0,	{0}},
 	{eCalcNum_AlgleD_pole1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	114+LOFFSET,		277+CALCOFFSET,	0,	{0}},
 	{eCalcNum_AlgleD_s11,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	128+LOFFSET,		277+CALCOFFSET,	0,	{0}},
@@ -646,7 +652,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_Posion_c22,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		386+LOFFSET,		309+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Posion_c23,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		397+LOFFSET,		309+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Posion_c24,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		408+LOFFSET,		309+CALCOFFSET,	0,	{0}},
-	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		23+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+*/
+	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		309+CALCOFFSET,	0,	{0}},
 	
 	{eStateMaintD,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		80+100,	0,	{0}},
 	{eStateDetend,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		80+100,	0,	{0}},
@@ -661,10 +668,10 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eStateMacMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		255-15+100,	0,	{0}},
 	{eStateGreMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	247+LOFFSET,		255-15+100,	0,	{0}},
 	
-	{eStateWeaponCtrlA1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		360-24,	0,	{0}},
-	{eStateSrvAngle,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		395-27,	0,	{0}},
-	{eStateFulScrAngle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		430-30,	0,	{0}},
-	{eLaserSelect,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350-209+LOFFSET,		465-33,	0,	{0}},
+	{eStateWeaponCtrlA1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		390-24,	0,	{0}},
+	{eStateSrvAngle,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		425-27,	0,	{0}},
+	{eStateFulScrAngle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		460-30,	0,	{0}},
+	{eLaserSelect,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		495-33,	0,	{0}},
 
 	{eAnglePosn,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	260+LOFFSET,		465,	0,	{0}},
 	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		465,	0,	{0}},
@@ -1259,7 +1266,7 @@ void OSDCTRL_CalcNumHide(void)
 void OSDCTRL_FulScrAngleShow()
 {
 	int i=0;
-	for(i=eStateWeaponCtrlA1; i<=eLaserSelect; i++)
+	for(i=eStateWeaponCtrlA1; i<=eStateFulScrAngle; i++)
 	{
 		OSDCTRL_ItemShow(i);
 	}
@@ -1268,7 +1275,7 @@ void OSDCTRL_FulScrAngleShow()
 void OSDCTRL_FulScrAngleHide()
 {
 	int i=0;
-	for(i=eStateWeaponCtrlA1; i<=eLaserSelect; i++)
+	for(i=eStateWeaponCtrlA1; i<=eStateFulScrAngle; i++)
 	{
 		OSDCTRL_ItemHide(i);
 	}
@@ -2829,9 +2836,9 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"Px:%+06.2f,Py:%+06.2f,Spx:%+06.2f,Spy:%+06.2f",1.1,2.2,3.3,4.4); 
 			break;
 		case eCalcNum_Visual:
-			//sprintf(pStr,"%c%cX=%+08.2f %c%cY=%+08.2fmil",172,173,getSumCalibX(),172,173,getSumCalibY()); //��Ԫ:���� ��
+			sprintf(pStr,"%c%cX=%+08.2f %c%cY=%+08.2fmil",172,173,getSumCalibX(),172,173,getSumCalibY()); //��Ԫ:���� ��
 			break;
-
+#if 0
 		case eCalcNum_Visual_c1:
 			sprintf(pStr,"%c%cX=",172,173);
 			break;
@@ -2918,12 +2925,12 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_Visual_c5:
 			sprintf(pStr,"l" );
 			break;
-
+#endif
 			
 		case eCalcNum_Traject:
-			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2fmil",205,168,getTrajectCalcX(),205,168,getTrajectCalcY()); //������� 
+			sprintf(pStr,"%c%cX=%+08.2f %c%cY=%+08.2fmil",205,168,getTrajectCalcX(),205,168,getTrajectCalcY()); //������� 
 			break;
-
+#if 0
 		case eCalcNum_Traject_c1:
 			sprintf(pStr,"%c%cX=",205,168); 
 			break;
@@ -2993,10 +3000,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_Traject_c5:
 			sprintf(pStr,"l");
 			break;
-			
+#endif		
 		case eCalcNum_Trunion:
-			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2fmil",169,170,getTrunionCalibX(),169,170,getTrunionCalibY()); //���������� 
+			sprintf(pStr,"%c%cX=%+08.2f %c%cY=%+08.2fmil",169,170,getTrunionCalibX(),169,170,getTrunionCalibY()); //���������� 
 			break;
+#if 0
 		case eCalcNum_Trunion_c1:
 			sprintf(pStr,"%c%cX=",169,170); 
 			break;
@@ -3066,12 +3074,12 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_Trunion_c5:
 			sprintf(pStr,"l");
 			break;
-
+#endif
 			
 		case eCalcNum_General:
-			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2fmil",253,243,getCorrectionCalibX(),253,243,getCorrectionCalibY()); 		//���޲���
+			sprintf(pStr,"%c%cX=%+08.2f %c%cY=%+08.2fmil",253,243,getCorrectionCalibX(),253,243,getCorrectionCalibY()); 		//���޲���
 			break;
-	
+#if 0
 		case eCalcNum_General_c1:
 			sprintf(pStr,"%c%cX=",253,243); 
 			break;
@@ -3141,11 +3149,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_General_c5:
 			sprintf(pStr,"l");
 			break;
-	
+#endif
 		case eCalcNum_Weather:
-			//sprintf(pStr,"%c%c  = %+03d   %c  %c%c  = %+08.3fKpa",219,238,gWeatherTable.Temparature,174,219,247,gWeatherTable.Pressure/1000.0); //���� = +15 ����ѹ = +101.325 Kpa:
+			sprintf(pStr,"%c%c=%+03d%c %c%c=%+08.3fKpa",219,238,gWeatherTable.Temparature,174,219,247,gWeatherTable.Pressure/1000.0); //���� = +15 ����ѹ = +101.325 Kpa:
 			break;
-
+#if 0
 		case eCalcNum_Weather_c11:
 			sprintf(pStr,"%c%c =      ",219,238);
 			break;
@@ -3203,11 +3211,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_Weather_c24:
 			sprintf(pStr,"a");
 			break;
-		
+#endif		
 		case eCalcNum_Turret:
-			//sprintf(pStr,"%c%cX = %+08.2f                      ",190,239,getTurretTheta()); //��λX
+			sprintf(pStr,"%c%cX=%+08.2f",190,239,getTurretTheta()); //��λX
 			break;
-
+#if 0
 		case eCalcNum_Turret_c:
 			sprintf(pStr,"%c%c =              ",190,239);
 			break;
@@ -3250,11 +3258,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_Turret_blank:
 			sprintf(pStr," ");
 			break;
-	
+#endif
 		case eCalcNum_AlgleD:
-			//sprintf(pStr,"%c%cY = %+08.2f %c%cY = %+08.2fdeg",200,216,getMachGunAngle(),211,214,getGrenadeAngle()); //��ǹY=.. ��Y=..
+			sprintf(pStr,"%c%cY=%+08.2f %c%cY=%+08.2fdeg",200,216,getMachGunAngle(),211,214,getGrenadeAngle()); //��ǹY=.. ��Y=..
 			break;
-
+#if 0
 		case eCalcNum_AlgleD_c11:
 			sprintf(pStr,"%c%cY=     ",200,216);
 			break;
@@ -3344,11 +3352,11 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_AlgleD_c24:
 			sprintf(pStr,"g");
 			break;
-
+#endif
 		case eCalcNum_Posion:
-			//sprintf(pStr,"%c%cX = %+08.2f %c%cY = %+08.2fdeg",220,204,getPlatformPositionX(),220,204,getPlatformPositionY()); //���X=.. ���Y=..
+			sprintf(pStr,"%c%cX=%+08.2f %c%cY=%+08.2fdeg",220,204,getPlatformPositionX(),220,204,getPlatformPositionY()); //���X=.. ���Y=..
 			break;
-
+#if 0
 		case eCalcNum_Posion_c11:
 			sprintf(pStr,"%c%cX=      ",220,204);
 			break;
@@ -3438,7 +3446,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case eCalcNum_Posion_c24:
 			sprintf(pStr,"g");
 			break;
-
+#endif
 		case eStateMaintD:
 			Bye = getFrameA3Byte1();
 			sprintf(pStr,"%c%c%c  :%s",240,196,213,OpenCloseOsd[BIT1(Bye)]); //ά����
@@ -3491,16 +3499,17 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 
 		case eStateWeaponCtrlA1:
-			sprintf(pStr,"WeaponCtrlA1=%s                ",getWeaponCtrlA1()); //WeaponCtrlA1
+			sprintf(pStr,"WeaponCtrlA1=%s",getWeaponCtrlA1()); //WeaponCtrlA1
 			break;
 		case eStateSrvAngle:
-			sprintf(pStr,"SrvNrmAngle =  %+07.2f %+07.2f %+07.2f",getTurretTheta(),getMachGunAngle(),getGrenadeAngle()); //�ŷ��Ƕ���Ϣ
+			sprintf(pStr,"SrvNrmAngle=%+07.2f %+07.2f %+07.2f",getTurretTheta(),getMachGunAngle(),getGrenadeAngle()); //�ŷ��Ƕ���Ϣ
 			break;
 		case eStateFulScrAngle:
-			sprintf(pStr,"FulScrAngle =%s %+07.2f %+07.2f",getFulScrA0(),getpanoAngleV(),getpanoAngleH()); //ȫ���Ƕ���Ϣ=..
+			sprintf(pStr,"FulScrAngle=%+07.2f %+07.2f",getpanoAngleV(),getpanoAngleH()); //ȫ���Ƕ���Ϣ=..
+			//sprintf(pStr,"FulScrAngle=%s %+07.2f %+07.2f",getFulScrA0(),getpanoAngleV(),getpanoAngleH()); //ȫ���Ƕ���Ϣ=..
 			break;
 		case eLaserSelect:
-			sprintf(pStr,"%c%c%c%c:      %s                     ",201,144,145,146,Posd[eLaserState]);//������ĩѡͨ
+			sprintf(pStr,"%c%c%c%c:      %s",201,144,145,146,Posd[eLaserState]);//������ĩѡͨ
 			break;
 		case eAnglePosn:
 			sprintf(pStr,"%c%c:%5.2f",190,239,getTurretTheta()); //��λ��

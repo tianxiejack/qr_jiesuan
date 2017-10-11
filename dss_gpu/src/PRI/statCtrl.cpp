@@ -1292,7 +1292,7 @@ void processCMD_MIDPARAMS_SWITCH(long lParam)
 	{
 		CONNECT = FALSE;
 		OSDCTRL_ConnectMenuHide();
-		OSDCTRL_CalcNumShow();
+		OSDCTRL_CalcNumHide();
 		OSDCTRL_FulScrAngleShow();
 	}
 	else
