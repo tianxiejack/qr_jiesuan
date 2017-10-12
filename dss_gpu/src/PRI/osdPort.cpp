@@ -525,7 +525,8 @@ void moveFocusRightGeneral()
 	if(!SHINE)
 		return;
 	OSDCTRL_ItemShow(ShinId);
-	ShinId = eCalibGeneral_DisValue1 + (ShinId - eCalibGeneral_DisValue1 +1)%14;
+	//ShinId = eCalibGeneral_DisValue1 + (ShinId - eCalibGeneral_DisValue1 +1)%14;
+	ShinId = eCalibGeneral_XPole + (ShinId - eCalibGeneral_XPole +1)%10;
 }
 
 
@@ -543,7 +544,8 @@ void moveFocusLeftGeneral()
 	if(!SHINE)
 		return;
 	OSDCTRL_ItemShow(ShinId);
-	ShinId = eCalibGeneral_DisValue1 + (ShinId - eCalibGeneral_DisValue1+ 13)%14;
+	//ShinId = eCalibGeneral_DisValue1 + (ShinId - eCalibGeneral_DisValue1+ 13)%14;
+	ShinId = eCalibGeneral_XPole+ (ShinId - eCalibGeneral_XPole+ 9)%10;
 }
 
 int getDisLen()

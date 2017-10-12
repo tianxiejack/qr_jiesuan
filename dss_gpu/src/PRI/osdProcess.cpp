@@ -264,8 +264,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibGeneral_YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	511+LOFFSET+80,		220,	0,	{0}},
 	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	522+LOFFSET+80,		220,	0,	{0}},
 
-	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
+	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET,		490,	0,	{0}},
+	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	525+LOFFSET,		490,	0,	{0}},
 	{eCalibHorizen_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	487+LOFFSET,		115,	0,	{0}},
 	{eCalibHorizen_Pos,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		135-3,	0,	{0}},
 	{eCalibHorizen_Mach,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		170-6,	0,	{0}},
@@ -767,9 +767,18 @@ void OSDCTRL_CalibGeneralShow()
 {
 	int i;
 	OSDCTRL_AllHide();
-	for(i=eCalibGeneral_Dis; i<=eCalibGeneral_Ry; i++){
+	//for(i=eCalibGeneral_Dis; i<=eCalibGeneral_Ry; i++)
+	for(i=eCalibGeneral_XPole; i<=eCalibGeneral_Ry; i++)
+	{
 		OSDCTRL_ItemShow(i);
 	}
+
+	OSDCTRL_ItemShow(eCalibGeneral_X);
+	OSDCTRL_ItemShow(eCalibGeneral_Y);
+	
+	OSDCTRL_ItemShow(eErrorZone);
+	OSDCTRL_ItemShow(eAngleH);
+	OSDCTRL_ItemShow(eAngleV);
 	Posd[eWorkMode] = WorkOsd[wCalibGeneral];
 
 }
@@ -1840,14 +1849,16 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			value = General[5]*10 + General[6] + General[7]*0.1 + General[8]*0.01;
 			if(General[4] < 0)
 				value = -value;
-			sprintf(pStr,"Rx:%+06.2fm",value); 		//����X:+xxxx cm
+			//sprintf(pStr,"Rx:%+06.2fm",value); 		//����X:+xxxx cm
+			sprintf(pStr,"X:%+06.2f",value); 
 			break;
 			
 		case eCalibGeneral_Ry:
 			value = General[10]*10 + General[11] + General[12]*0.1 + General[13]*0.01;
 			if(General[9] < 0)
 				value = -value;
-			sprintf(pStr,"Ry:%+06.2fm",value); 		//����X:+xxxx cm
+			//sprintf(pStr,"Ry:%+06.2fm",value); 		//����X:+xxxx cm
+			sprintf(pStr,"Y:%+06.2f",value);
 			break;
 			
 		case eCalibHorizen_Menu:

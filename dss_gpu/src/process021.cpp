@@ -4371,7 +4371,8 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENERAL(LPARAM lParam)
 		gLevel2CalibrationState = STATE_CALIBRATION_GENERAL;
 		//update OSDdisplay
 		initilGeneralParam();
-		OSDCTRL_ItemShine(eCalibGeneral_DisValue1);
+		//OSDCTRL_ItemShine(eCalibGeneral_DisValue1);
+		OSDCTRL_ItemShine(eCalibGeneral_XPole);
 		OSDCTRL_EnterCalibMode();
 	}
 	return ;

@@ -1326,8 +1326,17 @@ void processCMD_SENSOR_SWITCH(long lParam)
 	{
 		pCtrlTimer->startTimer(eFxbutton_Timer,10000);	
 
-		OSDCTRL_ItemHide(eAngleV);
-		OSDCTRL_ItemHide(eWeather2);
+		if(isBattleMode())
+		{
+			OSDCTRL_ItemHide(eAngleV);
+			OSDCTRL_ItemHide(eWeather2);
+		}
+		else if(isCalibrationMode())
+		{
+			OSDCTRL_ItemHide(eAnglePosn);
+			OSDCTRL_ItemHide(eAngleMach);
+			OSDCTRL_ItemHide(eAngleGred);
+		}	
 		OSDCTRL_BaseMenuShow();	
 	}
 	else

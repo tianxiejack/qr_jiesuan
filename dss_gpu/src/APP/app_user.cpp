@@ -656,9 +656,18 @@ static Int32 APP_onTimer( Int32 timerId )
 				pCtrlTimer->KillTimer(eFxbutton_Timer);
 			}
 			
-			OSDCTRL_ItemShow(eAngleV);
-			OSDCTRL_ItemShow(eWeather2);
 			OSDCTRL_BaseMenuHide();
+			if(isBattleMode())
+			{
+				OSDCTRL_ItemShow(eAngleV);
+				OSDCTRL_ItemShow(eWeather2);
+			}
+			else if(isCalibrationMode())
+			{
+				OSDCTRL_ItemShow(eAnglePosn);
+				OSDCTRL_ItemShow(eAngleMach);
+				OSDCTRL_ItemShow(eAngleGred);
+			}	
 		}
 		
 		if(timerId == eCAN_Timer)
