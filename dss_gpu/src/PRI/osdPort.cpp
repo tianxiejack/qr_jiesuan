@@ -571,7 +571,7 @@ void decreaseMeasureMul()
 {
 	if(!SHINE)
 		return;
-	if(DISLEN>1)
+	if(DISLEN>10)
 		DISLEN /= 10;
 	/*
 	if(ShinId < eMeasureDis_Value4)

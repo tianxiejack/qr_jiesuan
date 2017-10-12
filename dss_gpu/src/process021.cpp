@@ -3811,9 +3811,16 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 		}
 		else if(isCalibrationZero())
 		{
-			if(isGrenadeGas())
-				return ;
-			moveCrossLeft();
+			if(!distancefirst)
+			{
+				if(isGrenadeGas())
+					return ;
+				moveCrossLeft();
+			}
+			else
+			{
+				increaseMeasureMul();
+			}
 		}
 		else if(isCalibrationWeather())
 		{
@@ -3879,9 +3886,16 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 		}
 		else if(isCalibrationZero())
 		{
-			if(isGrenadeGas())
-				return ;
-			moveCrossRight();
+			if(!distancefirst)
+			{
+				if(isGrenadeGas())
+					return ;
+				moveCrossRight();
+			}
+			else if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
+			{
+				decreaseMeasureMul();
+			}
 		}
 		else if(isCalibrationWeather())
 		{

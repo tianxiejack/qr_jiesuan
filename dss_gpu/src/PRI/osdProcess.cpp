@@ -420,7 +420,7 @@ unsigned char g_Trk_infor[128]={0};
 static int tick=0;
 void resetTickNum()
 {
-	tick = 40;
+	tick =8;
 }
 
 
