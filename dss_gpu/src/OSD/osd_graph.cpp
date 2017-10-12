@@ -266,7 +266,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 			else if((index>=33 && index <=47) | (index>58 && index <=64))
 			{
 				if(lastmhflag)
-					lenctl +=72;
+					lenctl +=60;
 				else if(lastcharacterflag)
 					lenctl +=48;
 				else if(lastnumflag)

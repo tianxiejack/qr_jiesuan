@@ -265,8 +265,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	522+LOFFSET+80,		220,	0,	{0}},
 
 	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	320+LOFFSET,		490,	0,	{0}},
-	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		490,	0,	{0}},
-	{eCalibHorizen_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		100,	0,	{0}},
+	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
+	{eCalibHorizen_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	487+LOFFSET,		115,	0,	{0}},
 	{eCalibHorizen_Pos,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		135-3,	0,	{0}},
 	{eCalibHorizen_Mach,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		170-6,	0,	{0}},
 	{eCalibHorizen_Grenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		205-9,	0,	{0}},
@@ -381,7 +381,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_Trunion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		149+CALCOFFSET,	0,	{0}},
 	{eCalcNum_General,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		181+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Weather,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		213+CALCOFFSET,	0,	{0}},
-	{eCalcNum_Turret,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	43+LOFFSET,		245+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Turret,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		245+CALCOFFSET,	0,	{0}},
 	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		277+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		309+CALCOFFSET,	0,	{0}},
 	
@@ -403,11 +403,11 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eStateFulScrAngle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		460-30,	0,	{0}},
 	{eLaserSelect,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		495-33,	0,	{0}},
 
-	{eAnglePosn,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	260+LOFFSET,		465,	0,	{0}},
-	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		465,	0,	{0}},
-	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		500,	0,	{0}},
-	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		465,	0,	{0}},
-	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		500,	0,	{0}},
+	{eAnglePosn,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		500,	0,	{0}},
+	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		465,	0,	{0}},
+	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		465,	0,	{0}},
+	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		500,	0,	{0}},
+	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		500,	0,	{0}},
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
 	{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
 	{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
@@ -671,10 +671,15 @@ void OSDCTRL_CalibMenuShow()
 		OSDCTRL_ItemShow(i);
 	}
 	
+	for(i=eAnglePosn; i<=eAngleGred; i++)
+	{
+		OSDCTRL_ItemShow(i);
+	}
+	OSDCTRL_ItemShow(eErrorZone);
 	Posd[eWorkMode] = WorkOsd[wCalibration];
 
 	OSDCTRL_NoShine();
-	OSDCTRL_AlgSelect();
+	//OSDCTRL_AlgSelect();
 	OSDCTRL_updateMainMenu(getProjectileType());
 }
 
@@ -773,26 +778,34 @@ void OSDCTRL_CalibZeroShow()
 {
 	int i;
 	OSDCTRL_AllHide();
+	
 	for(i=eCalibZero_D; i<=eCalibZero_Fy; i++)
 	{
 		OSDCTRL_ItemShow(i);
 	}
 	Posd[eWorkMode] = WorkOsd[wCalibZero];
+
+	OSDCTRL_ItemShow(eAngleH);
+	OSDCTRL_ItemShow(eAngleV);
+	OSDCTRL_ItemShow(eErrorZone);
+
 	if(isMachineGun())
 	{
-		for(i=eCalibZero_AngleGun; i<=eCalibZero_Angle; i++)
+		for(i=eCalibZero_AngleGun; i<=eCalibZero_AngleGrenade/*eCalibZero_Angle*/; i++)
 		{
 			OSDCTRL_ItemHide(i);
 		}
 	}
 	else
 	{
-		for(i=eCalibZero_AngleGun; i<=eCalibZero_Angle; i++)
+		for(i=eCalibZero_AngleGun; i<=eCalibZero_AngleGrenade/*eCalibZero_Angle*/; i++)
 		{
 
 			OSDCTRL_ItemShow(i);
 		}
+		OSDCTRL_ItemShow(eCalibHorizen_Menu);
 	}
+
 	OSDCTRL_NoShine();
 }
 
@@ -1503,120 +1516,15 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"P%03dk",Pressure/10000); 
 			//sprintf(pStr,"T"); 
 			break;	
-#if 0	
-		case eWeather1_pole:
-			if(Temparature>=0)
-				sprintf(pStr,"+"); 
-			else
-				sprintf(pStr,"-"); 
-			break;
-
-		case eweather1_tmperature1:
-			sprintf(pStr,"%01d",(abs(Temparature))/10%10); 
-			break;	
-
-		case eweather1_tmperature2:
-			sprintf(pStr,"%01d  ",(abs(Temparature))%10);
-			break;
-
-		case eweather1_p:
-			sprintf(pStr,"P");
-			break;
-
-		case eweather1_qiya1:
-			//printf("Pressure = %d\n",Pressure);
-			sprintf(pStr,"%01d",Pressure/1000/1000%10);
-			break;
-
-		case eweather1_qiya2:
-			sprintf(pStr,"%01d",Pressure/1000/100%10);
-			break;
-
-		case eweather1_qiya3:
-			sprintf(pStr,"%01d",Pressure/1000/10%10);
-			break;
-
-		case eweather1_qiya4:
-			sprintf(pStr,"k");
-			break;
-
-#endif		
 		case eWeather2:
 			sprintf(pStr,"R:%+02.1f%+02.1f",getAimOffsetX(),getAimOffsetY()); 
 			break;
-#if 0
-		case eweather2_R:
-			sprintf(pStr,"R");
-			break;
-			
-		case eweather2_maohao:
-			sprintf(pStr,":");
-			break;
-
-		case eweather2_pole1:
-			if(getAimOffsetX()>=0)
-				sprintf(pStr,"+");
-			else
-				sprintf(pStr,"-");
-			break;
-
-		case eweather2_offx_1:
-			sprintf(pStr,"%01d",((int)abs(getAimOffsetX()))%10);
-			break;
-
-		case eweather2_offx_2:
-			sprintf(pStr,".");
-			break;
-			
-		case eweather2_offx_3:
-			sprintf(pStr,"%01d",((int)abs(getAimOffsetX())*10)%10);
-			break;
-
-		case eweather2_pole2:
-			if(getAimOffsetY()>=0)
-				sprintf(pStr,"+");
-			else
-				sprintf(pStr,"-");
-			break;
-
-		case eweather2_offy_1:
-			sprintf(pStr,"%01d",((int)abs(getAimOffsetY()))%10);
-			break;
-
-		case eweather2_offy_2:
-			sprintf(pStr,".");
-			break;
-
-		case eweather2_offy_3:
-			sprintf(pStr,"%01d",((int)abs(getAimOffsetY()*10))%10);
-			break;
-#endif	
 		case eErrorZone:
 			sprintf(pStr,"%s",Posd[eErrorZone]); 
 			break;
 		case eDynamicZone:
 			sprintf(pStr,"%s",Posd[eDynamicZone]);//); //��������
 			break;
-#if 0
-		case eAngleH_char:
-			sprintf(pStr,"%c",200); 
-			break;
-
-		case eAngleH_pole:
-			if(getMachGunAngle()>=0)
-				sprintf(pStr,"+");
-			else
-				sprintf(pStr,"-");
-			break;
-
-		case eAngleH_s1:
-			sprintf(pStr,"%01d",((int)abs(getMachGunAngle()))/10%10); 
-			break;
-
-		case eAngleH_s2:
-			sprintf(pStr,"%01d",((int)abs(getMachGunAngle()))%10);; 
-			break;
-#endif			
 		case eAngleH:
 			PositionX = getPlatformPositionX();
 			PositionY = getPlatformPositionY();
@@ -1624,26 +1532,6 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			//sprintf(pStr,"%c%+03.0f%+03.0f",200,(PositionX),(PositionY)); 
 			sprintf(pStr,"%c%+03.0f",200,getMachGunAngle()); 
 			break;
-#if 0
-		case eAngleV_char:
-			sprintf(pStr,"%c",211); 
-			break;
-
-		case eAngleV_pole:
-			if(getGrenadeAngle()>=0)
-				sprintf(pStr,"+");
-			else
-				sprintf(pStr,"-");
-			break;
-
-		case eAngleV_s1:
-			sprintf(pStr,"%01d",((int)abs(getGrenadeAngle()))/10%10); 
-			break;
-
-		case eAngleV_s2:
-			sprintf(pStr,"%01d",((int)abs(getGrenadeAngle()))%10); 
-			break;
-#endif			
 		case eAngleV:
 			AngleGun = getMachGunAngle();
 			AngleGrenade = getGrenadeAngle();
@@ -1838,12 +1726,12 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 		case eCalibZero_AngleGun:
 			value = getMachGunAngleAbs();
-			sprintf(pStr,"%c%cY:%+06.2f",200,216,value);
+			sprintf(pStr,"%c%cY:%+08.3f",200,216,value);
 			break;
 		
 		case eCalibZero_AngleGrenade:
 			value = getGrenadeAngleAbs();
-			sprintf(pStr,"%c%cY:%+06.2f",211,214,value);
+			sprintf(pStr,"%c%cY:%+08.3f",211,214,value);
 			break;
 
 		case eCalibZero_Angle:
@@ -1963,7 +1851,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			break;
 			
 		case eCalibHorizen_Menu:
-			sprintf(pStr,"%c%c<->",203,184); 		//���
+			sprintf(pStr,"%c%c",203,184); 
 			break;
 		case eCalibHorizen_Pos:
 			sprintf(pStr,"%c%c_X: %+08.3f",216,236,getTurretTheta()); 		//����
@@ -2296,7 +2184,7 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%c%c=%+03d%c %c%c=%+08.3fKpa",219,238,gWeatherTable.Temparature,174,219,247,gWeatherTable.Pressure/1000.0); //���� = +15 ����ѹ = +101.325 Kpa:
 			break;
 		case eCalcNum_Turret:
-			sprintf(pStr,"%c%cX=%+08.2f",190,239,getTurretTheta()); //��λX
+			sprintf(pStr,"%c%cX=%+08.2fdeg",190,239,getTurretTheta()); //��λX
 			break;
 		case eCalcNum_AlgleD:
 			sprintf(pStr,"%c%cY=%+08.2f %c%cY=%+08.2fdeg",200,216,getMachGunAngle(),211,214,getGrenadeAngle()); //��ǹY=.. ��Y=..
@@ -2370,19 +2258,19 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%c%c%c%c:      %s",201,144,145,146,Posd[eLaserState]);//������ĩѡͨ
 			break;
 		case eAnglePosn:
-			sprintf(pStr,"%c%c:%5.2f",190,239,getTurretTheta()); //��λ��
+			sprintf(pStr,"%c%c%+5.2f",190,239,getTurretTheta()); //��λ��
 			break;
 		case eAngleDipX:
-			sprintf(pStr,"%cX:%5.2f",220,getPlatformPositionX()); //���X
+			sprintf(pStr,"%cX:%+5.2f",220,getPlatformPositionX()); //���X
 			break;
 		case eAngleDipY:
-			sprintf(pStr,"%cY:%5.2f",220,getPlatformPositionY()); //���Y
+			sprintf(pStr,"%cY:%+5.2f",220,getPlatformPositionY()); //���Y
 			break;
 		case eAngleMach:
-			sprintf(pStr,"%cY:%5.2f",200,getMachGunAngle()); //��ǹY
+			sprintf(pStr,"%cY:%+5.2f",200,getMachGunAngle()); //��ǹY
 			break;
 		case eAngleGred:
-			sprintf(pStr,"%cY:%5.2f",211,getGrenadeAngle()); //��Y
+			sprintf(pStr,"%cY:%+5.2f",211,getGrenadeAngle()); //��Y
 			break;
 		case eGunTip:
 			sprintf(pStr,"%s",Posd[eGunTip]); //����ȷ����ʾ
