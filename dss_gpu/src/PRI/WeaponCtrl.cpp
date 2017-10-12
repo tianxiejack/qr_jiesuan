@@ -178,6 +178,24 @@ void startServoCheck_Timer()
 	}
 }
 
+void killF2Timer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eF2_Timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eF2_Timer);
+	}
+}
+
+void startF2_Timer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eF2_Timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eF2_Timer,FN_TIMER);	
+	}
+}
+
 
 void killF6Timer()
 {
@@ -971,7 +989,18 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	if(BIT6(BYTE3(FrameBuf1)) != BIT6(BYTE5(buf)))  //ͼɫF2
 	{    
 		if(BIT6(BYTE5(buf)) == 0x01)	
-			MSGDRIV_send(CMD_MODE_PIC_COLOR_SWITCH,0);
+		{
+			if(isTimerAlive(eF2_Timer))
+			{
+				killF2Timer();
+				MSGDRIV_send(CMD_MODE_PIC_COLOR_SWITCH,0);
+			}
+		}
+		else if(BIT6(BYTE5(buf)) == 0x00)	
+		{
+			startF2_Timer();
+		}
+			
 	}
 	if(BIT5(BYTE3(FrameBuf1)) != BIT5(BYTE5(buf)))	//ǿʾ
 	{ 
@@ -988,7 +1017,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			startF3_Timer();
 		}
 	}
-	if(BIT4(BYTE3(FrameBuf1)) != BIT4(BYTE5(buf)))	   //෽ʽ
+	if(BIT4(BYTE3(FrameBuf1)) != BIT4(BYTE5(buf)))	   //F4
 	{   
 		if(BIT4(BYTE5(buf)) == 0x01)
 			MSGDRIV_send(CMD_MEASURE_DISTANCE_SWITCH,0);

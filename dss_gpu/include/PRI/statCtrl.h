@@ -139,6 +139,7 @@ typedef enum _time_id
 	eF6_Timer,
 	eF5_Timer,
 	eF3_Timer,
+	eF2_Timer,
 	eFxbutton_Timer,
 	eDipAngle_Timer,
 	eOSD_shine_Timer	,					// the max of the timer number  is 0x20

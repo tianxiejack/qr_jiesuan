@@ -141,6 +141,9 @@ void teststartServo(BYTE code);
 void WeaponCtrlPORT_ParseByteGrenade(unsigned char *buf);
 void WeaponCtrlPORT_ParseByteTurret(unsigned char *buf);
 void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf);
+void startF2_Timer();
+void killF2Timer();
+
 
 extern BOOL bTraceSend;
 extern int servoInit;

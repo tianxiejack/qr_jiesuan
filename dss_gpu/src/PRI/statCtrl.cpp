@@ -41,6 +41,7 @@ int COUNTER=0;
 static bool MIDPARAMS=FALSE;
 static bool BASEMENU=FALSE;
 static bool CONNECT=FALSE;
+static bool ADCalibMenu=FALSE;
 
 extern void setJoyStickStat(BOOL stat);
 extern void setServoControlObj();

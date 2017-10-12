@@ -12,7 +12,7 @@
 
 extern OSDCTRL_OBJ * pCtrlObj;
 extern int shine_table[10];
-
+extern bool AdCalibMenuFlag;
 
 FOVCTRL_Handle	 pFovCtrlObj = NULL;	
 	
@@ -428,9 +428,10 @@ void moveUpXposition()
 	//	return;
 
 	i = (pTextObj[eCursorX].osdInitY - pTextObj[eCalibMenu_Weather].osdInitY)/35;
-
-	pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+3)%4)*35;
-	//pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+6)%7)*35;
+	if(AdCalibMenuFlag)
+		pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+6)%7)*35;
+	else
+		pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+3)%4)*35;
 	return;
 }
 
@@ -443,9 +444,10 @@ void moveDownXPosition()
 	//if(pCtrlObj->uInit==0)
 	//	return;
 	i = (pTextObj[eCursorX].osdInitY - pTextObj[eCalibMenu_Weather].osdInitY)/35;
-
-	//pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+1)%7)*35;
-	pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+1)%4)*35;
+	if(AdCalibMenuFlag)
+		pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+1)%7)*35;
+	else
+		pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+1)%4)*35;
 }
 
 int getXPosition()
@@ -727,4 +729,5 @@ void udateMenuItem_Zero_General(PROJECTILE_TYPE type)
 			Posd[eCalibMenu_Zero] = CalibZeroOsd[type];
 	}
 }
+
 

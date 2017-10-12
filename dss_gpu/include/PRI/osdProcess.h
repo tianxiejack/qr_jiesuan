@@ -581,8 +581,8 @@ void OSDCTRL_BaseMenuShow();
 void OSDCTRL_BaseMenuHide();
 void OSDCTRL_ConnectMenuShow();
 void OSDCTRL_ConnectMenuHide();
-
-
+void processCMD_ADCALIBMENU_SWITCH(long lParam);
+void initilFireViewPram();
 
 #ifdef __cplusplus
 }

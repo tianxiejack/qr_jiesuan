@@ -32,6 +32,7 @@
 
 #define LOFFSET	 0
 #define ROFFSET  15
+#define W1TOFFSET 9
 #define WOFFSET 140
 #define CALCOFFSET 20
 //extern volatile int msgLight;
@@ -43,6 +44,8 @@ extern int shine_table[10];
 OSDCTRL_OBJ * pCtrlObj = NULL;
 
 char tmparray[12] = "abcdef";
+bool AdCalibMenuFlag = false; 
+
 
 #if 1
 const char ModeOsd[9][8]=
@@ -140,7 +143,7 @@ int DisValue[4]={0,0,0,0};
 double AngleGun=0.0, AngleGrenade=0.0,PositionX=0.0,PositionY=0.0;//ǹ�ڵĶ���Ƕ���Ϣ �¶� �����ˮƽ�͸����Ƕ�ֵ
 //int n=0,ShinId=eCalibGeneral_XPole;
 unsigned char CalibGenPram_VFLD[48]={0};
-int CCD_Big[2]={1200000,900000},CCD_Small[2]={430000,330000},IR_Big[2]={11600000,11200000};
+int CCD_Big[2]={1200000,900000},CCD_Small[2]={430000,330000},IR_Big[2]={10000000,10000000};//IR_Big[2]={11600000,11200000};
 unsigned char TimeValue[8]={0};
 int MachTime=0,GrenadeTime=180;
 int codeX=0,signX='+', codeY=0,signY='+';
@@ -271,64 +274,64 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibHorizen_Mach,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		170-6,	0,	{0}},
 	{eCalibHorizen_Grenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		205-9,	0,	{0}},
 
-	{eCalibGenPram_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		100,	0,	{0}},
-	{eCalibGenpram_VFLD0TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+198+LOFFSET,	135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOX,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOY,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenpram_VFLD1TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+198+LOFFSET,	205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1X,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1Y,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenpram_VFLD2TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+198+LOFFSET,	275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2X,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2Y,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		310-18,	0,	{0}},
-	{eCalibGenPram_VFLDOXValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOXValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOXValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOXValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOXValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOXValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOXValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOXValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET,		135-3,	0,	{0}},
-	{eCalibGenPram_VFLDOYValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenPram_VFLDOYValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenPram_VFLDOYValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenPram_VFLDOYValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenPram_VFLDOYValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenPram_VFLDOYValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenPram_VFLDOYValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenPram_VFLDOYValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET,		170-6,	0,	{0}},
-	{eCalibGenPram_VFLD1XValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1XValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1XValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1XValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET,		205-9,	0,	{0}},
-	{eCalibGenPram_VFLD1YValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenPram_VFLD1YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenPram_VFLD1YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenPram_VFLD1YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenPram_VFLD1YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenPram_VFLD1YValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenPram_VFLD1YValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenPram_VFLD1YValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET,		240-12,	0,	{0}},
-	{eCalibGenPram_VFLD2XValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2XValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2XValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2XValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET,		275-15,	0,	{0}},
-	{eCalibGenPram_VFLD2YValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET,		310-18,	0,	{0}},
-	{eCalibGenPram_VFLD2YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET,		310-18,	0,	{0}},
-	{eCalibGenPram_VFLD2YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		310-18,	0,	{0}},
-	{eCalibGenPram_VFLD2YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET,		310-18,	0,	{0}},
-	{eCalibGenPram_VFLD2YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET,		310-18,	0,	{0}},
-	{eCalibGenPram_VFLD2YValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET,		310-18,	0,	{0}},
-	{eCalibGenPram_VFLD2YValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET,		310-18,	0,	{0}},
-	{eCalibGenPram_VFLD2YValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	38+LOFFSET,		100,	0,	{0}},
+	{eCalibGenpram_VFLD0TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	280+LOFFSET,	135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOX,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOY,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		170-6,	0,	{0}},
+	{eCalibGenpram_VFLD1TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	280+LOFFSET,	205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1X,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1Y,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		240-12,	0,	{0}},
+	{eCalibGenpram_VFLD2TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	280+LOFFSET,	275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2X,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2Y,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_VFLDOXValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET+W1TOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOXValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET+W1TOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOXValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET+W1TOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOXValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET+W1TOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOXValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET+W1TOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOXValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET+W1TOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOXValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET+W1TOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOXValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET+W1TOFFSET,		135-3,	0,	{0}},
+	{eCalibGenPram_VFLDOYValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET+W1TOFFSET,		170-6,	0,	{0}},
+	{eCalibGenPram_VFLDOYValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET+W1TOFFSET,		170-6,	0,	{0}},
+	{eCalibGenPram_VFLDOYValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET+W1TOFFSET,		170-6,	0,	{0}},
+	{eCalibGenPram_VFLDOYValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET+W1TOFFSET,		170-6,	0,	{0}},
+	{eCalibGenPram_VFLDOYValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET+W1TOFFSET,		170-6,	0,	{0}},
+	{eCalibGenPram_VFLDOYValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET+W1TOFFSET,		170-6,	0,	{0}},
+	{eCalibGenPram_VFLDOYValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET+W1TOFFSET,		170-6,	0,	{0}},
+	{eCalibGenPram_VFLDOYValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET+W1TOFFSET,		170-6,	0,	{0}},
+	{eCalibGenPram_VFLD1XValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET+W1TOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET+W1TOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET+W1TOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET+W1TOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET+W1TOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1XValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET+W1TOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1XValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET+W1TOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1XValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET+W1TOFFSET,		205-9,	0,	{0}},
+	{eCalibGenPram_VFLD1YValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET+W1TOFFSET,		240-12,	0,	{0}},
+	{eCalibGenPram_VFLD1YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET+W1TOFFSET,		240-12,	0,	{0}},
+	{eCalibGenPram_VFLD1YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET+W1TOFFSET,		240-12,	0,	{0}},
+	{eCalibGenPram_VFLD1YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET+W1TOFFSET,		240-12,	0,	{0}},
+	{eCalibGenPram_VFLD1YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET+W1TOFFSET,		240-12,	0,	{0}},
+	{eCalibGenPram_VFLD1YValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET+W1TOFFSET,		240-12,	0,	{0}},
+	{eCalibGenPram_VFLD1YValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET+W1TOFFSET,		240-12,	0,	{0}},
+	{eCalibGenPram_VFLD1YValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET+W1TOFFSET,		240-12,	0,	{0}},
+	{eCalibGenPram_VFLD2XValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET+W1TOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET+W1TOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET+W1TOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET+W1TOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET+W1TOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2XValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET+W1TOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2XValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET+W1TOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2XValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET+W1TOFFSET,		275-15,	0,	{0}},
+	{eCalibGenPram_VFLD2YValue0,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	148+LOFFSET+W1TOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_VFLD2YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	159+LOFFSET+W1TOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_VFLD2YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET+W1TOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_VFLD2YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	192+LOFFSET+W1TOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_VFLD2YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	203+LOFFSET+W1TOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_VFLD2YValue5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	214+LOFFSET+W1TOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_VFLD2YValue6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	225+LOFFSET+W1TOFFSET,		310-18,	0,	{0}},
+	{eCalibGenPram_VFLD2YValue7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	236+LOFFSET+W1TOFFSET,		310-18,	0,	{0}},
 
 	{eCalibGenPram_MachGunTime,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		205-9,	0,	{0}},
 	{eCalibGenPram_GrenadeTime,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		240-12,	0,	{0}},
@@ -677,6 +680,21 @@ void OSDCTRL_CalibMenuShow()
 	}
 	OSDCTRL_ItemShow(eErrorZone);
 	Posd[eWorkMode] = WorkOsd[wCalibration];
+
+	//AdCalibMenu
+	if(AdCalibMenuFlag)
+	{
+		OSDCTRL_ItemShow(eCalibMenu_GenPram);
+		OSDCTRL_ItemShow(eCalibMenu_Horizen);
+		OSDCTRL_ItemShow(eCalibMenu_Laser);
+	}
+	else
+	{ 
+		OSDCTRL_ItemHide(eCalibMenu_GenPram);
+		OSDCTRL_ItemHide(eCalibMenu_Horizen);
+		OSDCTRL_ItemHide(eCalibMenu_Laser);
+	}
+	
 
 	OSDCTRL_NoShine();
 	//OSDCTRL_AlgSelect();
@@ -1582,13 +1600,13 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"%c%c%c%c",180,225,181,182); 			//����洢
 			break;
 		case eCalibMenu_GenPram:
-			sprintf(pStr,"%c%c%c%c  ",253,180,197,250); 			//�۲�У׼
+			sprintf(pStr,"%c%c%c%c",253,180,197,250); 			//�۲�У׼
 			break;
 		case eCalibMenu_Horizen:
-			sprintf(pStr,"%c%c%c%c  ",186,153,197,209); 			//��ƽУ��
+			sprintf(pStr,"%c%c%c%c",186,153,197,209); 			//��ƽУ��
 			break;
 		case eCalibMenu_Laser:
-			sprintf(pStr,"%c%c%c%c  ",201,144,197,209); 			//����У��
+			sprintf(pStr,"%c%c%c%c",201,144,197,209); 			//����У��
 			break;
 		case eCalibMenu_Child:
 			sprintf(pStr,"%s",Posd[eCalibMenu_Child]);//�Ӳ˵�
@@ -1880,28 +1898,28 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			sprintf(pStr,"CCD-Big"); 		//CCD-BIG
 			break;
 		case eCalibGenPram_VFLDOX:
-			sprintf(pStr,"VFLD0-X=   .     ",12.0); 		//VFLD0-X
+			sprintf(pStr,"VFLD0-X=  .  ",12.0); 		//VFLD0-X
 			break;
 		case eCalibGenPram_VFLDOY:
-			sprintf(pStr,"VFLD0-Y=   .     ",9.0); 		//VFLD0-Y
+			sprintf(pStr,"VFLD0-Y=  .  ",9.0); 		//VFLD0-Y
 			break;
 		case eCalibGenpram_VFLD1TAG:
 			sprintf(pStr,"CCD-Small"); 		//CCD-Small
 			break;
 		case eCalibGenPram_VFLD1X:
-			sprintf(pStr,"VFLD1-X=   .     ",4.3); 		//VFLD1-X
+			sprintf(pStr,"VFLD1-X=  .  ",4.3); 		//VFLD1-X
 			break;
 		case eCalibGenPram_VFLD1Y:
-			sprintf(pStr,"VFLD1-Y=   .     ",3.3); 		//VFLD1-Y
+			sprintf(pStr,"VFLD1-Y=  .  ",3.3); 		//VFLD1-Y
 			break;
 		case eCalibGenpram_VFLD2TAG:
 			sprintf(pStr,"IR-Big"); 		//IR-Big
 			break;
 		case eCalibGenPram_VFLD2X:
-			sprintf(pStr,"VFLD2-X=   .     ",116.0); 		//VFLD2-X
+			sprintf(pStr,"VFLD2-X=  .  ",116.0); 		//VFLD2-X
 			break;
 		case eCalibGenPram_VFLD2Y:
-			sprintf(pStr,"VFLD2-Y=   .     ",112.0); 		//VFLD2-Y
+			sprintf(pStr,"VFLD2-Y=  .  ",112.0); 		//VFLD2-Y
 			break;
 		case eCalibGenPram_VFLDOXValue0:
 			sprintf(pStr,"%01d",CalibGenPram_VFLD[0]); 					
@@ -2403,4 +2421,68 @@ void moveRightServoYPram()
 		ServoY[codeY] -= addY;
 	}
 	isBeyondServoY(codeY);
+}
+
+
+void processCMD_ADCALIBMENU_SWITCH(long lParam)
+{
+	AdCalibMenuFlag = !AdCalibMenuFlag;
+}
+
+
+void initilFireViewPram()
+{
+	CalibGenPram_VFLD[0]   = CCD_Big[0]/10000000%10;
+	CalibGenPram_VFLD[1]   = CCD_Big[0]/1000000%10;
+	CalibGenPram_VFLD[2]   = CCD_Big[0]/100000%10;
+	CalibGenPram_VFLD[3]   = CCD_Big[0]/10000%10;
+	CalibGenPram_VFLD[4]   = CCD_Big[0]/1000%10;
+	CalibGenPram_VFLD[5]   = CCD_Big[0]/100%10;
+	CalibGenPram_VFLD[6]   = CCD_Big[0]/10%10;
+	CalibGenPram_VFLD[7]   = CCD_Big[0]/1%10;
+
+	CalibGenPram_VFLD[8]   = CCD_Big[1]/10000000%10;
+	CalibGenPram_VFLD[9]   = CCD_Big[1]/1000000%10;
+	CalibGenPram_VFLD[10] = CCD_Big[1]/100000%10;
+	CalibGenPram_VFLD[11] = CCD_Big[1]/10000%10;
+	CalibGenPram_VFLD[12] = CCD_Big[1]/1000%10;
+	CalibGenPram_VFLD[13] = CCD_Big[1]/100%10;
+	CalibGenPram_VFLD[14] = CCD_Big[1]/10%10;
+	CalibGenPram_VFLD[15] = CCD_Big[1]/1%10;
+
+	CalibGenPram_VFLD[16]   = CCD_Small[0]/10000000%10;
+	CalibGenPram_VFLD[17]   = CCD_Small[0]/1000000%10;
+	CalibGenPram_VFLD[18]   = CCD_Small[0]/100000%10;
+	CalibGenPram_VFLD[19]   = CCD_Small[0]/10000%10;
+	CalibGenPram_VFLD[20]   = CCD_Small[0]/1000%10;
+	CalibGenPram_VFLD[21]   = CCD_Small[0]/100%10;
+	CalibGenPram_VFLD[22]   = CCD_Small[0]/10%10;
+	CalibGenPram_VFLD[23]   = CCD_Small[0]/1%10;
+
+	CalibGenPram_VFLD[24]   = CCD_Small[1]/10000000%10;
+	CalibGenPram_VFLD[25]   = CCD_Small[1]/1000000%10;
+	CalibGenPram_VFLD[26] = CCD_Small[1]/100000%10;
+	CalibGenPram_VFLD[27] = CCD_Small[1]/10000%10;
+	CalibGenPram_VFLD[28] = CCD_Small[1]/1000%10;
+	CalibGenPram_VFLD[29] = CCD_Small[1]/100%10;
+	CalibGenPram_VFLD[30] = CCD_Small[1]/10%10;
+	CalibGenPram_VFLD[31] = CCD_Small[1]/1%10;
+
+	CalibGenPram_VFLD[32]   = IR_Big[0]/10000000%10;
+	CalibGenPram_VFLD[33]   = IR_Big[0]/1000000%10;
+	CalibGenPram_VFLD[34]   = IR_Big[0]/100000%10;
+	CalibGenPram_VFLD[35]   = IR_Big[0]/10000%10;
+	CalibGenPram_VFLD[36]   = IR_Big[0]/1000%10;
+	CalibGenPram_VFLD[37]   = IR_Big[0]/100%10;
+	CalibGenPram_VFLD[38]   = IR_Big[0]/10%10;
+	CalibGenPram_VFLD[39]   = IR_Big[0]/1%10;
+
+	CalibGenPram_VFLD[40]   = IR_Big[1]/10000000%10;
+	CalibGenPram_VFLD[41]   = IR_Big[1]/1000000%10;
+	CalibGenPram_VFLD[42] = IR_Big[1]/100000%10;
+	CalibGenPram_VFLD[43] = IR_Big[1]/10000%10;
+	CalibGenPram_VFLD[44] = IR_Big[1]/1000%10;
+	CalibGenPram_VFLD[45] = IR_Big[1]/100%10;
+	CalibGenPram_VFLD[46] = IR_Big[1]/10%10;
+	CalibGenPram_VFLD[47] = IR_Big[1]/1%10;
 }

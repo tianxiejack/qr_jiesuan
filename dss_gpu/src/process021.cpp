@@ -26,8 +26,6 @@
 
 #include "spiH.h"
 #include "servo_control_obj.h"
-//extern Level_one_state gLevel1Mode;
-//extern Level_one_state gLevel1LastMode;
 
 #define VIDEO1280X1024 1
 
@@ -37,6 +35,7 @@ using namespace cv;
 //extern OSDCTRL_Handle pOsdCtrlObj;
 
 extern OSDCTRL_Handle pCtrlObj;
+
 OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 OSDCTRL_Handle pCtrlObjLocal = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 
@@ -2506,7 +2505,9 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_MIDPARAMS_SWITCH,					processCMD_MIDPARAMS_SWITCH,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7F5
     MSGDRIV_attachMsgFun(handle,	CMD_LASERSELECT_SWITCH,				processCMD_LASERSELECT_SWITCH,		0); //F5
     MSGDRIV_attachMsgFun(handle,	CMD_STABLEVIDEO_SWITCH,				processCMD_STABLEVIDEO_SWITCH,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7F3(\u951f\u65a4\u62f7\u9891\u951f\u65a4\u62f7\u5f3a)
-    
+    MSGDRIV_attachMsgFun(handle,	CMD_ADCALIBMENU_SWITCH,				processCMD_ADCALIBMENU_SWITCH,		0);
+
+	
     MSGDRIV_attachMsgFun(handle,	CMD_SENSOR_SWITCH,					processCMD_SENSOR_SWITCH,		0); //F6
     MSGDRIV_attachMsgFun(handle,	CMD_CONNECT_SWITCH,					processCMD_CONNECT_SWITCH,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7F6
     
@@ -3977,6 +3978,18 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 					processCMD_CALIBRATION_SWITCH_TO_GENERAL(0);
 					break;
 
+				case CMD_CALIBRATION_SWITCH_TO_GENPRAM:
+					processCMD_CALIBRATION_SWITCH_TO_GENPRAM(0);
+					break;
+
+				case CMD_CALIBRATION_SWITCH_TO_HORIZEN:
+					processCMD_CALIBRATION_SWITCH_TO_HORIZEN(0);
+					break;
+
+				case CMD_CALIBRATION_SWITCH_TO_LASER:
+					processCMD_CALIBRATION_SWITCH_TO_LASER(0);
+					break;
+
 				default:
 					break;				
 			}				
@@ -4385,9 +4398,10 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENPRAM(LPARAM lParam)
 	{
 		gLevel2CalibrationState = STATE_CALIBRATION_GENPRAM;
 		//update OSDdisplay
-		switch(gLevel3CalibrationState){
+		switch(gLevel3CalibrationState)
+		{
 			case Menu_FireView:
-				//initilFireViewPram();
+				initilFireViewPram();
 				OSDCTRL_ItemShine(eCalibGenPram_VFLDOXValue0);
 				break;
 			case Menu_FireCtrl:
@@ -4411,14 +4425,27 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_GENPRAM(LPARAM lParam)
 
 void CProcess021::processCMD_CALIBRATION_SWITCH_TO_HORIZEN(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_HORIZEN",__func__,__LINE__);
-	return ;
+	if(isCalibrationMode())
+	{
+		gLevel2CalibrationState = STATE_CALIBRATION_HORIZEN;
+		//update OSDdisplay
+			//initilGeneralParam();
+			//OSDCTRL_ItemShine(eCalibGeneral_DisValue1);
+		OSDCTRL_EnterCalibMode();
+	}	return ;
  }
 
 
 void CProcess021::processCMD_CALIBRATION_SWITCH_TO_LASER(LPARAM lParam)
  {
- 	OSA_printf("%s,line:%d ... processCMD_CALIBRATION_SWITCH_TO_LASER",__func__,__LINE__);
+	if(isCalibrationMode())
+	{
+		gLevel2CalibrationState = STATE_CALIBRATION_LASER;
+		//update OSDdisplay
+			//initilGeneralParam();
+			//OSDCTRL_ItemShine(eCalibGeneral_DisValue1);
+		OSDCTRL_EnterCalibMode();
+	}
 	return ;
  }
 

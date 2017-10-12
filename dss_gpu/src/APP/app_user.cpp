@@ -619,6 +619,12 @@ static Int32 APP_onTimer( Int32 timerId )
 			sendCommand(CMD_STABLEVIDEO_SWITCH );	
 		}
 
+		if(timerId == eF2_Timer)
+		{
+			killF2Timer();
+			sendCommand(CMD_ADCALIBMENU_SWITCH);	
+		}
+
 		if(timerId == eF5_Timer)
 		{
 			killF5Timer();
