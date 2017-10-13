@@ -38,6 +38,7 @@ FOVCTRL_Handle FOVCTRL_create( UINT Sens,UINT fovElem,UINT x,UINT y)
 		pCtrlObj->crosswidth			=60;
 		pCtrlObj->crossheight			=60;
 		pCtrlObj->frcolor				=2;
+		pCtrlObj->linew				=1;
 		
 		FOVCTRL_updateFovRect(pCtrlObj,Sens,fovElem,x,y);
 	}
@@ -183,13 +184,20 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		if(isCalibrationZero())
 		{
 			//DrawjsCompass(frame,cthis);
+			cthis->linew = 1;
 			DrawjsCross(frame, cthis);		
 			DrawjsRuler(frame,cthis);
+		}
+		if(isCalibrationLaser())
+		{
+			cthis->linew = 2;
+			DrawjsCross(frame, cthis);		
 		}
 	
 	}
 	else if(isBattleMode())//&&isStatBattleAlert())
 	{
+		cthis->linew = 1;
 		if(isStatBattleAuto())
 		{
 			DrawjsCompass(frame,cthis);

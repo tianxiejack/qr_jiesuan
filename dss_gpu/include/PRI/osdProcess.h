@@ -84,7 +84,6 @@ typedef struct _weather_table{
 typedef enum _eOsdTypeId{
 	eModeId			=	0x00,
 	eWorkMode		,
-//	erase_guntip,
 	eAimType		,
 	eGunType		,
 	eMeasureType	,
@@ -104,40 +103,10 @@ typedef enum _eOsdTypeId{
 	eErrorZone	,//	=	0x0C,
 	eWeather1	,
 	eWeather1_T,
-/*	eWeather1_pole,
-	eweather1_tmperature1,
-	eweather1_tmperature2,
-	eweather1_p,
-	eweather1_qiya1,
-	eweather1_qiya2,
-	eweather1_qiya3,
-	eweather1_qiya4,
-*/
-	eWeather2	,//	=	0x0E,
-/*
-	eweather2_R,
-	eweather2_maohao,
-	eweather2_pole1,
-	eweather2_offx_1,
-	eweather2_offx_2,
-	eweather2_offx_3,
-	eweather2_pole2,
-	eweather2_offy_1,
-	eweather2_offy_2,
-	eweather2_offy_3,
 
-	eAngleH_char,
-	eAngleH_pole,
-	eAngleH_s1,
-	eAngleH_s2,
-*/	
+	eWeather2	,//	=	0x0E,
+	
 	eAngleH		,//	=	0x0F,
-/*
-	eAngleV_char,
-	eAngleV_pole,
-	eAngleV_s1,
-	eAngleV_s2,
-*/	
 	eAngleV		,//	=	0x10,
 	eDynamicZone,//	=	0x11,
 	eCorrectionTip,//	=	0x12,
@@ -181,7 +150,8 @@ typedef enum _eOsdTypeId{
 	eCalibZero_D	,//=	0x2A,
 	eCalibZero_Fx	,//=	0x2B,
 	eCalibZero_Fy	,//=	0x2C,
-	
+
+	eCalibZero_jc,
 	eCalibZero_AngleGun	,//=0x2D,
 	eCalibZero_AngleGrenade,//=0x2E,
 	eCalibZero_Angle,//=	0x2F,
@@ -356,9 +326,11 @@ typedef enum _eOsdTypeId{
 	eAngleMach,
 	eAngleGred,
 	eGunTip,
-	
+eLaserjlx,
+eLaserjly,	
 	erase_shottype,
 	erase_guntip,
+	
 	eBoreSightLinId,
 	OSD_TEXT_SIZE
 }eOsdId;

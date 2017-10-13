@@ -61,6 +61,7 @@ typedef struct _fov_ctrl
 	int 				crossheight;
 	int				theta;
 	int 				frcolor;
+	int				linew;
 
 	RECT 			fovRect;						
 	CBrush 			fovBrush;

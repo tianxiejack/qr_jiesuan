@@ -232,9 +232,10 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibZero_Fx,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	379+LOFFSET+80,		490,	0,	{0}},
 	{eCalibZero_Fy,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		490,	0,	{0}},
 
-	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		500+LOFFSET,		150,	0,	{0}},
-	{eCalibZero_AngleGrenade,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
-	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		60+LOFFSET,		490,	0,	{0}},
+	{eCalibZero_jc,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	487+LOFFSET,		115,	0,	{0}},
+	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		150,	0,	{0}},
+	{eCalibZero_AngleGrenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
+	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
 
 	{eCalibWeather_Tep,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		100,	0,	{0}},
 	{eCalibWeather_Pre,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		135,	0,	{0}},
@@ -269,13 +270,13 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 
 	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET,		490,	0,	{0}},
 	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	525+LOFFSET,		490,	0,	{0}},
-	{eCalibHorizen_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	487+LOFFSET,		115,	0,	{0}},
-	{eCalibHorizen_Pos,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		135-3,	0,	{0}},
-	{eCalibHorizen_Mach,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		170-6,	0,	{0}},
-	{eCalibHorizen_Grenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		205-9,	0,	{0}},
+	{eCalibHorizen_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		100,	0,	{0}},
+	{eCalibHorizen_Pos,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		132,	0,	{0}},
+	{eCalibHorizen_Mach,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		164,	0,	{0}},
+	{eCalibHorizen_Grenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		196,	0,	{0}},
 
 	{eCalibGenPram_Menu,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	38+LOFFSET,		100,	0,	{0}},
-	{eCalibGenpram_VFLD0TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	280+LOFFSET,	135-3,	0,	{0}},
+	{eCalibGenpram_VFLD0TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	280+LOFFSET,		135-3,	0,	{0}},
 	{eCalibGenPram_VFLDOX,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		135-3,	0,	{0}},
 	{eCalibGenPram_VFLDOY,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		170-6,	0,	{0}},
 	{eCalibGenpram_VFLD1TAG,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	280+LOFFSET,	205-9,	0,	{0}},
@@ -412,6 +413,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		500,	0,	{0}},
 	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		500,	0,	{0}},
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
+	{eLaserjlx,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,		500,	0,	{0}},
+	{eLaserjly,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,		500,	0,	{0}},
+
 	{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
 	{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
 
@@ -766,6 +770,13 @@ void OSDCTRL_CalibHorizenShow()
 void OSDCTRL_CalibLaserShow()
 {
 	OSDCTRL_AllHide();
+	
+	OSDCTRL_ItemShow(eErrorZone);
+	OSDCTRL_ItemShow(eAngleH);
+	OSDCTRL_ItemShow(eAngleV);
+	OSDCTRL_ItemShow(eLaserjlx);
+	OSDCTRL_ItemShow(eLaserjly);
+	
 	Posd[eWorkMode] = WorkOsd[wCalibLaser];
 }
 
@@ -830,7 +841,7 @@ void OSDCTRL_CalibZeroShow()
 
 			OSDCTRL_ItemShow(i);
 		}
-		OSDCTRL_ItemShow(eCalibHorizen_Menu);
+		OSDCTRL_ItemShow(eCalibZero_jc);
 	}
 
 	OSDCTRL_NoShine();
@@ -1418,7 +1429,8 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 	static double value =0.0;
 	static BYTE Bye;
 	int i ;
-
+int ls1tmp = 0000;
+int ls2tmp = 0000;
 	unsigned char thousand = 0 ,hundred = 0,tens = 0,unit = 0;
 
 	SDK_ASSERT(pCtrlObj!=NULL);
@@ -1878,9 +1890,13 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 			//sprintf(pStr,"Ry:%+06.2fm",value); 		//����X:+xxxx cm
 			sprintf(pStr,"Y:%+06.2f",value);
 			break;
+
+		case eCalibZero_jc:
+			sprintf(pStr,"%c%c",203,184); 
+			break;
 			
 		case eCalibHorizen_Menu:
-			sprintf(pStr,"%c%c",203,184); 
+			sprintf(pStr,"%c%c<->",203,184); 
 			break;
 		case eCalibHorizen_Pos:
 			sprintf(pStr,"%c%c_X: %+08.3f",216,236,getTurretTheta()); 		//����
@@ -2310,6 +2326,14 @@ int OSDCTRL_genOsdContext(HANDLE hOsdCtrl,UINT uItemId)
 		case erase_guntip:
 			sprintf(pStr," ");
 			break;
+
+		case eLaserjlx:
+			sprintf(pStr,"Lx:%+05d",ls1tmp);
+			break;
+
+		case eLaserjly:
+			sprintf(pStr,"Lx:%+05d",ls2tmp);
+		break;
 		
 		default:
 			break;
