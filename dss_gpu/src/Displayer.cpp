@@ -988,13 +988,22 @@ void CDisplayer::gl_display(void)
 		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		//OSA_mutexLock(&m_mutex);
-		#if 1
+		#if 0
 		glViewport(m_renders[winId].displayrect.x,
 				m_renders[winId].displayrect.y,
 				m_renders[winId].displayrect.w, m_renders[winId].displayrect.h);
-		
+		//draw in draw resize
 
 		#endif
+		if(winId == 0)
+		{
+			glViewport(m_renders[winId].displayrect.x,
+				m_renders[winId].displayrect.y,
+				m_renders[winId].displayrect.w, m_renders[winId].displayrect.h);
+		}
+		else
+			glViewport(33,390,120,120);
+		
 		//OSA_mutexUnlock(&m_mutex);
 
 		#if 0

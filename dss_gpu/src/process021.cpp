@@ -1799,16 +1799,16 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 		itmp = pIStuts->SensorStat;
 		dynamic_config(VP_CFG_MainChId, itmp, NULL);
 
-#if 0//change the sensor picp change too
+#if 1//change the sensor picp change too
 		if(pIStuts->PicpSensorStat==0||pIStuts->PicpSensorStat==1)
 			{
 				if(pIStuts->SensorStat==0)
 				{
-						pIStuts->PicpSensorStat=1;
+						pIStuts->PicpSensorStat=0;
 				}
 				else
 				{
-						pIStuts->PicpSensorStat=0;
+						pIStuts->PicpSensorStat=1;
 				}
 				if(pIStuts->ImgPicp[pIStuts->SensorStat]==1||pIStuts->ImgPicp[pIStuts->SensorStat^1]==1)
 					pIStuts->PicpSensorStatpri=pIStuts->PicpSensorStat;					
