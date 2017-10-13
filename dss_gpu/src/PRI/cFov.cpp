@@ -126,15 +126,10 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	}
 	else if(isBattleMode())//&&isStatBattleAlert())
 	{
-		if(isStatBattleAuto())
-		{
-			DrawjsCompass(frame,cthis);
-			DrawjsCross(frame, cthis);
-			DrawjsRuler(frame,cthis);
-		}
-		else if(isStatBattleAlert())
-		{		
-		}		
+		cthis->linew = 3;
+		DrawjsCompass(frame,cthis);
+		DrawjsCross(frame, cthis);
+		DrawjsRuler(frame,cthis);
 	}	
 	
 	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
@@ -148,7 +143,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	DrawjsRightFrame(frame,cthis);
 	DrawjsBottomFrame(frame,cthis);
 
-#if 0
+#if 1
 	DrawjsCompass(frame,cthis);
 	DrawjsCross(frame,cthis);
 	DrawjsRuler(frame,cthis);

@@ -166,7 +166,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eWorkMode,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		30,	0,	{0}},
 	{eAimType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	140+LOFFSET,		30,	0,	{0}},
 	{eGunType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		30,	0,	{0}},
-	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		30,	0,	{0}},
+	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		30,	0,	{0}},
 	{eVideoErr,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	334+LOFFSET,		200,	0,	{0}},
 	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,	30,	0,	{0}},
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,		30,	0,	{0}},
@@ -178,7 +178,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eMeasureDis_Value3,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	457+LOFFSET,	30,	0,	{0}},
 	{eMeasureDis_Value4,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	468+LOFFSET,	30,	0,	{0}},
 	*/
-	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		30,	0,	{0}},
+	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		30,	0,	{0}},
 	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		436,	0,	{0}},
 	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		470,	0,	{0}},
@@ -1477,11 +1477,10 @@ int ls2tmp = 0000;
 				}
 				else
 				{
-					sprintf(pStr,"%s:%s",Posd[eLaserState],Distance); //mo
+					sprintf(pStr,"%s%s",Posd[eLaserState],Posd[eMeasureType]); //shou or mo :
 					//sprintf(pStr,"%s:",Posd[eMeasureType]); //laser
 				}
-				 //OSDCTRL_ItemHide(eMeasureDis);	
-
+				OSDCTRL_ItemHide(eMeasureDis);	
 			}
 			break;
 		case eMeasureDis:

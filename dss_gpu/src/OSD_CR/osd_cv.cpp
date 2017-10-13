@@ -425,7 +425,7 @@ void DrawjsRuler(Mat frame,CFOV * fovOsdCtrl)
 	int i;
 
 	int CenterX=cthis->fovX;
-	int CenterY=cthis->fovY-50;
+	int CenterY=cthis->fovY-30;
 	int Len=15;
 	
 	int StepGap=0;
@@ -441,12 +441,12 @@ void DrawjsRuler(Mat frame,CFOV * fovOsdCtrl)
 			StepGap *= 1.2;
 	#endif
 	
-	StepGap = angleToOffset(5);
+	StepGap = angleToOffset(10);
 	
 
 	for(i = -3;i<=3;i++)
 	{
-		start.x = CenterX + i*StepGap ;
+		start.x = CenterX + i*StepGap;
 		start.y = CenterY;
 		end.x = start.x ;
 		end.y = start.y -2*Len;

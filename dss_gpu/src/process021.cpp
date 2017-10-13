@@ -392,6 +392,7 @@ void CProcess021::process_osd(void *pPrm)
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
 	flag = 1;
+	
 	sThis->m_display.UpDateOsd(0);
 	return ;
 }
@@ -1549,7 +1550,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'd'|| key == 'D')
 	{
-		testjiqiangjiansu();
+		OSDCTRL_ItemShine(eMeasureType);
+		//testjiqiangjiansu();
 		#if 0
 			if(pIStuts->ImgMtdStat[pIStuts->SensorStat])
 				pIStuts->ImgMtdStat[pIStuts->SensorStat] = eImgAlg_Disable;
@@ -1574,7 +1576,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	
 	if (key == 'f' || key == 'F')
 	{
-		testjiqiangjiasu();
+		OSDCTRL_NoShineShow();;
+		//testjiqiangjiasu();
 		#if 0
 			if(pIStuts->ImgFrezzStat[pIStuts->SensorStat])
 				pIStuts->ImgFrezzStat[pIStuts->SensorStat] = eImgAlg_Disable;
@@ -1777,6 +1780,9 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 	int tempvalue=0;
 	CMD_EXT *pIStuts = &extInCtrl;
 	CMD_EXT *pInCmd = NULL;
+
+	CFOV* cthis = pFovCtrlObj;
+	
 printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pIStuts->unitAxisY[extInCtrl.SensorStat ]);
 	if(msgId == MSGID_EXT_INPUT_SENSOR || msgId == MSGID_EXT_INPUT_ENPICP)
 	{
@@ -1857,21 +1863,26 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
 		DS_Rect lay_rect;
 	#if 1
-		lay_rect.w = vdisWH[0][0]/3;
+		lay_rect.w =cthis->fovX;
+		lay_rect.h = cthis->fovY;
+		lay_rect.x = 720/2-lay_rect.w/2;
+		lay_rect.y = 572/2-lay_rect.h/2;
+	#endif
+
+	#if 0
+		lay_rect.w =vdisWH[0][0]/3;
 		lay_rect.h = vdisWH[0][1]/3;
 		lay_rect.x = vdisWH[0][0]/2-lay_rect.w/2;
 		lay_rect.y = vdisWH[0][1]/2-lay_rect.h/2;
-	#endif
-		if(pIStuts->PicpSensorStat==1)
-			{
-			#if 1
-				lay_rect.w = vcapWH[1][0]/3;
-				lay_rect.h = vcapWH[1][1]/3;
-				lay_rect.x = vcapWH[1][0]/2-lay_rect.w/2;
-				lay_rect.y = vcapWH[1][1]/2-lay_rect.h/2;
-			#endif
 
-			}
+		if(pIStuts->PicpSensorStat==1)
+		{
+			lay_rect.w = vcapWH[1][0]/3;
+			lay_rect.h = vcapWH[1][1]/3;
+			lay_rect.x = vcapWH[1][0]/2-lay_rect.w/2;
+			lay_rect.y = vcapWH[1][1]/2-lay_rect.h/2;
+		}
+	#endif
 		m_display.dynamic_config(CDisplayer::DS_CFG_CropRect, 1, &lay_rect);
 //picp position
 		lay_rect=rendpos[pIStuts->PicpPosStat];
@@ -4522,9 +4533,7 @@ void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
 void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
  {
 	//printf("processCMD_MEASURE_VELOCITY   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
-
 	gLevel3CalculatorState = Auto_Idle;
-
 	finish_laser_measure = 0;
 	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleIdle())
@@ -4601,7 +4610,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			//gLevel3CalculatorState = Auto_Idle;
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			OSDCTRL_ItemShow(eCorrectionTip);
-			SPI_mirror_send_requst();
+			//SPI_mirror_send_requst();
 		}	
 	}
 	return ;
