@@ -35,7 +35,7 @@ using namespace cv;
 //extern OSDCTRL_Handle pOsdCtrlObj;
 
 extern OSDCTRL_Handle pCtrlObj;
-
+int msgEraseId = 0;
 OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 OSDCTRL_Handle pCtrlObjLocal = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 
@@ -375,6 +375,12 @@ void CProcess021::process_osd(void *pPrm)
 		}
 	}
 
+	if(msgEraseId)
+	{
+		sThis->OSDCTRL_erase_single(pCtrlObj, msgEraseId);
+		msgEraseId = 0;
+	}
+	
 	if(flag)
 	{
 		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
@@ -1863,10 +1869,12 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
 		DS_Rect lay_rect;
 	#if 1
-		lay_rect.w =cthis->fovX;
-		lay_rect.h = cthis->fovY;
-		lay_rect.x = 720/2-lay_rect.w/2;
-		lay_rect.y = 572/2-lay_rect.h/2;
+		lay_rect.w = 60;
+		lay_rect.h = 60;
+		lay_rect.x = cthis->fovX-lay_rect.w/2;
+		lay_rect.y = cthis->fovY-lay_rect.h/2;
+
+		
 	#endif
 
 	#if 0
@@ -4595,6 +4603,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 		OSDCTRL_ItemShine(eMeasureType);
 		//for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
 			OSDCTRL_ItemHide(eMeasureDis);
+
 		
 		if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
 		{
@@ -5094,4 +5103,25 @@ bool CProcess021::ValidateGunType()
 
  #endif
 
+void CProcess021::OSDCTRL_erase_single(OSDCTRL_Handle pCtrlObj,int id)
+{
+	int i=0;
+	Mat frame = sThis->m_dc;
+	OSDText_Obj * pTextObj = NULL;
+	int startx,starty;
+	char *ptr;
+	UInt32 frcolor,bgcolor;
+	
+	i = id;
+
+	pTextObj = &pCtrlObj->pTextList[i]; 
+	if(pTextObj)
+		OSDCTRL_genOsdContext(pCtrlObj,i);
+	startx   = pTextObj->osdInitX;
+	starty   = pTextObj->osdInitY;
+	frcolor  = WHITECOLOR;
+	bgcolor = BGCOLOR;
+	ptr   = (char*)pTextObj->osdContext;
+	osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
+}
 

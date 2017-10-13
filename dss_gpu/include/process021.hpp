@@ -221,7 +221,9 @@ protected:
         static void processCMD_GRENADEMOTOR_OK(long lParam );
 	 static void updateCMD_BUTTON_SWITCH(int param);	
 	 static bool ValidateGunType();
+	void OSDCTRL_erase_single(OSDCTRL_Handle pCtrlObj,int id);
 
+	
 private:
 	ACK_EXT extOutAck;
 	bool     m_bCast;

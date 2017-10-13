@@ -76,7 +76,7 @@ DXD_Info gDXD_infoSave;
 #endif
 static Bool  gAPP_Started   = FALSE;
 static Int32 gAPP_Usecase   = 0x00;
-
+extern int msgEraseId;
 void initgdxd_info()
 {
 	 gDXD_info.OnLoadDefCfg  = APP_loadDefCfg;
@@ -590,6 +590,9 @@ static Int32 APP_onTimer( Int32 timerId )
 	     if(timerId == eOSD_shine_Timer)
 	     {
      			//printf("eOSD_shine_Timer eOSD_shine_Timer eOSD_shine_Timer\n");
+    
+		    	// OSDCTRL_erase_single(pCtrlObj, eMeasureType);
+			msgEraseId = eMeasureType;
      			pTimerObj->KillTimer(eOSD_shine_Timer);
 			//Posd[eMeasureType] = MeasureTypeOsd[0];
 			OSDCTRL_NoShineShow();	

@@ -166,7 +166,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eWorkMode,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		30,	0,	{0}},
 	{eAimType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	140+LOFFSET,		30,	0,	{0}},
 	{eGunType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		30,	0,	{0}},
-	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		30,	0,	{0}},
+	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		30,	0,	{0}},
 	{eVideoErr,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	334+LOFFSET,		200,	0,	{0}},
 	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,	30,	0,	{0}},
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,		30,	0,	{0}},
@@ -1105,8 +1105,7 @@ void OSDCTRL_ItemHide(LPARAM lParam)
 	if(pCtrlObj->uInit==0)
 		return;
 
-	pTextObj[lParam].osdState = eOsd_Hide;
-	
+	pTextObj[lParam].osdState = eOsd_Hide;	
 }
 
 bool OSDCTRL_IsOsdDisplay(LPARAM lParam)
@@ -1477,8 +1476,8 @@ int ls2tmp = 0000;
 				}
 				else
 				{
-					sprintf(pStr,"%s%s",Posd[eLaserState],Posd[eMeasureType]); //shou or mo :
-					//sprintf(pStr,"%s:",Posd[eMeasureType]); //laser
+					//sprintf(pStr,"%s%s",Posd[eLaserState],Posd[eMeasureType]); //shou or mo :
+					sprintf(pStr,"%s:LSBG",Posd[eLaserState]); 
 				}
 				OSDCTRL_ItemHide(eMeasureDis);	
 			}

@@ -1594,7 +1594,5 @@ void  APP_tracker_timer_alarm()
 			pIStuts->AvtTrkCoast=0;
 
 	 	}
-
-
 }
 
