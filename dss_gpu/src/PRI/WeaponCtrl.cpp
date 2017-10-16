@@ -1043,14 +1043,14 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		{
 			if(isTimerAlive(eF6_Timer)/*״ֵ̬*/)
 			{
-				killF6Timer();
+				//killF6Timer();
 				MSGDRIV_send(CMD_SENSOR_SWITCH,0);
 				MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
 			}
 		}
 		else if(BIT2(BYTE5(buf)) == 0x00)
 		{
-			startF6_Timer();
+			//startF6_Timer();
 		}
 	}
 	if(BIT1(BYTE3(FrameBuf1)) != BIT1(BYTE5(buf)))//shou bing shang zi dong bu huo an jian

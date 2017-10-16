@@ -328,8 +328,8 @@ typedef enum _eOsdTypeId{
 	eGunTip,
 eLaserjlx,
 eLaserjly,	
-	erase_shottype,
-	erase_guntip,
+//	erase_shottype,
+//	erase_guntip,
 	
 	eBoreSightLinId,
 	OSD_TEXT_SIZE

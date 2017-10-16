@@ -1295,11 +1295,17 @@ void processCMD_MIDPARAMS_SWITCH(long lParam)
 		OSDCTRL_ConnectMenuHide();
 		OSDCTRL_CalcNumHide();
 		OSDCTRL_FulScrAngleShow();
+
+		//add
+		OSDCTRL_ConnectMenuShow();
 	}
 	else
 	{ 
 		OSDCTRL_CalcNumHide();
 		OSDCTRL_FulScrAngleHide();
+		OSDCTRL_ConnectMenuHide();
+		//add
+		
 	}
 }
 

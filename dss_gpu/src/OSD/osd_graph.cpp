@@ -51,7 +51,7 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 				}
 		
 	}
-#if 1
+#if 0
 	{	
 		pTextObj = &pCtrlObj->pTextList[erase_guntip]; 
 		//if(pTextObj)
@@ -199,10 +199,10 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 	int number=0;
 	char *tmpt;
 	int lenctl=0;
-	bool lastnumflag = 0;
-	bool lastmhflag = 0;
-	bool lastcharacterflag = 0;
-	bool lastfhflag = 0;
+	static bool lastnumflag = 0;
+	static bool lastmhflag = 0;
+	static bool lastcharacterflag = 0;
+	static bool lastfhflag = 0;
 
 	fontWidth 	= 	OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814;
 	fontHeight 	= 	OSDUTIL_FONT_FLR_DEFAULT_HEIGHT_0814;
@@ -280,7 +280,27 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 				lastcharacterflag = 0;
 				lastfhflag = 1;
 			}
-			else if((index>=65 && index<=90)|(index >=97 && index <122))
+			else if(index>=65 && index<=90)
+			{
+				if(lastnumflag)
+					lenctl +=48;
+				else if(lastcharacterflag)
+					lenctl +=48;  
+				else if(lastfhflag)
+					lenctl +=24;
+				else if(lastmhflag)
+					lenctl +=48;
+
+				if((index >=97 && index <122))
+					if(lastcharacterflag)
+						lenctl += 12;
+				
+				lastmhflag = 0;
+				lastnumflag = 0;
+				lastcharacterflag = 1;
+				lastfhflag = 0;
+			}
+			else if(index >=97 && index <122)
 			{
 				if(lastnumflag)
 					lenctl +=48;
@@ -288,6 +308,8 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 					lenctl +=36;  
 				else if(lastfhflag)
 					lenctl +=24;
+				else if(lastmhflag)
+					lenctl +=48;
 
 				if((index >=97 && index <122))
 					if(lastcharacterflag)
@@ -311,55 +333,37 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 				lastcharacterflag = 0;
 				lastfhflag = 0;
 			}
-					if(1)
+
+			
+			if(1)
+			{
+				pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
+				for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
+				{
+								
+					offset 	= j-startx-k*fontWidth;
+					data 	= *(pChar + offset/8);
+					data 	<<= (offset%8);
+
+					if(frcolor == 0)
+						pixcolor 		= (data&0x80)?frcolor:bgcolor;
+					else						
+						pixcolor		= (data&0x80)?frcolor:0xff000000;//0x50000000;
+
+					if(i == 0 && k == numchar-1)
 					{
-						pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
-						for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
-						{
-										
-							offset 	= j-startx-k*fontWidth;
-							data 	= *(pChar + offset/8);
-							data 	<<= (offset%8);
-
-							if(frcolor == 0)
-								pixcolor 		= (data&0x80)?frcolor:bgcolor;
-							else						
-								pixcolor		= (data&0x80)?frcolor:0xff000000;//0x50000000;
-
-							if(i == 0 && k == numchar-1)
-							{
-								pixcolor	= 0x000000000;
-							}
-							
-							//pixcolor		= (data&0x80)?frcolor:bgcolor;
-							if(	k == numchar-1 && 
-								((index >=48  && index <=57) |
-								(index >=33  && index <=47) | 
-								//(index >=58  && index <=64) |
-								index == 58 |
-								(index >=65  && index <=90) |
-								(index >=97 && index <122))
-							  )
-							{
-							  	if(j<startx+k*fontWidth+fontWidth-12)
-							  	{
-							  		*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
-									*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
-									*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
-									*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
-							  	}	
-							}	
-							else
-							{
-								*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
-								*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
-								*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
-								*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
-							}
-						}
-						
+						pixcolor	= 0x000000000;
 					}
-				#if 0
+
+					if(k == numchar-1)
+					{
+						lastmhflag = 0;
+						lastnumflag = 0;
+						lastcharacterflag = 0;
+						lastfhflag = 0;
+					}
+					
+					//pixcolor		= (data&0x80)?frcolor:bgcolor;
 					if(	k == numchar-1 && 
 						((index >=48  && index <=57) |
 						(index >=33  && index <=47) | 
@@ -369,31 +373,60 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 						(index >=97 && index <122))
 					  )
 					{
-						pixcolor	= 0x00000000;
-						for(j=startx+k*fontWidth+fontWidth-12; j<startx+k*fontWidth+fontWidth; j++)
-						{
-							*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
+					  	if(j<startx+k*fontWidth+fontWidth-12)
+					  	{
+					  		*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
 							*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
 							*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
-							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;						
-						}
+							*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
+					  	}	
+					}	
+					else
+					{	
+						*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
+						*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
+						*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
+						*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;
 					}
-				#endif
-					#if 0
-						pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
-						for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
-						{
-							offset 	= j-startx-k*fontWidth;
-							data 	= *(pChar + offset/8);
-							data 	<<= (offset%8);
+				}
+				
+			}
+			
+		#if 0
+			if(	k == numchar-1 && 
+				((index >=48  && index <=57) |
+				(index >=33  && index <=47) | 
+				//(index >=58  && index <=64) |
+				index == 58 |
+				(index >=65  && index <=90) |
+				(index >=97 && index <122))
+			  )
+			{
+				pixcolor	= 0x00000000;
+				for(j=startx+k*fontWidth+fontWidth-12; j<startx+k*fontWidth+fontWidth; j++)
+				{
+					*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
+					*(pin+j*4+1-lenctl)	= (pixcolor >> 8) & 0xFF;
+					*(pin+j*4+2-lenctl)	= (pixcolor >> 16) & 0xFF;
+					*(pin+j*4+3-lenctl)	= (pixcolor >> 24) & 0xFF;						
+				}
+			}
+		#endif
+			#if 0
+				pChar = &fontData[i*(fontWidth/8+add)+index*(fontWidth/8+add)*fontHeight];
+				for(j=startx+k*fontWidth; j<startx+k*fontWidth+fontWidth; j++)
+				{
+					offset 	= j-startx-k*fontWidth;
+					data 	= *(pChar + offset/8);
+					data 	<<= (offset%8);
 
-							pixcolor		= (data&0x80)?frcolor:bgcolor;
-							*(pin+j*4)		= pixcolor & 0xFF;
-							*(pin+j*4+1)	= (pixcolor >> 8) & 0xFF;
-							*(pin+j*4+2)	= (pixcolor >> 16) & 0xFF;
-							*(pin+j*4+3)	= (pixcolor >> 24) & 0xFF;
-						}
-					#endif
+					pixcolor		= (data&0x80)?frcolor:bgcolor;
+					*(pin+j*4)		= pixcolor & 0xFF;
+					*(pin+j*4+1)	= (pixcolor >> 8) & 0xFF;
+					*(pin+j*4+2)	= (pixcolor >> 16) & 0xFF;
+					*(pin+j*4+3)	= (pixcolor >> 24) & 0xFF;
+				}
+			#endif
 		
 		}
 	}

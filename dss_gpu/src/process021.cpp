@@ -1556,7 +1556,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'd'|| key == 'D')
 	{
-		OSDCTRL_ItemShine(eMeasureType);
+		OSDCTRL_ItemShow(eMeasureType);
 		//testjiqiangjiansu();
 		#if 0
 			if(pIStuts->ImgMtdStat[pIStuts->SensorStat])
@@ -1582,7 +1582,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	
 	if (key == 'f' || key == 'F')
 	{
-		OSDCTRL_NoShineShow();;
+		OSDCTRL_ItemHide(eMeasureType);
 		//testjiqiangjiasu();
 		#if 0
 			if(pIStuts->ImgFrezzStat[pIStuts->SensorStat])
@@ -1599,7 +1599,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	
 	if (key == 'g')
 	{
-		MSGDRIV_send(CMD_BUTTON_CALIBRATION,NULL);//	jiao zhun
+		Posd[eMeasureType] = MeasureTypeOsd[0];
+		//MSGDRIV_send(CMD_BUTTON_CALIBRATION,NULL);//	jiao zhun
 		//msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
 		//MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
 	}
@@ -1618,7 +1619,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if (key == 'H')
 	{
-		MSGDRIV_send(CMD_BUTTON_ENTER, NULL);
+		Posd[eMeasureType] = MeasureTypeOsd[2];
+		//MSGDRIV_send(CMD_BUTTON_ENTER, NULL);
 	}
 
 	if (key == 'I' ||key == 'i')

@@ -637,7 +637,7 @@ static Int32 APP_onTimer( Int32 timerId )
 		if(timerId == eF6_Timer)
 		{
 			killF6Timer();
-			sendCommand(CMD_CONNECT_SWITCH);
+			//sendCommand(CMD_CONNECT_SWITCH);
 		}
 
 		if(timerId == eServoCheck_Timer)

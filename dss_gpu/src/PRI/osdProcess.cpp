@@ -35,6 +35,7 @@
 #define W1TOFFSET 9
 #define WOFFSET 140
 #define CALCOFFSET 20
+#define YOFFSET  135
 //extern volatile int msgLight;
 #define MIDMENU
 
@@ -171,7 +172,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,	30,	0,	{0}},
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,		30,	0,	{0}},
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,		30,	0,	{0}},
-	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	436+LOFFSET,		30,	0,	{0}},
+	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	448+LOFFSET,		30,	0,	{0}},
 	/*
 	{eMeasureDis_Value1,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	30,	0,	{0}},
 	{eMeasureDis_Value2,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	446+LOFFSET,	30,	0,	{0}},//+23
@@ -182,7 +183,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		436,	0,	{0}},
 	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		470,	0,	{0}},
-	{eWeather1_T,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	472+LOFFSET+WOFFSET,		470,	0,	{0}},
+	{eWeather1_T,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	479+LOFFSET+WOFFSET,		470,	0,	{0}},
 
 	{eWeather2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		500,	0,	{0}},
 	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		468,	0,	{0}},
@@ -389,23 +390,23 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		277+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		309+CALCOFFSET,	0,	{0}},
 	
-	{eStateMaintD,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		80+100,	0,	{0}},
-	{eStateDetend,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		80+100,	0,	{0}},
-	{eStateClutch,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		115-3+100,	0,	{0}},
-	{eStateGrenad,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		115-3+100,	0,	{0}},
-	{eStateFirer,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		150-6+100,	0,	{0}},
-	{eStateFulCAN,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		150-6+100,	0,	{0}},
-	{eStateDisCAN0,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		185-9+100,	0,	{0}},
-	{eStateDisCAN1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		185-9+100,	0,	{0}},
-	{eStateMagnet,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		220-12+100,	0,	{0}},
-	{eStatePosMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		220-12+100,	0,	{0}},
-	{eStateMacMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		255-15+100,	0,	{0}},
-	{eStateGreMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	247+LOFFSET,		255-15+100,	0,	{0}},
+	{eStateMaintD,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		82,	0,	{0}},
+	{eStateDetend,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		82,	0,	{0}},
+	{eStateClutch,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		114,	0,	{0}},
+	{eStateGrenad,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		114,	0,	{0}},
+	{eStateFirer,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		146,	0,	{0}},
+	{eStateFulCAN,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		146,	0,	{0}},
+	{eStateDisCAN0,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		178,	0,	{0}},
+	{eStateDisCAN1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		178,	0,	{0}},
+	{eStateMagnet,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		210,	0,	{0}},
+	{eStatePosMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		210,	0,	{0}},
+	{eStateMacMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		242,	0,	{0}},
+	{eStateGreMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	247+LOFFSET,		242,	0,	{0}},
 	
-	{eStateWeaponCtrlA1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		390-24,	0,	{0}},
-	{eStateSrvAngle,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		425-27,	0,	{0}},
-	{eStateFulScrAngle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		460-30,	0,	{0}},
-	{eLaserSelect,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		495-33,	0,	{0}},
+	{eStateWeaponCtrlA1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		274,	0,	{0}},
+	{eStateSrvAngle,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		306,	0,	{0}},
+	{eStateFulScrAngle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		338,	0,	{0}},
+	{eLaserSelect,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		370,	0,	{0}},
 
 	{eAnglePosn,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		500,	0,	{0}},
 	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		465,	0,	{0}},
@@ -416,8 +417,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eLaserjlx,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,		500,	0,	{0}},
 	{eLaserjly,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,		500,	0,	{0}},
 
-	{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
-	{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
+	//{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
+	//{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
 
 };
 
@@ -2318,12 +2319,12 @@ int ls2tmp = 0000;
 		case eGunTip:
 			sprintf(pStr,"%s",Posd[eGunTip]); //����ȷ����ʾ
 			break;	
-		case erase_shottype:
-			sprintf(pStr,"  ");
-			break;
-		case erase_guntip:
-			sprintf(pStr," ");
-			break;
+		//case erase_shottype:
+		//	sprintf(pStr,"  ");
+		//	break;
+		//case erase_guntip:
+		//	sprintf(pStr," ");
+		//	break;
 
 		case eLaserjlx:
 			sprintf(pStr,"Lx:%+05d",ls1tmp);
