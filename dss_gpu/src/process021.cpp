@@ -326,7 +326,7 @@ void CProcess021::process_osd(void *pPrm)
 {
    
 	//int devId=0;
-	Mat frame=sThis->m_dc;//.m_imgOsd;
+	Mat frame=sThis->m_dc;
 	Mat frame_graph=sThis->m_dccv;
 	//D_EXT *pIStuts = &sThis->extInCtrl;
 	//int winId;
@@ -1137,7 +1137,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 //putText(frame,"heolo",Point(200,200),CV_FONT_HERSHEY_COMPLEX,1.0,Scalar(0,0,255),3,8);
 	osdindex=0;
 	
-osdindex++;
+	osdindex++;
 	{
 		 UTC_RECT_float rcResult = m_rcTrack;
 		 int aimw= trkWinWH[extInCtrl.SensorStat][extInCtrl.AvtTrkAimSize][0];
@@ -1161,7 +1161,7 @@ osdindex++;
 					detect_num = detect_bak.size();
 					for(i=0;i<detect_num;i++)
 					{
-						DrawjsRect(frame, detect_bak[i].targetRect,0);	
+						DrawjsRect(m_dccv, detect_bak[i].targetRect,0);	
 					}			
 					Osdflag[osdindex]=0;
 				}
@@ -1170,7 +1170,7 @@ osdindex++;
 					detect_num = detect_vect.size();
 					for(i =0;i<detect_num;i++)
 					{
-						DrawjsRect(frame, detect_vect[i].targetRect,2);
+						DrawjsRect(m_dccv, detect_vect[i].targetRect,2);
 					}		
 					detect_bak = detect_vect;
 					Osdflag[osdindex]=1;
@@ -2370,7 +2370,19 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 
 	if(msgId == MSGID_EXT_MVDETECT)
 	{	
-		dynamic_config(VP_CFG_MvDetect, 1,NULL);	
+		static bool open_close_movedetect = 1;
+		
+		if(open_close_movedetect)
+		{
+			dynamic_config(VP_CFG_MvDetect, 1,NULL);
+			open_close_movedetect = 0;
+		}
+		else
+		{
+			dynamic_config(VP_CFG_MvDetect, 0,NULL);
+			open_close_movedetect = 1;
+		}
+	
 	}
 	
 	/*if(msgId == MSGID_EXT_INPUT_DISPGRADE)
@@ -3756,10 +3768,17 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 		}
 		else if(isCalibrationZero())
 		{
-			if(isGrenadeGas())
-				return ;
-			//moveCrossDown();
-			moveCrossUp(); 
+			if(distancefirst)
+			{
+				if(isMeasureManual())
+					decreaseMeasureDis();
+			}	
+			else
+			{
+				if(isGrenadeGas())
+					return ;
+				moveCrossUp();
+			}
 		}
 		else if(isCalibrationWeather())
 		{

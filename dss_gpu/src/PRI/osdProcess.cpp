@@ -410,8 +410,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 
 	{eAnglePosn,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		500,	0,	{0}},
 	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		465,	0,	{0}},
-	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		465,	0,	{0}},
-	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		500,	0,	{0}},
+	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		465,	0,	{0}},
+	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		500,	0,	{0}},
 	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		500,	0,	{0}},
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
 	{eLaserjlx,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,		500,	0,	{0}},
@@ -419,7 +419,6 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 
 	//{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
 	//{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
-
 };
 
 volatile FONT_OBJ g_Font={NULL,WHITECOLOR,1,0,0,0,NULL};

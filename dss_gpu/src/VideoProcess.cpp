@@ -362,7 +362,7 @@ int CVideoProcess::init()
 	
 	m_display.init(&dsInit); 
 
-	m_display.m_bOsd = true;//false;//true;
+	m_display.m_bOsd = true;
 	m_dc = m_display.m_imgOsd[0];
 	m_dccv=m_display.m_imgOsd[1];
 	OnInit();
@@ -827,14 +827,14 @@ void	CVideoProcess::initMvDetect()
 	
 	std::vector<cv::Point> polyWarnRoi ;
 	polyWarnRoi.resize(4);
-	polyWarnRoi[0]	= cv::Point(200,100);
-	polyWarnRoi[1]	= cv::Point(520,100);
-	polyWarnRoi[2]	= cv::Point(520,476);
-	polyWarnRoi[3]	= cv::Point(200,476);
+	polyWarnRoi[0]	= cv::Point(50,50);
+	polyWarnRoi[1]	= cv::Point(670,50);
+	polyWarnRoi[2]	= cv::Point(50,526);
+	polyWarnRoi[3]	= cv::Point(670,526);
 	for(i=0; i<DETECTOR_NUM; i++){
 		m_pMovDetector->setWarningRoi(polyWarnRoi,	i);
 		m_pMovDetector->setDrawOSD(m_dccv, i);
-		m_pMovDetector->enableSelfDraw(true, i);
+		m_pMovDetector->enableSelfDraw(false, i);
 		m_pMovDetector->setWarnMode(WARN_MOVEDETECT_MODE, i);
 	} 
 }  
