@@ -652,10 +652,7 @@ void OSDCTRL_BattleShow()
 	{
 		OSDCTRL_ItemShow(i);
 	}
-//	for(i=eWeather1_T; i<=eweather1_qiya4; i++)
-//	{
-//		OSDCTRL_ItemShow(i);
-//	}
+
 	Posd[eWorkMode] = WorkOsd[wAuto];
 	OSDCTRL_updateAreaN();
 	OSDCTRL_AlgSelect();	
@@ -849,7 +846,6 @@ void OSDCTRL_CalibZeroShow()
 
 void OSDCTRL_BattleAlertShow()
 {
-#if 1
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eWeather1; i<=eAngleV; i++)
@@ -859,7 +855,6 @@ void OSDCTRL_BattleAlertShow()
 	OSDCTRL_ItemHide(eDynamicZone);
 	Posd[eWorkMode] = WorkOsd[wAlert];
 	OSDCTRL_NoShine();
-#endif
 }
 
 void OSDCTRL_BattleTrackShow()
@@ -1897,13 +1892,13 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%c%c<->",203,184); 
 			break;
 		case eCalibHorizen_Pos:
-			sprintf(pStr,"%c%c_X: %+08.3f",216,236,getTurretTheta()); 		//����
+			sprintf(pStr,"%c%c_X:%+08.3f",216,236,getTurretTheta()); 		//����
 			break;
 		case eCalibHorizen_Mach:
-			sprintf(pStr,"%c%c_Y: %+08.3f",200,216,getMachGunAngleAbs()); 		//��ǹ
+			sprintf(pStr,"%c%c_Y:%+08.3f",200,216,getMachGunAngleAbs()); 		//��ǹ
 			break;
 		case eCalibHorizen_Grenade:
-			sprintf(pStr,"%c%c_Y: %+08.3f",211,175,getGrenadeAngleAbs()); 		//��
+			sprintf(pStr,"%c%c_Y:%+08.3f",211,175,getGrenadeAngleAbs()); 		//��
 			break;
 		case eCalibGenPram_Menu:
 			sprintf(pStr,"VF-Degree"); 		//���

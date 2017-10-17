@@ -827,10 +827,10 @@ void	CVideoProcess::initMvDetect()
 	
 	std::vector<cv::Point> polyWarnRoi ;
 	polyWarnRoi.resize(4);
-	polyWarnRoi[0]	= cv::Point(50,50);
-	polyWarnRoi[1]	= cv::Point(670,50);
-	polyWarnRoi[2]	= cv::Point(50,526);
-	polyWarnRoi[3]	= cv::Point(670,526);
+	polyWarnRoi[0]	= cv::Point(70,80);
+	polyWarnRoi[1]	= cv::Point(70,390);
+	polyWarnRoi[2]	= cv::Point(660,80);
+	polyWarnRoi[3]	= cv::Point(660,390);
 	for(i=0; i<DETECTOR_NUM; i++){
 		m_pMovDetector->setWarningRoi(polyWarnRoi,	i);
 		m_pMovDetector->setDrawOSD(m_dccv, i);

@@ -203,6 +203,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 	static bool lastmhflag = 0;
 	static bool lastcharacterflag = 0;
 	static bool lastfhflag = 0;
+	static bool lastxhxflag = 0;
 
 	fontWidth 	= 	OSDUTIL_FONT_FLR_DEFAULT_WIDTH_0814;
 	fontHeight 	= 	OSDUTIL_FONT_FLR_DEFAULT_HEIGHT_0814;
@@ -241,6 +242,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 				lastmhflag   = 0;
 				lastcharacterflag = 0;
 				lastfhflag = 0;
+				lastxhxflag = 0;
 			}
 			else if(index == 46) //.
 			{	
@@ -250,6 +252,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 				lastnumflag = 0;
 				lastcharacterflag = 0;
 				lastfhflag = 0;
+				lastxhxflag = 0;
 			}
 			else if(index == 58)  //:
 			{
@@ -259,6 +262,15 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 					lenctl += 36;
 				
 				lastmhflag   = 1;
+				lastnumflag = 0;
+				lastcharacterflag = 0;
+				lastfhflag = 0;
+				lastxhxflag = 0;
+			}
+			else if(index == 95)
+			{
+				lastxhxflag = 1;
+				lastmhflag   = 0;
 				lastnumflag = 0;
 				lastcharacterflag = 0;
 				lastfhflag = 0;
@@ -279,6 +291,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 				lastnumflag = 0;
 				lastcharacterflag = 0;
 				lastfhflag = 1;
+				lastxhxflag = 0;
 			}
 			else if(index>=65 && index<=90)
 			{
@@ -290,35 +303,31 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 					lenctl +=24;
 				else if(lastmhflag)
 					lenctl +=48;
-
-				if((index >=97 && index <122))
-					if(lastcharacterflag)
-						lenctl += 12;
+				else if(lastxhxflag)
+					lenctl += 24;
 				
 				lastmhflag = 0;
 				lastnumflag = 0;
 				lastcharacterflag = 1;
 				lastfhflag = 0;
+				lastxhxflag = 0;
 			}
 			else if(index >=97 && index <122)
 			{
 				if(lastnumflag)
 					lenctl +=48;
 				else if(lastcharacterflag)
-					lenctl +=36;  
+					lenctl +=48;  
 				else if(lastfhflag)
 					lenctl +=24;
 				else if(lastmhflag)
 					lenctl +=48;
-
-				if((index >=97 && index <122))
-					if(lastcharacterflag)
-						lenctl += 12;
 				
 				lastmhflag = 0;
 				lastnumflag = 0;
 				lastcharacterflag = 1;
 				lastfhflag = 0;
+				lastxhxflag = 0;
 			}
 			else
 			{
@@ -326,12 +335,12 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 				{
 					lenctl +=48;
 				}
-				
-				
+					
 				lastmhflag = 0;
 				lastnumflag = 0;
 				lastcharacterflag = 0;
 				lastfhflag = 0;
+				lastxhxflag = 0;
 			}
 
 			

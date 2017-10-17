@@ -1,6 +1,7 @@
 #include "cFov.h"
 #include "statCtrl.h"
 #include "osd_cv.h"
+#include "process021.hpp"
 
 #define xmin(a,b) 		(((a) < (b)) ? (a) : (b))
 #define xmax(a,b) 		(((a) > (b)) ? (a) : (b))
@@ -241,6 +242,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	{
 		static int i=0;
 		DrawjsAlertFrame(frame,cthis);
+		
 		#if 0
 			if((i++)%8 == 0)
 				FOVCTRL_clearAlertMovingAim(hFov,pImg);

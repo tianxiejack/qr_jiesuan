@@ -782,11 +782,11 @@ void DrawjsAlertFrame(Mat frame,CFOV * fovOsdCtrl)
 	Osd_cvPoint start;
 	Osd_cvPoint end;
 	int len = 20;
-	int linew = 1;
+	int linew = 2;
 	int i=0;
 
 	CFOV* cthis = fovOsdCtrl;
-
+	
 	/*******************V*******************/
 	start.x = 70 ;
 	start.y = 80 ;

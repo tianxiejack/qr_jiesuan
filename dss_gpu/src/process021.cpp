@@ -4236,18 +4236,14 @@ void CProcess021::processCMD_BUTTON_AUTOCATCH(LPARAM lParam)
 	if(isBattleMode()&&isStatBattleAlert())
 	{
 		AUTOCATCH = !AUTOCATCH;
+		sThis->msgdriv_event(MSGID_EXT_MVDETECT, NULL);
 		if(AUTOCATCH)
 		{
-		//	AVTCTRL_setAquire();
-		//	AVTCTRL_selectMTD(pAvtCtrlObj);
-//		//	AVTCTRL_setAtuoTack();
-		//	AVTCTRL_regMTT(pAvtCtrlObj);
+			
 		}
 		else
 		{
-		//	OSDCTRL_AlgSelect();
-		//	AVTCTRL_setAquire();
-		//	AVTCTRL_regCancelMTT(pAvtCtrlObj);
+
 		}
 	}
 	else if(isBattleMode()&&isStatBattleAuto())
