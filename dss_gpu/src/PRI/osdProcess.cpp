@@ -258,16 +258,16 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibGeneral_DisValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	477+LOFFSET+80,		150,	0,	{0}},
 	{eCalibGeneral_DisValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	488+LOFFSET+80,		150,	0,	{0}},
 	{eCalibGeneral_DisValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	499+LOFFSET+80,		150,	0,	{0}},
-	{eCalibGeneral_XPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	472+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	489+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	511+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	522+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_YPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	472+LOFFSET+80,		220,	0,	{0}},
-	{eCalibGeneral_YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	489+LOFFSET+80,		220,	0,	{0}},
-	{eCalibGeneral_YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET+80,		220,	0,	{0}},
-	{eCalibGeneral_YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	511+LOFFSET+80,		220,	0,	{0}},
-	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	522+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_XPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	460+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	486+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	497+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	519+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_YPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	460+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	486+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	497+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	519+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530+LOFFSET+80,		220,	0,	{0}},
 
 	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET,		490,	0,	{0}},
 	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	525+LOFFSET,		490,	0,	{0}},
@@ -1832,7 +1832,7 @@ int ls2tmp = 0000;
 			break;
 		case eCalibGeneral_X:
 			//sprintf(pStr,"%c%cX:   cm",253,243); 		//����X:+xxxx cm
-			sprintf(pStr,"%c%cX:   mil",253,243); 
+			sprintf(pStr,"%c%cX:  . mil",253,243); 
 			break;
 		case eCalibGeneral_XPole:
 			if(General[4]>= 0)
@@ -1853,7 +1853,7 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%01d",General[8]&0xFF); 		//����X:+xxxx cm
 			break;
 		case eCalibGeneral_Y:
-			sprintf(pStr,"%c%cY:   mil",253,243); 		//����Y:+xxxx cm
+			sprintf(pStr,"%c%cY:  . mil",253,243); 		//����Y:+xxxx cm
 			break;
 		case eCalibGeneral_YPole:
 			if(General[9] >= 0)
