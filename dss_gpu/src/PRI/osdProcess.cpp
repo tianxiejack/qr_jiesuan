@@ -412,7 +412,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		465,	0,	{0}},
 	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		465,	0,	{0}},
 	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		500,	0,	{0}},
-	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		500,	0,	{0}},
+	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	285+LOFFSET,		500,	0,	{0}},
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
 	{eLaserjlx,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,		500,	0,	{0}},
 	{eLaserjly,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,		500,	0,	{0}},
@@ -664,7 +664,12 @@ void OSDCTRL_BattleShow()
 void OSDCTRL_CalibMenuShow()
 {
 	int i;
-	OSDCTRL_AllHide();
+	OSDText_Obj * pTextObj = pCtrlObj->pTextList;
+	
+	if(!AdCalibMenuFlag && pTextObj[eCursorX].osdInitY > 170)
+		pTextObj[eCursorX].osdInitY = 170;
+	
+	OSDCTRL_AllHide();	
 	for(i=eCalibMenu_Weather; i<=eCalibMenu_Save; i++)
 	{
 		OSDCTRL_ItemShow(i);
