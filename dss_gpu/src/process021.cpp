@@ -50,6 +50,9 @@ UInt32 interfaceflag;
 static bool tiaolingwei_flag = 0;
 static bool distancefirst = 1;
 
+bool gProjectileMachFovlast = 0; //0 - small   1 - big
+bool gProjectileGreFovlast = 0;
+
 	
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
@@ -4234,9 +4237,7 @@ void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
 
  	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
-	//g_Text[eGunTip].osdInitX = 243; 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_GAS+2);
-	//Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_GAS+2];
 	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_GAS+2];	
  	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH3",__func__,__LINE__);
 	return ;
@@ -4706,10 +4707,24 @@ void CProcess021::processCMD_TRACKING_OK(LPARAM lParam)
 void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
  {
  	CMD_EXT *pIStuts = &(sThis->extInCtrl);
+
+	if(getProjectileType() == 0)
+	{
+		gProjectileMachFovlast = 0;
+	}
+	else if(getProjectileType() == 1)
+	{
+		gProjectileGreFovlast = 0;
+	}
+
+	//printf("gProjectileMachFovlast = %d\n",gProjectileMachFovlast);	
+	//printf("gProjectileGreFovlast = %d\n",gProjectileGreFovlast);
+
 	Posd[eFovType] = FovTypeOsd[1];
 	pFovCtrlObj->fovElem=eFov_SmlFov_Stat;
 
-	pIStuts->SensorStat = (pIStuts->SensorStat + 1)%2;
+	//pIStuts->SensorStat = (pIStuts->SensorStat + 1)%2;
+	pIStuts->SensorStat = 1;
 	MSGDRIV_send(MSGID_EXT_INPUT_SENSOR,NULL);
 	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_SMALL",__func__,__LINE__);
 	return ;
@@ -4719,10 +4734,22 @@ void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
 void CProcess021::processCMD_MODE_FOV_LARGE(LPARAM lParam)
  {
  	CMD_EXT *pIStuts = &(sThis->extInCtrl);
+
+	if(getProjectileType() == 0)
+	{
+		gProjectileMachFovlast = 1;
+	}
+	else if(getProjectileType() == 1)
+	{
+		gProjectileGreFovlast = 1;
+	}
+	//printf("gProjectileMachFovlast = %d\n",gProjectileMachFovlast);	
+	//printf("gProjectileGreFovlast = %d\n",gProjectileGreFovlast);
+	
  	Posd[eFovType] = FovTypeOsd[0];
 	pFovCtrlObj->fovElem=eFov_LarFov_Stat;
 	
-	pIStuts->SensorStat = (pIStuts->SensorStat + 1)%2;
+	pIStuts->SensorStat = 0;
 	MSGDRIV_send(MSGID_EXT_INPUT_SENSOR,NULL);
 	
  	//OSA_printf("%s,line:%d ... processCMD_MODE_FOV_LARGE",__func__,__LINE__);

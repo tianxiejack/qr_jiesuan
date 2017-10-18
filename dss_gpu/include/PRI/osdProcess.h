@@ -326,8 +326,9 @@ typedef enum _eOsdTypeId{
 	eAngleMach,
 	eAngleGred,
 	eGunTip,
-eLaserjlx,
-eLaserjly,	
+	eLaserjlx,
+	eLaserjly,
+	eReady,
 //	erase_shottype,
 //	erase_guntip,
 	

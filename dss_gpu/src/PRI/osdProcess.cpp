@@ -259,15 +259,15 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibGeneral_DisValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	488+LOFFSET+80,		150,	0,	{0}},
 	{eCalibGeneral_DisValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	499+LOFFSET+80,		150,	0,	{0}},
 	{eCalibGeneral_XPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	460+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	486+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	497+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	519+LOFFSET+80,		185,	0,	{0}},
-	{eCalibGeneral_XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_XValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	474+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_XValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	485+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_XValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	507+LOFFSET+80,		185,	0,	{0}},
+	{eCalibGeneral_XValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	518+LOFFSET+80,		185,	0,	{0}},
 	{eCalibGeneral_YPole,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	460+LOFFSET+80,		220,	0,	{0}},
-	{eCalibGeneral_YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	486+LOFFSET+80,		220,	0,	{0}},
-	{eCalibGeneral_YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	497+LOFFSET+80,		220,	0,	{0}},
-	{eCalibGeneral_YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	519+LOFFSET+80,		220,	0,	{0}},
-	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_YValue1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	474+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_YValue2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	485+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_YValue3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	507+LOFFSET+80,		220,	0,	{0}},
+	{eCalibGeneral_YValue4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	518+LOFFSET+80,		220,	0,	{0}},
 
 	{eCalibGeneral_Rx,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	410+LOFFSET,		490,	0,	{0}},
 	{eCalibGeneral_Ry,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	525+LOFFSET,		490,	0,	{0}},
@@ -416,6 +416,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
 	{eLaserjlx,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,		500,	0,	{0}},
 	{eLaserjly,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,		500,	0,	{0}},
+	{eReady,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
 
 	//{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
 	//{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
@@ -520,7 +521,7 @@ static void OSDCTRL_OsdInitial()
 	Posd[eWorkMode] = WorkOsd[0];
 	Posd[eAimType] = AimOsd[0];
 	Posd[eGunType] = GunOsd[gProjectileType];
-	Posd[eFovType] = FovTypeOsd[0];
+	Posd[eFovType] = FovTypeOsd[1];
 	Posd[eSuperOrder] = SuperOsd[0];
 	Posd[eDynamicZone] = DynamicOsd[0];
 	Posd[eSelfCheckResult] = ResultOsd[1];
@@ -1476,15 +1477,14 @@ int ls2tmp = 0000;
 				}
 				else
 				{
-					//sprintf(pStr,"%s%s",Posd[eLaserState],Posd[eMeasureType]); //shou or mo :
-					sprintf(pStr,"%s:LSBG",Posd[eLaserState]); 
+					sprintf(pStr,"%s%s",Posd[eLaserState],Posd[eMeasureType]); //shou or mo :
 				}
 				OSDCTRL_ItemHide(eMeasureDis);	
 			}
 			break;
 		case eMeasureDis:
 			if(isMultiChanged())
-				sprintf(pStr,"x%d",getDisLen()); //����
+				sprintf(pStr,"x%03d",getDisLen()); //����
 			else
 				sprintf(pStr,"%04d",DistanceManual);
 			break;
@@ -2333,6 +2333,10 @@ int ls2tmp = 0000;
 		case eLaserjly:
 			sprintf(pStr,"Ly:%+05d",ls2tmp);
 		break;
+
+		case eReady:
+			sprintf(pStr,"%c%c",141,142);
+			break;
 		
 		default:
 			break;

@@ -31,8 +31,10 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	char *ptr;
 	UInt32 frcolor,bgcolor;
 
-	//OSDCTRL_ItemHide(eMeasureDis);
-		
+
+	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
+		OSDCTRL_ItemShow(eReady);
+	
 	for(i=eModeId;i<eBoreSightLinId;i++)
 	{
 			pTextObj = &pCtrlObj->pTextList[i]; 
@@ -51,19 +53,6 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 				}
 		
 	}
-#if 0
-	{	
-		pTextObj = &pCtrlObj->pTextList[erase_guntip]; 
-		//if(pTextObj)
-			OSDCTRL_genOsdContext(pCtrlObj,i);
-		startx   = pTextObj->osdInitX;
-		starty   = pTextObj->osdInitY;
-		frcolor  = WHITECOLOR;
-		bgcolor = BGCOLOR;
-		ptr   = (char*)pTextObj->osdContext;
-		osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
-	}
-#endif
 }
 
 

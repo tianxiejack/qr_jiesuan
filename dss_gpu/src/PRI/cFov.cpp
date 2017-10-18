@@ -234,8 +234,8 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		}
 	#endif
 
-	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
-		DrawjsGrenadeLoadOK(frame,cthis);
+	//if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
+	//	DrawjsGrenadeLoadOK(frame,cthis);
 	
 
 	if(isStatBattleAlert() && isAutoCatching())

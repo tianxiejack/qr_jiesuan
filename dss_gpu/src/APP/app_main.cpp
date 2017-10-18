@@ -89,7 +89,7 @@ static Int32 usercase_run( int type )
     while ( !done )
     {
 	 printf( "\r\n******Build date: %s %s", __DATE__, __TIME__);
-	 printf("\r\n******Version : 2.01  r\n");
+	 printf("\r\n******Version : 2.01   \n");
         printf( gAPP_runMenu );
 
        ch = APP_getChar( );

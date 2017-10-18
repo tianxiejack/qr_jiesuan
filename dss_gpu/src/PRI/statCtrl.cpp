@@ -50,6 +50,8 @@ extern WeatherItem gWeatherTable;
 //extern PIF_servo_control pServoControlObj;
 extern volatile  int vpstatus;
 extern void setJoyStickStat(bool stat);
+extern bool gProjectileMachFovlast;
+extern bool gProjectileGreFovlast;
 
 static double AimOffsetX=0.000,AimOffsetY=0.000;
 static bool gTrackingMode=FALSE;
@@ -857,7 +859,6 @@ void EnterCMD_BULLET_SWITCH(int i)
 
 void EnterCMD_BULLET_SWITCH1()
 {
-	//g_Text[eShotType].osdInitX = 545;
 	if(isCalibrationMode() && isCalibrationMainMenu())
 	{
 		OSDCTRL_updateMainMenu(PROJECTILE_BULLET);
@@ -882,6 +883,10 @@ void EnterCMD_BULLET_SWITCH1()
 		}
 		#endif
 	}
+	if(gProjectileMachFovlast)
+		MSGDRIV_send(CMD_MODE_FOV_LARGE, 0);
+	else
+		MSGDRIV_send(CMD_MODE_FOV_SMALL, 0);
 	
 	UpdataBoreSight();
 	setServoControlObj();
@@ -914,6 +919,10 @@ void EnterCMD_BULLET_SWITCH2( )
 			startDynamicTimer();
 		}
 	}
+	if(gProjectileGreFovlast)
+		MSGDRIV_send(CMD_MODE_FOV_LARGE, 0);
+	else
+		MSGDRIV_send(CMD_MODE_FOV_SMALL, 0);
 	//gProjectileType=PROJECTILE_GRENADE_KILL;
 	UpdataBoreSight();
 	setServoControlObj();
@@ -922,7 +931,7 @@ void EnterCMD_BULLET_SWITCH2( )
 
 void EnterCMD_BULLET_SWITCH3( )
 {
-	//g_Text[eShotType].osdInitX = 545;
+	MSGDRIV_send(CMD_MODE_FOV_LARGE,0);
 	if(isCalibrationMode()&& isCalibrationMainMenu())
 	{
 		OSDCTRL_updateMainMenu(PROJECTILE_GRENADE_GAS);
