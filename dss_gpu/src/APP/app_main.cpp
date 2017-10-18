@@ -88,11 +88,12 @@ static Int32 usercase_run( int type )
 
     while ( !done )
     {
-       printf( gAPP_runMenu );
+	 printf( "\r\n******Build date: %s %s", __DATE__, __TIME__);
+	 printf("\r\n******Version : 2.01  r\n");
+        printf( gAPP_runMenu );
 
        ch = APP_getChar( );
      
-
         switch ( ch )
         {
         case 'C':
@@ -131,10 +132,7 @@ static Int32 usercase_run( int type )
 		 brigthness = APP_getint( );
             cltrl_dis_user(brigthness,2);
             break;
-*/
-			
-           
-           
+*/        
         }
     }
 

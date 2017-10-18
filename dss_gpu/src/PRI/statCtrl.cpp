@@ -1179,7 +1179,7 @@ void startSCHEDULEtimer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eSchedule_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eSchedule_Timer,2000/*SCHEDULE_TIMER*/);	
+		pCtrlTimer->startTimer(eSchedule_Timer,SCHEDULE_TIMER);	
 	}
 }
 
@@ -1196,6 +1196,7 @@ void killSCHEDULEtimer()
 
 void SCHEDULE_cbFxn(void* cbParam)
 {
+	static int jsq1 = 0,jsq2 = 0;
 	//	killSCHEDULEtimer();
 		float x=0.0,y=0.0;
 		if(SCHEDULE_GUN/*not timeout and angle not ok*/)

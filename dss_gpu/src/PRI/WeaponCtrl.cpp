@@ -832,11 +832,13 @@ int WeaponCtrlPORT_ParseFrameByte_type0(unsigned char* buf)
 	panoAngleV = STOH2(pbuf);
 	pbuf = &buf[6];
 	panoAngleH = STOH2(pbuf);
-	if(panoAngleV > 36000||(panoAngleH>36000||(panoAngleH>9000&&panoAngleH<27000))){
+	if(panoAngleV > 36000||(panoAngleH>36000||(panoAngleH>9000&&panoAngleH<27000)))
+	{
 		return -2;
 	}
 
-	if((BYTE6(FrameBuf0)) != (BYTE8(buf))){
+	if((BYTE6(FrameBuf0)) != (BYTE8(buf)))
+	{
 		jssignal.byte = BYTE8(buf);
 	}
 	

@@ -1534,7 +1534,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	if(key == 'b' || key == 'B')
 	{
 		//pIStuts->PicpSensorStat = (pIStuts->PicpSensorStat + 1) % (eSen_Max+1);
-		
+		 
 		if(pIStuts->PicpSensorStat==0xff)
 			pIStuts->PicpSensorStat=1;
 		else 
@@ -3547,6 +3547,7 @@ void CProcess021::processCMD_BUTTON_BATTLE(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
  {
+ 	CMD_EXT *pIStuts = &sThis->extInCtrl;
  	if(ShinId == eGunTip)
 		OSDCTRL_NoShine();
   //printf("isBootUpMode=%d\n",isBootUpMode());
@@ -3570,6 +3571,12 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 		{
 			if(isCalibrationZero())
 			{
+				if(pIStuts->PicpSensorStat==0xff)
+					pIStuts->PicpSensorStat=1;
+				else 
+					pIStuts->PicpSensorStat=0xff;		
+				sThis->msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
+				
 				saveZeroParam();
 			}
 			else if(isCalibrationGeneral())
@@ -3987,6 +3994,7 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 {
+	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	int i;
 	if(!ValidateGunType())
 		return;
@@ -4011,6 +4019,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 					break;
 
 				case CMD_CALIBRATION_SWITCH_TO_ZERO:
+					gMeasureType = MEASURETYPE_LASER;
 					processCMD_CALIBRATION_SWITCH_TO_ZERO(0);
 					break;
 
@@ -4042,11 +4051,15 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				if(distancefirst)
 				{			
 					distancefirst = 0;
-					SHINE =0;
-					memset(shine_table,0,10);
-					for(i =0;i<4;i++)
-						OSDCTRL_ItemShow(shine_table[i]);
+					SHINE =0; 
 				}
+				
+				if(pIStuts->PicpSensorStat==0xff)
+					pIStuts->PicpSensorStat=1;
+				else 
+					pIStuts->PicpSensorStat=0xff;		
+				sThis->msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
+				
 				saveZeroParam();
 			}
 			else if(isCalibrationGeneral())
