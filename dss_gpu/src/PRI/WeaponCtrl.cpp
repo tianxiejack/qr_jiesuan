@@ -868,7 +868,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	{    
 		if(BIT3_2(BYTE3(buf)) == 0x01) //У׼
 		{
-			if(isBattleMode())
+			if(isBattleMode() && !isStatBattleAlert())
 				MSGDRIV_send(CMD_BUTTON_CALIBRATION,NULL);
 		}	
 		else

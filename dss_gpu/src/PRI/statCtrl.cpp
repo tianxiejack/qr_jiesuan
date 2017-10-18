@@ -1179,7 +1179,7 @@ void startSCHEDULEtimer()
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eSchedule_Timer)==eTimer_Stat_Stop)
 	{
-		pCtrlTimer->startTimer(eSchedule_Timer,SCHEDULE_TIMER);	
+		pCtrlTimer->startTimer(eSchedule_Timer,2000/*SCHEDULE_TIMER*/);	
 	}
 }
 
@@ -1197,13 +1197,14 @@ void killSCHEDULEtimer()
 void SCHEDULE_cbFxn(void* cbParam)
 {
 	//	killSCHEDULEtimer();
-	#if 1
 		float x=0.0,y=0.0;
-		if(SCHEDULE_GUN/*not timeout and angle not ok*/){
+		if(SCHEDULE_GUN/*not timeout and angle not ok*/)
+		{
 			float tempX = (getpanoAngleV()<180)?(getpanoAngleV()):(getpanoAngleV()-360);
 			x = (tempX - getTurretTheta());
 			y = (getpanoAngleH() - getMachGunAngle());
-			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER)){
+			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
+			{
 	//			getPelcoServoContrlObj()->stop();
 				killSCHEDULEtimer();
 				releaseServoContrl();
@@ -1213,11 +1214,14 @@ void SCHEDULE_cbFxn(void* cbParam)
 			}
 	//		getPelcoServoContrlObj()->moveOffset(x,y);
 			startSCHEDULEtimer();
-		}else if(SCHEDULE_STRONG/*not timeout and angle not ok*/){
+		}
+		else if(SCHEDULE_STRONG/*not timeout and angle not ok*/)
+		{
 			float tempX = (getpanoAngleV()<180)?(getpanoAngleV()-180):(getpanoAngleV()-180);
 			x = (tempX - getTurretTheta());
 			y = (getpanoAngleH() - getMachGunAngle());
-			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER)){
+			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
+			{
 	//			getPelcoServoContrlObj()->stop();
 				killSCHEDULEtimer();
 				releaseServoContrl();
@@ -1245,7 +1249,6 @@ void SCHEDULE_cbFxn(void* cbParam)
 			startSCHEDULEtimer();
 		}
 		COUNTER++;
-	#endif
 }
 
 
