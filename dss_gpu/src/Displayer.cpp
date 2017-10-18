@@ -942,7 +942,7 @@ void CDisplayer::gl_textureLoad(void)
 	cudaEventSynchronize(m_stopEvent);
 	cudaEventElapsedTime(	&elapsedTime, m_startEvent, m_stopEvent);
 	//if(elapsedTime > 5.0f)
-	//	OSA_printf("%s: -------elapsed %.3f ms.\n", __func__, elapsedTime);
+	//OSA_printf("%s: -------elapsed %.3f ms.\n", __func__, elapsedTime);
 
 	float telapse = ( (getTickCount() - tstart)/getTickFrequency());
 }

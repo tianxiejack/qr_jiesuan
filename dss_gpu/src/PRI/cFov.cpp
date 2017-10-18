@@ -110,7 +110,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		return;
 
 	cthis->frcolor = 0;
-
+#if 0
 	DrawjsAngleFrame(frame,cthis,last_angle);
 	if(isCalibrationMode() && isBootUpMode())
 	{
@@ -127,7 +127,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	}
 	else if(isBattleMode())//&&isStatBattleAlert())
 	{
-		cthis->linew = 3;
+		cthis->linew = 1;
 		DrawjsCompass(frame,cthis);
 		DrawjsCross(frame, cthis);
 		DrawjsRuler(frame,cthis);
@@ -143,14 +143,14 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	DrawjsLeftFrame(frame,cthis);
 	DrawjsRightFrame(frame,cthis);
 	DrawjsBottomFrame(frame,cthis);
-
+#endif
 #if 1
 	DrawjsCompass(frame,cthis);
 	DrawjsCross(frame,cthis);
 	DrawjsRuler(frame,cthis);
 	DrawjsAlertFrame(frame,cthis);
 	DrawjsAngleFrame(frame,cthis,last_angle);
-	DrawjsGrenadeLoadOK(frame,cthis);
+	//DrawjsGrenadeLoadOK(frame,cthis);
 	DrawjsLeftFrame(frame,cthis);
 	DrawjsRightFrame(frame,cthis);
 	DrawjsBottomFrame(frame,cthis);

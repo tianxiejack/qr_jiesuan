@@ -331,12 +331,6 @@ void CProcess021::process_osd(void *pPrm)
 	//int devId=0;
 	Mat frame=sThis->m_dc;
 	Mat frame_graph=sThis->m_dccv;
-	//D_EXT *pIStuts = &sThis->extInCtrl;
-	//int winId;
-	//Text_Param_fb * textParam = NULL;
-	//Line_Param_fb * lineParam = NULL;
-	//Text_Param_fb * textParampri = NULL;
-	//Line_Param_fb * lineParampri = NULL;
 	static int flag = 0;
 	int i ;
 	OSDText_Obj * pTextObj = NULL;
@@ -394,14 +388,13 @@ void CProcess021::process_osd(void *pPrm)
 	
 	FOVCTRL_draw(frame,pFovCtrlObj);
 	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
-
-	
 	
 	OSDCTRL_draw_text(frame,pCtrlObj);
 	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
+
+
 	flag = 1;
-	
 	sThis->m_display.UpDateOsd(0);
 	return ;
 }
@@ -1873,29 +1866,12 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 //sensor 1 rect
 
 		DS_Rect lay_rect;
-	#if 1
+
 		lay_rect.w = 60;
 		lay_rect.h = 60;
 		lay_rect.x = cthis->fovX-lay_rect.w/2;
 		lay_rect.y = cthis->fovY-lay_rect.h/2;
 
-		
-	#endif
-
-	#if 0
-		lay_rect.w =vdisWH[0][0]/3;
-		lay_rect.h = vdisWH[0][1]/3;
-		lay_rect.x = vdisWH[0][0]/2-lay_rect.w/2;
-		lay_rect.y = vdisWH[0][1]/2-lay_rect.h/2;
-
-		if(pIStuts->PicpSensorStat==1)
-		{
-			lay_rect.w = vcapWH[1][0]/3;
-			lay_rect.h = vcapWH[1][1]/3;
-			lay_rect.x = vcapWH[1][0]/2-lay_rect.w/2;
-			lay_rect.y = vcapWH[1][1]/2-lay_rect.h/2;
-		}
-	#endif
 		m_display.dynamic_config(CDisplayer::DS_CFG_CropRect, 1, &lay_rect);
 //picp position
 		lay_rect=rendpos[pIStuts->PicpPosStat];
@@ -3713,6 +3689,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 				if(isGrenadeGas())
 					return ;
 				moveCrossDown();
+				updateDrawInDraw();
 			}
 		}
 		else if(isCalibrationWeather())
@@ -3788,6 +3765,7 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 				if(isGrenadeGas())
 					return ;
 				moveCrossUp();
+				updateDrawInDraw();
 			}
 		}
 		else if(isCalibrationWeather())
@@ -3867,6 +3845,7 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 				if(isGrenadeGas())
 					return ;
 				moveCrossLeft();
+				updateDrawInDraw();
 			}
 			else
 			{
@@ -3942,6 +3921,7 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 				if(isGrenadeGas())
 					return ;
 				moveCrossRight();
+				updateDrawInDraw();
 			}
 			else if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 			{
@@ -5156,6 +5136,17 @@ bool CProcess021::ValidateGunType()
 		return FALSE;
 	}
 	return TRUE;
+}
+
+void CProcess021::updateDrawInDraw()
+{
+		CFOV* cthis = pFovCtrlObj;
+		DS_Rect lay_rect;
+		lay_rect.w = 60;
+		lay_rect.h = 60;
+		lay_rect.x = cthis->fovX-lay_rect.w/2;
+		lay_rect.y = cthis->fovY-lay_rect.h/2;
+		sThis->m_display.dynamic_config(CDisplayer::DS_CFG_CropRect, 1, &lay_rect);
 }
 
  #endif

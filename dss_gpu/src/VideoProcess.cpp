@@ -169,16 +169,6 @@ void CVideoProcess::main_proc_func()
 			if(m_pMovDetector != NULL)
 				m_pMovDetector->setFrame(frame_gray, chId);	
 			OSA_assert(chId == 0);
-/*			m_pMovDetector->getMoveTarget(detect_vect,0);
-			detect_rec.x 		= detect_vect[0].targetRect.x;
-			detect_rec.y 		= detect_vect[0].targetRect.y;
-			detect_rec.width	= detect_vect[0].targetRect.width;
-			detect_rec.height	 = detect_vect[0].targetRect.height;	
-
-			printf(" x  =%d \n", detect_vect[0].targetRect.x);
-			printf(" y  =%d \n", detect_vect[0].targetRect.y);
-			printf(" width  =%d \n", detect_vect[0].targetRect.width);
-			printf(" height  =%d \n", detect_vect[0].targetRect.height);*/
 		}
 
 		if(chId != m_curChId)
@@ -357,8 +347,8 @@ int CVideoProcess::init()
 	dsInit.bFullScreen = true;
 	dsInit.winPosX = 200;
 	dsInit.winPosY = 100;
-	dsInit.winWidth = 720;//720;
-	dsInit.winHeight = 576;//576;
+	dsInit.winWidth = 720;
+	dsInit.winHeight = 576;
 	
 	m_display.init(&dsInit); 
 
@@ -402,8 +392,6 @@ int CVideoProcess::dynamic_config(int type, int iPrm, void* pPrm)
 			if(pPrm == NULL)
 			{
 				UTC_RECT_float rc;
-				//rc.x = (int)(m_mousex*frame.cols/m_display.m_mainWinWidth) - 20;
-				//rc.y = (int)(m_mousey*frame.rows/m_display.m_mainWinHeight) - 15;
 				rc.x = m_ImageAxisx - 30;
 				rc.y = m_ImageAxisx - 30;
 				rc.width = 60;
@@ -415,7 +403,6 @@ int CVideoProcess::dynamic_config(int type, int iPrm, void* pPrm)
 			else
 			{
 				m_rcTrack = *(UTC_RECT_float*)pPrm;
-				//m_rcAcq = *(UTC_RECT_float*)pPrm;
 			}
 			break;
 		case VP_CFG_MtdEnable:
@@ -831,7 +818,8 @@ void	CVideoProcess::initMvDetect()
 	polyWarnRoi[1]	= cv::Point(70,390);
 	polyWarnRoi[2]	= cv::Point(660,80);
 	polyWarnRoi[3]	= cv::Point(660,390);
-	for(i=0; i<DETECTOR_NUM; i++){
+	for(i=0; i<DETECTOR_NUM; i++)
+	{
 		m_pMovDetector->setWarningRoi(polyWarnRoi,	i);
 		m_pMovDetector->setDrawOSD(m_dccv, i);
 		m_pMovDetector->enableSelfDraw(false, i);
@@ -852,20 +840,7 @@ void CVideoProcess::NotifyFunc(void *context, int chId)
 	pParent->m_display.m_bOsd = true;
 
 	pThis->m_pMovDetector->getMoveTarget(pThis->detect_vect,0);
-/*
-	num = detect_vect.size();
-	for(int i = 0;i<num;i++)
-	{
-		detect_rec.x 		= detect_vect[i].targetRect.x;
-		detect_rec.y 		= detect_vect[i].targetRect.y;
-		detect_rec.width	= detect_vect[i].targetRect.width;
-		detect_rec.height	= detect_vect[i].targetRect.height;	
-		
-		DrawjsRect(frame, detect_recBak,0);	
-		DrawjsRect(frame, detect_rec,2);
-		memcpy(&detect_recBak,&detect_rec,sizeof(UTC_Rect));
-	}
-*/		
+
 	pParent->m_display.UpDateOsd(1);
 }
 
