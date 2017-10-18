@@ -964,9 +964,15 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	if(BIT3_2(BYTE2(FrameBuf1)) != BIT3_2(BYTE4(buf)))  //ƵӳСѡ
 	{     
 		if(BIT3_2(BYTE4(buf)) == 0x01)
+		{
+			if(getProjectileType() == 2)
+				return;
 			MSGDRIV_send(CMD_MODE_FOV_SMALL,0);
+		}	
 		else
+		{
 			MSGDRIV_send(CMD_MODE_FOV_LARGE,0);
+		}		
 	}
 	
 	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf)))  //5.8ǹʽ
@@ -1064,8 +1070,8 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			MSGDRIV_send(CMD_MEASURE_VELOCITY,0);
 		else if(BIT0(BYTE5(buf)) == 0x01)//up button to test the distance
 		{
-			//if(!isMeasureManual())
-			MSGDRIV_send(CMD_MEASURE_DISTANCE,0);
+			if(!isMeasureManual())
+				MSGDRIV_send(CMD_MEASURE_DISTANCE,0);
 		}
 	}
 #if 0

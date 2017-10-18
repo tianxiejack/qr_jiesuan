@@ -233,23 +233,23 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibZero_Fx,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	379+LOFFSET+80,		490,	0,	{0}},
 	{eCalibZero_Fy,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		490,	0,	{0}},
 
-	{eCalibZero_jc,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	487+LOFFSET,		115,	0,	{0}},
+	{eCalibZero_jc,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		115,	0,	{0}},
 	{eCalibZero_AngleGun,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		150,	0,	{0}},
 	{eCalibZero_AngleGrenade,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	500+LOFFSET,		185,	0,	{0}},
 	{eCalibZero_Angle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		490,	0,	{0}},
 
 	{eCalibWeather_Tep,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		100,	0,	{0}},
 	{eCalibWeather_Pre,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	450+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_TepPole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	518+LOFFSET,		100,	0,	{0}},
-	{eCalibWeather_TepVal1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	534+LOFFSET,		100,	0,	{0}},
-	{eCalibWeather_TepVal2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,		100,	0,	{0}},
-	{eCalibWeather_PreVal1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	523+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	534+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	556+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	567+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	578+LOFFSET,		135,	0,	{0}},
-	{eCalibWeather_PreVal7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	589+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_TepPole,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	508+LOFFSET,		100,	0,	{0}},
+	{eCalibWeather_TepVal1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	524+LOFFSET,		100,	0,	{0}},
+	{eCalibWeather_TepVal2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	535+LOFFSET,		100,	0,	{0}},
+	{eCalibWeather_PreVal1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	506+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal2,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	517+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal3,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	528+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal4,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	550+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal5,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	561+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal6,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	550+LOFFSET,		135,	0,	{0}},
+	{eCalibWeather_PreVal7,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	700+LOFFSET,		135,	0,	{0}},
 
 	{eCalibGeneral_Dis,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		150,	0,	{0}},
 	{eCalibGeneral_X,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	470+LOFFSET,		185,	0,	{0}},
@@ -1780,7 +1780,7 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%c%c:  %c",219,238,174); 	
 			break;
 		case eCalibWeather_Pre:
-			sprintf(pStr,"%c%c:   KPa",219,247); 	
+			sprintf(pStr,"%c%c:   Kpa",219,247); 	
 			break;
 		case eCalibWeather_TepPole:
 			if(Weather[0] > 0)
@@ -1810,10 +1810,11 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%01d",Weather[7]); 	
 			break;
 		case eCalibWeather_PreVal6:
-			sprintf(pStr,"%01d",Weather[8]); 	
+			sprintf(pStr,"."); 	
+			//sprintf(pStr,"%01d",Weather[8]); 	
 			break;
 		case eCalibWeather_PreVal7:
-			sprintf(pStr,"%01d",Weather[9]); 	
+			//sprintf(pStr,"%01d",Weather[9]); 	
 			break;
 		case eCalibGeneral_Dis:
 			sprintf(pStr,"%c%c:   m",202,212);//,General[0]); 		//����:xxxx m

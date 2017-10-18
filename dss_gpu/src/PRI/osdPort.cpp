@@ -518,7 +518,7 @@ void moveFocusRight()
 	if(!SHINE)
 		return;
 	OSDCTRL_ItemShow(ShinId);
-	ShinId = eCalibWeather_TepPole + (ShinId-eCalibWeather_TepPole + 1)%9;
+	ShinId = eCalibWeather_TepPole + (ShinId-eCalibWeather_TepPole + 1)%8;
 }
 
 
@@ -537,7 +537,7 @@ void moveFocusLeft()
 	if(!SHINE)
 		return;
 	OSDCTRL_ItemShow(ShinId);
-	ShinId = eCalibWeather_TepPole + (ShinId-eCalibWeather_TepPole + 6)%7;
+	ShinId = eCalibWeather_TepPole + (ShinId-eCalibWeather_TepPole + 7)%8;
 }
 
 
