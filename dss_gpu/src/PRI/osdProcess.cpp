@@ -172,7 +172,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,	30,	0,	{0}},
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,		30,	0,	{0}},
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,		30,	0,	{0}},
-	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	448+LOFFSET,		30,	0,	{0}},
+	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	436+LOFFSET,		30,	0,	{0}},
 	/*
 	{eMeasureDis_Value1,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	30,	0,	{0}},
 	{eMeasureDis_Value2,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	446+LOFFSET,	30,	0,	{0}},//+23
@@ -1484,7 +1484,7 @@ int ls2tmp = 0000;
 			break;
 		case eMeasureDis:
 			if(isMultiChanged())
-				sprintf(pStr,"x%03d",getDisLen()); //����
+				sprintf(pStr,"x%d",getDisLen()); //����
 			else
 				sprintf(pStr,"%04d",DistanceManual);
 			break;
@@ -2330,7 +2330,7 @@ int ls2tmp = 0000;
 			break;
 
 		case eLaserjly:
-			sprintf(pStr,"Lx:%+05d",ls2tmp);
+			sprintf(pStr,"Ly:%+05d",ls2tmp);
 		break;
 		
 		default:
