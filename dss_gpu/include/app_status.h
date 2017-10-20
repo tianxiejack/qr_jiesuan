@@ -421,6 +421,7 @@ typedef enum
     CMD_GENERADE_SERVO_ERR,
 
     CMD_WEAPONCTRL_OK  = 0x00000070,
+    CMD_WEAPONCTRL_ERR,
     CMD_BUTTON_BATTLE,                
     CMD_BUTTON_QUIT,                  
     CMD_BUTTON_UNLOCK,                

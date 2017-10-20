@@ -374,7 +374,7 @@ void CProcess021::process_osd(void *pPrm)
 
 	if(msgEraseId)
 	{
-		sThis->OSDCTRL_erase_single(pCtrlObj, msgEraseId);
+		//sThis->OSDCTRL_erase_single(pCtrlObj, msgEraseId);
 		msgEraseId = 0;
 	}
 	
@@ -2437,7 +2437,8 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_OK,				          onJoyStickOK,	0); // \u951f\u8857\u618b\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_ERR,				          onJoyStickErr,	0); // \u951f\u8857\u618b\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_WEAPONCTRL_OK,			          onWeaponCtrlOK,		0); //\u951f\u7686\u5321\u62f7\u951f\u65a4\u62f7
-    
+    MSGDRIV_attachMsgFun(handle,	CMD_WEAPONCTRL_ERR,			          onWeaponCtrlErr,		0); //\u951f\u7686\u5321\u62f7\u951f\u65a4\u62f7
+  
     MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_OK,				          onDipAngleSensorOK,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u8c34\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_ERR,				          onDipAngleSensorERR,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u8c34\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_OK,	          onMachineGunSensorOK,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7

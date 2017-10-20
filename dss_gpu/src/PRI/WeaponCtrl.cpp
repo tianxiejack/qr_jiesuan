@@ -1450,7 +1450,9 @@ static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 	int stat;
 
 	if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
-		MSGDRIV_send(CMD_WEAPONCTRL_OK,0);
+	{	
+	//	MSGDRIV_send(CMD_WEAPONCTRL_OK,0);
+	}
 #if 0
 	stat = WeaponCtrlPORT_recv(pUartObj,1);
 	if(stat!=1)
@@ -1461,8 +1463,22 @@ static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 }
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 {
-	if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
-			sendCommand(CMD_WEAPONCTRL_OK);
+	#if 0
+		if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
+		{
+				sendCommand(CMD_WEAPONCTRL_OK);
+				killSelfCheckWeaponCtrlTimer();
+				startSelfCheckWeaponCtrl_Timer();
+		}
+	#endif
+	printf("aaaaaaaa\n");
+	if(!bWeaponCtrlOK())
+	{
+		sendCommand(CMD_WEAPONCTRL_OK);
+	}
+	killSelfCheckWeaponCtrlTimer();
+	startSelfCheckWeaponCtrl_Timer();
+	
 	switch(buf[2])
 	{
 		case Frame_Type0:

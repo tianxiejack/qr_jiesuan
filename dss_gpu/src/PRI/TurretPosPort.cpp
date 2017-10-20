@@ -68,6 +68,34 @@ void startSelfCheckPosAngle_Timer()
 	return ;
 }
 
+
+void startSelfCheckWeaponCtrl_Timer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eWeaponCtrl_Timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eWeaponCtrl_Timer,SELFCHECK_TIMER);	
+	}
+	return ;
+}
+
+void killSelfCheckWeaponCtrlTimer()
+{	
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eWeaponCtrl_Timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eWeaponCtrl_Timer);
+	}
+	return ;
+}
+
+void SelfCheckWeaponCtrlTimer_cbFxn(void* cbParam)
+{
+	killSelfCheckWeaponCtrlTimer();
+	MSGDRIV_send(CMD_WEAPONCTRL_ERR,0);
+}
+
+
 void markMeasure_dist_Time()
 {
 	//g_measure_dist_time = turretTimer;

@@ -91,7 +91,7 @@
 #endif
 
 #define DXD_HD_DISPLAY_DEFAULT_STD	( VSYS_STD_1080P_60 )
-#define DX_TIMER_MAX				( 40 )
+#define DX_TIMER_MAX				( 50 )
 
 typedef enum {
 	DXD_TYPE_PROGRESSIVE,

@@ -189,7 +189,6 @@ bool isMachineGun()
 
 bool bWeaponCtrlOK()
 {
-	//isWeaponCtrlOK =1 ;
 	return isWeaponCtrlOK;
 }
 

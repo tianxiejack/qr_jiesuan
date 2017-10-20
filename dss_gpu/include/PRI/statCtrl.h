@@ -150,6 +150,7 @@ typedef enum _time_id
 	eMachGunServo_Timer,
 	eGrenadeServo_Timer,
 	eServoCheck_Timer,
+	eWeaponCtrl_Timer,
 	MAX_TIMER_NUM
 }eTimerId;
 

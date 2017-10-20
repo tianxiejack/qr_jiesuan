@@ -32,6 +32,10 @@ void killSelfCheckPosAngleTimer();
 void startSelfCheckPosAngle_Timer();
 
 
+void killSelfCheckWeaponCtrlTimer();
+void startSelfCheckWeaponCtrl_Timer();
+void SelfCheckWeaponCtrlTimer_cbFxn(void* cbParam);
+
 extern C_Thetas gTurretTheta;
 extern volatile bool valid_measure;
 
