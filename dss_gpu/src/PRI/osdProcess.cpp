@@ -46,7 +46,7 @@ OSDCTRL_OBJ * pCtrlObj = NULL;
 
 char tmparray[12] = "abcdef";
 bool AdCalibMenuFlag = false; 
-
+extern bool isMaintPortOpen;
 
 #if 1
 const char ModeOsd[9][8]=
@@ -954,12 +954,13 @@ void OSDCTRL_updateAreaN()
 		Posd[eErrorZone] = ErrorOsd[18];
 	}
 	else if(bMaintPortOpen())
+	{
 		Posd[eErrorZone] = ErrorOsd[17];
+	}
 	else
 	{
 		noErr = TRUE;
 	}
-
 	if(noErr)
 	{
 		OSDCTRL_ItemHide(eErrorZone);	
@@ -1003,15 +1004,13 @@ void OSDCTRL_updateDistanceValue()
 
 void OSDCTRL_CheckResultsShow()
 {
-#if 1
 	int i;
 	OSDCTRL_AllHide();
 	for(i=eSelfCheckState1; i<=eSelfCheckState9_status; i++)
 	{
 		OSDCTRL_ItemShow(i);
 	}
-	OSDCTRL_ItemShow(eErrorZone);
-#endif
+	OSDCTRL_updateAreaN();
 }
 
 void OSDCTRL_ItemShow(LPARAM lParam)

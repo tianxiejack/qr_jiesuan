@@ -45,6 +45,7 @@ FOVCTRL_Handle  pFovCtrlLocal = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ))
 int n=0,ShinId=eCalibGeneral_XPole;
 int shine_table[10] = {0};
 
+extern bool isMaintPortOpen;
 
 UInt32 interfaceflag;
 static bool tiaolingwei_flag = 0;
@@ -348,6 +349,8 @@ void CProcess021::process_osd(void *pPrm)
 	}
 	else
 		OSDCTRL_ItemShow(eShotType);
+
+	OSDCTRL_updateAreaN();
 	//memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
 	//memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
@@ -1716,6 +1719,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		isGrenadeSensorOK = 1;
 		isMachineGunServoOK = 1;
 		isGrenadeServoOK = 1;
+		isDetendClose = 0;
+		isMaintPortOpen = 0;
 		if(Is9stateOK())
 	       {
 	   	   sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);

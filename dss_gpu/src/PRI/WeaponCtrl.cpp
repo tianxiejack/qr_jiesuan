@@ -1463,21 +1463,19 @@ static void WeaponCtrlPORT_ParsePanel(UartObj*pUartObj)
 }
 void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 {
-	#if 0
+	#if 1
 		if(isBootUpMode()&&isBootUpSelfCheck()&&(!bWeaponCtrlOK()))
 		{
 				sendCommand(CMD_WEAPONCTRL_OK);
-				killSelfCheckWeaponCtrlTimer();
-				startSelfCheckWeaponCtrl_Timer();
 		}
+	#else
+		if(!bWeaponCtrlOK())
+		{
+			sendCommand(CMD_WEAPONCTRL_OK);
+		}
+		killSelfCheckWeaponCtrlTimer();
+		startSelfCheckWeaponCtrl_Timer();
 	#endif
-	printf("aaaaaaaa\n");
-	if(!bWeaponCtrlOK())
-	{
-		sendCommand(CMD_WEAPONCTRL_OK);
-	}
-	killSelfCheckWeaponCtrlTimer();
-	startSelfCheckWeaponCtrl_Timer();
 	
 	switch(buf[2])
 	{
