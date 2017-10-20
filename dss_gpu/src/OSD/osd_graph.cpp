@@ -64,30 +64,19 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	int startx,starty;
 	char *ptr;
 	UInt32 frcolor,bgcolor;
+	char * tmpOsd;
 
 	for(i=eModeId;i<=eBoreSightLinId;i++)
 	{
 		pTextObj = &pCtrlObj->pTextList[i]; 
-		if (pTextObj->osdState==eOsd_Hide)
-		{
-			if(pTextObj)
-				OSDCTRL_genOsdContext(pCtrlObj,i);
-			else
-				continue;	
-			startx   = pTextObj->osdInitX;
-			starty   = pTextObj->osdInitY;
-			frcolor  = WHITECOLOR;
-			bgcolor = BGCOLOR;
-			ptr   = (char*)pTextObj->osdContext;
-			osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
-		}
-	}
-#if 0
-	for(i=erase_guntip;i<OSD_TEXT_SIZE;i++)
-	{
-		pTextObj = &pCtrlObj->pTextList[i]; 
 		//if (pTextObj->osdState==eOsd_Hide)
 		{
+			if(pTextObj->osdId == eErrorZone)
+			{
+				tmpOsd = Posd[eErrorZone];
+				Posd[eErrorZone] = ErrorOsd[18];
+			}
+
 			if(pTextObj)
 				OSDCTRL_genOsdContext(pCtrlObj,i);
 			else
@@ -98,10 +87,14 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 			bgcolor = BGCOLOR;
 			ptr   = (char*)pTextObj->osdContext;
 			osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
+
+			if(pTextObj->osdId == eErrorZone)
+			{
+				Posd[eErrorZone] = tmpOsd;
+			}
+
 		}
 	}
-#endif
-
 }
 
 

@@ -366,11 +366,6 @@ void CProcess021::process_osd(void *pPrm)
 		{
 			
 			Osd_shinItem(ShinId);
-			for(i = 0;i<10;i++)
-			{
-				if(shine_table[i])
-					Osd_shinItem(shine_table[i]);
-			}
 			n = 0;
 		}
 	}
@@ -383,19 +378,19 @@ void CProcess021::process_osd(void *pPrm)
 	
 	if(flag)
 	{
-		OSDCTRL_erase_draw_text(frame,pCtrlObjbefore);
-		FOVCTRL_erase_draw(frame, pFovCtrlBeforObj);//frame_graph
+		OSDCTRL_erase_draw_text(frame,pCtrlObjLocal);
+		//FOVCTRL_erase_draw(frame, pFovCtrlLocal);//frame_graph
 	}
 	//OSDCTRL_ItemShow(eErrorZone);
 	//OSDCTRL_AllHide();
-	
-	FOVCTRL_draw(frame,pFovCtrlObj);
-	memcpy(pFovCtrlBeforObj,pFovCtrlObj,sizeof(FOVCTRL_OBJ));
-	
-	OSDCTRL_draw_text(frame,pCtrlObj);
-	memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
+	memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
+//	memcpy(pFovCtrlBeforObj,pFovCtrlLocal,sizeof(FOVCTRL_OBJ));
+	//FOVCTRL_draw(frame,pFovCtrlLocal);
 
+	memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
+//	memcpy(pCtrlObjbefore,pCtrlObjLocal,sizeof(OSDCTRL_OBJ));
+	OSDCTRL_draw_text(frame,pCtrlObjLocal);
 
 	flag = 1;
 	sThis->m_display.UpDateOsd(0);
@@ -2510,7 +2505,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_LONG,					processCMD_MODE_SHOT_LONG,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u6212\u3001\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_GUN,						processCMD_SCHEDULE_GUN,		0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_STRONG,					processCMD_SCHEDULE_STRONG,		0); // \u951f\u65a4\u62f7\u5f3a\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_RESET,						processCMD_SCHEDULE_RESET,		0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u4f4d
+    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_RESET,					processCMD_SCHEDULE_RESET,		0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u4f4d
     
     MSGDRIV_attachMsgFun(handle,	CMD_TIMER_SENDFRAME0,					processCMD_TIMER_SENDFRAME0,		0); //send frame0 through CAN
     MSGDRIV_attachMsgFun(handle,	CMD_TRACE_SENDFRAME0,					processCMD_TRACE_SENDFRAME0,		0); //send frame0 through TracePort
@@ -3620,6 +3615,11 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 		OSDCTRL_BattleShow();
 	}
 
+	if(tiaolingwei_flag)
+	{
+		OSDCTRL_NoShine();
+		tiaolingwei_flag = 0;
+	}
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_QUIT",__func__,__LINE__);
 	return ;
  }
@@ -4115,6 +4115,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			requstServoContrl();
 			COUNTER = 0;
 			SCHEDULE_RESET = TRUE;
+			killSCHEDULEtimer();
 			startSCHEDULEtimer();
 			tiaolingwei_flag = 0;
 		}
@@ -4830,6 +4831,7 @@ void CProcess021::processCMD_MODE_SHOT_LONG(LPARAM lParam)
 
 void CProcess021::processCMD_SCHEDULE_STRONG(LPARAM lParam)
  {
+ 	OSDCTRL_NoShine();
 	if(isCalibrationMode())
 		return;
 	//tiao qiang sheng
@@ -4847,7 +4849,8 @@ void CProcess021::processCMD_SCHEDULE_STRONG(LPARAM lParam)
 
 void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
  {
-	if(isCalibrationMode() || tiaolingwei_flag == 1)
+ 	OSDCTRL_NoShine();
+	if(isCalibrationMode())
 		return;
 	
 	tiaolingwei_flag = 1;

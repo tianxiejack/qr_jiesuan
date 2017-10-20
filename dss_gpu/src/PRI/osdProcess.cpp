@@ -943,7 +943,7 @@ void OSDCTRL_updateAreaN()
 #if 1
 	int i=0;
 	bool noErr = FALSE;
-	
+
 	if(!Is9stateOK())
 	{
 		i = getErrCodeId();
@@ -1547,7 +1547,7 @@ int ls2tmp = 0000;
 			break;
 		case eWeather1:
 			//sprintf(pStr,"T%+02d P%03dk",Temparature,Pressure/10000);//gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
-			sprintf(pStr,"T%+02d",Temparature);
+			sprintf(pStr,"T%+03d",Temparature);
 			break;
 		
 		case eWeather1_T:

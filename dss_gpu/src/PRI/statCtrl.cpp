@@ -1209,9 +1209,9 @@ void SCHEDULE_cbFxn(void* cbParam)
 		float x=0.0,y=0.0;
 		if(SCHEDULE_GUN/*not timeout and angle not ok*/)
 		{
-			float tempX = (getpanoAngleV()<180)?(getpanoAngleV()):(getpanoAngleV()-360);
+			float tempX = (getpanoAngleH()<180)?(getpanoAngleH()):(getpanoAngleH()-360);
 			x = (tempX - getTurretTheta());
-			y = (getpanoAngleH() - getMachGunAngle());
+			y = (getpanoAngleV() - getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 			{
 	//			getPelcoServoContrlObj()->stop();
@@ -1226,9 +1226,9 @@ void SCHEDULE_cbFxn(void* cbParam)
 		}
 		else if(SCHEDULE_STRONG/*not timeout and angle not ok*/)
 		{
-			float tempX = (getpanoAngleV()<180)?(getpanoAngleV()-180):(getpanoAngleV()-180);
+			float tempX = (getpanoAngleH()<180)?(getpanoAngleH()-180):(getpanoAngleH()-180);
 			x = (tempX - getTurretTheta());
-			y = (getpanoAngleH() - getMachGunAngle());
+			y = (getpanoAngleV() - getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 			{
 	//			getPelcoServoContrlObj()->stop();
@@ -1263,6 +1263,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 
 void processCMD_SCHEDULE_GUN(long lParam)
  {
+ 	OSDCTRL_NoShine();
 	if(isCalibrationMode())
 		return;
 	// tiao qiang ta

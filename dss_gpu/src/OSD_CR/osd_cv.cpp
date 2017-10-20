@@ -430,20 +430,8 @@ void DrawjsRuler(Mat frame,CFOV * fovOsdCtrl)
 	
 	int StepGap=0;
 	
-	#if 0
-		if(isFovMachineGun())
-			StepGap = 30;
-		else if(isFovGrenadeGas())
-			StepGap = 20;
-		else if(isFovGrenadeKill())
-			StepGap = 25;
-		if(isFovSmall())
-			StepGap *= 1.2;
-	#endif
-	
 	StepGap = angleToOffset(10);
 	
-
 	for(i = -3;i<=3;i++)
 	{
 		start.x = CenterX + i*StepGap;

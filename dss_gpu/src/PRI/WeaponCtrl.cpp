@@ -829,10 +829,10 @@ int WeaponCtrlPORT_ParseFrameByte_type0(unsigned char* buf)
 		}
 	}
 	pbuf = &buf[4];
-	panoAngleV = STOH2(pbuf);
-	pbuf = &buf[6];
 	panoAngleH = STOH2(pbuf);
-	if(panoAngleV > 36000||(panoAngleH>36000||(panoAngleH>9000&&panoAngleH<27000)))
+	pbuf = &buf[6];
+	panoAngleV= STOH2(pbuf);
+	if(panoAngleH > 36000||(panoAngleV>36000||(panoAngleV>9000&&panoAngleV<27000)))
 	{
 		return -2;
 	}
