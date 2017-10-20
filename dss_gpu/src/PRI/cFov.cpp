@@ -12,9 +12,6 @@ static float g_FovRat[2][3]=
 	{FILR_MFOV_ARG/FILR_LFOV_ARG, FILR_NFOV_ARG/FILR_MFOV_ARG,	FILR_EFOV_ARG/FILR_NFOV_ARG}
 };
 
-static double last_angle = 0.0;
-
-
 FOVCTRL_Handle FOVCTRL_create( UINT Sens,UINT fovElem,UINT x,UINT y)
 {
 	CFOV * pCtrlObj = NULL;
@@ -110,6 +107,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		return;
 
 	cthis->frcolor = 0;
+	cthis->linew = 2;
 #if 0
 	DrawjsAngleFrame(frame,cthis,last_angle);
 	if(isCalibrationMode() && isBootUpMode())
@@ -145,15 +143,32 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	DrawjsBottomFrame(frame,cthis);
 #endif
 #if 1
-	DrawjsCompass(frame,cthis);
-	DrawjsCross(frame,cthis);
-	DrawjsRuler(frame,cthis);
-	DrawjsAlertFrame(frame,cthis);
-	DrawjsAngleFrame(frame,cthis,last_angle);
-	//DrawjsGrenadeLoadOK(frame,cthis);
-	DrawjsLeftFrame(frame,cthis);
-	DrawjsRightFrame(frame,cthis);
-	DrawjsBottomFrame(frame,cthis);
+	if(cthis->drawflag & (1<<0))
+	{
+		DrawjsCross(frame,cthis);	
+		printf("erase the cross\n");
+	}
+	if(cthis->drawflag & (1<<1))
+	{
+		DrawjsRuler(frame,cthis);
+		printf("erase the Ruler\n");
+	}
+#if 0		
+	if(cthis->drawflag & (1<<2))
+		DrawjsCompass(frame,cthis);
+	if(cthis->drawflag & (1<<3))
+		DrawjsLeftFrame(frame,cthis);
+	if(cthis->drawflag & (1<<4))
+		DrawjsRightFrame(frame,cthis);		
+	if(cthis->drawflag & (1<<5))
+		DrawjsBottomFrame(frame,cthis);
+	if(cthis->drawflag & (1<<6))
+		DrawjsAlertFrame(frame,cthis);
+	if(cthis->drawflag & (1<<7))
+		DrawjsAngleFrame(frame,cthis,cthis->last_angle);
+#endif
+
+	//DrawjsGrenadeLoadOK(frame,cthis);	
 #endif
 	return ;
 }
@@ -161,15 +176,18 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 
 void FOVCTRL_draw(Mat frame,HANDLE hFov)
 {
-#if 1
 	CFOV * cthis = (	CFOV *)hFov;
 	static int shin=0;
 	SDK_ASSERT(cthis!=NULL);
 	if(cthis->bFovDraw==FALSE)
 		return;
- 
-	last_angle = getGrenadeAngle()-getMachGunAngle();
-	DrawjsAngleFrame(frame,cthis,last_angle);
+	
+	cthis->drawflag = 0;
+	cthis->last_angle = 0;
+ 	
+	cthis->last_angle = getGrenadeAngle()-getMachGunAngle();
+	DrawjsAngleFrame(frame,cthis,cthis->last_angle);
+	cthis->drawflag |= 1<<7;
 
 	if(isCalibrationMode() && isBootUpMode())
 	{
@@ -177,17 +195,22 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	}
 	else if(isCalibrationMode())//&&(isCalibrationGeneral()||isCalibrationWeather()))
 	{
+		
 		if(isCalibrationZero())
 		{
-			//DrawjsCompass(frame,cthis);
+			DrawjsCompass(frame,cthis);
 			cthis->linew = 1;
-			DrawjsCross(frame, cthis);		
+			DrawjsCross(frame, cthis);
+			cthis->drawflag |= 1<<0;
 			DrawjsRuler(frame,cthis);
+			cthis->drawflag |= 1<<1;
+						
 		}
 		if(isCalibrationLaser())
 		{
 			cthis->linew = 2;
 			DrawjsCross(frame, cthis);		
+			cthis->drawflag |= 1<<0;
 		}
 	
 	}
@@ -197,8 +220,11 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		if(isStatBattleAuto())
 		{
 			DrawjsCompass(frame,cthis);
+			cthis->drawflag |= 1<<2;
 			DrawjsCross(frame, cthis);
+			cthis->drawflag |= 1<<0;
 			DrawjsRuler(frame,cthis);
+			cthis->drawflag |= 1<<1;
 		}
 		else if(isStatBattleAlert())
 		{
@@ -215,33 +241,30 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	if(/*isFovShine() && */(((shin++)%6)<3) )//yue jie kuang
 	{
 		if(isBeyondDerection(DERECTION_LEFT))
+		{
 			DrawjsLeftFrame(frame,cthis);
-		else if(isBeyondDerection(DERECTION_RIGHT))
-			DrawjsRightFrame(frame,cthis);
-		else if(isBeyondDerection(DERECTION_DOWN))
-			DrawjsBottomFrame(frame,cthis);
-	}
-	
-	#if 0
-		if(!(isBattleMode()&&isStatBattleAlert())){
-			FOVCTRL_drawRulerFrame(hFov,pImg);//biao chi
-			if(isCalibrationMode()&& isCalibrationZero())
-				FOVCTRL_drawBoresightZero(hFov,pImg);
-			else if((isMeasureManual())||(isBattleMode()&& isStatBattleAuto()&& isDistanceMeasured()))
-				FOVCTRL_drawBoresightAim(hFov,pImg);
-			else
-				FOVCTRL_drawBoresight(hFov,pImg);
+			cthis->drawflag |= 1<<3;
 		}
-	#endif
+		else if(isBeyondDerection(DERECTION_RIGHT))
+		{
+			DrawjsRightFrame(frame,cthis);
+			cthis->drawflag |= 1<<4;
+		}
+		else if(isBeyondDerection(DERECTION_DOWN))
+		{
+			DrawjsBottomFrame(frame,cthis);
+			cthis->drawflag |= 1<<5;
+		}
+	}	
 
 	//if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
 	//	DrawjsGrenadeLoadOK(frame,cthis);
 	
-
 	if(isStatBattleAlert() && isAutoCatching())
 	{
 		static int i=0;
 		DrawjsAlertFrame(frame,cthis);
+		cthis->drawflag |= 1<<6;
 		
 		#if 0
 			if((i++)%8 == 0)
@@ -253,6 +276,5 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	}
 
 	//FOVSYMBOL_drawTrk(handle,pImg);
-#endif
 }
 

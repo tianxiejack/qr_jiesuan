@@ -48,6 +48,42 @@ typedef struct _fov_ctrl
 	ModleCtrl_t		Interface;	
 	unsigned int		segId;
 	unsigned int    	bFovDraw;
+	unsigned int		fovScal;
+	unsigned int		fovSens;
+	unsigned int		fovElem;		
+	unsigned short	fovX;				
+	unsigned short	fovY;				
+	unsigned short  	fovW;	
+	unsigned short  	fovH;	
+	int 				crosswidth;
+	int 				crossheight;
+	int				theta;
+	int 				frcolor;
+	int				linew;
+	RECT 			fovRect;						
+	CBrush 			fovBrush;
+
+	bool fovdraw;
+	int lastStepGap ;
+	unsigned char drawflag ;		
+	double last_angle;
+/*	
+
+--------drawflag ---------
+	DrawjsCross	  		0
+	DrawjsRuler 	 		1
+	DrawjsCompass		2
+	DrawjsLeftFrame		3
+	DrawjsRightFrame 		4
+	DrawjsBottomFrame	5
+	DrawjsAlertFrame		6
+	DrawjsAngleFrame		7
+*/	
+
+#if 0
+	ModleCtrl_t		Interface;	
+	unsigned int		segId;
+	unsigned int    	bFovDraw;
 	
 	unsigned int		fovScal;
 	unsigned int		fovSens;			/*   *0___*4___1*	*/
@@ -65,6 +101,7 @@ typedef struct _fov_ctrl
 
 	RECT 			fovRect;						
 	CBrush 			fovBrush;
+#endif
 }CFOV,FOVCTRL_OBJ,*FOVCTRL_Handle;
 
 

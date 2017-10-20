@@ -380,14 +380,15 @@ void CProcess021::process_osd(void *pPrm)
 	if(flag)
 	{
 		OSDCTRL_erase_draw_text(frame,pCtrlObjLocal);
-		//FOVCTRL_erase_draw(frame, pFovCtrlLocal);//frame_graph
+		pFovCtrlLocal->fovdraw = 0;
+		FOVCTRL_erase_draw(frame, pFovCtrlLocal);//frame_graph
 	}
 	//OSDCTRL_ItemShow(eErrorZone);
 	//OSDCTRL_AllHide();
 
 	memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
-//	memcpy(pFovCtrlBeforObj,pFovCtrlLocal,sizeof(FOVCTRL_OBJ));
-	//FOVCTRL_draw(frame,pFovCtrlLocal);
+	pFovCtrlLocal->fovdraw = 1;
+	FOVCTRL_draw(frame,pFovCtrlLocal);
 
 	memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
 //	memcpy(pCtrlObjbefore,pCtrlObjLocal,sizeof(OSDCTRL_OBJ));
