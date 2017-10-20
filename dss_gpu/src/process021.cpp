@@ -50,6 +50,7 @@ extern bool isMaintPortOpen;
 UInt32 interfaceflag;
 static bool tiaolingwei_flag = 0;
 static bool distancefirst = 1;
+static bool DrawInDrawopen = 0;
 
 bool gProjectileMachFovlast = 0; //0 - small   1 - big
 bool gProjectileGreFovlast = 0;
@@ -3504,6 +3505,9 @@ void CProcess021::onGrenadeServoERR(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_BATTLE(LPARAM lParam)
  {
+	if(DrawInDrawopen)
+		DrawInDraw_open_close();	
+ 	
 	if(isCalibrationMode())
 	{
 		gLevel1Mode = MODE_BATTLE;
@@ -3551,11 +3555,8 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 		{
 			if(isCalibrationZero())
 			{
-				if(pIStuts->PicpSensorStat==0xff)
-					pIStuts->PicpSensorStat=1;
-				else 
-					pIStuts->PicpSensorStat=0xff;		
-				sThis->msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
+				if(isMeasureManual() && distancefirst == 0 && DrawInDrawopen)
+					DrawInDraw_open_close();		
 				
 				saveZeroParam();
 			}
@@ -3983,7 +3984,6 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 {
-	CMD_EXT *pIStuts = &sThis->extInCtrl;
 	int i;
 	if(!ValidateGunType())
 		return;
@@ -4037,19 +4037,16 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 		{
 			if(isCalibrationZero())
 			{
-				if(distancefirst)
+				if(distancefirst && isMeasureManual())
 				{			
 					distancefirst = 0;
 					SHINE =0; 
 				}
+				else	
+					saveZeroParam();
 				
-				if(pIStuts->PicpSensorStat==0xff)
-					pIStuts->PicpSensorStat=1;
-				else 
-					pIStuts->PicpSensorStat=0xff;		
-				sThis->msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
-				
-				saveZeroParam();
+				if(isMeasureManual() && distancefirst == 0 && !DrawInDrawopen)
+					DrawInDraw_open_close();		
 			}
 			else if(isCalibrationGeneral())
 			{
@@ -5147,6 +5144,19 @@ bool CProcess021::ValidateGunType()
 	return TRUE;
 }
 
+void CProcess021::DrawInDraw_open_close()
+{	
+	DrawInDrawopen = !DrawInDrawopen ;// open --1   close --0     0- dafault
+	
+	CMD_EXT *pIStuts = &sThis->extInCtrl;
+	if(pIStuts->PicpSensorStat==0xff)
+		pIStuts->PicpSensorStat=1;
+	else 
+		pIStuts->PicpSensorStat=0xff;		
+	sThis->msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
+	
+}
+	
 void CProcess021::updateDrawInDraw()
 {
 		CFOV* cthis = pFovCtrlObj;
@@ -5160,25 +5170,4 @@ void CProcess021::updateDrawInDraw()
 
  #endif
 
-void CProcess021::OSDCTRL_erase_single(OSDCTRL_Handle pCtrlObj,int id)
-{
-	int i=0;
-	Mat frame = sThis->m_dc;
-	OSDText_Obj * pTextObj = NULL;
-	int startx,starty;
-	char *ptr;
-	UInt32 frcolor,bgcolor;
-	
-	i = id;
-
-	pTextObj = &pCtrlObj->pTextList[i]; 
-	if(pTextObj)
-		OSDCTRL_genOsdContext(pCtrlObj,i);
-	startx   = pTextObj->osdInitX;
-	starty   = pTextObj->osdInitY;
-	frcolor  = WHITECOLOR;
-	bgcolor = BGCOLOR;
-	ptr   = (char*)pTextObj->osdContext;
-	osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
-}
 

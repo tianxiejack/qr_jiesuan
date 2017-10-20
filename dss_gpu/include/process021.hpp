@@ -222,7 +222,7 @@ protected:
 	 static void updateCMD_BUTTON_SWITCH(int param);	
 	 static bool ValidateGunType();
 	 static void updateDrawInDraw();
-	void OSDCTRL_erase_single(OSDCTRL_Handle pCtrlObj,int id);
+	 static void DrawInDraw_open_close();
 
 	
 private:
