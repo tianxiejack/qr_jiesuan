@@ -47,7 +47,6 @@ FOVCTRL_Handle FOVCTRL_create( UINT Sens,UINT fovElem,UINT x,UINT y)
 
 void FOVCTRL_updateFovRect(HANDLE hFov,char Sens,char fovElem,short x,short y)
 {
-#if 1
 	CFOV * cthis  = (CFOV * )hFov;
 	PRECT  pRect = NULL;
 	float ftmp =1.0;
@@ -59,9 +58,9 @@ void FOVCTRL_updateFovRect(HANDLE hFov,char Sens,char fovElem,short x,short y)
 	cthis->fovSens = Sens;
 	cthis->fovElem = fovElem;
 	cthis->fovX    = x;
-	cthis->fovY    = y;
-	cthis->fovW	   = 720;
-	cthis->fovH	   = 576;
+	cthis->fovY   	= y;
+	cthis->fovW	= 720;
+	cthis->fovH	= 576;
 
 	ftmp = (float)cthis->fovScal/100.0;
 	fovWidth = (int)(g_FovRat[Sens][fovElem]*FOV_WIDTH);
@@ -77,7 +76,6 @@ void FOVCTRL_updateFovRect(HANDLE hFov,char Sens,char fovElem,short x,short y)
 	cthis->fovBrush.rect.bottom = xmin(575,(int)((y<<1)+fovHeight*ftmp));
 	cthis->fovBrush.rect.left	= xmax(1,(int)(x-(fovWidth>>1)*ftmp));
 	cthis->fovBrush.rect.right	= xmin(703,(int)(x+(fovWidth>>1)*ftmp));
-#endif	
 }
 
 
