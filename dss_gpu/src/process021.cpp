@@ -1155,8 +1155,10 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 				if(detect_vect[i].targetRect.width > 50 && detect_vect[i].targetRect.height > 50 )
 				{
 					DrawjsRect(m_dccv, detect_vect[i].targetRect,2);
-					randomx = detect_vect[i].targetRect.x;
-					randomy = detect_vect[i].targetRect.y;
+					random.x = detect_vect[i].targetRect.x;
+					random.y = detect_vect[i].targetRect.y;
+					random.h = detect_vect[i].targetRect.height;
+					random.w =detect_vect[i].targetRect.width;	
 				}
 			}		
 			detect_bak = detect_vect;
@@ -1971,14 +1973,14 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 
 			dynamic_config(VP_CFG_TrkEnable, 0);
 			//pIStuts->unitAimX = pIStuts->unitAxisX[extInCtrl.SensorStat ] ;//- pIStuts->unitAimW/2;
-			pIStuts->unitAimX =  randomx;
+			pIStuts->unitAimX =  random.x+random.w/2;
 			if(pIStuts->unitAimX<0)
 			{
 				pIStuts->unitAimX=0;
 			}
 			
 			//pIStuts->unitAimY = pIStuts->unitAxisY[extInCtrl.SensorStat ];// - pIStuts->unitAimH/2;
-			pIStuts->unitAimY = randomy;
+			pIStuts->unitAimY = random.y+random.h/2;
 
 			if(pIStuts->unitAimY<0)
 			{
