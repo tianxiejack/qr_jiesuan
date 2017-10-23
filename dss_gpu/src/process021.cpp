@@ -1153,7 +1153,11 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 			for(i =0;i<detect_num;i++)
 			{
 				if(detect_vect[i].targetRect.width > 50 && detect_vect[i].targetRect.height > 50 )
-					DrawjsRect(m_dccv, detect_vect[i].targetRect,2);	
+				{
+					DrawjsRect(m_dccv, detect_vect[i].targetRect,2);
+					randomx = detect_vect[i].targetRect.x;
+					randomy = detect_vect[i].targetRect.y;
+				}
 			}		
 			detect_bak = detect_vect;
 			Osdflag[osdindex]=1;
@@ -1811,7 +1815,7 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 
 	CFOV* cthis = pFovCtrlObj;
 	
-printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pIStuts->unitAxisY[extInCtrl.SensorStat ]);
+//printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pIStuts->unitAxisY[extInCtrl.SensorStat ]);
 	if(msgId == MSGID_EXT_INPUT_SENSOR || msgId == MSGID_EXT_INPUT_ENPICP)
 	{
 		if(prm != NULL)
@@ -1961,22 +1965,25 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 		char procStr[][10] = {"ACQ", "TARGET", "MTD", "SECTRK", "SEARCH", "ROAM", "SCENE", "IMGTRK"};
 
 		if (pIStuts->AvtTrkStat == eTrk_mode_acq)
-		{
+		{//printf("@@@@@@@@@@@@@@@aaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
 			OSA_printf(" %d:%s set track to [%s]\n", OSA_getCurTimeInMsec(), __func__,
 					   procStr[pIStuts->AvtTrkStat]);
 
 			dynamic_config(VP_CFG_TrkEnable, 0);
-			pIStuts->unitAimX = pIStuts->unitAxisX[extInCtrl.SensorStat ] ;//- pIStuts->unitAimW/2;
+			//pIStuts->unitAimX = pIStuts->unitAxisX[extInCtrl.SensorStat ] ;//- pIStuts->unitAimW/2;
+			pIStuts->unitAimX =  randomx;
 			if(pIStuts->unitAimX<0)
-				{
-					pIStuts->unitAimX=0;
-				}
+			{
+				pIStuts->unitAimX=0;
+			}
 			
-			pIStuts->unitAimY = pIStuts->unitAxisY[extInCtrl.SensorStat ];// - pIStuts->unitAimH/2;
-				if(pIStuts->unitAimY<0)
-				{
-					pIStuts->unitAimY=0;
-				}
+			//pIStuts->unitAimY = pIStuts->unitAxisY[extInCtrl.SensorStat ];// - pIStuts->unitAimH/2;
+			pIStuts->unitAimY = randomy;
+
+			if(pIStuts->unitAimY<0)
+			{
+				pIStuts->unitAimY=0;
+			}
 
 			return ;
 		}
@@ -1988,10 +1995,9 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 					   procStr[pIStuts->AvtTrkStat]);
 
 			pIStuts->AvtTrkStat = eTrk_mode_sectrk;
-			 pIStuts->unitAimX = pIStuts->ImgPixelX[extInCtrl.SensorStat];
-		  	 pIStuts->unitAimY = pIStuts->ImgPixelY[extInCtrl.SensorStat] ;
-			// pIStuts->unitAxisX[extInCtrl.SensorStat ]=pIStuts->unitAimX ;
-		  	// pIStuts->unitAxisY[extInCtrl.SensorStat ]=pIStuts->unitAimY ;
+			pIStuts->unitAimX = pIStuts->ImgPixelX[extInCtrl.SensorStat];
+		  	pIStuts->unitAimY = pIStuts->ImgPixelY[extInCtrl.SensorStat];
+
 			//pIStuts->unitTrkProc = eTrk_proc_target;
 
 			//return ;
@@ -2071,14 +2077,13 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 		rc.height=pIStuts->unitAimH;
 		dynamic_config(VP_CFG_TrkEnable, 1,&rc);
 		if((pIStuts->AvtTrkStat == eTrk_mode_sectrk)||(pIStuts->AvtTrkStat == eTrk_mode_search))
-			{
-				m_intervalFrame=2;
-				m_rcAcq=rc;
-				pIStuts->AvtTrkStat = eTrk_mode_target;
-				
-				printf("***********************set sec track\n ");
-				
-			}
+		{
+			m_intervalFrame=2;
+			m_rcAcq=rc;
+			pIStuts->AvtTrkStat = eTrk_mode_target;
+			
+			printf("***********************set sec track\n ");			
+		}
 	//	printf("the rc.x=%d rc.y=%d ,unitAimX=%d  unitAimY=%d \n",rc.x,rc.y,pIStuts->unitAimX,pIStuts->unitAimY);
 	//	printf("w=%d h=%d\n",pIStuts->unitAimW,pIStuts->unitAimH);
 	//	printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pIStuts->unitAxisY[extInCtrl.SensorStat ]);

@@ -60,14 +60,14 @@ typedef struct _pattern_t
 }Pattern;
 
 typedef	struct	 _trk_rect_t{
-	cv::Rect							targetRect;
-	TRK_STATE						trkState;
+	cv::Rect					targetRect;
+	TRK_STATE				trkState;
 	TARGET_TYPE				targetType;
-	double							distance;
-	int									disp_frames;
-	int									trk_frames;
+	double					distance;
+	int						disp_frames;
+	int						trk_frames;
 	WARN_ROI_STATE			warnType;
-	int									index;
+	int						index;
 }TRK_RECT_INFO;
 
 

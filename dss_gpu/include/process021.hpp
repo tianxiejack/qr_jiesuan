@@ -34,7 +34,7 @@ class CProcess021 : public CVideoProcess
 	int Mmtsendtime;
 	int prisensorstatus;
 	int Fovpri[2];
-	
+	int randomx,randomy;
 
 public:
 	CProcess021();
