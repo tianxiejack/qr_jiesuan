@@ -1135,14 +1135,14 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 
 
 	#if 1
-	osdindex++;
+	//osdindex++;
 	{
 		
 		if(Osdflag[osdindex]==1)
 		{
 			detect_num = detect_bak.size();
 			for(i=0;i<detect_num;i++)
-			{
+			{	
 				DrawjsRect(m_dccv, detect_bak[i].targetRect,0);	
 			}			
 			Osdflag[osdindex]=0;
@@ -1152,7 +1152,8 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 			detect_num = detect_vect.size();
 			for(i =0;i<detect_num;i++)
 			{
-				DrawjsRect(m_dccv, detect_vect[i].targetRect,2);
+				if(detect_vect[i].targetRect.width > 50 && detect_vect[i].targetRect.height > 50 )
+					DrawjsRect(m_dccv, detect_vect[i].targetRect,2);	
 			}		
 			detect_bak = detect_vect;
 			Osdflag[osdindex]=1;
@@ -1167,6 +1168,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 		 int aimw= trkWinWH[extInCtrl.SensorStat][extInCtrl.AvtTrkAimSize][0];
 		 int aimh= trkWinWH[extInCtrl.SensorStat][extInCtrl.AvtTrkAimSize][1];
 
+
 		#if 1
 		if(Osdflag[osdindex]==1)
 		{
@@ -1178,7 +1180,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 				Point( startx, starty ),
 				Point( endx, endy),
 				cvScalar(0,0,0,0), 1, 8 );
-			 Osdflag[osdindex]==0;
+			 Osdflag[osdindex]=0;
 		}
 		
 		 if(m_bTrack)
@@ -1189,7 +1191,17 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 		 	 endy=PiexltoWindowsy(rcResult.y+rcResult.height,extInCtrl.SensorStat);
 
 			// printf("the x=%d y=%d w=%f h=%f\n",startx,starty,rcResult.width,rcResult.height);
-		 	
+
+			if(Osdflag[osdindex-1]==1)
+			{
+				detect_num = detect_bak.size();
+				for(i=0;i<detect_num;i++)
+				{	
+					DrawjsRect(m_dccv, detect_bak[i].targetRect,0);	
+				}			
+				Osdflag[osdindex-1]=0;
+			}
+			
 			if( m_iTrackStat == 1)
 				rectangle( m_dccv,
 					Point( startx, starty ),
@@ -1207,7 +1219,8 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 			rcTrackBak.height=endy-starty;
 			extInCtrl.unitAimX=rcResult.x+rcResult.width/2;
 			extInCtrl.unitAimY=rcResult.y+rcResult.height/2;
-			Osdflag[osdindex]==1;
+			Osdflag[osdindex]=1;
+
 		 }
 		 
 		// printf("rcResult.x =%f rcResult.y=%f w=%f h=%f\n",rcResult.x,rcResult.y,rcResult.width,rcResult.height);
@@ -1990,6 +2003,7 @@ printf("*************x=%d y=%d\n",pIStuts->unitAxisX[extInCtrl.SensorStat ],pISt
 					   procStr[pIStuts->AvtTrkStat]);
 
 		   pIStuts->AvtTrkStat = eTrk_mode_search;
+		   
 		   pIStuts->unitAimX = pIStuts->ImgPixelX[extInCtrl.SensorStat];
 		   pIStuts->unitAimY = pIStuts->ImgPixelY[extInCtrl.SensorStat] ;
 		//   pIStuts->unitAxisX[extInCtrl.SensorStat ]=pIStuts->unitAimX ;

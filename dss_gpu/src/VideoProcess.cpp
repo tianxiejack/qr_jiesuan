@@ -143,7 +143,7 @@ void CVideoProcess::main_proc_func()
 					m_searchmod=0;
 			}
 			m_iTrackStat = process_track(iTrackStat, frame_gray, m_dc, m_rcTrack);
-			//printf("********m_iTrackStat=%d\n",m_iTrackStat);
+			printf("********m_iTrackStat=%d\n",m_iTrackStat);
 	//		OSA_printf("ALL-Trk: time = %f sec \n", ( (getTickCount() - tstart)/getTickFrequency()) );
 		}
 		else if(bMtd)
