@@ -53,11 +53,13 @@ void CVideoProcess::main_proc_func()
 {
 	OSA_printf("%s: Main Proc Tsk Is Entering...\n",__func__);
 
-
+//static int abcde = 0;
 	while(mainProcThrObj.exitProcThread ==  false)
 	{
 	/******************************************/
-		
+//	OSA_printf("111ALL-Trk: time = %f sec \n", ( (getTickCount() - tstart)/getTickFrequency()) );
+//	abcde = getTickCount();	
+	
 		OSA_semWait(&mainProcThrObj.procNotifySem, OSA_TIMEOUT_FOREVER);
 
 		//OSA_printf("%s:pp = %d ,\n",__func__, mainProcThrObj.pp);
@@ -110,7 +112,7 @@ void CVideoProcess::main_proc_func()
 		if(bTrack)
 		{
 			iTrackStat = ReAcqTarget();
-//			tstart = getTickCount();
+	//		tstart = getTickCount();
 			//printf("********x=%d y=%d w=%d h=%d\n",m_rcTrack.x,m_rcTrack.y,m_rcTrack.width,m_rcTrack.height);
 		
 			//
@@ -142,7 +144,7 @@ void CVideoProcess::main_proc_func()
 			}
 			m_iTrackStat = process_track(iTrackStat, frame_gray, m_dc, m_rcTrack);
 			//printf("********m_iTrackStat=%d\n",m_iTrackStat);
-//			OSA_printf("ALL-Trk: time = %f sec \n", ( (getTickCount() - tstart)/getTickFrequency()) );
+	//		OSA_printf("ALL-Trk: time = %f sec \n", ( (getTickCount() - tstart)/getTickFrequency()) );
 		}
 		else if(bMtd)
 		{

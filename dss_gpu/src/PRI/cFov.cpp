@@ -108,40 +108,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 
 	cthis->frcolor = 0;
 	cthis->linew = 2;
-#if 0
-	DrawjsAngleFrame(frame,cthis,last_angle);
-	if(isCalibrationMode() && isBootUpMode())
-	{
-		//no draw
-	}
-	else if(isCalibrationMode())//&&(isCalibrationGeneral()||isCalibrationWeather()))
-	{
-		//if(isCalibrationZero())
-		{
-			DrawjsCompass(frame,cthis);
-			DrawjsCross(frame, cthis);	
-			DrawjsRuler(frame,cthis);
-		}	
-	}
-	else if(isBattleMode())//&&isStatBattleAlert())
-	{
-		cthis->linew = 1;
-		DrawjsCompass(frame,cthis);
-		DrawjsCross(frame, cthis);
-		DrawjsRuler(frame,cthis);
-	}	
-	
-	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
-		DrawjsGrenadeLoadOK(frame,cthis);
-	
-	if(isStatBattleAlert() && isAutoCatching())
-	{
-		DrawjsAlertFrame(frame,cthis);
-	}
-	DrawjsLeftFrame(frame,cthis);
-	DrawjsRightFrame(frame,cthis);
-	DrawjsBottomFrame(frame,cthis);
-#endif
+
 #if 1
 	if(cthis->drawflag & (1<<0))
 	{
@@ -153,7 +120,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		DrawjsRuler(frame,cthis);
 		printf("erase the Ruler\n");
 	}
-#if 0		
+	
 	if(cthis->drawflag & (1<<2))
 		DrawjsCompass(frame,cthis);
 	if(cthis->drawflag & (1<<3))
@@ -166,7 +133,6 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		DrawjsAlertFrame(frame,cthis);
 	if(cthis->drawflag & (1<<7))
 		DrawjsAngleFrame(frame,cthis,cthis->last_angle);
-#endif
 
 	//DrawjsGrenadeLoadOK(frame,cthis);	
 #endif

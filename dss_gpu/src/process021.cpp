@@ -1132,47 +1132,54 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 	CvScalar colour=GetcvColour(2);
 //putText(frame,"heolo",Point(200,200),CV_FONT_HERSHEY_COMPLEX,1.0,Scalar(0,0,255),3,8);
 	osdindex=0;
-	
+
+
+	#if 1
+	osdindex++;
+	{
+		
+		if(Osdflag[osdindex]==1)
+		{
+			detect_num = detect_bak.size();
+			for(i=0;i<detect_num;i++)
+			{
+				DrawjsRect(m_dccv, detect_bak[i].targetRect,0);	
+			}			
+			Osdflag[osdindex]=0;
+		}
+		if(m_bMoveDetect)
+		{
+			detect_num = detect_vect.size();
+			for(i =0;i<detect_num;i++)
+			{
+				DrawjsRect(m_dccv, detect_vect[i].targetRect,2);
+			}		
+			detect_bak = detect_vect;
+			Osdflag[osdindex]=1;
+		}		
+	}
+	#endif	
+
+
 	osdindex++;
 	{
 		 UTC_RECT_float rcResult = m_rcTrack;
 		 int aimw= trkWinWH[extInCtrl.SensorStat][extInCtrl.AvtTrkAimSize][0];
 		 int aimh= trkWinWH[extInCtrl.SensorStat][extInCtrl.AvtTrkAimSize][1];
-		 #if 1
-		 startx=rcTrackBak.x;//PiexltoWindowsx(rcTrackBak.x,extInCtrl.SensorStat);
-		 starty=rcTrackBak.y;//PiexltoWindowsy(rcTrackBak.y,extInCtrl.SensorStat);
-		 endx=rcTrackBak.x+rcTrackBak.width;//PiexltoWindowsx(rcTrackBak.x+rcTrackBak.width,extInCtrl.SensorStat);
-		 endy=rcTrackBak.y+rcTrackBak.height;//PiexltoWindowsy(rcTrackBak.y+rcTrackBak.height,extInCtrl.SensorStat);
-		rectangle( m_dc,
-			Point( startx, starty ),
-			Point( endx, endy),
-			cvScalar(0,0,0, 0), 1, 8 );
 
 		#if 1
-			osdindex++;
-			{
-				
-				if(Osdflag[osdindex]==1)
-				{
-					detect_num = detect_bak.size();
-					for(i=0;i<detect_num;i++)
-					{
-						DrawjsRect(m_dccv, detect_bak[i].targetRect,0);	
-					}			
-					Osdflag[osdindex]=0;
-				}
-				if(m_bMoveDetect)
-				{
-					detect_num = detect_vect.size();
-					for(i =0;i<detect_num;i++)
-					{
-						DrawjsRect(m_dccv, detect_vect[i].targetRect,2);
-					}		
-					detect_bak = detect_vect;
-					Osdflag[osdindex]=1;
-				}		
-			}
-		#endif	
+		if(Osdflag[osdindex]==1)
+		{
+			 startx=rcTrackBak.x;//PiexltoWindowsx(rcTrackBak.x,extInCtrl.SensorStat);
+			 starty=rcTrackBak.y;//PiexltoWindowsy(rcTrackBak.y,extInCtrl.SensorStat);
+			 endx=rcTrackBak.x+rcTrackBak.width;//PiexltoWindowsx(rcTrackBak.x+rcTrackBak.width,extInCtrl.SensorStat);
+			 endy=rcTrackBak.y+rcTrackBak.height;//PiexltoWindowsy(rcTrackBak.y+rcTrackBak.height,extInCtrl.SensorStat);
+			 rectangle( m_dccv,
+				Point( startx, starty ),
+				Point( endx, endy),
+				cvScalar(0,0,0,0), 1, 8 );
+			 Osdflag[osdindex]==0;
+		}
 		
 		 if(m_bTrack)
 		 {
@@ -1184,15 +1191,15 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 			// printf("the x=%d y=%d w=%f h=%f\n",startx,starty,rcResult.width,rcResult.height);
 		 	
 			if( m_iTrackStat == 1)
-				rectangle( m_dc,
+				rectangle( m_dccv,
 					Point( startx, starty ),
 					Point( endx, endy),
-					colour, 1, 8 );
+					colour, 1, 8 );			//    white
 			else
-				rectangle( m_dc,
+				rectangle( m_dccv,
 				Point( startx, starty ),
 				Point( endx, endy),
-				cvScalar(0,255,0, 255), 1, 8 );
+				cvScalar(0,255,0, 255), 1, 8 );  	//	green 
 			//rcTrackBak = rcResult;
 			rcTrackBak.x=startx;
 			rcTrackBak.y=starty;
@@ -1200,6 +1207,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 			rcTrackBak.height=endy-starty;
 			extInCtrl.unitAimX=rcResult.x+rcResult.width/2;
 			extInCtrl.unitAimY=rcResult.y+rcResult.height/2;
+			Osdflag[osdindex]==1;
 		 }
 		 
 		// printf("rcResult.x =%f rcResult.y=%f w=%f h=%f\n",rcResult.x,rcResult.y,rcResult.width,rcResult.height);
@@ -1304,11 +1312,12 @@ osdindex++;
 	{
 		//osd_mtd_show(tgBak, false);
 		if(Osdflag[osdindex]==1)
-	 			{
-					erassdrawmmtnew(tgBak, false);
-					Osdflag[osdindex]=0;
-				}
-		 if(m_bMtd){
+		{
+			erassdrawmmtnew(tgBak, false);
+			Osdflag[osdindex]=0;
+		}
+		 if(m_bMtd)
+		 {
 			//osd_mtd_show(m_mtd[chId]->tg, true);
 			drawmmtnew(m_mtd[chId]->tg, true);
 			memcpy(tgBak, m_mtd[chId]->tg, sizeof(TARGET)*MAX_TARGET_NUMBER);

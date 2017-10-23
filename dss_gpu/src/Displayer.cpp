@@ -4,7 +4,7 @@
 #include <opencv/cv.hpp>
 #include <opencv2/opencv.hpp>
 
-//#include <gl.h>
+//#include <gl.h>  
 #include <glew.h>
 #include <glut.h>
 #include <freeglut_ext.h>
@@ -15,7 +15,7 @@
 #include "osa_mutex.h"
 #include "osa_tsk.h"
 #include "Displayer.hpp"
-#include "cuProcess.hpp"
+#include "enh.hpp"
 
 #include "cuda_mem.cpp"
 
@@ -882,7 +882,11 @@ void CDisplayer::gl_textureLoad(void)
 					//m_bEnh[chId^1]=m_bEnh[chId];
 					Mat dst = m_img[chId];
 					dst.data = dev_pbo;
-					cuHistEn( m_img[chId], dst);
+
+					cuClahe( m_img[chId],dst, 4,4,3.5,0);
+
+					
+					//cuHistEn( m_img[chId], dst);
 				}
 				else
 				{

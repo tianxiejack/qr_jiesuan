@@ -349,20 +349,18 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 					else						
 						pixcolor		= (data&0x80)?frcolor:0xff000000;//0x50000000;
 
-					if(i == 0 && k == numchar-1)
-					{
-						pixcolor	= 0x000000000;
-					}
-
 					if(k == numchar-1)
 					{
 						lastmhflag = 0;
 						lastnumflag = 0;
 						lastcharacterflag = 0;
 						lastfhflag = 0;
+						lastxhxflag = 0;
+						lastxsdflag = 0;
 					}
 					
 					//pixcolor		= (data&0x80)?frcolor:bgcolor;
+				
 					if(	k == numchar-1 && 
 						((index >=48  && index <=57) |
 						(index >=33  && index <=47) | 
@@ -371,7 +369,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 						(index >=65  && index <=90) |
 						(index >=97 && index <122))
 					  )
-					{
+					{	
 					  	if(j<startx+k*fontWidth+fontWidth-12)
 					  	{
 					  		*(pin+j*4+0-lenctl)	= pixcolor & 0xFF;
