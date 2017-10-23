@@ -3740,7 +3740,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		}
 		else if(isCalibrationGenPram())
 		{
-		//	increaseGenPram();
+			//	increaseGenPram();
 			switch(gLevel3CalibrationState){
 				case Menu_FireView:
 					increaseFireViewPram();
@@ -3766,7 +3766,11 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 			// update OSDdisplay
 			OSDCTRL_CalibMenuShow();
 			moveUpXposition();
-		}	
+		}
+		else if(isCalibrationLaser())
+		{
+			moveCrossDown();
+		}
 	}
 	else if(isBattleMode())
 	{
