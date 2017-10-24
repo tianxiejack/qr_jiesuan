@@ -107,18 +107,10 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	cthis->frcolor = 0;
 	cthis->linew = 2;
 
-#if 1
 	if(cthis->drawflag & (1<<0))
-	{
 		DrawjsCross(frame,cthis);	
-		printf("erase the cross\n");
-	}
 	if(cthis->drawflag & (1<<1))
-	{
 		DrawjsRuler(frame,cthis);
-		printf("erase the Ruler\n");
-	}
-	
 	if(cthis->drawflag & (1<<2))
 		DrawjsCompass(frame,cthis);
 	if(cthis->drawflag & (1<<3))
@@ -133,7 +125,6 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		DrawjsAngleFrame(frame,cthis,cthis->last_angle);
 
 	//DrawjsGrenadeLoadOK(frame,cthis);	
-#endif
 	return ;
 }
 

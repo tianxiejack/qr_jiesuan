@@ -3769,7 +3769,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		}
 		else if(isCalibrationLaser())
 		{
-			moveCrossDown();
+			//moveCrossDown();
 		}
 	}
 	else if(isBattleMode())

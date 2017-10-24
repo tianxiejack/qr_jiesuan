@@ -23,13 +23,12 @@
 #include <unistd.h>
 #include <errno.h>
 
-
 #include "osa.h"
 #include "dx.h"
 #include "dx_config.h"
 #include "app_user.h"
 #include "dx_main.h"
-//#include "Ti_vdis.h"
+#include "firingCtrl.h"
 
 
 char gAPP_mainMenu[] =
@@ -56,6 +55,7 @@ char gAPP_runMenu[] =
         "\r\n c: Configure setup"
         "\r\n b: Print link buffers statistics"
         "\r\n e: Stop App"
+        "\r\n f: Switch the algorithm"
         "\r\n"
         "\r\n Enter Choice: "
     };
@@ -116,6 +116,11 @@ static Int32 usercase_run( int type )
         case 'e':
             done = TRUE;
             break;
+	 case 'F':
+	 case 'f':
+	 	printf("dx sendmsging \n");
+		setUseInterPolation();
+		break;
 /*			
         case '4':
 		printf("input the value");

@@ -1,6 +1,7 @@
 
 #include "firingCtrl.h"
 #include "trajectoryCalc.h"
+#include "PolyNomialCalc.h"
 #include "LaserPort.h"
 #include "MachGunPort.h"
 #include <math.h>
@@ -69,11 +70,15 @@ static const DipCorrectionRow gDipCorrectionTable[] =
 };
 
 static double gGrenadeDestTheta = 0.0;
-static Bool Use_interPolation = TRUE;//FALSE;
+static Bool Use_interPolation = TRUE;
 
 void setUseInterPolation(void)
 {
 	Use_interPolation = !Use_interPolation;
+	if(Use_interPolation)
+		printf("trajectoryCalc\n");
+	else
+		printf("polynomialCalc\n");
 }
 float getSumCalibX(void)
 {
@@ -394,11 +399,10 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 		
 	}
 //计算提前量
-	//if(Use_interPolation)
-	if(1)
+	if(Use_interPolation)
 		ret = trajectoryCalc( input, output);//计算射击诸元，得出飞行时间、提前量等
 	else
-	 	;//ret = polynomialCalc(input, output);
+	 	ret = polynomialCalc(input, output);
 
 	if(ret < 0)
 		return ret;

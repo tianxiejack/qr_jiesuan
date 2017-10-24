@@ -74,7 +74,7 @@ GeneralCorrectionItem gGrenadeGas_GCTable[]=
 
 ZeroCorrectionItem gMachineGun_ZCTable = {500,	{360,288}};
 ZeroCorrectionItem gGrenadeKill_ZCTable  = {500,{360,288}};//{500,	{352,288}};
-WeatherItem gWeatherTable={15,101325};
+WeatherItem gWeatherTable={15,1013250};
 
 
 #define  ParameterAddrBase				(0x000000001)

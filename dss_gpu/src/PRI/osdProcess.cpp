@@ -2328,12 +2328,12 @@ int ls2tmp = 0000;
 		//	break;
 
 		case eLaserjlx:
-			sprintf(pStr,"Lx:%+05d",ls1tmp);
+			sprintf(pStr,"Lx:%+05d",getCrossX());
 			break;
 
 		case eLaserjly:
-			sprintf(pStr,"Ly:%+05d",ls2tmp);
-		break;
+			sprintf(pStr,"Ly:%+05d",getCrossY());
+			break;
 
 		case eReady:
 			sprintf(pStr,"%c%c",141,142);

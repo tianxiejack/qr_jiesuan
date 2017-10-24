@@ -45,6 +45,7 @@
 #include "osdPort.h"
 #include "statCtrl.h"
 
+
 #define DX_TSK_PRI          2
 #define DX_TSK_STACK_SIZE   ( 0 )
 DX_CFG dxCfg[8];
