@@ -414,9 +414,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		500,	0,	{0}},
 	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	330+LOFFSET,		500,	0,	{0}},
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
-	{eLaserjlx,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,		500,	0,	{0}},
-	{eLaserjly,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,		500,	0,	{0}},
-	{eReady,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
+	{eLaserjlx,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,		500,	0,	{0}},
+	{eLaserjly,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,		500,	0,	{0}},
+	{eReady,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
 
 	//{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
 	//{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
@@ -1582,22 +1582,22 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%s",Posd[eCorrectionTip]);
 			break;
 		case eF1Button:
-			sprintf(pStr,"%c %c",143,156);//200,210); 			//ɨ��//����
+			sprintf(pStr,"%c%c",143,156);//200,210); 			//ɨ��//����
 			break;
 		case eF2Button:
-			sprintf(pStr,"%c %c",237,178); 			//ͼ��
+			sprintf(pStr,"%c%c",237,178); 			//ͼ��
 			break;
 		case eF3Button:
-			sprintf(pStr,"%c %c",252,218); 			//��ǿ
+			sprintf(pStr,"%c%c",252,218); 			//��ǿ
 			break;
 		case eF4Button:
-			sprintf(pStr,"%c %c",179,202); 			//���
+			sprintf(pStr,"%c%c",179,202); 			//���
 			break;
 		case eF5Button:
-			sprintf(pStr,"%c %c",172,173); 			//206 kong
+			sprintf(pStr,"%c%c",172,173); 			//206 kong
 			break;
 		case eF6Button:
-			sprintf(pStr,"%c %c",145,146); 			//��
+			sprintf(pStr,"%c%c",145,146); 			//��
 			break;
 		case eCalibMenu_Weather:
 			sprintf(pStr,"%c%c%c%c",219,242,180,225); 			//�������
