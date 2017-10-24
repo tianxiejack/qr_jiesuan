@@ -329,7 +329,7 @@ typedef enum _eOsdTypeId{
 	eLaserjlx,
 	eLaserjly,
 	eReady,
-//	erase_shottype,
+//	erase_blank,
 //	erase_guntip,
 	
 	eBoreSightLinId,
@@ -469,7 +469,7 @@ extern char ShotGunOsd[2][8];//���ģʽ:��ǹ
 extern char LaserOsd[2][8];
 extern char GenPramMenu[4][12];
 extern char WorkOsd[10][8];	//����ģʽ
-
+extern char erase_blank[8];
 extern volatile char globalShoweErrorZone;
 extern WeatherItem gWeatherTable;
 

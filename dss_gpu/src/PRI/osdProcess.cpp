@@ -135,6 +135,8 @@ char AngleCorrectOsd[3][8]={
 char SaveYesNoOsd[2][8]={
 	"YES<","NO>"
 };
+char erase_blank[8] = {"  "};
+
 char *Posd[OSD_TEXT_SIZE]={NULL};
 char CalibGeneralOsd[3][8];
 int General[14]={0,0,0,0,0,0,0,0,0,0,0};
@@ -206,8 +208,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eCalibMenu_Laser,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		275,	0,	{0}},
 	{eCalibMenu_Child,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		205,	0,	{0}},
 	
-	{eCursorX,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		170,	0,	{0}},
-	{eSaveYesNo,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		170,	0,	{0}},
+	{eCursorX,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		170,	0,	{0}},
+	{eSaveYesNo,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		170,	0,	{0}},
 	{eCalibMenu_SaveOK,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	300+LOFFSET,		65,	0,	{0}},
 	{eSelfCheckResult,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		65,	0,	{0}},
 	{eSelfCheckState1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		97,	0,	{0}},
@@ -418,7 +420,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eLaserjly,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,		500,	0,	{0}},
 	{eReady,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
 
-	//{erase_shottype,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545,		70,	0,	{0}},
+	//{erase_blank,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160,		70,	0,	{0}},
 	//{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
 };
 

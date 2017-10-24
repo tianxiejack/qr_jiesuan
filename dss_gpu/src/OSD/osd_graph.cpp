@@ -77,10 +77,12 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 				tmpOsd = Posd[eErrorZone];
 				Posd[eErrorZone] = ErrorOsd[18];
 			}
-			else if(pTextObj->osdId == eCursorX && g_Text[eCursorX].osdInitY != 70)
+			else if(pTextObj->osdId == eCursorX)//&& g_Text[eCursorX].osdInitY < 90)
 			{
+				#if 1
 				XtempY = g_Text[eCursorX].osdInitY;
-				g_Text[eCursorX].osdInitY = 70;
+				g_Text[eCursorX].osdInitY = 65;
+			//printf("before = %d\n",XtempY);
 				OSDCTRL_genOsdContext(pCtrlObj,i);
 				startx   = pTextObj->osdInitX;
 				starty   = pTextObj->osdInitY;
@@ -88,7 +90,9 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 				bgcolor = BGCOLOR;
 				ptr   = (char*)pTextObj->osdContext;
 				osd_chtext(frame, startx, starty, ptr, bgcolor, bgcolor);
+				
 				g_Text[eCursorX].osdInitY = XtempY;
+				#endif
 			}
 			
 
