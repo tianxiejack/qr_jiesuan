@@ -4530,9 +4530,8 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 		gLevel3CalculatorState = Battle_Idle;
 
 		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
-
-		OSDCTRL_ItemShow(eDynamicZone);
 		Posd[eDynamicZone] = DynamicOsd[2];
+		OSDCTRL_ItemShow(eDynamicZone);
 		startDynamicTimer();
 		//sendCommand(CMD_QUIT_AVT_TRACKING);
 	}
@@ -4542,8 +4541,9 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 			OSDCTRL_ItemHide(eMeasureDis);
 		gLevel3CalculatorState = Auto_Idle;
 		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
-		OSDCTRL_ItemShow(eDynamicZone);
+		//OSDCTRL_ItemShow(eMeasureType);
 		Posd[eDynamicZone] = DynamicOsd[2];
+		OSDCTRL_ItemShow(eDynamicZone);
 		startDynamicTimer();
 	}	
 
@@ -4639,9 +4639,8 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 				processCMD_LASER_OK(0);
 				//sendCommand(CMD_LASER_OK);
 			else
-				LaserPORT_requst();
-
-			//sendCommand(CMD_TRIGGER_AVT);
+				SPI_mirror_send_requst();
+				//LaserPORT_requst();
 		}
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&& isAutoTriggerMeasureVelocity())
@@ -4669,7 +4668,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			//gLevel3CalculatorState = Auto_Idle;
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			OSDCTRL_ItemShow(eCorrectionTip);
-			//SPI_mirror_send_requst();
+			SPI_mirror_send_requst();
 		}	
 	}
 	return ;

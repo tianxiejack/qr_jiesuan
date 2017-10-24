@@ -1,10 +1,7 @@
 
 #include "permanentStorage.h"
-//#include "FiringCtrl.h"
-//#include "sdkDef.h"
 #include "WeaponCtrl.h"
 #include "PositionPort.h"
-//#include "main.h"
 
 GeneralCorrectionItem gMachineGun_GCTable[]= 
 {

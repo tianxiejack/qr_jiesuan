@@ -203,7 +203,7 @@ int LaserPORT_requst()		//���Ͳ������
 #endif	
 	//LaserPORT_requst_TRACE();
 // start a timeout fail
-	pTimerObj->startTimer(eLaser_Timer,LASER_TIMER);
+	startLaserTimer();
 
 	return 0;
 }

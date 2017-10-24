@@ -1580,12 +1580,14 @@ void button_to_save()
 	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_distance,     		(int)(gGrenadeKill_GCParam.distance*100));
 	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_deltaX,        		(int)(gGrenadeKill_GCParam.data.deltaX*100));
 	CFGID_CONFIG_SETSAVE(CFGID_Kill_GC_deltaY,        		(int)(gGrenadeKill_GCParam.data.deltaY*100)); 
-
+	
+	CFGID_CONFIG_SETSAVE(CFGID_CCD_BIG0,        			(int)(CCD_Big[0]));
+	CFGID_CONFIG_SETSAVE(CFGID_CCD_BIG1,        			(int)(CCD_Big[1]));
+	CFGID_CONFIG_SETSAVE(CFGID_CCD_SMALL0,        		(int)(CCD_Small[0]));
+	CFGID_CONFIG_SETSAVE(CFGID_CCD_SMALL1,        		(int)(CCD_Small[1]));
+	
 	Dx_sendCfgMsg(NULL,DX_MSGID_SET_CFG,&dxCfg[0],FALSE);
-
-printf("gMachineGun_ZCTable.data.deltaX = %d\n",gMachineGun_ZCTable.data.deltaX);
-printf("gWeatherTable.Temparature = %d\n",gWeatherTable.Temparature);
-	 return ;
+	return ;
 }
 
 
@@ -1610,7 +1612,7 @@ void button_to_read()
 
 	gWeatherTable.Temparature		=	gDXD_info.sysConfig[CFGID_Weather_Temparature];
 	gWeatherTable.Pressure			=	gDXD_info.sysConfig[CFGID_Weather_Pressure];
-//printf("gWeatherTable.Pressure = %d\n",gWeatherTable.Pressure);
+	//printf("gWeatherTable.Pressure = %d\n",gWeatherTable.Pressure);
 	gMachineGun_GCParam.distance	=	gDXD_info.sysConfig[CFGID_Gun_GC_distance]*0.01;
 	gMachineGun_GCParam.data.deltaX	=	gDXD_info.sysConfig[CFGID_Gun_GC_deltaX]*0.01;
 	gMachineGun_GCParam.data.deltaY	=	gDXD_info.sysConfig[CFGID_Gun_GC_deltaY]*0.01;
@@ -1623,6 +1625,12 @@ void button_to_read()
 	gGrenadeKill_GCParam.data.deltaX	=	gDXD_info.sysConfig[CFGID_Kill_GC_deltaX]*0.01;
 	gGrenadeKill_GCParam.data.deltaY	=	gDXD_info.sysConfig[CFGID_Kill_GC_deltaY]*0.01;
 
+	CCD_Big[0] = gDXD_info.sysConfig[CFGID_CCD_BIG0];
+	CCD_Big[1] = gDXD_info.sysConfig[CFGID_CCD_BIG1];
+	CCD_Small[0] = gDXD_info.sysConfig[CFGID_CCD_SMALL0];
+	CCD_Small[1] = gDXD_info.sysConfig[CFGID_CCD_SMALL1];
+
+	
 	//printf("gMachineGun_ZCTable.distance = %f\n\n",gMachineGun_ZCTable.distance);
 	return ;
 }

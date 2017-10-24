@@ -208,7 +208,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	
 	{eCursorX,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		170,	0,	{0}},
 	{eSaveYesNo,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		170,	0,	{0}},
-	{eCalibMenu_SaveOK,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	150+LOFFSET,		65,	0,	{0}},
+	{eCalibMenu_SaveOK,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	300+LOFFSET,		65,	0,	{0}},
 	{eSelfCheckResult,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		65,	0,	{0}},
 	{eSelfCheckState1,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		97,	0,	{0}},
 	{eSelfCheckState1_status,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	210+LOFFSET,		97,	0,	{0}},
@@ -457,10 +457,10 @@ static void OSDCTRL_OsdInitial()
 
 	sprintf(MeasureTypeOsd[0],"%c",201);//laser 
 	sprintf(MeasureTypeOsd[1],"%c",222);//manual
-	sprintf(MeasureTypeOsd[2],"LSBG");//LSBG
-	sprintf(MeasureTypeOsd[3],"TMOV");//TMOV
-	sprintf(MeasureTypeOsd[4],"ECNL");//ECNL
-	sprintf(MeasureTypeOsd[5],"SMNL");//SMNL
+	sprintf(MeasureTypeOsd[2],":LSBG");//LSBG
+	sprintf(MeasureTypeOsd[3],":TMOV");//TMOV
+	sprintf(MeasureTypeOsd[4],":ECNL");//ECNL
+	sprintf(MeasureTypeOsd[5],":SMNL");//SMNL
 
 	sprintf(GunOsd[0],"%c%c",200,216);// ji qiang
 	sprintf(GunOsd[1],"%c%c",223,224);// sha shang
@@ -657,7 +657,8 @@ void OSDCTRL_BattleShow()
 	Posd[eWorkMode] = WorkOsd[wAuto];
 	OSDCTRL_updateAreaN();
 	OSDCTRL_AlgSelect();	
-	
+	printf("CCD_Big[0] = %d\n",CCD_Big[0]);
+	printf("CCD_Big[1] = %d\n",CCD_Big[1]);
 	num = 1;
 }
 
