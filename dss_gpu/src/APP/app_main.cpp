@@ -118,7 +118,6 @@ static Int32 usercase_run( int type )
             break;
 	 case 'F':
 	 case 'f':
-	 	printf("dx sendmsging \n");
 		setUseInterPolation();
 		break;
 /*			

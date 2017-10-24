@@ -76,9 +76,9 @@ void setUseInterPolation(void)
 {
 	Use_interPolation = !Use_interPolation;
 	if(Use_interPolation)
-		printf("trajectoryCalc\n");
+		printf("the alogrithm is trajectoryCalc\n");
 	else
-		printf("polynomialCalc\n");
+		printf("the alogrithm is polynomialCalc\n");
 }
 float getSumCalibX(void)
 {
