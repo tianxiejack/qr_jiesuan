@@ -729,5 +729,3 @@ void udateMenuItem_Zero_General(PROJECTILE_TYPE type)
 			Posd[eCalibMenu_Zero] = CalibZeroOsd[type];
 	}
 }
-
-

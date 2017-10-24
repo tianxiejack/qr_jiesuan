@@ -3823,7 +3823,7 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 			switch(gLevel3CalibrationState)
 			{
 				case Menu_FireView:
-					//decreaseFireViewPram();
+					decreaseFireViewPram();
 					break;
 				case Menu_FireCtrl:
 					//decreaseFireCtrlPram();
@@ -4096,7 +4096,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				switch(gLevel3CalibrationState)
 				{
 					case Menu_FireView:
-						//saveFireViewPram();
+						saveFireViewPram();
 						break;
 					case Menu_FireCtrl:
 						//saveFireCtrlPram();
