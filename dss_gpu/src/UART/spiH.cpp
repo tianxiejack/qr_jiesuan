@@ -120,6 +120,8 @@ int process_decode(struct RS422_data * pRS422_data)
 				Temperature =  buf[5]<<8|buf[6];
 
 				#if SPI_DEBUG
+					for(int aaa = 0;aaa<=7;aaa++)
+						printf("recvbuf[%d] = %x\n",aaa,buf[aaa]);
 					printf(" PlatformThetaX=%d PlatformThetaY=%d weather=%d \n", PlatformThetaX, PlatformThetaY, Temperature);
 				#endif
 

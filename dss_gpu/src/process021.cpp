@@ -27,7 +27,7 @@
 #include "spiH.h"
 #include "servo_control_obj.h"
 
-#define VIDEO1280X1024 1
+//#define VIDEO1280X1024 0
 
 using namespace std;
 using namespace cv;
@@ -51,6 +51,7 @@ UInt32 interfaceflag;
 static bool tiaolingwei_flag = 0;
 static bool distancefirst = 1;
 static bool DrawInDrawopen = 0;
+static bool DrawMoveDetect = 0;
 
 bool gProjectileMachFovlast = 0; //0 - small   1 - big
 bool gProjectileGreFovlast = 0;
@@ -75,8 +76,8 @@ CProcess021::CProcess021()
 	pIStuts->unitAxisX[0]      = 360;
 	pIStuts->unitAxisY[0]      = 288;
 #ifdef VIDEO1280X1024
-	pIStuts->unitAxisX[1]      = 640;
-	pIStuts->unitAxisY[1]      = 512;
+	pIStuts->unitAxisX[1]      = 360;
+	pIStuts->unitAxisY[1]      = 288;
 #else
 	pIStuts->unitAxisX[1]      = 360;
 	pIStuts->unitAxisY[1]      = 288;
@@ -1150,6 +1151,11 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 		if(m_bMoveDetect)
 		{
 			detect_num = detect_vect.size();
+			if(detect_num)
+				DrawMoveDetect = 1;
+			else
+				DrawMoveDetect = 0;
+			
 			for(i =0;i<detect_num;i++)
 			{
 				if(detect_vect[i].targetRect.width > 50 && detect_vect[i].targetRect.height > 50 )
@@ -1159,11 +1165,14 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 					random.y = detect_vect[i].targetRect.y;
 					random.h = detect_vect[i].targetRect.height;
 					random.w =detect_vect[i].targetRect.width;	
+					
 				}
 			}		
 			detect_bak = detect_vect;
 			Osdflag[osdindex]=1;
-		}		
+		}
+		else
+			DrawMoveDetect = 0;
 	}
 	#endif	
 
@@ -1972,15 +1981,18 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 					   procStr[pIStuts->AvtTrkStat]);
 
 			dynamic_config(VP_CFG_TrkEnable, 0);
-			//pIStuts->unitAimX = pIStuts->unitAxisX[extInCtrl.SensorStat ] ;//- pIStuts->unitAimW/2;
-			pIStuts->unitAimX =  random.x+random.w/2;
+			if(DrawMoveDetect)
+				pIStuts->unitAimX = pIStuts->unitAxisX[extInCtrl.SensorStat ] ;//- pIStuts->unitAimW/2;
+			else
+				pIStuts->unitAimX =  random.x+random.w/2;
 			if(pIStuts->unitAimX<0)
 			{
 				pIStuts->unitAimX=0;
 			}
-			
-			//pIStuts->unitAimY = pIStuts->unitAxisY[extInCtrl.SensorStat ];// - pIStuts->unitAimH/2;
-			pIStuts->unitAimY = random.y+random.h/2;
+			if(DrawMoveDetect)
+				pIStuts->unitAimY = pIStuts->unitAxisY[extInCtrl.SensorStat ];// - pIStuts->unitAimH/2;
+			else
+				pIStuts->unitAimY = random.y+random.h/2;
 
 			if(pIStuts->unitAimY<0)
 			{
@@ -2530,7 +2542,7 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,					processCMD_MODE_ATTACK_MULTI,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_SMALL,					processCMD_MODE_FOV_SMALL,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u5c0f\u951f\u63a5\u7b79\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_LARGE,					processCMD_MODE_FOV_LARGE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u63a5\u7b79\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,					processCMD_MODE_SCALE_SWITCH,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u811a\u8fbe\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,			MSGAPI_inputzoom /*processCMD_MODE_SCALE_SWITCH*/,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u811a\u8fbe\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_PIC_COLOR_SWITCH,			processCMD_MODE_PIC_COLOR_SWITCH,		0); // \u951f\u53eb\u4f19\u62f7\u56fe\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ENHANCE_SWITCH,				processCMD_MODE_ENHANCE_SWITCH,		0); // \u951f\u65a4\u62f7\u9891\u951f\u65a4\u62f7\u5f3a\u951f\u53eb\u4f19\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_SHORT,					processCMD_MODE_SHOT_SHORT,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u6559\u7889\u62f7\u951f\u6212\u3001\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
@@ -2810,15 +2822,15 @@ void CProcess021::MSGAPI_inputbdt(long lParam )
 
 void CProcess021::MSGAPI_inputzoom(long lParam )
 {
-#if 0
+#if 1
 	CMD_EXT *pIStuts = &sThis->extInCtrl;
-		//if(pIStuts->ImgZoomStat[pIStuts->SensorStat])
-		//	pIStuts->ImgZoomStat[pIStuts->SensorStat] = eImgAlg_Disable;
-		//else
-		//	pIStuts->ImgZoomStat[pIStuts->SensorStat] = eImgAlg_Enable;
+	if(pIStuts->ImgZoomStat[pIStuts->SensorStat])
+		pIStuts->ImgZoomStat[pIStuts->SensorStat] = eImgAlg_Disable;
+	else
+		pIStuts->ImgZoomStat[pIStuts->SensorStat] = eImgAlg_Enable;
 	sThis->msgdriv_event(MSGID_EXT_INPUT_ENZOOM,NULL);
 #endif
-	OSA_printf("%s,line:%d ... MSGAPI_inputzoom",__func__,__LINE__);
+	//OSA_printf("%s,line:%d ... MSGAPI_inputzoom",__func__,__LINE__);
 	return ;
 }
 
