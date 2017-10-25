@@ -82,7 +82,7 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 				#if 1
 				XtempY = g_Text[eCursorX].osdInitY;
 				g_Text[eCursorX].osdInitY = 65;
-			//printf("before = %d\n",XtempY);
+				//printf("XtempY = %d\n",XtempY);
 				OSDCTRL_genOsdContext(pCtrlObj,i);
 				startx   = pTextObj->osdInitX;
 				starty   = pTextObj->osdInitY;
