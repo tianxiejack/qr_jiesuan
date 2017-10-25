@@ -7,6 +7,7 @@ CPP_SRCS += \
 ../src/PRI/GrenadePort.cpp \
 ../src/PRI/LaserPort.cpp \
 ../src/PRI/MachGunPort.cpp \
+../src/PRI/PolyNomialCalc.cpp \
 ../src/PRI/PositionPort.cpp \
 ../src/PRI/TurretPosPort.cpp \
 ../src/PRI/WeaponCtrl.cpp \
@@ -26,6 +27,7 @@ OBJS += \
 ./src/PRI/GrenadePort.o \
 ./src/PRI/LaserPort.o \
 ./src/PRI/MachGunPort.o \
+./src/PRI/PolyNomialCalc.o \
 ./src/PRI/PositionPort.o \
 ./src/PRI/TurretPosPort.o \
 ./src/PRI/WeaponCtrl.o \
@@ -45,6 +47,7 @@ CPP_DEPS += \
 ./src/PRI/GrenadePort.d \
 ./src/PRI/LaserPort.d \
 ./src/PRI/MachGunPort.d \
+./src/PRI/PolyNomialCalc.d \
 ./src/PRI/PositionPort.d \
 ./src/PRI/TurretPosPort.d \
 ./src/PRI/WeaponCtrl.d \
