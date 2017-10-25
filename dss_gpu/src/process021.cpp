@@ -4396,6 +4396,11 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 			isfixingMeasure = FALSE;
 			OSDCTRL_ItemShow(eMeasureDis);				
 		}
+
+		if(!isMeasureManual() && DrawInDrawopen)
+			DrawInDraw_open_close();		
+
+		
 	}
  	return ;
  }

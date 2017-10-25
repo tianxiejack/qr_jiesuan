@@ -1556,7 +1556,7 @@ int ls2tmp = 0000;
 			//sprintf(pStr,"T"); 
 			break;	
 		case eWeather2:
-			sprintf(pStr,"R:%+02.1f%+02.1f",getAimOffsetX(),getAimOffsetY()); 
+			sprintf(pStr,"R:%+02.1f%+02.1f",getCorrectionCalibX(),getCorrectionCalibY()); 
 			break;
 		case eErrorZone:
 			sprintf(pStr,"%s",Posd[eErrorZone]); 
