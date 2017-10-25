@@ -381,14 +381,12 @@ void CProcess021::process_osd(void *pPrm)
 	if(flag)
 	{
 		OSDCTRL_erase_draw_text(frame,pCtrlObjLocal);
-		pFovCtrlLocal->fovdraw = 0;
 		FOVCTRL_erase_draw(frame, pFovCtrlLocal);//frame_graph
 	}
 	//OSDCTRL_ItemShow(eErrorZone);
 	//OSDCTRL_AllHide();
 
 	memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
-	pFovCtrlLocal->fovdraw = 1;
 	FOVCTRL_draw(frame,pFovCtrlLocal);
 
 	memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
@@ -4249,6 +4247,7 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
  {
+ 	OSDCTRL_NoShine();
  	OSDCTRL_ItemShine(eGunTip);
 	
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
@@ -4265,6 +4264,7 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 
 void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
  {
+ 	OSDCTRL_NoShine();
  	OSDCTRL_ItemShine(eGunTip);
 
  	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
@@ -4385,23 +4385,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
 			OSDCTRL_ItemShine(eMeasureDis);
-		#if 0
-			switch(getDisLen())
-			{
-				case 100: 
-					i = eMeasureDis_Value2;
-					break;
-				case 10: 
-					i = eMeasureDis_Value3;
-					break;
-				case 1:
-					i = eMeasureDis_Value4;
-					break;
-				default :
-					break;
-			}
-			//OSDCTRL_ItemShine(i);		
-		#endif
+
 			isfixingMeasure = TRUE;
 			finish_laser_measure = 0;
 		}
@@ -4410,8 +4394,6 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 			SHINE = FALSE;
 			ShinId = 0;
 			isfixingMeasure = FALSE;
-			//for(i = eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-			//	OSDCTRL_ItemShow(i);
 			OSDCTRL_ItemShow(eMeasureDis);				
 		}
 	}

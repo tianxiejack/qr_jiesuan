@@ -107,6 +107,8 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	cthis->frcolor = 0;
 	cthis->linew = 2;
 
+	cthis->fovdraw = 0;
+
 	if(cthis->drawflag & (1<<0))
 		DrawjsCross(frame,cthis);	
 	if(cthis->drawflag & (1<<1))
@@ -139,6 +141,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	
 	cthis->drawflag = 0;
 	cthis->last_angle = 0;
+	cthis->fovdraw = 1;
  	
 	cthis->last_angle = getGrenadeAngle()-getMachGunAngle();
 	DrawjsAngleFrame(frame,cthis,cthis->last_angle);

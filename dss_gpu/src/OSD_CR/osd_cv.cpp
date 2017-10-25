@@ -487,6 +487,8 @@ void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 	else
 		offlen = 20;
 
+	if(!cthis->fovdraw)
+		offlen = 20;
 	//ren
 
 	start.x = cthis->fovX;
