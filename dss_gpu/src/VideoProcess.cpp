@@ -57,7 +57,7 @@ void CVideoProcess::main_proc_func()
 	while(mainProcThrObj.exitProcThread ==  false)
 	{
 	/******************************************/
-//	OSA_printf("111ALL-Trk: time = %f sec \n", ( (getTickCount() - tstart)/getTickFrequency()) );
+	//OSA_printf("111ALL-Trk: time = %f sec \n", ( (getTickCount() - tstart)/getTickFrequency()) );
 //	abcde = getTickCount();	
 	
 		OSA_semWait(&mainProcThrObj.procNotifySem, OSA_TIMEOUT_FOREVER);
@@ -169,8 +169,8 @@ void CVideoProcess::main_proc_func()
 		else if(bMoveDetect)
 		{
 			if(m_pMovDetector != NULL)
-				m_pMovDetector->setFrame(frame_gray, chId);	
-			OSA_assert(chId == 0);
+				m_pMovDetector->setFrame(frame_gray, 0);	//chId
+			//OSA_assert(chId == 0);
 		}
 
 		if(chId != m_curChId)
