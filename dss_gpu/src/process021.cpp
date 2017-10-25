@@ -4140,8 +4140,9 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 	else if(isBattleMode())
 	{	
 		if(tiaolingwei_flag)
-		{
-			OSDCTRL_NoShine();
+		{	
+			//OSDCTRL_NoShine();
+			OSDCTRL_ItemHide(eGuiling);
 			Posd[eSuperOrder] = SuperOsd[2];
 			OSDCTRL_ItemShow(eSuperOrder);
 			requstServoContrl();
@@ -4885,8 +4886,9 @@ void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
 		return;
 	
 	tiaolingwei_flag = 1;
-	Posd[eDynamicZone] = DynamicOsd[9];
-	OSDCTRL_ItemShine(eDynamicZone);
+	//Posd[eDynamicZone] = DynamicOsd[9];
+	//OSDCTRL_ItemShine(eDynamicZone);
+	OSDCTRL_ItemShine(eGuiling);
 	//tiao ling wei
 	#if 0
 		Posd[eSuperOrder] = SuperOsd[2];

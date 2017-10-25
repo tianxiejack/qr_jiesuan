@@ -329,6 +329,7 @@ typedef enum _eOsdTypeId{
 	eLaserjlx,
 	eLaserjly,
 	eReady,
+	eGuiling,
 //	erase_blank,
 //	erase_guntip,
 	

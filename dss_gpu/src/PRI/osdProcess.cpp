@@ -87,6 +87,7 @@ char GunOsd[6][8];	//ǹ������
 char ShotOsd[2][8];//���ģʽ:��
 char ShotGunOsd[2][8];//���ģʽ:��ǹ
 char LaserOsd[2][8];
+char GuilingOsd[1][8];
 
 
 char EnhanceOsd[2][8]={
@@ -416,11 +417,11 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		500,	0,	{0}},
 	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	330+LOFFSET,		500,	0,	{0}},
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
-	{eLaserjlx,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,		500,	0,	{0}},
-	{eLaserjly,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,		500,	0,	{0}},
+	{eLaserjlx,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,				500,	0,	{0}},
+	{eLaserjly,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,				500,	0,	{0}},
 	{eReady,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
 
-	//{erase_blank,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160,		70,	0,	{0}},
+	{eGuiling,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	300,				70,	0,	{0}},
 	//{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
 };
 
@@ -607,19 +608,18 @@ void OSDCTRL_NoShine()
 {
 	int i;
 	SHINE = FALSE;
-	/*
-	if(isMeasureManual()&&(eMeasureDis_Value1 == shine_table[0]&& shine_table[3] == eMeasureDis_Value4))
-	{
-		for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-			OSDCTRL_ItemShow(i);		
-	}
-	*/
+
 	if(isMeasureManual()&&(eMeasureDis == ShinId))
 		OSDCTRL_ItemShow(ShinId);
 	else if(isCalibrationSave()&&(eSaveYesNo==ShinId))
 		OSDCTRL_ItemShow(ShinId);
 	else
+	{
 		OSDCTRL_ItemHide(ShinId);
+		printf("ShinId = %d\n",ShinId);
+		printf("number = %d\n",eGuiling);
+	}
+		
 	ShinId = 0;
 }
 
@@ -659,8 +659,6 @@ void OSDCTRL_BattleShow()
 	Posd[eWorkMode] = WorkOsd[wAuto];
 	OSDCTRL_updateAreaN();
 	OSDCTRL_AlgSelect();	
-	printf("CCD_Big[0] = %d\n",CCD_Big[0]);
-	printf("CCD_Big[1] = %d\n",CCD_Big[1]);
 	num = 1;
 }
 
@@ -2340,6 +2338,9 @@ int ls2tmp = 0000;
 
 		case eReady:
 			sprintf(pStr,"%c%c",141,142);
+			break;
+		case eGuiling:
+			sprintf(pStr,"%c%c%c%c?",235,236,140,209);
 			break;
 		
 		default:
