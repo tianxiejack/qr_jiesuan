@@ -1006,7 +1006,7 @@ void CDisplayer::gl_display(void)
 				m_renders[winId].displayrect.w, m_renders[winId].displayrect.h);
 		}
 		else
-			glViewport(33,390,120,120);
+			glViewport(30,390,120,120);
 		
 		//OSA_mutexUnlock(&m_mutex);
 

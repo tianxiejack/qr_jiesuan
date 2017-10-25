@@ -3,6 +3,7 @@
 #include "osd_cv.h"
 #include "process021.hpp"
 
+extern bool DrawInDrawopen;
 #define xmin(a,b) 		(((a) < (b)) ? (a) : (b))
 #define xmax(a,b) 		(((a) > (b)) ? (a) : (b))
 
@@ -125,6 +126,8 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		DrawjsAlertFrame(frame,cthis);
 	if(cthis->drawflag & (1<<7))
 		DrawjsAngleFrame(frame,cthis,cthis->last_angle);
+	if(cthis->drawflag & (1<<8))
+		DrawjsLittleCross(frame,cthis);
 
 	//DrawjsGrenadeLoadOK(frame,cthis);	
 	return ;
@@ -146,6 +149,13 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	cthis->last_angle = getGrenadeAngle()-getMachGunAngle();
 	DrawjsAngleFrame(frame,cthis,cthis->last_angle);
 	cthis->drawflag |= 1<<7;
+
+	if(DrawInDrawopen)
+	{
+		DrawjsLittleCross(frame, cthis);
+		cthis->drawflag |= 1<<8;
+	}
+		
 
 	if(isCalibrationMode() && isBootUpMode())
 	{

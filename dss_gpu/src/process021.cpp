@@ -50,7 +50,7 @@ extern bool isMaintPortOpen;
 UInt32 interfaceflag;
 static bool tiaolingwei_flag = 0;
 static bool distancefirst = 1;
-static bool DrawInDrawopen = 0;
+bool DrawInDrawopen = 0;
 static bool DrawMoveDetect = 0;
 
 bool gProjectileMachFovlast = 0; //0 - small   1 - big
@@ -1572,7 +1572,6 @@ void CProcess021::OnKeyDwn(unsigned char key)
 			pIStuts->PicpSensorStat=0xff;
 		
 		msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
-		//MSGDRIV_send(MSGID_EXT_INPUT_ENPICP,NULL);
 	}
 
 	if(key == 'c'|| key == 'C')
@@ -1846,8 +1845,8 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 		itmp = pIStuts->SensorStat;
 		dynamic_config(VP_CFG_MainChId, itmp, NULL);
 
-#if 1//change the sensor picp change too
-		if(pIStuts->PicpSensorStat==0||pIStuts->PicpSensorStat==1)
+		#if 1//change the sensor picp change too
+			if(pIStuts->PicpSensorStat==0||pIStuts->PicpSensorStat==1)
 			{
 				if(pIStuts->SensorStat==0)
 				{
@@ -1860,7 +1859,7 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 				if(pIStuts->ImgPicp[pIStuts->SensorStat]==1||pIStuts->ImgPicp[pIStuts->SensorStat^1]==1)
 					pIStuts->PicpSensorStatpri=pIStuts->PicpSensorStat;					
 			}
-#endif
+		#endif
 
 		itmp = pIStuts->PicpSensorStat;//freeze change
 		dynamic_config(VP_CFG_SubChId, itmp, NULL);
@@ -5189,7 +5188,6 @@ void CProcess021::DrawInDraw_open_close()
 	else 
 		pIStuts->PicpSensorStat=0xff;		
 	sThis->msgdriv_event(MSGID_EXT_INPUT_ENPICP, NULL);
-	
 }
 	
 void CProcess021::updateDrawInDraw()

@@ -65,7 +65,7 @@ typedef struct _fov_ctrl
 
 	bool fovdraw;
 	int lastStepGap ;
-	unsigned char drawflag ;		
+	unsigned int drawflag ;		
 	double last_angle;
 /*	
 
@@ -78,6 +78,7 @@ typedef struct _fov_ctrl
 	DrawjsBottomFrame	5
 	DrawjsAlertFrame		6
 	DrawjsAngleFrame		7
+	DrawjsLittleCross		8
 */	
 
 #if 0
