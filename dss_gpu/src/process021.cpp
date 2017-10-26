@@ -1148,12 +1148,8 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 		}
 		if(m_bMoveDetect)
 		{
-			detect_num = detect_vect.size();
-			if(detect_num)
-				DrawMoveDetect = 1;
-			else
-				DrawMoveDetect = 0;
-			
+			detect_num = detect_vect.size();		
+			DrawMoveDetect = 1;
 			for(i =0;i<detect_num;i++)
 			{
 				if(detect_vect[i].targetRect.width > 50 && detect_vect[i].targetRect.height > 50 )
@@ -1170,7 +1166,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 			Osdflag[osdindex]=1;
 		}
 		else
-			DrawMoveDetect = 0;
+			DrawMoveDetect = 0 ;
 	}
 	#endif	
 
@@ -1979,17 +1975,17 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 
 			dynamic_config(VP_CFG_TrkEnable, 0);
 			if(DrawMoveDetect)
-				pIStuts->unitAimX = pIStuts->unitAxisX[extInCtrl.SensorStat ] ;//- pIStuts->unitAimW/2;
-			else
 				pIStuts->unitAimX =  random.x+random.w/2;
+			else
+				pIStuts->unitAimX = pIStuts->unitAxisX[extInCtrl.SensorStat ] ;//- pIStuts->unitAimW/2;
 			if(pIStuts->unitAimX<0)
 			{
 				pIStuts->unitAimX=0;
 			}
 			if(DrawMoveDetect)
-				pIStuts->unitAimY = pIStuts->unitAxisY[extInCtrl.SensorStat ];// - pIStuts->unitAimH/2;
-			else
 				pIStuts->unitAimY = random.y+random.h/2;
+			else
+				pIStuts->unitAimY = pIStuts->unitAxisY[extInCtrl.SensorStat ];// - pIStuts->unitAimH/2;
 
 			if(pIStuts->unitAimY<0)
 			{
@@ -2535,11 +2531,11 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_FIRING_TABLE_FAILURE,				processCMD_FIRING_TABLE_FAILURE,		0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u7686\ue036\u5e2e\u62f7\u951f\u7ede\u044d\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_LAND,				      		processCMD_MODE_AIM_LAND,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u7686\u7889\u62f7\u76ee\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_AIM_SKY,						processCMD_MODE_AIM_SKY,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u7686\u5321\u62f7\u76ee\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,					processCMD_MODE_ATTACK_SIGLE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,					processCMD_MODE_ATTACK_MULTI,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_SIGLE,				processCMD_MODE_ATTACK_SIGLE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ATTACK_MULTI,				processCMD_MODE_ATTACK_MULTI,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_SMALL,					processCMD_MODE_FOV_SMALL,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u5c0f\u951f\u63a5\u7b79\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_LARGE,					processCMD_MODE_FOV_LARGE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u63a5\u7b79\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,			MSGAPI_inputzoom /*processCMD_MODE_SCALE_SWITCH*/,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u811a\u8fbe\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,				MSGAPI_inputzoom /*processCMD_MODE_SCALE_SWITCH*/,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u811a\u8fbe\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_PIC_COLOR_SWITCH,			processCMD_MODE_PIC_COLOR_SWITCH,		0); // \u951f\u53eb\u4f19\u62f7\u56fe\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_ENHANCE_SWITCH,				processCMD_MODE_ENHANCE_SWITCH,		0); // \u951f\u65a4\u62f7\u9891\u951f\u65a4\u62f7\u5f3a\u951f\u53eb\u4f19\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_SHORT,					processCMD_MODE_SHOT_SHORT,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u6559\u7889\u62f7\u951f\u6212\u3001\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
@@ -2578,24 +2574,24 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_CLOSE,				processCMD_LIHEQI_CLOSE,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_OPEN,				processCMD_LIHEQI_OPEN,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_ERR,				processCMD_GRENADE_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_OK,					processCMD_GRENADE_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_OK,				processCMD_GRENADE_OK,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_ERR,			processCMD_FIREBUTTON_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_OK,			processCMD_FIREBUTTON_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_OK,				processCMD_FIREBUTTON_OK,	0);
 
-    MSGDRIV_attachMsgFun(handle,	CMD_FULSCREENCAN_ERR,				processCMD_FULSCREENCAN_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_FULSCREENCAN_OK,				processCMD_FULSCREENCAN_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_ERR,			processCMD_DISCONTRLCAN0_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_OK,				processCMD_DISCONTRLCAN0_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_ERR,			processCMD_DISCONTRLCAN1_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_OK,				processCMD_DISCONTRLCAN1_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DIANCITIE_ERR,							processCMD_DIANCITIE_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DIANCITIE_OK,							processCMD_DIANCITIE_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_POSMOTOR_ERR,						processCMD_POSMOTOR_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_POSMOTOR_OK,						processCMD_POSMOTOR_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_ERR,			processCMD_MACHGUNMOTOR_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_FULSCREENCAN_ERR,			processCMD_FULSCREENCAN_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_FULSCREENCAN_OK,			processCMD_FULSCREENCAN_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_ERR,		processCMD_DISCONTRLCAN0_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_OK,			processCMD_DISCONTRLCAN0_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_ERR,		processCMD_DISCONTRLCAN1_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_OK,			processCMD_DISCONTRLCAN1_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DIANCITIE_ERR,				processCMD_DIANCITIE_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DIANCITIE_OK,				processCMD_DIANCITIE_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_POSMOTOR_ERR,				processCMD_POSMOTOR_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_POSMOTOR_OK,				processCMD_POSMOTOR_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_ERR,		processCMD_MACHGUNMOTOR_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_OK,			processCMD_MACHGUNMOTOR_OK,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADEMOTOR_ERR,			processCMD_GRENADEMOTOR_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_GRENADEMOTOR_OK,				processCMD_GRENADEMOTOR_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADEMOTOR_OK,			processCMD_GRENADEMOTOR_OK,	0);
 
     return 0;
 }
@@ -3515,7 +3511,7 @@ void CProcess021::onGrenadeSensorOK(LPARAM lParam)
 void CProcess021::onGrenadeSensorERR(LPARAM lParam)
  {
  	isGrenadeSensorOK = FALSE;
- 	OSA_printf("%s,line:%d ... onGrenadeSensorERR",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... onGrenadeSensorERR",__func__,__LINE__);
 	return ;
  }
 
@@ -5019,13 +5015,16 @@ void CProcess021::processCMD_LIHEQI_CLOSE(long lParam )
 
 void CProcess021::processCMD_LIHEQI_OPEN(long lParam )
 {
-	OSA_printf("%s,line:%d ... processCMD_LIHEQI_OPEN",__func__,__LINE__);
+
+
+	//OSA_printf("%s,line:%d ... processCMD_LIHEQI_OPEN",__func__,__LINE__);
 	return ;
 }
 
 
  void CProcess021::processCMD_GRENADE_ERR(long lParam )
  {
+ 	
  	OSA_printf("%s,line:%d ... processCMD_GRENADE_ERR",__func__,__LINE__);
  	return ;
  }

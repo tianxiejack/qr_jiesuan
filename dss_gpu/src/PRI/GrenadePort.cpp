@@ -248,7 +248,7 @@ int GrenadePORT_PhraseByte(BYTE* pRecv)
 {
 
 	double value;
-	//if(!bGrenadeSensorOK())
+	if(!bGrenadeSensorOK())
 	{
 		MSGDRIV_send(CMD_GENERADE_SENSOR_OK,0);
 	}
