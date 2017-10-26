@@ -4567,10 +4567,9 @@ void CProcess021::processCMD_VELOCITY_FAIL(LPARAM lParam)
 		Posd[eDynamicZone]=DynamicOsd[3];
 		OSDCTRL_ItemShow(eDynamicZone);
 		startDynamicTimer();
-
-
+ 
 	
-		OSDCTRL_ItemShine(eMeasureType);
+		//DCTRL_ItemShine(eMeasureType);
 	
 		if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
 		{
@@ -4597,7 +4596,7 @@ void CProcess021::processCMD_MEASURE_VELOCITY(LPARAM lParam)
 		markMeasure_dist_Time();
 		resetDipVelocityCounter();
 	}
-	else if(isBattleMode()&& isStatBattleAuto()&& isAutoIdle())
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoIdle() || isCalibrationZero())
 	{
 		gLevel3CalculatorState = Auto_TriggerMeasureVelocity;
 		resetTurretVelocityCounter();
@@ -4617,7 +4616,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 	//printf(" processCMD_MEASURE_DISTANCE   gLevel3CalculatorState = %d\n",gLevel3CalculatorState);
 	
 	if(isBattleMode()&& isStatBattleAuto()&& isBattleTriggerMeasureVelocity())
-	{
+	{ 
 		if(1||isMeasureManual())   
 		{
 			if(!isTurretVelocityValid())
@@ -4638,33 +4637,40 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 				//LaserPORT_requst();
 		}
 	}
-	else if(isBattleMode()&& isStatBattleAuto()&& isAutoTriggerMeasureVelocity())
+	else if(isBattleMode()&& isStatBattleAuto()&& isAutoTriggerMeasureVelocity() || isCalibrationZero())
 	{
 		if(!isTurretVelocityValid())
-			processCMD_VELOCITY_FAIL(0);
-			//sendCommand(CMD_VELOCITY_FAIL);
-		Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG			
-		OSDCTRL_ItemShine(eMeasureType);
-		//for(i=eMeasureDis_Value1;i<=eMeasureDis_Value4;i++)
-			OSDCTRL_ItemHide(eMeasureDis);
-
-		
-		if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
 		{
-			pTimerObj->startTimer(eOSD_shine_Timer,2000);
-		}
-		
-		//todo: trigger Laser and AVT
-		gLevel3CalculatorState = Auto_Preparation;
-		if(isMeasureManual())
-			processCMD_LASER_OK(0);
+			processCMD_VELOCITY_FAIL(0);
+		}	
 		else
 		{
-			//gLevel3CalculatorState = Auto_Idle;
-			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
-			OSDCTRL_ItemShow(eCorrectionTip);
-			SPI_mirror_send_requst();
-		}	
+			//sendCommand(CMD_VELOCITY_FAIL);
+			Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG			
+			OSDCTRL_ItemShine(eMeasureType);
+			OSDCTRL_ItemHide(eMeasureDis);
+
+			
+			if(pTimerObj->GetTimerStat(eOSD_shine_Timer)==eTimer_Stat_Stop)
+			{
+				pTimerObj->startTimer(eOSD_shine_Timer,2000);
+			}
+			
+			//todo: trigger Laser and AVT
+			gLevel3CalculatorState = Auto_Preparation;
+			if(isMeasureManual())
+				processCMD_LASER_OK(0);
+			else
+			{
+				//gLevel3CalculatorState = Auto_Idle;
+				if(!isCalibrationZero())
+				{
+					Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+					OSDCTRL_ItemShow(eCorrectionTip);
+				}
+				SPI_mirror_send_requst();
+			}
+		}
 	}
 	return ;
  }

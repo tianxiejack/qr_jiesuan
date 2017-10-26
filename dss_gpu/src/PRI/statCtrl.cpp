@@ -1219,6 +1219,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 				releaseServoContrl();
 				SCHEDULE_GUN = FALSE;
 				OSDCTRL_ItemHide(eSuperOrder);
+				OSDCTRL_ItemHide(eDynamicZone);
 				return;
 			}
 	//		getPelcoServoContrlObj()->moveOffset(x,y);
@@ -1268,7 +1269,9 @@ void processCMD_SCHEDULE_GUN(long lParam)
 		return;
 	// tiao qiang ta
 	Posd[eSuperOrder] = SuperOsd[0];
+	Posd[eDynamicZone] = DynamicOsd[4];
 	OSDCTRL_ItemShow(eSuperOrder);
+	OSDCTRL_ItemShow(eDynamicZone);
 	requstServoContrl();
 	SCHEDULE_GUN = TRUE;
 	COUNTER = 0;

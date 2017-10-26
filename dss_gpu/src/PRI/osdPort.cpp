@@ -619,6 +619,8 @@ void increaseMeasureDis()
 			if(DistanceManual >= 360)
 				DistanceManual = 360;
 		}
+		else if(DistanceManual < 0)
+			DistanceManual = 0;
 	}
 }
 
@@ -633,8 +635,27 @@ void decreaseMeasureDis()
 	if(eMeasureDis == i)	
 	{
 		DistanceManual -= DISLEN;
-		if(DistanceManual <= 0)
+		if(DistanceManual < 0)
 			DistanceManual = 0;
+		else
+		{
+			if(isMachineGun())
+			{
+				if(DistanceManual >= 1500)
+					DistanceManual = 1500;
+			}
+			else if(isGrenadeKill())
+			{
+				if(DistanceManual >= 1700)
+					DistanceManual = 1700;
+			}
+			else if(isGrenadeGas())
+			{
+				if(DistanceManual >= 360)
+					DistanceManual = 360;
+			}
+		}
+		
 	}
 }
 
