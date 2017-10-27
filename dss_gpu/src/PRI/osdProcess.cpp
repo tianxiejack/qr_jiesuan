@@ -142,7 +142,7 @@ char *Posd[OSD_TEXT_SIZE]={NULL};
 char CalibGeneralOsd[3][8];
 int General[14]={0,0,0,0,0,0,0,0,0,0,0};
 int Weather[10]={1,0,4,0,1,0,1,3,2,5};
-int Pressure=101325,DistanceManual=0,Temparature=15;//xiang shu  | zuo biao | ya li | ju li
+int Pressure=1013250,DistanceManual=0,Temparature=15;//xiang shu  | zuo biao | ya li | ju li
 int DisValue[4]={0,0,0,0};
 double AngleGun=0.0, AngleGrenade=0.0,PositionX=0.0,PositionY=0.0;//ǹ�ڵĶ���Ƕ���Ϣ �¶� �����ˮƽ�͸����Ƕ�ֵ
 //int n=0,ShinId=eCalibGeneral_XPole;
@@ -184,13 +184,13 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	*/
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		30,	0,	{0}},
 	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
-	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		436,	0,	{0}},
+	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		436,	0,	{0}},
 	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		470,	0,	{0}},
 	{eWeather1_T,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	479+LOFFSET+WOFFSET,		470,	0,	{0}},
 
 	{eWeather2,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		500,	0,	{0}},
-	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		468,	0,	{0}},
-	{eAngleV,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		500,	0,	{0}},
+	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		468,	0,	{0}},
+	{eAngleV,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		500,	0,	{0}},
 
 	{eDynamicZone,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,		468,	0,	{0}},
 	{eCorrectionTip,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		500,	0,	{0}},
@@ -385,34 +385,34 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{ePlatFormX,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	100+LOFFSET,		400,	0,	{0}},
 	
 	{eCalcNum_Visual,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		85+CALCOFFSET,	0,	{0}},
-	{eCalcNum_Traject,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		117+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Traject,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		117+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Trunion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		149+CALCOFFSET,	0,	{0}},
 	{eCalcNum_General,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		181+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Weather,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		213+CALCOFFSET,	0,	{0}},
 	{eCalcNum_Turret,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		245+CALCOFFSET,	0,	{0}},
-	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		277+CALCOFFSET,	0,	{0}},
-	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,		30+LOFFSET,		309+CALCOFFSET,	0,	{0}},
+	{eCalcNum_AlgleD,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		277+CALCOFFSET,	0,	{0}},
+	{eCalcNum_Posion,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		309+CALCOFFSET,	0,	{0}},
 	
 	{eStateMaintD,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		82,	0,	{0}},
 	{eStateDetend,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		82,	0,	{0}},
 	{eStateClutch,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		114,	0,	{0}},
-	{eStateGrenad,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		114,	0,	{0}},
+	{eStateGrenad,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		114,	0,	{0}},
 	{eStateFirer,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		146,	0,	{0}},
 	{eStateFulCAN,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		146,	0,	{0}},
 	{eStateDisCAN0,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		178,	0,	{0}},
 	{eStateDisCAN1,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		178,	0,	{0}},
 	{eStateMagnet,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		210,	0,	{0}},
 	{eStatePosMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		210,	0,	{0}},
-	{eStateMacMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	42+LOFFSET,		242,	0,	{0}},
-	{eStateGreMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	247+LOFFSET,		242,	0,	{0}},
+	{eStateMacMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		242,	0,	{0}},
+	{eStateGreMotor,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	230+LOFFSET,		242,	0,	{0}},
 	
 	{eStateWeaponCtrlA1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		274,	0,	{0}},
 	{eStateSrvAngle,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		306,	0,	{0}},
 	{eStateFulScrAngle,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		338,	0,	{0}},
 	{eLaserSelect,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		370,	0,	{0}},
 
-	{eAnglePosn,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		500,	0,	{0}},
-	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	45+LOFFSET,		465,	0,	{0}},
+	{eAnglePosn,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		500,	0,	{0}},
+	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		465,	0,	{0}},
 	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		465,	0,	{0}},
 	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		500,	0,	{0}},
 	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	330+LOFFSET,		500,	0,	{0}},
@@ -2227,13 +2227,13 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%c%cX=%+08.2f %c%cY=%+08.2fmil",253,243,getCorrectionCalibX(),253,243,getCorrectionCalibY()); 		//���޲���
 			break;
 		case eCalcNum_Weather:
-			sprintf(pStr,"%c%c=%+03d%c %c%c=%+08.3fKpa",219,238,gWeatherTable.Temparature,174,219,247,gWeatherTable.Pressure/1000.0); //���� = +15 ����ѹ = +101.325 Kpa:
+			sprintf(pStr,"%c%c=%+03d%c %c%c=%+08.3fKpa",219,238,gWeatherTable.Temparature,174,219,247,gWeatherTable.Pressure/10000.0); //���� = +15 ����ѹ = +101.325 Kpa:
 			break;
 		case eCalcNum_Turret:
 			sprintf(pStr,"%c%cX=%+08.2fdeg",190,239,getTurretTheta()); //��λX
 			break;
 		case eCalcNum_AlgleD:
-			sprintf(pStr,"%c%cY=%+08.2f %c%cY=%+08.2fdeg",200,216,getMachGunAngle(),211,214,getGrenadeAngle()); //��ǹY=.. ��Y=..
+			sprintf(pStr,"%c%cY=%+08.2f 35%cY=%+08.2fdeg",200,216,getMachGunAngle(),211,getGrenadeAngle()); //��ǹY=.. ��Y=..
 			break;
 		case eCalcNum_Posion:
 			sprintf(pStr,"%c%cX=%+08.2f %c%cY=%+08.2fdeg",220,204,getPlatformPositionX(),220,204,getPlatformPositionY()); //���X=.. ���Y=..

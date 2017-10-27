@@ -996,6 +996,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			if(isTimerAlive(eF2_Timer))
 			{
 				killF2Timer();
+				MSGDRIV_send(CMD_SENSOR_SWITCH,0);
 				MSGDRIV_send(CMD_MODE_PIC_COLOR_SWITCH,0);
 			}
 		}
@@ -1029,15 +1030,21 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	{	
 		if(BIT3(BYTE5(buf)) == 0x01)
 		{
-			if(isTimerAlive(eF5_Timer)/*״ֵ̬*/)
+			if(!isCalibrationMode())
 			{
-				killF5Timer();
-				MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
+				if(isTimerAlive(eF5_Timer)/*״ֵ̬*/)
+				{
+					killF5Timer();
+					MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
+				}
 			}
 		}
 		else if(BIT3(BYTE5(buf)) == 0x00)
 		{
-			startF5_Timer();
+			if(!isCalibrationMode())
+			{
+				startF5_Timer();
+			}
 		}
 	}
 	if(BIT2(BYTE3(FrameBuf1)) != BIT2(BYTE5(buf)))	//F6
@@ -1047,7 +1054,6 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 			if(isTimerAlive(eF6_Timer)/*״ֵ̬*/)
 			{
 				killF6Timer();
-				MSGDRIV_send(CMD_SENSOR_SWITCH,0);
 				MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
 			}
 		}
