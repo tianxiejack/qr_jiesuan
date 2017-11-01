@@ -192,7 +192,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eAngleH,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		468,	0,	{0}},
 	{eAngleV,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		500,	0,	{0}},
 
-	{eDynamicZone,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,		468,	0,	{0}},
+	{eDynamicZone,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180+LOFFSET,		500,	0,	{0}},
 	{eCorrectionTip,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	360+LOFFSET,		500,	0,	{0}},
 	{eF1Button,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	50+LOFFSET,		500,	0,	{0}},
 	{eF2Button,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	160+LOFFSET,		500,	0,	{0}},
@@ -491,7 +491,8 @@ static void OSDCTRL_OsdInitial()
 	sprintf(SuperOsd[6],"%c%c%c",158,159,194);//WEN XIANG GUAN
 	
 	
-	sprintf(DynamicOsd[0],"%c%c%c%c",221,185,205,229);//QI DONG JIE SUO
+	//sprintf(DynamicOsd[0],"%c%c%c%c",221,185,205,229);//QI DONG JIE SUO
+	sprintf(DynamicOsd[0],"35%c%c%c",211,205,229);//35liu jie suo
 	sprintf(DynamicOsd[1],"%c%c%c%c",209,239,205,229);//LING WEI JIE SUO
 	sprintf(DynamicOsd[2],"%c%c%c%c",179,202,245,183);//CE JU YI CHANG
 	sprintf(DynamicOsd[3],"%c%c%c%c",179,231,188,232);//CE SU DUAN SHI
