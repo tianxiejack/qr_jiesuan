@@ -344,14 +344,14 @@ void CProcess021::process_osd(void *pPrm)
 	lineParam.height = 60;
 	lineParam.frcolor = 2;
 	Osd_cvPoint start,end;
-	
-	if(isMachineGun() && (!getGunShotType()))
-	{
-		OSDCTRL_ItemHide(eShotType);
-	}
-	else
-		OSDCTRL_ItemShow(eShotType);
-
+	/*	
+		if(isMachineGun() && (!getGunShotType()))
+		{
+			OSDCTRL_ItemHide(eShotType);
+		}
+		else
+			OSDCTRL_ItemShow(eShotType);
+	*/
 	OSDCTRL_updateAreaN();
 	//memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
 	//memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
@@ -1625,10 +1625,11 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	
 	if (key == 'g')
 	{
-		Posd[eMeasureType] = MeasureTypeOsd[0];
+		//Posd[eMeasureType] = MeasureTypeOsd[0];
 		//MSGDRIV_send(CMD_BUTTON_CALIBRATION,NULL);//	jiao zhun
 		//msgdriv_event(MSGID_EXT_INPUT_COAST, NULL);
 		//MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
+		
 	}
 
 	if (key == 'G')
@@ -1638,15 +1639,9 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		//MSGDRIV_send(MSGID_EXT_INPUT_COAST,NULL);
 	}
 
-	if (key == 'h')
+	if (key == 'h' ||key == 'H')
 	{
-		MSGDRIV_send(CMD_BUTTON_AUTOCHECK, NULL);
-	}
-
-	if (key == 'H')
-	{
-		Posd[eMeasureType] = MeasureTypeOsd[2];
-		//MSGDRIV_send(CMD_BUTTON_ENTER, NULL);
+		//MSGDRIV_send(CMD_BUTTON_AUTOCHECK, NULL);
 	}
 
 	if (key == 'I' ||key == 'i')

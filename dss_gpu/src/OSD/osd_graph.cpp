@@ -47,8 +47,8 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 					frcolor  = WHITECOLOR;
 					bgcolor = BGCOLOR;
 					ptr   = (char*)pTextObj->osdContext;
-					if(i == eShotType && gProjectileType == PROJECTILE_BULLET && gGunShotType == SHOTTYPE_SHORT)
-						frcolor = bgcolor;
+					//if(i == eShotType && gProjectileType == PROJECTILE_BULLET && gGunShotType == SHOTTYPE_SHORT)
+					//	frcolor = bgcolor;
 					osd_chtext(frame, startx, starty, ptr, frcolor, bgcolor);
 				}
 		

@@ -242,7 +242,7 @@ int angleToOffset(double angleMil)
 		case FOV_SMALL:
 			ret = MIL2DEGREE(angleMil)*7200/43;
 			break;
-	// large FOV=16x12 degree; 704x576		//12 x 10
+	// large FOV=16x12 degree; 704x576		//12 x 9
 		case FOV_LARGE:
 			ret = MIL2DEGREE(angleMil)*720/12;
 			break;

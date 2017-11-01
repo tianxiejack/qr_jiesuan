@@ -646,7 +646,7 @@ void DrawjsAngleFrame(Mat frame,CFOV * fovOsdCtrl,double angle)
 	Osd_cvPoint start;
 	Osd_cvPoint end;
 	int len = 20;
-	int linew = 1;
+	int linew = 2;
 	int i=0;
 
 	CFOV*cthis =fovOsdCtrl;

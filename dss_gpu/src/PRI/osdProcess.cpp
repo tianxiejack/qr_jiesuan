@@ -168,14 +168,14 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 {
 	{eModeId,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	60+LOFFSET,		40,	0,	{0}},
 	{eWorkMode,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		30,	0,	{0}},
-	{eAimType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	140+LOFFSET,		30,	0,	{0}},
-	{eGunType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		30,	0,	{0}},
-	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400+LOFFSET,		30,	0,	{0}},
+	{eAimType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		30,	0,	{0}},
+	{eGunType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		30,	0,	{0}},
+	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,		30,	0,	{0}},
 	{eVideoErr,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	334+LOFFSET,		200,	0,	{0}},
-	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	545+LOFFSET,	30,	0,	{0}},
-	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	630+LOFFSET,		30,	0,	{0}},
+	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	575+LOFFSET,	30,	0,	{0}},
+	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	660+LOFFSET,		30,	0,	{0}},
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,		30,	0,	{0}},
-	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	436+LOFFSET,		30,	0,	{0}},
+	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	466+LOFFSET,		30,	0,	{0}},
 	/*
 	{eMeasureDis_Value1,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	435+LOFFSET,	30,	0,	{0}},
 	{eMeasureDis_Value2,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	446+LOFFSET,	30,	0,	{0}},//+23
@@ -476,7 +476,7 @@ static void OSDCTRL_OsdInitial()
 	sprintf(ShotOsd[0],"%c",188);//dan 	liu dan
 	sprintf(ShotOsd[1],"%c",210);//lian	liu dan
 
-	sprintf(ShotGunOsd[0],"  ");//DAN 	JI QIANG
+	sprintf(ShotGunOsd[0],"%c",210);//lian 	JI QIANG
 	sprintf(ShotGunOsd[1],"%c",143);//sao
 	
 	sprintf(FovTypeOsd[0],"%c",187);//big
@@ -492,14 +492,14 @@ static void OSDCTRL_OsdInitial()
 	
 	
 	//sprintf(DynamicOsd[0],"%c%c%c%c",221,185,205,229);//QI DONG JIE SUO
-	sprintf(DynamicOsd[0],"35%c%c%c",211,205,229);//35liu jie suo
+	sprintf(DynamicOsd[0],"35%c%c%c",211,205,229);	  //35liu jie suo
 	sprintf(DynamicOsd[1],"%c%c%c%c",209,239,205,229);//LING WEI JIE SUO
 	sprintf(DynamicOsd[2],"%c%c%c%c",179,202,245,183);//CE JU YI CHANG
 	sprintf(DynamicOsd[3],"%c%c%c%c",179,231,188,232);//CE SU DUAN SHI
 	sprintf(DynamicOsd[4],"%c%c%c%c",235,236,205,229);//TIAO TA JIE SUO
 	sprintf(DynamicOsd[5],"%c%c%c%c",179,202,195,248);//CE JU GUO YUAN
 	sprintf(DynamicOsd[6],"%c%c%c%c",209,239,203,184);//LING WEI JIAN CHA
-//	sprintf(DynamicOsd[7],"%c%c%c%c",163,164,166,167);//MU BIAO SHI BAI
+	//sprintf(DynamicOsd[7],"%c%c%c%c",163,164,166,167);//MU BIAO SHI BAI
 	sprintf(DynamicOsd[8],"%c%c%c%c",163,164,165,166);//MU BIAO DIU SHI
 	sprintf(DynamicOsd[9],"%c%c%c%c?",161,162,209,239);//shi fou gui ling
 
