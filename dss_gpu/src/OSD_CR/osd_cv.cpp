@@ -523,11 +523,11 @@ void DrawjsLittleCross(Mat frame,CFOV * fovOsdCtrl)
 	DrawcvLine(frame, &start, &end, cthis->frcolor, 2);
 }
 
-void DrawjsZeroCross(Mat frame,CFOV * fovOsdCtrl)
+void DrawjsGenCross(Mat frame,CFOV * fovOsdCtrl)
 {
-	int len =	5;
+	int len =	100;
 	int linew = 1;
-	int offlen = 2;
+	int offlen = 8;
 	if(fovOsdCtrl == NULL)
 		return;
 	CFOV * cthis = fovOsdCtrl;
@@ -544,7 +544,7 @@ void DrawjsZeroCross(Mat frame,CFOV * fovOsdCtrl)
 	start.x = cthis->fovX ;
 	start.y = cthis->fovY - offlen;
 	end.x = start.x;
-	end.y = start.y - len;
+	end.y = start.y - len; 
 	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//up
 
 	start.x = cthis->fovX;
@@ -564,14 +564,57 @@ void DrawjsZeroCross(Mat frame,CFOV * fovOsdCtrl)
 	end.x = start.x + len;  
 	end.y = start.y;
 	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//right
+}
+
+void DrawjsZeroCross(Mat frame,CFOV * fovOsdCtrl)
+{
+	int len =	15;
+	int linew = 1;
+	int offlen = 5;
+	if(fovOsdCtrl == NULL)
+		return;
+	CFOV * cthis = fovOsdCtrl;
+	
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+
+	start.x = cthis->fovX;
+	start.y = cthis->fovY;
+	end.x = start.x;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew); //center
+
+	start.x = cthis->fovX ;
+	start.y = cthis->fovY - offlen;
+	end.x = start.x;
+	end.y = start.y - len - 12; 
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//up
+
+	start.x = cthis->fovX;
+	start.y = cthis->fovY + offlen;
+	end.x = start.x;
+	end.y = start.y + len +12;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//down
+
+	start.x = cthis->fovX - offlen;
+	start.y = cthis->fovY;
+	end.x = start.x - len;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//left
+
+	start.x = cthis->fovX + offlen;
+	start.y = cthis->fovY;
+	end.x = start.x + len;  
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//right
 
 }
 
 void DrawjsBigFovCross(Mat frame,CFOV * fovOsdCtrl)
 {
-	int len =	15;
+	int len =	60;
 	int linew = 1;
-	int offlen = 5;
+	int offlen = 15;
 	if(fovOsdCtrl == NULL)
 		return;
 	CFOV * cthis = fovOsdCtrl;

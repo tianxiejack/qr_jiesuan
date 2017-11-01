@@ -81,6 +81,7 @@ typedef struct _fov_ctrl
 	DrawjsLittleCross		8
 	DrawjsZeroCross		9
 	DrawjsBigFovCross		10
+	DrawjsGenCross		11
 	
 */	
 

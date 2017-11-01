@@ -132,6 +132,10 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		DrawjsZeroCross(frame,cthis);
 	if(cthis->drawflag & (1<<10))
 		DrawjsBigFovCross(frame,cthis);
+	if(cthis->drawflag & (1<<11))
+		DrawjsGenCross(frame,cthis);
+
+	
 	//DrawjsGrenadeLoadOK(frame,cthis);	
 	return ;
 }
@@ -166,25 +170,25 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	}
 	else if(isCalibrationMode())//&&(isCalibrationGeneral()||isCalibrationWeather()))
 	{
-		
 		if(isCalibrationZero())
 		{
 			DrawjsCompass(frame,cthis);
 			cthis->drawflag |= 1<<2;
 			cthis->linew = 1;
 			DrawjsZeroCross(frame, cthis);
-			cthis->drawflag |= 1<<9;
-			DrawjsRuler(frame,cthis);
-			cthis->drawflag |= 1<<1;
-						
+			cthis->drawflag |= 1<<9; 
 		}
-		if(isCalibrationLaser())
+		else if(isCalibrationWeather() || isCalibrationGeneral())
+		{
+			DrawjsGenCross(frame,cthis);
+			cthis->drawflag |= 1<<11; 
+		}
+		else if(isCalibrationLaser())
 		{
 			cthis->linew = 2;
 			DrawjsCross(frame, cthis);		
 			cthis->drawflag |= 1<<0;
 		}
-	
 	}
 	else if(isBattleMode())//&&isStatBattleAlert())
 	{
@@ -193,10 +197,10 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		{
 			DrawjsCompass(frame,cthis);
 			cthis->drawflag |= 1<<2;
-			DrawjsRuler(frame,cthis);
-			cthis->drawflag |= 1<<1;
 			if(isFovSmall())
 			{
+				DrawjsRuler(frame,cthis);
+				cthis->drawflag |= 1<<1;
 				DrawjsCross(frame, cthis);
 				cthis->drawflag |= 1<<0;
 			}

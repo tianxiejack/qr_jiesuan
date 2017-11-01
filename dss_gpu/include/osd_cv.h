@@ -60,6 +60,7 @@ void DrawjsLittleCross(Mat frame,CFOV * fovOsdCtrl);
 
 void DrawjsBigFovCross(Mat frame,CFOV * fovOsdCtrl);
 void DrawjsZeroCross(Mat frame,CFOV * fovOsdCtrl);
+void DrawjsGenCross(Mat frame,CFOV * fovOsdCtrl);
 
 
 #endif /* OSD_CV_H_ */
