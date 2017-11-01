@@ -172,8 +172,6 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	{
 		if(isCalibrationZero())
 		{
-			DrawjsCompass(frame,cthis);
-			cthis->drawflag |= 1<<2;
 			cthis->linew = 1;
 			DrawjsZeroCross(frame, cthis);
 			cthis->drawflag |= 1<<9; 
