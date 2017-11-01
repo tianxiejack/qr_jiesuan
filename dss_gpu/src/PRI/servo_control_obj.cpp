@@ -8,6 +8,7 @@
 #include "statCtrl.h"
 #include "firingCtrl.h"
 #include "UartCanMessage.h"
+#include "UartMessage.h"
 //#include "dramMsgDef.h"
 //#include "main.h"
 
@@ -58,18 +59,16 @@ PIF_servo_control getGrenadeServoContrlObj()
 
 //-------------------CAN packets--- speed --------------
 static unsigned char Turretbuf[]		 = {0x03, 0x42, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
-static unsigned char  Machbuf[] 		 = {0x03, 0x2C, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static unsigned char  Machbuf[] 		 = {0x03, 0x2c, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
 static unsigned char  Grenadebuf[]	 = {0x03,0x37,0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
 /**************** CAN packets         position**************/
 static unsigned char Pos_Turretbuf[] 	= {0x03, 0x42, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
-static unsigned char Pos_Machbuf[] 		= {0x03, 0x2C, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static unsigned char Pos_Machbuf[] 		= {0x03, 0x2c, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
 static unsigned char Pos_Grenadebuf[] 	= {0x03,0x37,0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
 
 /*********************TEST buf ************************/
-static char  TestMachbuf[] 	 = {0x03, 0x2C, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
-static char  TestGrenadebuf[] = {0x03,0x37,0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
-
-
+static char  TestMachSpebuf[] 	 = {0x03, 0x2c, 0x53, 0x50, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char  TestMachPosbuf[] = {0x03,0x2c,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x00};
 
 #define MACH_SERVO_SPEED_RATE  1139
 #define MACH_SERVO_RESOLUTION  4096
@@ -546,7 +545,7 @@ void testchushihua()
 {
 	TeststartServoServer(CODE_GRENADE);
 	TeststartServoServer(CODE_MACHGUN);
-	//TeststartServoServer(CODE_TURRET);
+	TeststartServoServer(CODE_TURRET);
 	return ;
 }
 
@@ -556,15 +555,18 @@ void testjiqiangqidong()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	ymilsecond.value = 8000;
-	//FILLBUFFSPEED(TestMachbuf, ymilsecond);
-	ymilsecond.value = (2)*2*(4096/6000.0);
-	FILLBUFFOFFST(TestMachbuf,ymilsecond);
-	TestSendCANBuf(TestMachbuf,10);
-	usleep(500);
-	FILLBUFFBGIN(TestMachbuf);
-	TestSendCANBuf(TestMachbuf,6);
-	usleep(500);
+	//ymilsecond.value = 112800;
+	ymilsecond.value = 90000;
+	FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
+	TestMachPosbuf[2] = 0x53;
+	TestMachPosbuf[3] = 0x50;
+	SendCANBuf(TestMachSpebuf,10);
+	ymilsecond.value = 5000;//8000;
+	//FILLBUFFOFFST(TestMachPosbuf, ymilsecond);
+	//TestMachPosbuf[2] = 0x41;
+	//TestMachPosbuf[3] = 0x43;
+	//SendCANBuf(TestMachPosbuf,10);
+	teststartServo(CODE_MACHGUN);
 }
 
 void testliudanqidong()
@@ -573,15 +575,17 @@ void testliudanqidong()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	ymilsecond.value = 3500;
-	ymilsecond.value = (2)*2*(4096/6000.0);
-	FILLBUFFOFFST(TestMachbuf,ymilsecond);
-	//FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
-	TestSendCANBuf(TestGrenadebuf,10);
-	usleep(500);
-	FILLBUFFBGIN(TestGrenadebuf);
-	TestSendCANBuf(TestGrenadebuf,6);
-	usleep(500);
+	ymilsecond.value = 1000;
+	FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
+	TestMachPosbuf[2] = 0x53;
+	TestMachPosbuf[3] = 0x50;
+	SendCANBuf(TestMachSpebuf,10);
+	//ymilsecond.value = 5000;//8000;
+	//FILLBUFFOFFST(TestMachPosbuf, ymilsecond);
+	//TestMachPosbuf[2] = 0x44;
+	//TestMachPosbuf[3] = 0x43;
+	//SendCANBuf(TestMachPosbuf,10);
+	teststartServo(CODE_MACHGUN);
 }
 
 
@@ -592,12 +596,7 @@ void testFjiqiangqidong()
 		int value;
 	}ymilsecond;
 	ymilsecond.value = -8000;
-	FILLBUFFSPEED(TestMachbuf, ymilsecond);
-	TestSendCANBuf(TestMachbuf,10);
-	usleep(500);
-	FILLBUFFBGIN(TestMachbuf);
-	TestSendCANBuf(TestMachbuf,6);
-	usleep(500);
+
 }
 
 void testFliudanqidong()
@@ -607,23 +606,13 @@ void testFliudanqidong()
 		int value;
 	}ymilsecond;
 	ymilsecond.value = -10000;
-	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
-	TestSendCANBuf(TestGrenadebuf,10);
-	usleep(500);
-	FILLBUFFBGIN(TestGrenadebuf);
-	TestSendCANBuf(TestGrenadebuf,6);
-	usleep(500);
+
 }
 
 void teststopserver()
 {
-	FILLBUFFSTOP(TestMachbuf);
-	TestSendCANBuf((TestMachbuf), CAN_CMD_SIZE_SHORT);
-	usleep(5000);
-
-	FILLBUFFSTOP(TestGrenadebuf);
-	TestSendCANBuf((TestGrenadebuf), CAN_CMD_SIZE_SHORT);
-	usleep(5000);	
+	FILLBUFFSTOP(TestMachPosbuf);
+	SendCANBuf((TestMachPosbuf), CAN_CMD_SIZE_SHORT);
 }
 
 void testliudanjiasu()
@@ -634,12 +623,6 @@ void testliudanjiasu()
 	}ymilsecond;
 	if(ymilsecond.value <= 112800)
 		ymilsecond.value +=5000;
-	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
-	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_LONG);
-	usleep(500);
-	FILLBUFFBGIN(TestGrenadebuf);
-	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_SHORT);	
-	usleep(500);	
 }
 
 void testjiqiangjiasu()
@@ -651,11 +634,11 @@ void testjiqiangjiasu()
 	ymilsecond.value = 1000;
 	if(ymilsecond.value <= 192800)
 		ymilsecond.value +=5000;
-	FILLBUFFSPEED(TestMachbuf, ymilsecond);
-	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
+	//FILLBUFFSPEED(TestMachbuf, ymilsecond);
+	//TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
 	usleep(500);
-	FILLBUFFBGIN(TestMachbuf);
-	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_SHORT);	
+	//FILLBUFFBGIN(TestMachbuf);
+	//TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_SHORT);	
 	usleep(500);	
 }
 
@@ -668,12 +651,6 @@ void testliudanjiansu()
 	ymilsecond.value = 1000;
 	if(ymilsecond.value >= -192800)
 		ymilsecond.value -=5000;
-	FILLBUFFSPEED(TestGrenadebuf, ymilsecond);
-	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_LONG);
-	usleep(500);
-	FILLBUFFBGIN(TestGrenadebuf);
-	TestSendCANBuf(TestGrenadebuf, CAN_CMD_SIZE_SHORT);	
-	usleep(500);	
 }
 
 void testjiqiangjiansu()
@@ -685,12 +662,6 @@ void testjiqiangjiansu()
 	ymilsecond.value = 1000;
 	if(ymilsecond.value >= 2000)
 		ymilsecond.value -=5000;
-	FILLBUFFSPEED(TestMachbuf, ymilsecond);
-	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
-	usleep(500);
-	FILLBUFFBGIN(TestMachbuf);
-	TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_SHORT);	
-	usleep(500);
 }
 
 

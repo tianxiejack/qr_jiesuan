@@ -143,7 +143,7 @@ void WeaponCtrlPORT_ParseByteTurret(unsigned char *buf);
 void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf);
 void startF2_Timer();
 void killF2Timer();
-
+void absSetPosRequest(BYTE code);
 
 extern BOOL bTraceSend;
 extern int servoInit;

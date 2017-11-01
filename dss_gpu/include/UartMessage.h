@@ -21,7 +21,18 @@ extern "C" {
 #define MSG_HEAD_SIZE	(0x03)
 #define MSG_CHSUM_SIZE	(0x01)
 
+#define CAN_ID_PANEL 		(0x0002)
+#define CAN_ID_MACHGUN 	(0x02AC)	//Confirm
+#define CAN_ID_GRENADE		(0x02B7)
+#define CAN_ID_TURRET 		(0x02C2)
 
+#define CODE_SERVO_MACHGUN    (0x2C)
+#define CODE_SERVO_GRENADE	(0x37)
+#define CODE_SERVO_TURRET     	(0x42)
+
+#define CODE_MACHGUN 		(0x2c)  //jiqiang --confirm
+#define CODE_GRENADE 		(0x37)
+#define CODE_TURRET   		(0x42)
 
 
 

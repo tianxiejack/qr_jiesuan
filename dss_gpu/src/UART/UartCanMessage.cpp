@@ -32,18 +32,12 @@
 #include "UartCanMessage.h"
 #include "WeaponCtrl.h"
 #include "record_log.h"
-
+#include "UartMessage.h"
 
 bool test_flag_uart = 0;
 static int fd_can;
 
 pthread_mutex_t can_mutex;
-
-//\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u839e\u951f\u65a4\u62f7\u6b27\u951f\u65a4\u62f7\u6a21\u6851\u66ae\u62e7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u89d2?\u951f\u65a4\u62f7	\u951f\u65a4\u62f7\u53f0
-#define CODE_SERVO_MACHGUN   	(0x37)
-#define CODE_SERVO_GRENADE	(0x42)
-#define CODE_SERVO_TURRET     	(0x2C)
-
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -356,17 +350,15 @@ int ReadCANBuf(char *buf, int length)
 
 int SendCANBuf(char *buf, int length)
 {
-	#if 1
 		int nwrite= 0 ;
-
-		pthread_mutex_lock(&can_mutex);
 		
+		pthread_mutex_lock(&can_mutex);
+		usleep(2500);
 		nwrite = write(fd_can, buf, length);
 
 		pthread_mutex_unlock(&can_mutex);
 		
 		return nwrite;	
-	#endif
 }
 
 
@@ -375,7 +367,7 @@ int TestSendCANBuf(char *buf, int length)
 		int nwrite= 0 ;
 
 		pthread_mutex_lock(&can_mutex);
-		
+		//usleep(50000);
 		nwrite = write(fd_can, buf, length);
 		record_log_send_data(record_log_can_send, length, (unsigned char*)buf);
 	
@@ -394,7 +386,6 @@ void ServoAbsPosRequest( char code)
 	SendCANBuf(servoPos,  sizeof(servoPos));
 }
 
-//\u951f\u65a4\u62f7\u59cb\u951f\u65a4\u62f7\u951f\u65a4\u62f7
 void ServoStart( char code)
 {
 	 char start[6] = {0x03, 0x00, 0x42, 0x47, 0x00, 0x00 };
@@ -402,8 +393,6 @@ void ServoStart( char code)
 	SendCANBuf(start, sizeof(start));
 }
 
-//\u951f\u65a4\u62f7\u951f\u65a4\u62f7startServoServer()\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-//\u951f\u65a4\u62f7\u59cb\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u501f\u5907
 int InitServo(  char code )
 {
 	 char buf[4] = {0x00, 0x00, 0x01, 0x00};
@@ -519,11 +508,8 @@ void Turret_servo_stop()
 void Servo_start_init()
 {
 	startServoServer( CODE_SERVO_MACHGUN );
-	usleep(10*1000);
 	startServoServer( CODE_SERVO_GRENADE );
-	usleep(10*1000);
 	startServoServer( CODE_SERVO_TURRET );
-	usleep(10*1000);
 }
 
 

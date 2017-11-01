@@ -1653,7 +1653,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	{	
 		//init the server
 		requstServoContrl();
-		testchushihua();
+		//testchushihua();
 	}
 
 		
@@ -1681,7 +1681,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if (key == 'n' || key == 'N')
 	{
-		//testliudanqidong();
+		testliudanqidong();
 	}
 	
 

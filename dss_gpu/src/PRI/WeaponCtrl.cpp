@@ -25,6 +25,7 @@
 #include "statCtrl.h"
 #include "msgDriv.h"
 #include "UartCanMessage.h"
+#include "UartMessage.h"
 
 #if 0
 #include "MachGunPort.h"
@@ -84,9 +85,19 @@ void absPosRequest(BYTE code)
 	return ;
 }
 
+void absSetPosRequest(BYTE code)
+{
+	
+	char SERVOPOS[10]   ={0x03,0x00,0x50,0x58,0x00,0x00,0x00,0x00,0x00,0x00};
+	SERVOPOS[1] = code;
+	SendCANBuf(SERVOPOS, sizeof(SERVOPOS));
+	usleep(500);
+	return ;
+}
+
 void TestabsPosRequest(BYTE code)
 {
-	char SERVOPOS[6]   ={0x03,0x00,0x50,0x58,0x00,0x00};
+	char SERVOPOS[10]   ={0x03,0x00,0x50,0x58,0x00,0x00,0x00,0x00,0x00,0x00};
 	SERVOPOS[1] = code;
 	TestSendCANBuf(SERVOPOS, sizeof(SERVOPOS));
 	usleep(500);
@@ -105,7 +116,7 @@ void teststartServo(BYTE code)
 {
 	char start[6] = {0x03,0x00,0x42,0x47,0x00,0x00};
 	start[1] = code;
-	TestSendCANBuf(start, sizeof(start));
+	SendCANBuf(start, sizeof(start));
 	return ;
 }
 
@@ -126,7 +137,8 @@ void startServoServer(BYTE code)
 	MOTOR1[1] = code;
 	SendCANBuf(MOTOR1, sizeof(MOTOR1));
 	usleep(WAIT_DELAY);
-	absPosRequest(code);
+	//absPosRequest(code);
+	absSetPosRequest(code);
 	usleep(WAIT_DELAY);
 	startServo(code);
 	usleep(WAIT_DELAY);
@@ -413,7 +425,7 @@ void resetGrenadeInPositionFlag(void)
 
 void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 {
-	absPosRequest(CODE_GRENADE);
+	//absPosRequest(CODE_GRENADE);
 	//absPosRequest(CODE_MACHGUN);
 	//absPosRequest(CODE_TURRET);
 	return ;
@@ -427,20 +439,18 @@ void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 		return ;
 	//todo: check Sensor and Servo is All OK
 	TempAngle = (short)(getMachGunAngle() *100.0);
-	CANSendbuf[4] = 0x00;//((TempAngle>>8)&0xFF);
-	CANSendbuf[5] =0x00; //(TempAngle&0xFF);
+	CANSendbuf[4] = ((TempAngle>>8)&0xFF);
+	CANSendbuf[5] = (TempAngle&0xFF);
 	
 	TempAngle = (short)(getGrenadeAngle()*100.0);
-	CANSendbuf[6] = 0x00;//((TempAngle>>8)&0xFF);
-	CANSendbuf[7] = 0x00;//(TempAngle&0xFF);
+	CANSendbuf[6] = ((TempAngle>>8)&0xFF);
+	CANSendbuf[7] = (TempAngle&0xFF);
 
 	TempAngle = (short)(getTurretTheta()*100.0);
-	CANSendbuf[8] = 0x00;//((TempAngle>>8)&0xFF);
-	CANSendbuf[9] = 0x0;//TempAngle&0xFF);
-
-	CANSendbuf[3] = 0x5;
+	CANSendbuf[8] = ((TempAngle>>8)&0xFF);
+	CANSendbuf[9] = (TempAngle&0xFF);
+	
 	SendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
-	//TestSendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
 	
 }
 void processCMD_TIMER_SENDFRAME1(LPARAM lParam)//����֡1
@@ -515,11 +525,9 @@ void processCMD_TRACE_SENDFRAME0(LPARAM lParam)
 }
 void processCMD_SERVO_INIT(LPARAM lParam)
 {
-#if 1
 	startServoServer(CODE_GRENADE);
 	startServoServer(CODE_MACHGUN);
 	startServoServer(CODE_TURRET);
-#endif
 }
 Fov_Type getFovState()
 {

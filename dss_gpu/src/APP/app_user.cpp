@@ -640,13 +640,6 @@ static Int32 APP_onTimer( Int32 timerId )
 			//sendCommand(CMD_CONNECT_SWITCH);
 		}
 
-		if(timerId == eServoCheck_Timer)
-		{
-			if(isBootUpMode()&&isBootUpSelfCheck())
-				return 0;
-			sendCommand(CMD_SERVOTIMER_MACHGUN);
-		}
-
 		if(timerId == eBootUp_Timer)
 		{
 			CTimerCtrl * pCtrlTimer = pTimerObj;
@@ -699,6 +692,12 @@ static Int32 APP_onTimer( Int32 timerId )
 			//	sendCommand(CMD_TRACE_SENDFRAME0);
 		}
 
+		if(timerId == eServoCheck_Timer)
+		{
+			if(isBootUpMode()&&isBootUpSelfCheck())
+				return 0;
+			sendCommand(CMD_SERVOTIMER_MACHGUN);
+		}
 		
 		if(timerId == eSchedule_Timer)
 		{

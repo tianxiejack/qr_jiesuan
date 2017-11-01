@@ -35,10 +35,13 @@
 #define CAN_ID_MACHGUN 	(0x02B7)
 #define CAN_ID_GRENADE		(0x2C2)
 
-#define CAN_ID_TUREET_SERVO		(0x0342)
-#define CAN_ID_MACHGUN_SERVO   	(0x032C)
-#define CAN_ID_GRENADE_SERVO 	(0x0337)
+#define CODE_SERVO_MACHGUN   	(0x37)
+#define CODE_SERVO_GRENADE	(0x42)
+#define CODE_SERVO_TURRET     	(0x2C)
 
+#define CODE_MACHGUN 		(0x37)
+#define CODE_GRENADE 		(0x42)
+#define CODE_TURRET   		(0x2C)
 
 #define CAN_DEBUG 0
 
