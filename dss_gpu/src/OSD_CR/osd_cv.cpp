@@ -460,6 +460,7 @@ void DrawjsRuler(Mat frame,CFOV * fovOsdCtrl)
 	return ;
 }
 
+
 void DrawjsLittleCross(Mat frame,CFOV * fovOsdCtrl)
 {
 	Osd_cvPoint start;
@@ -520,8 +521,93 @@ void DrawjsLittleCross(Mat frame,CFOV * fovOsdCtrl)
 	end.x = start.x;
 	end.y = start.y + 120;
 	DrawcvLine(frame, &start, &end, cthis->frcolor, 2);
-	
+}
 
+void DrawjsZeroCross(Mat frame,CFOV * fovOsdCtrl)
+{
+	int len =	5;
+	int linew = 1;
+	int offlen = 2;
+	if(fovOsdCtrl == NULL)
+		return;
+	CFOV * cthis = fovOsdCtrl;
+	
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+
+	start.x = cthis->fovX;
+	start.y = cthis->fovY;
+	end.x = start.x;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew); //center
+
+	start.x = cthis->fovX ;
+	start.y = cthis->fovY - offlen;
+	end.x = start.x;
+	end.y = start.y - len;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//up
+
+	start.x = cthis->fovX;
+	start.y = cthis->fovY + offlen;
+	end.x = start.x;
+	end.y = start.y + len;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//down
+
+	start.x = cthis->fovX - offlen;
+	start.y = cthis->fovY;
+	end.x = start.x - len;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//left
+
+	start.x = cthis->fovX + offlen;
+	start.y = cthis->fovY;
+	end.x = start.x + len;  
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//right
+
+}
+
+void DrawjsBigFovCross(Mat frame,CFOV * fovOsdCtrl)
+{
+	int len =	15;
+	int linew = 1;
+	int offlen = 5;
+	if(fovOsdCtrl == NULL)
+		return;
+	CFOV * cthis = fovOsdCtrl;
+	
+	Osd_cvPoint start;
+	Osd_cvPoint end;
+
+	start.x = cthis->fovX;
+	start.y = cthis->fovY;
+	end.x = start.x;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew); //center
+
+	start.x = cthis->fovX ;
+	start.y = cthis->fovY - offlen;
+	end.x = start.x;
+	end.y = start.y - len;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//up
+
+	start.x = cthis->fovX;
+	start.y = cthis->fovY + offlen;
+	end.x = start.x;
+	end.y = start.y + len;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//down
+
+	start.x = cthis->fovX - offlen;
+	start.y = cthis->fovY;
+	end.x = start.x - len;
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//left
+
+	start.x = cthis->fovX + offlen;
+	start.y = cthis->fovY;
+	end.x = start.x + len;  
+	end.y = start.y;
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);//right
 
 }
 
@@ -559,7 +645,7 @@ void DrawjsCross(Mat frame,CFOV * fovOsdCtrl)
 	start.y = cthis->fovY;
 	end.x = start.x;
 	end.y = start.y;
-	DrawcvLine(frame, &start, &end, cthis->frcolor, 3);
+	DrawcvLine(frame, &start, &end, cthis->frcolor, linew);
 
 	start.x = cthis->fovX - cthis->crosswidth/2 - offlen;
 	start.y = cthis->fovY;
@@ -646,7 +732,7 @@ void DrawjsAngleFrame(Mat frame,CFOV * fovOsdCtrl,double angle)
 	Osd_cvPoint start;
 	Osd_cvPoint end;
 	int len = 20;
-	int linew = 2;
+	int linew = 1;
 	int i=0;
 
 	CFOV*cthis =fovOsdCtrl;

@@ -128,7 +128,10 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 		DrawjsAngleFrame(frame,cthis,cthis->last_angle);
 	if(cthis->drawflag & (1<<8))
 		DrawjsLittleCross(frame,cthis);
-
+	if(cthis->drawflag & (1<<9))
+		DrawjsZeroCross(frame,cthis);
+	if(cthis->drawflag & (1<<10))
+		DrawjsBigFovCross(frame,cthis);
 	//DrawjsGrenadeLoadOK(frame,cthis);	
 	return ;
 }
@@ -169,8 +172,8 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 			DrawjsCompass(frame,cthis);
 			cthis->drawflag |= 1<<2;
 			cthis->linew = 1;
-			DrawjsCross(frame, cthis);
-			cthis->drawflag |= 1<<0;
+			DrawjsZeroCross(frame, cthis);
+			cthis->drawflag |= 1<<9;
 			DrawjsRuler(frame,cthis);
 			cthis->drawflag |= 1<<1;
 						
@@ -190,10 +193,19 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		{
 			DrawjsCompass(frame,cthis);
 			cthis->drawflag |= 1<<2;
-			DrawjsCross(frame, cthis);
-			cthis->drawflag |= 1<<0;
 			DrawjsRuler(frame,cthis);
 			cthis->drawflag |= 1<<1;
+			if(isFovSmall())
+			{
+				DrawjsCross(frame, cthis);
+				cthis->drawflag |= 1<<0;
+			}
+			else
+			{
+				DrawjsBigFovCross(frame, cthis);
+				cthis->drawflag |= 1<<10;
+			}
+				
 		}
 		else if(isStatBattleAlert())
 		{

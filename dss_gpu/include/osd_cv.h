@@ -58,4 +58,8 @@ void DrawjsRect(Mat frame,cv::Rect rec,int frcolor);//UTC_Rect rec
 void drawcvrect(Mat frame,int x,int y,int width,int height,int frcolor);
 void DrawjsLittleCross(Mat frame,CFOV * fovOsdCtrl);
 
+void DrawjsBigFovCross(Mat frame,CFOV * fovOsdCtrl);
+void DrawjsZeroCross(Mat frame,CFOV * fovOsdCtrl);
+
+
 #endif /* OSD_CV_H_ */

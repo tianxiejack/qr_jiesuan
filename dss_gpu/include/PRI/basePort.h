@@ -79,6 +79,9 @@ typedef struct _fov_ctrl
 	DrawjsAlertFrame		6
 	DrawjsAngleFrame		7
 	DrawjsLittleCross		8
+	DrawjsZeroCross		9
+	DrawjsBigFovCross		10
+	
 */	
 
 #if 0

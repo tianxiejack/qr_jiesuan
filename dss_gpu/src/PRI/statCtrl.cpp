@@ -1202,6 +1202,7 @@ void killSelfCheckVertoAutotimer()
 
 void SelfCheckVertoAuto_cbFxn(void* cbParam)
 {
+	killSelfCheckVertoAutotimer();
 	OSDCTRL_ItemHide(eSelfCheckResult);
 	MSGDRIV_send(CMD_BUTTON_BATTLE,0);
 }
