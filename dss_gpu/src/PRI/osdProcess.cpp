@@ -174,7 +174,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eGunType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		30,	0,	{0}},
 	{eMeasureType,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	430+LOFFSET,		30,	0,	{0}},
 	{eVideoErr,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	334+LOFFSET,		200,	0,	{0}},
-	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	575+LOFFSET,	30,	0,	{0}},
+	{eShotType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	575+LOFFSET,		30,	0,	{0}},
 	{eFovType,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	660+LOFFSET,		30,	0,	{0}},
 	{eEnhance,		eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	646+LOFFSET,		30,	0,	{0}},
 	{eMeasureDis,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	466+LOFFSET,		30,	0,	{0}},
@@ -418,7 +418,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		465,	0,	{0}},
 	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		500,	0,	{0}},
 	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	330+LOFFSET,		500,	0,	{0}},
-	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	240+LOFFSET,		70,	0,	{0}},
+	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		70,	0,	{0}},
 	{eLaserjlx,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,				500,	0,	{0}},
 	{eLaserjly,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,				500,	0,	{0}},
 	{eReady,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
@@ -470,8 +470,8 @@ static void OSDCTRL_OsdInitial()
 	sprintf(GunOsd[0],"%c%c",200,216);// ji qiang
 	sprintf(GunOsd[1],"%c%c",223,224);// sha shang
 	sprintf(GunOsd[2],"%c%c",189,176);//fang bao
-	sprintf(GunOsd[3],"%c%c%c%c?",223,224,216,193);//sha shang qiang guan//216,193
-	sprintf(GunOsd[4],"%c%c%c%c?",189,176,216,193);//fang bao qiang guan
+	sprintf(GunOsd[3],"%c%c?",223,224);//sha shang qiang guan//216,193
+	sprintf(GunOsd[4],"%c%c?",189,176);//fang bao qiang guan
 	sprintf(GunOsd[5],"       ");//fang bao qiang guan
 
 
@@ -1455,8 +1455,8 @@ int ls2tmp = 0000;
 			//printf("**********************pStr = %d    %d\n",*pStr,*(pStr+1));
 			break;
 		case eGunType:
+				Posd[eGunType] = GunOsd[getProjectileType()];
 				sprintf(pStr,"%s",Posd[eGunType]);//); 	//��ǹ
-			//	printf("**********************pStr = %d    %d\n",*pStr,*(pStr+1));
 			break;
 		case eMeasureType:
 			if(isMeasureManual())
@@ -2321,13 +2321,7 @@ int ls2tmp = 0000;
 		case eGunTip:
 			sprintf(pStr,"%s",Posd[eGunTip]); //����ȷ����ʾ
 			break;	
-		//case erase_shottype:
-		//	sprintf(pStr,"  ");
-		//	break;
-		//case erase_guntip:
-		//	sprintf(pStr," ");
-		//	break;
-
+			
 		case eLaserjlx:
 			sprintf(pStr,"Lx:%+05d",getCrossX());
 			break;

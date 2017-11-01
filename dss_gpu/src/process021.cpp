@@ -3564,10 +3564,8 @@ void CProcess021::processCMD_BUTTON_BATTLE(LPARAM lParam)
 void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
  {
  	CMD_EXT *pIStuts = &sThis->extInCtrl;
- 	if(ShinId == eGunTip)
-		OSDCTRL_NoShine();
-  //printf("isBootUpMode=%d\n",isBootUpMode());
-  //printf("isBootUpSelfCheckFinished=%d\n",isBootUpSelfCheckFinished());
+ 	//if(ShinId == eGunTip)
+	//	OSDCTRL_NoShine();
 	if(isBootUpMode()&& isBootUpSelfCheckFinished())
 	{
 		processCMD_EXIT_SELF_CHECK(0);
@@ -4227,7 +4225,6 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 	OSDCTRL_NoShine();
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
-	gProjectileType = PROJECTILE_BULLET;
 	Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
 	//gProjectileType = (PROJECTILE_TYPE)(PROJECTILE_BULLET+5);
 	//Posd[eGunTip] = GunOsd[5];
@@ -4239,16 +4236,13 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
  {
  	OSDCTRL_NoShine();
+	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_KILL+2];
  	OSDCTRL_ItemShine(eGunTip);
 	
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
-	//g_Text[eGunTip].osdInitX = 240; 
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
-	//Posd[eGunType] = GunOsd[PROJECTILE_GRENADE_KILL+2];
-	//Posd[eGunTip] = GunOsd[5];
-	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_KILL+2];
- 	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH2",__func__,__LINE__);
+ 	EnterCMD_BULLET_SWITCH2();
 	return ;
  }
 
@@ -4262,7 +4256,7 @@ void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
 		gProjectileTypeBefore = gProjectileType;
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_GAS+2);
 	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_GAS+2];	
- 	//OSA_printf("%s,line:%d ... processCMD_BULLET_SWITCH3",__func__,__LINE__);
+ 	EnterCMD_BULLET_SWITCH3();
 	return ;
  }
 
@@ -5162,7 +5156,7 @@ bool CProcess021::ValidateGunType()
 	}	
 	else if(!isBootUpMode())
 		OSDCTRL_NoShineShow();
-	
+	/*
 	if(gProjectileType > PROJECTILE_GRENADE_GAS)
 	{		
 		if(gProjectileType == QUESTION_GRENADE_KILL)
@@ -5176,6 +5170,7 @@ bool CProcess021::ValidateGunType()
 		updateCMD_BUTTON_SWITCH(gProjectileType);
 		return FALSE;
 	}
+	*/
 	return TRUE;
 }
 

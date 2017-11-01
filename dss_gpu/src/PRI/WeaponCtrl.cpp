@@ -1127,11 +1127,9 @@ void WeaponCtrlPORT_ParseFrameByte_type2(unsigned char* buf)
 			break;
 		case Button_UP:
 			MSGDRIV_send(CMD_BUTTON_UP,0);
-			//MSGDRIV_send(CMD_BUTTON_DOWN,0);
 			break;
 		case Button_Down:
 			MSGDRIV_send(CMD_BUTTON_DOWN,0);
-			//MSGDRIV_send(CMD_BUTTON_UP,0);
 			break;
 		case Button_Enter:
 			MSGDRIV_send(CMD_BUTTON_ENTER,0);

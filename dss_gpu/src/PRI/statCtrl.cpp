@@ -886,7 +886,7 @@ void EnterCMD_BULLET_SWITCH1()
 		MSGDRIV_send(CMD_MODE_FOV_LARGE, 0);
 	else
 		MSGDRIV_send(CMD_MODE_FOV_SMALL, 0);
-	
+	gProjectileType = PROJECTILE_BULLET;
 	UpdataBoreSight();
 	setServoControlObj();
 
@@ -895,7 +895,6 @@ void EnterCMD_BULLET_SWITCH1()
 
 void EnterCMD_BULLET_SWITCH2( )
 {
-	//g_Text[eShotType].osdInitX = 545;
 	if(isCalibrationMode()&& isCalibrationMainMenu())
 	{
 		OSDCTRL_updateMainMenu(PROJECTILE_GRENADE_KILL);
@@ -922,7 +921,7 @@ void EnterCMD_BULLET_SWITCH2( )
 		MSGDRIV_send(CMD_MODE_FOV_LARGE, 0);
 	else
 		MSGDRIV_send(CMD_MODE_FOV_SMALL, 0);
-	//gProjectileType=PROJECTILE_GRENADE_KILL;
+	gProjectileType=PROJECTILE_GRENADE_KILL;
 	UpdataBoreSight();
 	setServoControlObj();
 }
