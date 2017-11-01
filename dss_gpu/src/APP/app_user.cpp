@@ -650,6 +650,11 @@ static Int32 APP_onTimer( Int32 timerId )
 			sendCommand(CMD_BOOT_UP_CHECK_COMPLETE);
 		}
 
+		if(timerId == eSelftoAuto_timer)
+		{
+			SelfCheckVertoAuto_cbFxn(NULL);
+		}
+
 		if(timerId == eFxbutton_Timer)
 		{
 			CTimerCtrl * pCtrlTimer = pTimerObj;

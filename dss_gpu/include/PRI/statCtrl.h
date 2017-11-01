@@ -151,6 +151,7 @@ typedef enum _time_id
 	eGrenadeServo_Timer,
 	eServoCheck_Timer,
 	eWeaponCtrl_Timer,
+	eSelftoAuto_timer,
 	MAX_TIMER_NUM
 }eTimerId;
 
@@ -160,7 +161,7 @@ typedef enum _time_id
 #define 	PICP_TIMER   			9
 #define 	TRACK_TIMER  			200
 #define 	TRACK_REFINE_TIMER 	2000
-#define 	BOOTUP_TIMER 			5000
+#define 	BOOTUP_TIMER 			2000
 #define 	LASER_TIMER 			6000
 #define 	RGQ_TIMER 				6000//3000
 #define 	CAN_TIMER 				500
@@ -318,7 +319,9 @@ void processCMD_MIDPARAMS_SWITCH(long lParam);
 void processCMD_LASERSELECT_SWITCH(long lParam);
 void processCMD_SENSOR_SWITCH(long lParam);
 void processCMD_CONNECT_SWITCH(long lParam);
-
+void SelfCheckVertoAuto_cbFxn(void* cbParam);
+void killSelfCheckVertoAutotimer();
+void startSelfCheckVertoAuto();
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;

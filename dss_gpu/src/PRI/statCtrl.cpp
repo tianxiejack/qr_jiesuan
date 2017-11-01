@@ -1182,6 +1182,30 @@ void processCMD_MODE_ATTACK_MULTI(LPARAM lParam)
 	return ;
  }
 
+void startSelfCheckVertoAuto()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eSelftoAuto_timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eSelftoAuto_timer,2000);	
+	}
+}
+
+void killSelfCheckVertoAutotimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eSelftoAuto_timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eSelftoAuto_timer);
+	}
+}
+
+void SelfCheckVertoAuto_cbFxn(void* cbParam)
+{
+	OSDCTRL_ItemHide(eSelfCheckResult);
+	MSGDRIV_send(CMD_BUTTON_BATTLE,0);
+}
+
 void startSCHEDULEtimer()
 {
 	CTimerCtrl * pCtrlTimer = pTimerObj;
