@@ -4023,7 +4023,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 	int i;
 	if(!ValidateGunType())
 		return;
-	
+
 	if(isCalibrationMode())
 	{
 		if(isCalibrationMainMenu())
@@ -5160,7 +5160,7 @@ bool CProcess021::ValidateGunType()
 	{
 		OSDCTRL_NoShine();
 	}	
-	else
+	else if(!isBootUpMode())
 		OSDCTRL_NoShineShow();
 	
 	if(gProjectileType > PROJECTILE_GRENADE_GAS)

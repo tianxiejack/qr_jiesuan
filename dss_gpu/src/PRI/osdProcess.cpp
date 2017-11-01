@@ -617,8 +617,6 @@ void OSDCTRL_NoShine()
 	else
 	{
 		OSDCTRL_ItemHide(ShinId);
-		printf("ShinId = %d\n",ShinId);
-		printf("number = %d\n",eGuiling);
 	}
 		
 	ShinId = 0;
