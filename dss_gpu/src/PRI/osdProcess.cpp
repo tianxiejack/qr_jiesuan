@@ -183,7 +183,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eMeasureDis_Value4,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	468+LOFFSET,	30,	0,	{0}},
 	*/
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		30,	0,	{0}},
-	{eSuperOrder,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
+	{eSuperOrder,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		436,	0,	{0}},
 	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		470,	0,	{0}},
 	{eWeather1_T,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	479+LOFFSET+WOFFSET,		470,	0,	{0}},
@@ -962,7 +962,7 @@ void OSDCTRL_updateAreaN()
 	{
 		noErr = TRUE;
 	}
-	if(noErr)
+	if(noErr || isBootUpMode())
 	{
 		OSDCTRL_ItemHide(eErrorZone);	
 	}
