@@ -1233,8 +1233,17 @@ void killShineOnetimer()
 void ShineOne_cbFxn()
 {
 	killShineOnetimer();
-	OSDCTRL_ItemShow(eCalibGeneral_Rx);
-	OSDCTRL_ItemShow(eCalibGeneral_Ry);	
+	if(isCalibrationGeneral())
+	{
+		OSDCTRL_ItemShow(eCalibGeneral_Rx);
+		OSDCTRL_ItemShow(eCalibGeneral_Ry);	
+	}
+	else if(isCalibrationZero())
+	{
+		OSDCTRL_ItemShow(eCalibZero_D);
+		OSDCTRL_ItemShow(eCalibZero_Fx);
+		OSDCTRL_ItemShow(eCalibZero_Fy);
+	}
 }
 
 

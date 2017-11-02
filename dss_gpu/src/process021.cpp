@@ -3734,7 +3734,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 			{
 				if(isGrenadeGas())
 					return ;
-				moveCrossDown();
+				moveCrossUp();				
 				updateDrawInDraw();
 			}
 		}
@@ -3821,7 +3821,7 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 			{
 				if(isGrenadeGas())
 					return ;
-				moveCrossUp();
+				moveCrossDown();
 				updateDrawInDraw();
 			}
 		}
@@ -4058,7 +4058,6 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 					break;
 
 				case CMD_CALIBRATION_SWITCH_TO_ZERO:
-					//gMeasureType = MEASURETYPE_LASER;
 					processCMD_CALIBRATION_SWITCH_TO_ZERO(0);
 					break;
 
@@ -4088,9 +4087,16 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			if(isCalibrationZero())
 			{
 				if(distancefirst && isMeasureManual())
-				{			
+				{		
+					OSDCTRL_ItemHide(eCalibZero_D);
+					OSDCTRL_ItemHide(eCalibZero_Fx);
+					OSDCTRL_ItemHide(eCalibZero_Fy);
+					startShineOnetimer();
+					
+					if(DistanceManual == 0)
+						return ;
 					distancefirst = 0;
-					SHINE =0; 
+					SHINE =0;	
 				}
 				if(!isMeasureManual())
 				{

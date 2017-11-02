@@ -1768,11 +1768,11 @@ int ls2tmp = 0000;
 			//sprintf(pStr,"D:%04d",500);				//ju li:500
 			break;
 		case eCalibZero_Fx:
-			sprintf(pStr,"Fx:%+05d",getCrossX()); 	//Fx
+			sprintf(pStr,"Fx:%+05d",getCrossX()-360); 	//Fx
 			break;
 
 		case eCalibZero_Fy:
-			sprintf(pStr,"Fy:%+05d",getCrossY()); 	//Fy
+			sprintf(pStr,"Fy:%+05d",getCrossY()-288); 	//Fy
 			break;
 		case eCalibZero_AngleGun:
 			value = getMachGunAngleAbs();
