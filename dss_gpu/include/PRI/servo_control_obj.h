@@ -8,6 +8,13 @@
 #define CAN_CMD_SIZE_LONG    	10
 #define CAN_CMD_SIZE_MINI		4
 
+typedef enum
+{
+	TURRET,
+	MACH,
+	GRENADE
+}SERVO_ID;
+
 PIF_servo_control getMachGunServoContrlObj();
 PIF_servo_control getGrenadeServoContrlObj();
 void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam);
@@ -26,14 +33,11 @@ void testchushihua();
 void testjiqiangqidong();
 void testliudanqidong();
 void teststopserver();
-void testliudanjiasu();
-void testjiqiangjiasu();
-void testliudanjiansu();
-void testjiqiangjiansu();
-void testFliudanqidong();
-void testFjiqiangqidong();
 
-
+static void TurretServoStop();
+static void TurretServoMoveSpeed(float xSpeed,float ySpeed);
+static void TurretServoMoveOffset(float xOffset,float yOffset);
+static int DEGREE2CANVALUE(double degree,int id);
 
 #endif
 

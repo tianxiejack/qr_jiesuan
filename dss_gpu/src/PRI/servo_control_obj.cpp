@@ -32,6 +32,12 @@ static IF_servo_control gGrenadeServoControlObj = {
 	GrenadeServoStop
 };
 
+static IF_servo_control gTurretServoControlObj = {
+	TurretServoMoveOffset,
+	TurretServoMoveSpeed,
+	TurretServoStop
+};
+
 #define sendCommand(MSG_ID) MSGDRIV_send(MSG_ID,0)
 
 static void PseudoMoveOffsetFunc(float x, float y){}
@@ -55,6 +61,11 @@ PIF_servo_control getMachGunServoContrlObj()
 PIF_servo_control getGrenadeServoContrlObj()
 {
 	return &gGrenadeServoControlObj;
+}
+
+PIF_servo_control getTurretServoContrlObj()
+{
+	return &gTurretServoControlObj;
 }
 
 //-------------------CAN packets--- speed --------------
@@ -131,406 +142,99 @@ static char  TestMachPosbuf[] = {0x03,0x2c,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x
 long cmd_machservo_moveoffset_tmp = 0;
 long cmd_grenadeservo_moveoffset_tmp = 0;
 
+static int DEGREE2CANVALUE(double degree,int id)
+{
+	double temp = 0.0;
+	int re = 0;
+	if(id == TURRET)
+	{
+		temp = degree*2*TURRET_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
+	}
+	else if(id == MACH)
+	{
+		temp = degree*2*MACH_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
+	}
+	else if(id == GRENADE)
+	{
+		temp = degree*2*GRENADE_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
+	}
+	re = (int)(temp/(360*60*60));
+	return re;
+}
+
+static void TurretServoMoveOffset(float xOffset,float yOffset)
+{
+	
+}
+
+static void TurretServoMoveSpeed(float xSpeed,float ySpeed)
+{
+
+}
+
+static void TurretServoStop()
+{
+	
+}
+
 static void MachServoMoveOffset(float xOffset, float yOffset)
 {
 	union {
 		unsigned char c[4];
 		int value;
 	} xmils, ymils;
-	//1.pixel to milGradiant/s X, Y,
+	// pixel vert to degree
 	double x = OFFSET_TO_ANGLE(xOffset);
 	double y = OFFSET_TO_ANGLE(yOffset);
-	{
-		static int counter = 11;
-		if(counter-- <= 0)
-			counter = 10;
-		if(counter < 10)
-			return;
-	}
-	
 
-	//mili Radian second
-	x= 3600*MIL2DEGREE(x);
-	y= 100*MIL2DEGREE(y);
-//	y= 3600*MIL2DEGREE(y);
-		
-	//2.form CAN packet X,
-    	//xmils.value = DEGREE2CANVALUE(x,TURRET);
-    	xmils.value = DEGREE2CANVALUE_TURRET(x);
-/*	FILLBUFFOFFST(Turretbuf, xmils);	
-	//3.sendCAN packet X to Turret servo,
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_LONG);
-	MYBOARD_waitusec(WAITTIME);
-	FILLBUFFBGIN(Turretbuf);
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);	
-	MYBOARD_waitusec(WAITTIME);
-*/	
-	//4.form CAN packet Y,
-//	ymils.value = DEGREE2CANVALUE(y,MACH);
-	//SendMessage(CMD_MACHSERVO_MOVEOFFSET, DEGREE2CANVALUE(y,MACH));
-	//MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, (void *)DEGREE2CANVALUE(y,MACH));
-	cmd_machservo_moveoffset_tmp = DEGREE2CANVALUE_MACH(y);
-	MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, 0);
 
-	
-/*	FILLBUFFOFFST(Machbuf, ymils);
-	
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_LONG);
-	MYBOARD_waitusec(WAITTIME);
-	FILLBUFFBGIN(Machbuf);
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_SHORT);	
-	MYBOARD_waitusec(WAITTIME);
-*/
-}
-void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
-{
-	union {
-		unsigned char c[4];
-		int value;
-	} xmils, ymils;
-	//ymils.value = lParam*100;
-	//ymils.value = (lParam)*2*(4096/6000.0);
-	ymils.value = (cmd_grenadeservo_moveoffset_tmp)*2*(4096/6000.0);
-#if 0
-	FILLBUFFOFFST(Machbuf, ymils);
-
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_LONG);
-	MYBOARD_waitusec(WAITTIME);
-	FILLBUFFBGIN(Machbuf);
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_SHORT);	
-	MYBOARD_waitusec(WAITTIME);
-#elif 0
-	FILLBUFFOFFST(Grenadebuf, ymils);
-
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_LONG);
-	MYBOARD_waitusec(WAITTIME);
-	FILLBUFFBGIN(Grenadebuf);
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_SHORT);	
-	MYBOARD_waitusec(WAITTIME);
-#elif 1
-	FILLBUFFOFFST(Turretbuf, ymils);//水平角度伺服转动
-
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	OSA_waitMsecs(10);
-	FILLBUFFBGIN(Turretbuf);
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);	
-	//MYBOARD_waitusec(WAITTIME);
-	OSA_waitMsecs(10);
-#endif
-}
-
-void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
-{
-	union {
-		unsigned char c[4];
-		int value;
-	} xmils, ymils;
-//	ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
-	ymils.value = (cmd_machservo_moveoffset_tmp)*2*(4096/6000.0);
-#if 0
-	FILLBUFFOFFST(Machbuf, ymils);//58机枪伺服转动
-
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_LONG);
-	MYBOARD_waitusec(WAITTIME);
-	FILLBUFFBGIN(Machbuf);
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_SHORT);	
-	MYBOARD_waitusec(WAITTIME);
-#elif 1
-	FILLBUFFOFFST(Grenadebuf, ymils);//35榴弹伺服转动
-
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	//Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	FILLBUFFBGIN(Grenadebuf);
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_SHORT);	
-	//MYBOARD_waitusec(WAITTIME);
-	//Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-#elif 1
-	FILLBUFFOFFST(Turretbuf, ymils);//水平角度伺服转动
-
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_LONG);
-	MYBOARD_waitusec(WAITTIME);
-	FILLBUFFBGIN(Turretbuf);
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);	
-	MYBOARD_waitusec(WAITTIME);
-#endif
+	xmils.value = DEGREE2CANVALUE(x,TURRET);
+	ymils.value = DEGREE2CANVALUE(y,MACH);
+	MSGDRIV_send(CMD_TURRETSERVO_MOVEOFFSET,&(xmils.value));
+	MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, &(ymils.value));
 	return ;
 }
+
 static void MachServoMoveSpeed(float xSpeed, float ySpeed)
 {
-/*	{
-		static int counter = 6;
-		if(counter-- <= 0)
-			counter = 5;
-		if(counter < 5)
-			return;
-	}
-
-	//1.pixel to milGradiant/s X, Y,
-	double x = OFFSET_TO_ANGLE(xSpeed);
-	double y = OFFSET_TO_ANGLE(ySpeed);
-	//mili Radian second
-	x= 3600*MIL2DEGREE(x);
-	y= 3600*MIL2DEGREE(y);
-		
-	//2.form CAN packet X,
-    xmilsecond.value = DEGREE2CANVALUE(x,TURRET);
-	FILLBUFFSPEED(Turretbuf, xmilsecond);	
-	//3.sendCAN packet X to Turret servo,
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_LONG);
-	MYBOARD_waitusec(WAITTIME);
-	FILLBUFFBGIN(Turretbuf);
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);	
-	MYBOARD_waitusec(WAITTIME);
-	
-	//4.form CAN packet Y,
-	ymilsecond.value = DEGREE2CANVALUE(y,MACH);
-	*/
-	union {
-		unsigned char c[4];
-		int value;
-	} xmilsecond, ymilsecond;
-	ymilsecond.value = 0x100790;
-	FILLBUFFSPEED(Machbuf, ymilsecond);
-	
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	FILLBUFFBGIN(Machbuf);
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_SHORT);	
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-}
-
-void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam)
-{
-	union {
-		unsigned char c[4];
-		int value;
-	}ymilsecond;
-	
-	static int counter = 11;
-	if(counter-- <= 0)
-		counter = 10;
-	if(counter < 10)
-		return;
-	ymilsecond.value = 0x790;
-	FILLBUFFSPEED(Machbuf, ymilsecond);
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_LONG);
-	FILLBUFFBGIN(Machbuf);
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_SHORT);	
-}
-
-void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam)
-{
-	union {
-		unsigned char c[4];
-		int value;
-	}ymilsecond;
-	ymilsecond.value = 0x100790;
-	FILLBUFFSPEED(Grenadebuf, ymilsecond);
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	FILLBUFFBGIN(Grenadebuf);
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_SHORT);	
 }
 
 static void MachServoStop()
 {
-	//1.form CAN packet X,
-	FILLBUFFSTOP(Turretbuf);
+}
 
-	//2.sendCAN packet X to Turret servo,
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	//3.form CAN packet Y,
-	FILLBUFFSTOP(Machbuf);
-	
-	//4.send CAN packet Y to mach gun servo
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_SHORT);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
+static void GrenadeServoMoveOffset(float xOffset, float yOffset)
+{
+}
+static void GrenadeServoMoveSpeed(float xSpeed, float ySpeed)
+{
+}
+static void GrenadeServoStop()
+{
+}
+
+void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
+{
+}
+void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam)
+{
 }
 void processCMD_MACHSERVO_STOP(LPARAM lParam)
 {
-	//3.form CAN packet Y,
-	FILLBUFFSTOP(Machbuf);
-	
-	//4.send CAN packet Y to mach gun servo
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_SHORT);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
 }
-//----Grenade-------------------
-static void GrenadeServoMoveOffset(float xOffset, float yOffset)
+void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
 {
-	union {
-		unsigned char c[4];
-		int value;
-	} xmils, ymils;
-//------------First: let the len mounted on machine gun follow up the target--------------
-	//1.pixel to milGradiant/s X, Y,
-	double x = OFFSET_TO_ANGLE(xOffset);
-	double y = OFFSET_TO_ANGLE(yOffset);
-	//mili Radian second
-	x= 3600*MIL2DEGREE(x);
-	y= 3600*MIL2DEGREE(y);
-		
-	//2.form CAN packet X,
-    	//xmils.value = DEGREE2CANVALUE(x,TURRET);
-	xmils.value = DEGREE2CANVALUE_TURRET(x);
-	FILLBUFFOFFST(Turretbuf, xmils);	
-	//3.sendCAN packet X to Turret servo,
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	FILLBUFFBGIN(Turretbuf);
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);	
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	//4.form CAN packet Y machgun,
-	//ymils.value = DEGREE2CANVALUE(y,MACH);
-	ymils.value = DEGREE2CANVALUE_MACH(y);
-	FILLBUFFOFFST(Machbuf, ymils);
-	
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	FILLBUFFBGIN(Machbuf);
-	WeaponCtrlPORT_send(Machbuf, CAN_CMD_SIZE_SHORT);	
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	
-//------------second: let the grenade move up to the aiming angle------	
-	//y.form CAN packet Y grenade ,
-	//delta Y
-	y = getGrenadeDestTheta() - getGrenadeAngle();
-	if( 0.2 < DEGREE2MIL(y)) // entered shooting threshold
-	{
-	//grenade is in position
-		sendCommand(CMD_GRENADE_LOAD_IN_POSITION);
-	}
-	//ymils.value = DEGREE2CANVALUE(y,GRENADE);
-	ymils.value = DEGREE2CANVALUE_GRENADE(y);
-	FILLBUFFOFFST(Grenadebuf, ymils);
-	
-	//5.send CAN packet Y to Mach gun servo
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	FILLBUFFBGIN(Grenadebuf);
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_SHORT);
-	//MYBOARD_waitusec(WAITTIME);	
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
 }
-
-static void GrenadeServoMoveSpeed(float xSpeed, float ySpeed)
+void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam)
 {
-	union {
-		unsigned char c[4];
-		int value;
-	} xmilsecond, ymilsecond;
-		
-	//1.pixel to milGradiant/s X, Y,
-	double x = OFFSET_TO_ANGLE(xSpeed);
-	double y = OFFSET_TO_ANGLE(ySpeed);
-	//mili Radian second
-	x= 3600*MIL2DEGREE(x);
-	y= 3600*MIL2DEGREE(y);
-
-	//2.form CAN packet X,
-   // xmilsecond.value = DEGREE2CANVALUE(x,TURRET);
-	 xmilsecond.value = DEGREE2CANVALUE_TURRET(x);
-	FILLBUFFSPEED(Turretbuf, xmilsecond);	
-	//3.sendCAN packet X to Turret servo,
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	FILLBUFFBGIN(Turretbuf);
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);	
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-//  I only need to let Turret rotate to the position. machine gun will not raise, yet grenade shall raise.
-//todo: cannot use PID to control grenade speed-- will use position instead which is no easy task....
-	//3. form CAN packet Y2,
-	//ymilsecond.value = DEGREE2CANVALUE(y,GRENADE);
-	ymilsecond.value = DEGREE2CANVALUE_GRENADE(y);
-	FILLBUFFSPEED(Grenadebuf, ymilsecond);
-	
-	//4. send CAN packet Y2 to Machine gun servo
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	FILLBUFFBGIN(Grenadebuf);
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_SHORT);
-	//MYBOARD_waitusec(WAITTIME);	
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
 }
 
-static void GrenadeServoStop()
-{
-	//1.form CAN packet X,
-	FILLBUFFSTOP(Turretbuf);
-
-	//2.sendCAN packet X to Turret servo,
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);
-	//MYBOARD_waitusec(WAITTIME);	
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	//3.form CAN packet Y,
-	FILLBUFFSTOP(Grenadebuf);
-	
-	//4.send CAN packet Y to Grenade servo
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_SHORT);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-}
 static void initServo(unsigned char *pBuf)
-{	
-//disable Motor;
-	FILLBUFFENABLE(pBuf ,0x0);
-	WeaponCtrlPORT_send(pBuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	//enable speed mode	
-	FILLBUFFMODE(pBuf, 0x02);
-	WeaponCtrlPORT_send(pBuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	//enable Motor;	
-	FILLBUFFENABLE(pBuf, 0x01);
-	WeaponCtrlPORT_send(pBuf, CAN_CMD_SIZE_LONG);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	
+{
 }
-
 void initAllServos()
 {
-// start CAN
-	static const unsigned char startCanbuf[]={0x00, 0x00, 0x01, 0x00};
-	WeaponCtrlPORT_send((unsigned char*)startCanbuf, CAN_CMD_SIZE_MINI);
-	//MYBOARD_waitusec(WAITTIME);
-	Dx_setTimer(BOARD_waitusec_TIMER,WAITTIME);
-	
-	initServo(Turretbuf);
-	initServo(Machbuf);
-	initServo(Grenadebuf);
-
 }
-
-
 void setServoControlObj()
 {
 	if(isMachineGun())
@@ -538,8 +242,6 @@ void setServoControlObj()
 	else
 		pServoControlObj=getGrenadeServoContrlObj();
 }
-
-
 
 void testchushihua()
 {
@@ -589,82 +291,9 @@ void testliudanqidong()
 }
 
 
-void testFjiqiangqidong()
-{
-	union {
-		unsigned char c[4];
-		int value;
-	}ymilsecond;
-	ymilsecond.value = -8000;
-
-}
-
-void testFliudanqidong()
-{
-	union {
-		unsigned char c[4];
-		int value;
-	}ymilsecond;
-	ymilsecond.value = -10000;
-
-}
-
 void teststopserver()
 {
 	FILLBUFFSTOP(TestMachPosbuf);
 	SendCANBuf((TestMachPosbuf), CAN_CMD_SIZE_SHORT);
 }
-
-void testliudanjiasu()
-{
-	union {
-		unsigned char c[4];
-		int value;
-	}ymilsecond;
-	if(ymilsecond.value <= 112800)
-		ymilsecond.value +=5000;
-}
-
-void testjiqiangjiasu()
-{
-	union {
-		unsigned char c[4];
-		int value;
-	}ymilsecond;
-	ymilsecond.value = 1000;
-	if(ymilsecond.value <= 192800)
-		ymilsecond.value +=5000;
-	//FILLBUFFSPEED(TestMachbuf, ymilsecond);
-	//TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_LONG);
-	usleep(500);
-	//FILLBUFFBGIN(TestMachbuf);
-	//TestSendCANBuf(TestMachbuf, CAN_CMD_SIZE_SHORT);	
-	usleep(500);	
-}
-
-void testliudanjiansu()
-{
-	union {
-		unsigned char c[4];
-		int value;
-	}ymilsecond;
-	ymilsecond.value = 1000;
-	if(ymilsecond.value >= -192800)
-		ymilsecond.value -=5000;
-}
-
-void testjiqiangjiansu()
-{
-	union {
-		unsigned char c[4];
-		int value;
-	}ymilsecond;
-	ymilsecond.value = 1000;
-	if(ymilsecond.value >= 2000)
-		ymilsecond.value -=5000;
-}
-
-
-
-
 

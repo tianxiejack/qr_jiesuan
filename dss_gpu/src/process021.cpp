@@ -1714,12 +1714,10 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'Q' || key == 'q')
 	{	
-		testliudanjiansu();
 	}
 
 	if(key == 'R' || key == 'r')
 	{
-		testFjiqiangqidong();
 	}
 
 	if(key == 'S' || key == 's')
@@ -1731,7 +1729,6 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		
 	if (key == 't' || key == 'T')
 	{
-		testFliudanqidong();
 		#if 0
 			if(pIStuts->ImgVideoTrans[pIStuts->SensorStat])
 				pIStuts->ImgVideoTrans[pIStuts->SensorStat] = eImgAlg_Disable;
@@ -1770,7 +1767,6 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if (key == 'w')
 	{
-		testliudanjiansu();
 		//MSGDRIV_send(CMD_BUTTON_QUIT, NULL);
 	}
 

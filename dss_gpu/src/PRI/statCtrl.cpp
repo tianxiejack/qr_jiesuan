@@ -1279,7 +1279,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 			y = (getpanoAngleV() - getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 			{
-	//			getPelcoServoContrlObj()->stop();
+				//getPelcoServoContrlObj()->stop();
 				killSCHEDULEtimer();
 				releaseServoContrl();
 				SCHEDULE_GUN = FALSE;
@@ -1287,7 +1287,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 				OSDCTRL_ItemHide(eDynamicZone);
 				return;
 			}
-	//		getPelcoServoContrlObj()->moveOffset(x,y);
+			//getPelcoServoContrlObj()->moveOffset(x,y);
 			startSCHEDULEtimer();
 		}
 		else if(SCHEDULE_STRONG/*not timeout and angle not ok*/)
@@ -1341,7 +1341,6 @@ void processCMD_SCHEDULE_GUN(long lParam)
 	SCHEDULE_GUN = TRUE;
 	COUNTER = 0;
 	startSCHEDULEtimer();
-	
 	return ;
  }
 
