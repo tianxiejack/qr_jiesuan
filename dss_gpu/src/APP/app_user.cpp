@@ -729,13 +729,16 @@ static Int32 APP_onTimer( Int32 timerId )
 			killSelfCheckGrenadeAngleTimer();
 			MSGDRIV_send(CMD_GENERADE_SENSOR_ERR,0);
 		 }
-
-		 
+	 
 		 if(timerId == eWeaponCtrl_Timer)
 		 {
 			SelfCheckWeaponCtrlTimer_cbFxn(NULL);
 		 }
-			
+		 
+		  if(timerId == eShineOne_timer)
+		 {
+			ShineOne_cbFxn();
+		 }	
 	
     	return OSA_SOK;
 }

@@ -126,9 +126,9 @@ typedef enum Dram_FovStat{
 typedef enum _time_id
 {
 	eOSD_Timer = 0x10,
-	eCap_Timer ,
-	eTrk_Timer ,
-	eCST_Timer ,
+	//eCap_Timer ,
+	//eTrk_Timer ,
+	//eCST_Timer ,
 	eBootUp_Timer,
 	eLaser_Timer,
 	eRGQ_Timer,
@@ -152,6 +152,7 @@ typedef enum _time_id
 	eServoCheck_Timer,
 	eWeaponCtrl_Timer,
 	eSelftoAuto_timer,
+	eShineOne_timer,
 	MAX_TIMER_NUM
 }eTimerId;
 
@@ -322,6 +323,9 @@ void processCMD_CONNECT_SWITCH(long lParam);
 void SelfCheckVertoAuto_cbFxn(void* cbParam);
 void killSelfCheckVertoAutotimer();
 void startSelfCheckVertoAuto();
+void startShineOnetimer();
+void killShineOnetimer();
+void ShineOne_cbFxn();
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;

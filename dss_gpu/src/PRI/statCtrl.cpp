@@ -1211,6 +1211,32 @@ void SelfCheckVertoAuto_cbFxn(void* cbParam)
 	MSGDRIV_send(CMD_BUTTON_BATTLE,0);
 }
 
+void startShineOnetimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eShineOne_timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eShineOne_timer,300);	
+	}
+}
+
+void killShineOnetimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eShineOne_timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eShineOne_timer);
+	}
+}
+
+void ShineOne_cbFxn()
+{
+	killShineOnetimer();
+	OSDCTRL_ItemShow(eCalibGeneral_Rx);
+	OSDCTRL_ItemShow(eCalibGeneral_Ry);	
+}
+
+
 void startSCHEDULEtimer()
 {
 	CTimerCtrl * pCtrlTimer = pTimerObj;

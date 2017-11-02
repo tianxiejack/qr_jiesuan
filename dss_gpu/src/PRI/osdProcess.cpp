@@ -157,8 +157,8 @@ float addX=0.01,addY=0.01;
 float ServoX[15]={30.0, 3.59, 2.69, 2.0, 0.8, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 float ServoY[10]={30.0,3.4, 2.6, 2.0, 0.7, 0.4, 0.0, 0.0, 0.0, 0.0};
 bool SHINE=FALSE;
-
 volatile char globalShoweErrorZone = 0 ;
+double gGenparmX,gGenparmY;
 
 extern PROJECTILE_TYPE gProjectileType;
 extern PROJECTILE_TYPE gProjectileTypeBefore;
@@ -1888,19 +1888,19 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%01d",General[13]&0xFF); 		//����X:+xxxx cm
 			break;
 		case eCalibGeneral_Rx:
-			value = General[5]*10 + General[6] + General[7]*0.1 + General[8]*0.01;
-			if(General[4] < 0)
-				value = -value;
+			//value = General[5]*10 + General[6] + General[7]*0.1 + General[8]*0.01;
+			//if(General[4] < 0)
+			//	value = -value;
 			//sprintf(pStr,"Rx:%+06.2fm",value); 		//����X:+xxxx cm
-			sprintf(pStr,"X:%+06.2f",value); 
+			sprintf(pStr,"X:%+06.2f",gGenparmX); 
 			break;
-			
+
 		case eCalibGeneral_Ry:
-			value = General[10]*10 + General[11] + General[12]*0.1 + General[13]*0.01;
-			if(General[9] < 0)
-				value = -value;
+			//value = General[10]*10 + General[11] + General[12]*0.1 + General[13]*0.01;
+			//if(General[9] < 0)
+			//	value = -value;
 			//sprintf(pStr,"Ry:%+06.2fm",value); 		//����X:+xxxx cm
-			sprintf(pStr,"Y:%+06.2f",value);
+			sprintf(pStr,"Y:%+06.2f",gGenparmY);
 			break;
 
 		case eCalibZero_jc:

@@ -13,6 +13,7 @@
 extern OSDCTRL_OBJ * pCtrlObj;
 extern int shine_table[10];
 extern bool AdCalibMenuFlag;
+extern double gGenparmX,gGenparmY;
 
 FOVCTRL_Handle	 pFovCtrlObj = NULL;	
 	
@@ -96,6 +97,8 @@ static void saveLastGeneralParam(GeneralCorrectionItem * Item)
 	Item->distance	 = getLastGeneralDistance();
 	Item->data.deltaX = getLastGeneralDataX();
 	Item->data.deltaY = getLastGeneralDataY();
+	gGenparmX = Item->data.deltaX/100.0;
+	gGenparmY = Item->data.deltaY/100.0;
 }
 
 

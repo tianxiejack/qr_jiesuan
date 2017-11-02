@@ -42,7 +42,7 @@ OSDCTRL_Handle pCtrlObjLocal = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 FOVCTRL_Handle  pFovCtrlBeforObj = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ));	
 FOVCTRL_Handle  pFovCtrlLocal = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ));	
 
-int n=0,ShinId=eCalibGeneral_XPole;
+int n=0,m=0,ShinId=eCalibGeneral_XPole;
 int shine_table[10] = {0};
 
 extern bool isMaintPortOpen;
@@ -4105,6 +4105,9 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			else if(isCalibrationGeneral())
 			{
 				saveGeneralParam();
+				OSDCTRL_ItemHide(eCalibGeneral_Rx);
+				OSDCTRL_ItemHide(eCalibGeneral_Ry);
+				startShineOnetimer();
 			}
 			else if(isCalibrationWeather())
 			{
