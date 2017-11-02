@@ -360,6 +360,7 @@ void CProcess021::process_osd(void *pPrm)
 		{
 			lastSHINE = SHINE;
 			SHINE = 0;
+			n = 0;
 		}
 		OSDCTRL_ItemShow(eMeasureType);
 		OSDCTRL_ItemShow(eMeasureDis);

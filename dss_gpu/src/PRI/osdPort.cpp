@@ -610,12 +610,12 @@ void increaseMeasureDis()
 
 void decreaseMeasureDis()
 {
-	int i = ShinId;	
+	//int i = ShinId;	
 
-	if(!SHINE)
-		return;
+	//if(!SHINE)
+	//	return;
 
-	if(eMeasureDis == i)	
+	//if(eMeasureDis == i)	
 	{
 		DistanceManual -= DISLEN;
 		if(DistanceManual < 0)
