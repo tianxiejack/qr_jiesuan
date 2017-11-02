@@ -562,7 +562,7 @@ void decreaseFireViewPram();
 
 
 extern int CCD_Big[2],CCD_Small[2];
-
+extern BOOL isMultiChanged();
 
 #ifdef __cplusplus
 }

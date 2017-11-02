@@ -55,7 +55,7 @@ static bool DrawMoveDetect = 0;
 static bool switchDisLen = 0;
 bool gProjectileMachFovlast = 0; //0 - small   1 - big
 bool gProjectileGreFovlast = 0;
-
+static bool lastSHINE = 0;
 	
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
@@ -353,15 +353,25 @@ void CProcess021::process_osd(void *pPrm)
 			OSDCTRL_ItemShow(eShotType);
 	*/
 	OSDCTRL_updateAreaN();
-	//memcpy(pFovCtrlLocal,pFovCtrlObj,sizeof(FOVCTRL_OBJ));	
-	//memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
 
-	
-	//erase
-	//if(!flag)
-		//memcpy(pCtrlObjbefore,pCtrlObj,sizeof(OSDCTRL_OBJ));
-
-	if(SHINE)
+	if(isMultiChanged())
+	{
+		if(SHINE)
+		{
+			lastSHINE = SHINE;
+			SHINE = 0;
+		}
+		OSDCTRL_ItemShow(eMeasureType);
+		OSDCTRL_ItemShow(eMeasureDis);
+	}
+	else if(lastSHINE)
+	{
+		SHINE = lastSHINE;
+		lastSHINE = 0;
+		OSDCTRL_ItemHide(eMeasureType);
+		OSDCTRL_ItemHide(eMeasureDis);
+	}	
+	else if(SHINE)
 	{
 		n++;
 		if(n%3 == 0)
@@ -3905,7 +3915,7 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 			}
 			else
 			{
-				increaseMeasureMul();
+				//increaseMeasureMul();
 			}
 		}
 		else if(isCalibrationWeather())
@@ -3983,7 +3993,12 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 			}
 			else if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 			{
-				decreaseMeasureMul();
+				switchDisLen = !switchDisLen;
+				if(switchDisLen)
+					decreaseMeasureMul();		
+				else
+					increaseMeasureMul();	
+				//decreaseMeasureMul();
 			}
 		}
 		else if(isCalibrationWeather())

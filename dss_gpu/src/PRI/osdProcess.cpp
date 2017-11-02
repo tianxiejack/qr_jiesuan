@@ -40,7 +40,6 @@
 #define GENOFFSET 0
 //extern volatile int msgLight;
 #define MIDMENU
-
 extern int shine_table[10];
 //OSDCTRL_Handle  pOsdCtrlObj		= NULL;
 //CVideoDev* pVideoCapObj				=NULL;
@@ -433,7 +432,7 @@ unsigned char g_Trk_infor[128]={0};
 static int tick=0;
 void resetTickNum()
 {
-	tick =30;
+	tick =40;
 }
 
 
@@ -1492,19 +1491,16 @@ int ls2tmp = 0000;
 			break;
 		case eMeasureDis:
 			if(isMultiChanged())
+			{
 				sprintf(pStr,"x%03d",getDisLen()); //����
+			}
 			else if(!isMeasureManual())
 			{
 				//do nothing
 			}
 			else
-				sprintf(pStr,"%04d",DistanceManual);
+				sprintf(pStr,"%04d",DistanceManual);			
 			break;
-			
-			//thousand = DistanceManual/1000;
-			//hundred =  (DistanceManual%1000)/100;
-			//tens = (DistanceManual/10)%10;
-			//unit = (DistanceManual%10);
 	#if 0
 		case eMeasureDis_Value1 :
 				if(isMeasureManual())
