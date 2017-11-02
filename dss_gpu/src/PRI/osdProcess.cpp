@@ -612,16 +612,22 @@ void OSDCTRL_NoShine()
 	int i;
 	SHINE = FALSE;
 
-	if(isMeasureManual()&&(eMeasureDis == ShinId))
+	if(eMeasureDis == ShinId)
 		OSDCTRL_ItemShow(ShinId);
 	else if(isCalibrationSave()&&(eSaveYesNo==ShinId))
 		OSDCTRL_ItemShow(ShinId);
 	else
 	{
 		OSDCTRL_ItemHide(ShinId);
-	}
-		
+	}	
 	ShinId = 0;
+
+
+	if(shine_table[0] == eMeasureType)
+		OSDCTRL_ItemShow(shine_table[0]);
+	else
+		OSDCTRL_ItemHide(shine_table[0]);	
+	shine_table[0] = 0;
 }
 
 void OSDCTRL_NoShineShow()
@@ -642,6 +648,8 @@ void OSDCTRL_ItemShine(int Id)
 {
 	SHINE = TRUE;
 	ShinId = Id;
+	if(ShinId == eMeasureDis)
+		shine_table[0] = eMeasureType;
 }
 
 void OSDCTRL_BattleShow()
@@ -847,8 +855,8 @@ void OSDCTRL_CalibZeroShow()
 		}
 		OSDCTRL_ItemShow(eCalibZero_jc);
 	}
-
-	OSDCTRL_NoShine();
+	OSDCTRL_ItemShine(eMeasureDis);
+	//OSDCTRL_NoShine();
 }
 
 void OSDCTRL_BattleAlertShow()
@@ -1470,7 +1478,6 @@ int ls2tmp = 0000;
 				if(Distance>1700)
 					;//printf("Distance = %d\n",Distance);
 				Distance = (Distance>1700)?0:(Distance);
-				//Distance = 100;
 				if(isMeasureOsdNormal())
 				{
 					//sprintf(pStr,"%s:%04d",Posd[eMeasureType],Distance); //laser
@@ -1480,12 +1487,16 @@ int ls2tmp = 0000;
 				{
 					sprintf(pStr,"%s%s",Posd[eLaserState],Posd[eMeasureType]); //shou or mo :
 				}
-				OSDCTRL_ItemHide(eMeasureDis);	
+				//OSDCTRL_ItemHide(eMeasureDis);	
 			}
 			break;
 		case eMeasureDis:
 			if(isMultiChanged())
 				sprintf(pStr,"x%03d",getDisLen()); //����
+			else if(!isMeasureManual())
+			{
+				//do nothing
+			}
 			else
 				sprintf(pStr,"%04d",DistanceManual);
 			break;

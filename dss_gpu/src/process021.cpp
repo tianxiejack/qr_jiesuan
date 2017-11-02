@@ -366,8 +366,9 @@ void CProcess021::process_osd(void *pPrm)
 		n++;
 		if(n%3 == 0)
 		{
-			
-			Osd_shinItem(ShinId);
+			if(shine_table[0])
+				Osd_shinItem(shine_table[0]);	
+			Osd_shinItem(ShinId);	
 			n = 0;
 		}
 	}
@@ -1608,7 +1609,8 @@ void CProcess021::OnKeyDwn(unsigned char key)
 	
 	if (key == 'f' || key == 'F')
 	{
-		OSDCTRL_ItemHide(eMeasureType);
+		SHINE = 0;
+		//OSDCTRL_ItemHide(eMeasureType);
 		//testjiqiangjiasu();
 		#if 0
 			if(pIStuts->ImgFrezzStat[pIStuts->SensorStat])
@@ -4042,7 +4044,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 					break;
 
 				case CMD_CALIBRATION_SWITCH_TO_ZERO:
-					gMeasureType = MEASURETYPE_LASER;
+					//gMeasureType = MEASURETYPE_LASER;
 					processCMD_CALIBRATION_SWITCH_TO_ZERO(0);
 					break;
 
@@ -4075,6 +4077,10 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				{			
 					distancefirst = 0;
 					SHINE =0; 
+				}
+				if(!isMeasureManual())
+				{
+					//do noting
 				}
 				else	
 					saveZeroParam();
@@ -4363,23 +4369,23 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
  {
  	int i = 0;
-	if(isBattleMode()&&isStatBattleAuto() || isCalibrationZero())
+	if(isBattleMode()&&isStatBattleAuto() || isCalibrationMode())
 	{
 		gMeasureType =(DIS_MEASURE_TYPE)(MEASURETYPE_MANUAL - gMeasureType);
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
 			OSDCTRL_ItemShine(eMeasureDis);
-
 			isfixingMeasure = TRUE;
 			finish_laser_measure = 0;
 		}
 		else
 		{
-			SHINE = FALSE;
-			ShinId = 0;
+			//SHINE = FALSE;
+			//ShinId = 0;
+			OSDCTRL_NoShine();
 			isfixingMeasure = FALSE;
-			OSDCTRL_ItemShow(eMeasureDis);				
+			//OSDCTRL_ItemShow(eMeasureDis);				
 		}
 
 		if(!isMeasureManual() && DrawInDrawopen)
