@@ -4750,7 +4750,8 @@ void CProcess021::processCMD_MODE_FOV_SMALL(LPARAM lParam)
 	}
 	else if(getProjectileType() == 1)
 	{
-		gProjectileGreFovlast = 0;
+		//gProjectileGreFovlast = 0;
+		gProjectileMachFovlast = 0;
 	}
 
 	//printf("gProjectileMachFovlast = %d\n",gProjectileMachFovlast);	
@@ -4777,7 +4778,8 @@ void CProcess021::processCMD_MODE_FOV_LARGE(LPARAM lParam)
 	}
 	else if(getProjectileType() == 1)
 	{
-		gProjectileGreFovlast = 1;
+		//gProjectileGreFovlast = 1;
+		gProjectileMachFovlast =1;
 	}
 	//printf("gProjectileMachFovlast = %d\n",gProjectileMachFovlast);	
 	//printf("gProjectileGreFovlast = %d\n",gProjectileGreFovlast);

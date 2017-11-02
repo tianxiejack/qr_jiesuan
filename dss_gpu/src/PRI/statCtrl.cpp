@@ -917,7 +917,8 @@ void EnterCMD_BULLET_SWITCH2( )
 			startDynamicTimer();
 		}
 	}
-	if(gProjectileGreFovlast)
+	//if(gProjectileGreFovlast)
+	if(gProjectileMachFovlast)
 		MSGDRIV_send(CMD_MODE_FOV_LARGE, 0);
 	else
 		MSGDRIV_send(CMD_MODE_FOV_SMALL, 0);
