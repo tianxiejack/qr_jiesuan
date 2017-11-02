@@ -612,7 +612,7 @@ void OSDCTRL_NoShine()
 	int i;
 	SHINE = FALSE;
 
-	if(eMeasureDis == ShinId)
+	if(eMeasureDis == ShinId || eGunType == ShinId)
 		OSDCTRL_ItemShow(ShinId);
 	else if(isCalibrationSave()&&(eSaveYesNo==ShinId))
 		OSDCTRL_ItemShow(ShinId);

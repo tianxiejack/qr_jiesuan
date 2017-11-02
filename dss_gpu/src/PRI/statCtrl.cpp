@@ -953,6 +953,13 @@ void EnterCMD_BULLET_SWITCH3( )
 		}
 	}
 	gProjectileType=PROJECTILE_GRENADE_GAS;
+	if(1 == getXPosition() && PROJECTILE_GRENADE_GAS== getProjectileType())
+		OSDCTRL_ItemShine(eGunType);
+	else
+	{
+		if(ShinId == eGunType)
+			OSDCTRL_NoShineShow();
+	}
 	UpdataBoreSight();
 	setServoControlObj();
 }
@@ -975,9 +982,7 @@ int  CTIMERCTRL_initTimerCtrl()
 	//pCtrlObj->SetTimer		= 	Dx_setTimer;
 	//pCtrlObj->RunTimer= NULL;
 	//pCtrlObj->DestroyTimerCtrl = NULL;
-	//pCtrlObj->InitTimerCtrl = NULL;
-	
-	
+	//pCtrlObj->InitTimerCtrl = NULL;	
 	return 0;
 }
 

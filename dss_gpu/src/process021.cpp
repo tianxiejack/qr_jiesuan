@@ -3715,6 +3715,13 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 		if(isCalibrationMainMenu())
 		{
 			moveUpXposition();
+			if(1 == getXPosition() && PROJECTILE_GRENADE_GAS== getProjectileType())
+				OSDCTRL_ItemShine(eGunType);
+			else
+			{
+				if(ShinId == eGunType)
+					OSDCTRL_NoShineShow();
+			}
 		}
 		else if(isCalibrationZero())
 		{
@@ -3795,6 +3802,13 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 		if(isCalibrationMainMenu())
 		{
 			moveDownXPosition();
+			if(1 == getXPosition() && PROJECTILE_GRENADE_GAS== getProjectileType())
+				OSDCTRL_ItemShine(eGunType);
+			else
+			{
+				if(ShinId == eGunType)
+					OSDCTRL_NoShineShow();
+			}
 		}
 		else if(isCalibrationZero())
 		{
@@ -4243,7 +4257,8 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
  {
  	OSDCTRL_NoShine();
 	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_KILL+2];
- 	OSDCTRL_ItemShine(eGunTip);
+	if(!isCalibrationMainMenu())
+ 		OSDCTRL_ItemShine(eGunTip);
 	
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
@@ -4256,7 +4271,8 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
  {
  	OSDCTRL_NoShine();
- 	OSDCTRL_ItemShine(eGunTip);
+	if(!isCalibrationMainMenu())
+ 		OSDCTRL_ItemShine(eGunTip);
 
  	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
@@ -4369,8 +4385,10 @@ void CProcess021::processCMD_USER_FIRED(LPARAM lParam)
 void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
  {
  	int i = 0;
+	if(!distancefirst && isCalibrationZero())
+			return ;
 	if(isBattleMode()&&isStatBattleAuto() || isCalibrationMode())
-	{
+	{	
 		gMeasureType =(DIS_MEASURE_TYPE)(MEASURETYPE_MANUAL - gMeasureType);
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
 		

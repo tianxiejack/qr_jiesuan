@@ -426,7 +426,6 @@ void moveUpXposition()
 	
 	//if(pCtrlObj->uInit==0)
 	//	return;
-
 	i = (pTextObj[eCursorX].osdInitY - pTextObj[eCalibMenu_Weather].osdInitY)/35;
 	if(AdCalibMenuFlag)
 		pTextObj[eCursorX].osdInitY = pTextObj[eCalibMenu_Weather].osdInitY +((i+6)%7)*35;
