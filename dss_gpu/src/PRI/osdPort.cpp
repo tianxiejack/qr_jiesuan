@@ -559,51 +559,32 @@ int getDisLen()
 
 void increaseMeasureMul()
 {
-	if(!SHINE)
-		return;
-	if(DISLEN<100)
-		DISLEN *= 10;
-	/*
-	if(ShinId > eMeasureDis_Value2)
-	{
-		OSDCTRL_ItemShow(ShinId);
-		ShinId -- ;
-	}
-	*/
+	//if(!SHINE)
+	//	return;
+	//if(DISLEN<100)
+	//	DISLEN *= 10;
+	DISLEN = 100;
 	resetTickNum();
 }
 
 void decreaseMeasureMul()
 {
-	if(!SHINE)
-		return;
-	if(DISLEN>10)
-		DISLEN /= 10;
-	/*
-	if(ShinId < eMeasureDis_Value4)
-	{
-		OSDCTRL_ItemShow(ShinId);
-		ShinId ++;
-	}
-	*/
+	//if(!SHINE)
+	//	return;
+	//if(DISLEN>10)
+	//	DISLEN /= 10;
+	DISLEN = 10;
 	resetTickNum();
 }
 
 void increaseMeasureDis()
 {
-	int i = ShinId;
-	/*
-	int flag =0;
-	for(i = 0;i<10;i++)
-	{	
-		if(shine_table[i] == eMeasureDis_Value1)
-			flag = 1;
-	}
-	*/
-	if(!SHINE)
-		return;
+	//int i = ShinId;
+	
+	//if(!SHINE)
+	//	return;
 
-	if(eMeasureDis == i)
+	//if(eMeasureDis == i)
 	{
 		DistanceManual+= DISLEN;
 		if(isMachineGun())

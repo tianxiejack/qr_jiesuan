@@ -52,7 +52,7 @@ static bool tiaolingwei_flag = 0;
 static bool distancefirst = 1;
 bool DrawInDrawopen = 0;
 static bool DrawMoveDetect = 0;
-
+static bool switchDisLen = 0;
 bool gProjectileMachFovlast = 0; //0 - small   1 - big
 bool gProjectileGreFovlast = 0;
 
@@ -3783,8 +3783,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 	else if(isBattleMode())
 	{
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
-		{
-			
+		{	
 			increaseMeasureDis();
 			loadFiringTable_Enter();
 		}
@@ -3944,10 +3943,12 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 	}
 	else if(isBattleMode())
 	{
-		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
-		{
-			increaseMeasureMul();
-		}
+		/*
+			if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
+			{
+				increaseMeasureMul();
+			}
+		*/
 	}
 
 	//OSA_printf("%s,line:%d ... processCMD_BUTTON_LEFT",__func__,__LINE__);
@@ -4022,8 +4023,13 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 	{
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
-			decreaseMeasureMul();
+			switchDisLen = !switchDisLen;
+			if(switchDisLen)
+				decreaseMeasureMul();		
+			else
+				increaseMeasureMul();	
 		}
+		
 	}
 
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_RIGHT",__func__,__LINE__);
@@ -4100,7 +4106,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				}
 				if(!isMeasureManual())
 				{
-					//do noting
+					return ;
 				}
 				else	
 					saveZeroParam();
@@ -4412,6 +4418,8 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 			OSDCTRL_ItemShine(eMeasureDis);
 			isfixingMeasure = FALSE;
 		}
+		else if(MEASURETYPE_MANUAL == gMeasureType)
+			isfixingMeasure = TRUE;
 		else
 			isfixingMeasure = FALSE;
 
