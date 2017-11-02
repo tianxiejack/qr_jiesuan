@@ -8,7 +8,7 @@
 
 
 #define abs(a) (((a)>0)?(a):(0-(a)))
-#define STEPLEN 4
+#define STEPLEN 1
 
 extern OSDCTRL_OBJ * pCtrlObj;
 extern int shine_table[10];
