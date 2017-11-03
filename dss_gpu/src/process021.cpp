@@ -1683,7 +1683,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if (key == 'm' || key == 'M')
 	{
-		testliudanqidong();  //JI
+		
 		//MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
 	}
 
@@ -1715,16 +1715,18 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'Q' || key == 'q')
 	{	
+		teststopserver();
+		releaseServoContrl();
 	}
 
 	if(key == 'R' || key == 'r')
 	{
+		testliudanqidong();  //JI
 	}
 
 	if(key == 'S' || key == 's')
 	{
-		teststopserver();
-		releaseServoContrl();
+
 	}
 	
 		
@@ -2483,7 +2485,7 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
   
     MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_OK,				          onDipAngleSensorOK,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u8c34\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_ERR,				          onDipAngleSensorERR,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u8c34\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
-    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_OK,	          onMachineGunSensorOK,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_OK,	          	   onMachineGunSensorOK,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_ERR,	          onMachineGunSensorERR,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_OK,		          onMachineGunServoOK,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_ERR,		          onMachineGunServoERR,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
@@ -2493,12 +2495,12 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SENSOR_OK,		          onGrenadeSensorOK,	0); // 35\u951f\u4eca\u4f20\u9769\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SENSOR_ERR,		          onGrenadeSensorERR,	0); // 35\u951f\u4eca\u4f20\u9769\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_OK,		          onGrenadeServoOK,	0); // 35\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_OK,		          	   onGrenadeServoOK,	0); // 35\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_ERR,		          onGrenadeServoERR,	0); // 35\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
 
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE,				processCMD_BUTTON_BATTLE,	0); // qie huan wei zhan dou mo shi
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_QUIT,				processCMD_BUTTON_QUIT,	0); //tui chu an jian
-    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,			processCMD_BUTTON_UNLOCK,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?   
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,				processCMD_BUTTON_UNLOCK,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?   
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_DOWN,				processCMD_BUTTON_DOWN,	0); // \u951f\u65a4\u62f7\u951f\u94f0\u5e2e\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UP,					processCMD_BUTTON_UP,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_LEFT,				processCMD_BUTTON_LEFT,	0); // \u951f\u65a4\u62f7\u951f\u895f\u6309\u7877\u62f7

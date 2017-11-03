@@ -1504,19 +1504,19 @@ void WeaponCtrlPORT_ParseBytePanel(unsigned char *buf)
 		case Frame_TEST:
 			WeaponCtrlPORT_ParseFrameByte_test(buf);
 			break;
-		case 0xAC:
+		case 0xC2:
 			if(!bPositionServoOK())
 				sendCommand(CMD_POSITION_SERVO_OK);
 			killSelfCheckPosServoTimer();
 			startSelfCheckPosServo_Timer();
 			break;
-		case 0xB7:
+		case 0xAC:
 			if(!bMachineGunServoOK())
 				sendCommand(CMD_MACHINEGUN_SERVO_OK);
 			killSelfCheckMachGunServoTimer();
 			startSelfCheckMachGunServo_Timer();
 			break;
-		case 0xC2:
+		case 0xB7:
 			if(!bGrenadeServoOK())
 				sendCommand(CMD_GENERADE_SERVO_OK);
 			killSelfCheckGrenadeServoTimer();

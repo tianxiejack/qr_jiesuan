@@ -303,7 +303,6 @@ bool bMaintPortOpen()
 
 bool bMachineGunServoOK()
 {
-	//isMachineGunServoOK = 1;
 	return isMachineGunServoOK;
 }
 
@@ -1313,8 +1312,9 @@ void SCHEDULE_cbFxn(void* cbParam)
 		else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
 		{	
 			//guilinig  test
-			x = (getTurretTheta());
-			y = (getMachGunAngle());
+			//x = (getTurretTheta());
+			x = (getGrenadeAngleAbs());//(getGrenadeAngle());
+			y = (getMachGunAngleAbs());// (getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 			{
 				getTurretServoContrlObj()->stop();
@@ -1326,9 +1326,8 @@ void SCHEDULE_cbFxn(void* cbParam)
 				OSDCTRL_ItemHide(eSuperOrder);
 				return;
 			}
-
-			
-			getMachGunServoContrlObj()->moveOffset(x,y);
+		
+			getMachGunServoContrlObj()->moveOffset(0,y);
 			#if 0
 				x = (getTurretTheta());
 				y = (getMachGunAngle());

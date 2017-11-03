@@ -193,7 +193,7 @@ static void MachServoMoveOffset(float xOffset, float yOffset)
 	
 	xmils.value = Rads2CANValue(x,TURRET);
 	ymils.value = Rads2CANValue(y,MACH);
-	processCMD_TURRETSERVO_MOVEOFFSET(xmils.value);
+	//processCMD_TURRETSERVO_MOVEOFFSET(xmils.value);
 	processCMD_MACHSERVO_MOVEOFFSET(ymils.value);
 	return ;
 }
@@ -350,7 +350,7 @@ void testjiqiangqidong()
 	}ymilsecond;
 	double x = 0.0,y=0.0;
 
-	x = DEGREE2RADS(0.333);
+	x = DEGREE2RADS(0.8);
 	
 	ymilsecond.value = 500;//8000;
 	FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
@@ -358,7 +358,8 @@ void testjiqiangqidong()
 	TestMachSpebuf[3] = 0x56;
 	SendCANBuf(TestMachSpebuf,10);
 	
-	ymilsecond.value = Rads2CANValue(x,GRENADE);
+	ymilsecond.value = Rads2CANValue(x,MACH);
+	ymilsecond.value = -ymilsecond.value ;
 	FILLBUFFOFFST(TestMachSpebuf, ymilsecond);
 	//TestMachPosbuf[2] = 0x44;
 	//TestMachPosbuf[3] = 0x43;
@@ -375,7 +376,7 @@ void testliudanqidong()
 	}ymilsecond;
 	double x = 0.0,y=0.0;
 
-	x = DEGREE2RADS(0.333);
+	x = DEGREE2RADS(0.8);
 	
 	ymilsecond.value = 500;//8000;
 	FILLBUFFSPEED(TestGRESpebuf, ymilsecond);
@@ -383,7 +384,8 @@ void testliudanqidong()
 	TestGRESpebuf[3] = 0x56;
 	SendCANBuf(TestGRESpebuf,10);
 	
-	ymilsecond.value = Rads2CANValue(x,MACH);
+	ymilsecond.value = Rads2CANValue(x,GRENADE);
+	ymilsecond.value = -ymilsecond.value;
 	FILLBUFFOFFST(TestGRESpebuf, ymilsecond);
 	//TestMachPosbuf[2] = 0x44;
 	//TestMachPosbuf[3] = 0x43;
@@ -400,7 +402,7 @@ void testturdanqidong()
 	}ymilsecond;
 	double x = 0.0,y=0.0;
 
-	x = DEGREE2RADS(0.333);
+	x = DEGREE2RADS(0.8);
 	
 	ymilsecond.value = 500;//8000;
 	FILLBUFFSPEED(TestTURSpebuf, ymilsecond);

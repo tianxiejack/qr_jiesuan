@@ -1501,35 +1501,7 @@ int ls2tmp = 0000;
 			else
 				sprintf(pStr,"%04d",DistanceManual);			
 			break;
-	#if 0
-		case eMeasureDis_Value1 :
-				if(isMeasureManual())
-					sprintf(pStr,"%01d", DistanceManual/1000);
-				else
-					sprintf(pStr,"%01d", LaserDistance/1000);
-				break;
-
-		case eMeasureDis_Value2 :
-				if(isMeasureManual())
-					sprintf(pStr,"%01d",(DistanceManual%1000)/100);
-				else
-					sprintf(pStr,"%01d",(LaserDistance%1000)/100);
-				break;
-
-		case eMeasureDis_Value3 :
-				if(isMeasureManual())
-					sprintf(pStr,"%01d",(DistanceManual/10)%10);
-				else
-					sprintf(pStr,"%01d",(LaserDistance/10)%10);
-				break;
-
-		case eMeasureDis_Value4 :
-				if(isMeasureManual())
-					sprintf(pStr,"%01d",(DistanceManual%10));
-				else
-					sprintf(pStr,"%01d",(LaserDistance%10));
-				break;	
-	#endif	
+	
 		case eLaserState:
 			sprintf(pStr,"%s",Posd[eLaserState]); 	//��ĩѡͨ
 			break;
