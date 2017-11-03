@@ -89,7 +89,7 @@ BOOL isMachGunPosLocked();
 BOOL isGrenadePosLocked();
 
 
-
+void startServo(BYTE code);
 void  updateBulletType(int);
 int getBulletType();
 Fov_Type getFovState();
@@ -137,7 +137,6 @@ void killSelfCheckPosServoTimer();
  void TeststartServoServer(unsigned char code);
 //int TestSendCANBuf(char *buf, int length);
 void TestabsPosRequest(BYTE code);
-void teststartServo(BYTE code);
 void WeaponCtrlPORT_ParseByteGrenade(unsigned char *buf);
 void WeaponCtrlPORT_ParseByteTurret(unsigned char *buf);
 void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf);

@@ -568,7 +568,7 @@ void loadFiringTable_Enter()
 	input.Temperature = gWeatherTable.Temparature;
 	
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
-
+	#if 0
 	printf("\n--------------------------INPUT-----------------------------------\n");
 	printf("PlatformXTheta = %f\n",(input.PlatformXTheta));
 	printf("PlatformYTheta = %f\n",(input.PlatformYTheta));
@@ -582,17 +582,17 @@ void loadFiringTable_Enter()
 	printf("TargetAngularVelocityY = %f\n",(input.TargetAngularVelocityY));
 	//printf("DipAngle = %f\n",input.DipAngle);
 	printf("\n------------------------------------------------------------------\n");
-
+	#endif
 	ret = FiringCtrl(&input, &output);
 	//output_prm_print(input, output);
+	#if 0
 	printf("\n--------------------------OUTPUT-----------------------------------\n");
 	printf("AimOffsetThetaX = %f\n",output.AimOffsetThetaX);
 	printf("AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
 	printf("AimOffsetX = %d\n",output.AimOffsetX);
 	printf("AimOffsetY = %d\n",output.AimOffsetY);
-
 	printf("\n------------------------------------------------------------------\n");
-	
+	#endif
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
 		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
@@ -651,26 +651,21 @@ void loadFiringTable_Enter()
 			//printf("getMeasureType = %d\n",getMeasureType());
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 
-
-			//: input PID aimoffset
-			/*AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
-			if(isMachineGun())
-				AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);*/
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-			
+			requstServoContrl();
 			if(isMachineGun())
 			{
 				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
 				cmd_machservo_moveoffset_tmp = output.AimOffsetY-DEGREE2MIL(getGrenadeAngle());
 				//processCMD_MACHSERVO_MOVEOFFSET(0);	
-				
+				MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET,&cmd_machservo_moveoffset_tmp);
 			}
 			else
 			{
 				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
 				cmd_grenadeservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
 				//processCMD_GRENADESERVO_MOVEOFFSET(0);
-				
+				MSGDRIV_send(CMD_GRENADESERVO_MOVEOFFSET, &cmd_grenadeservo_moveoffset_tmp);
 			}
 			processCMD_FIRING_TABLE_LOAD_OK(0);
 				
@@ -1056,7 +1051,7 @@ void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
 			OSDCTRL_ItemShow(eCorrectionTip);
 
 			// auto track and shoot.
-			requstServoContrl();
+			//requstServoContrl();
 
 			OSDCTRL_ItemShow(ePlatFormX);
 			//start a timer in 6sec timeout set osd CORRECTION_RGQ
@@ -1310,7 +1305,8 @@ void SCHEDULE_cbFxn(void* cbParam)
 			startSCHEDULEtimer();
 		}
 		else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
-		{			
+		{	
+			#if 0
 			x = (getTurretTheta());
 			y = (getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
@@ -1323,6 +1319,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 				return;
 			}
 	//		getPelcoServoContrlObj()->moveOffset(x,y);
+			#endif
 			startSCHEDULEtimer();
 		}
 		COUNTER++;

@@ -112,13 +112,6 @@ void startServo(BYTE code)
 	return ;
 }
 
-void teststartServo(BYTE code)
-{
-	char start[6] = {0x03,0x00,0x42,0x47,0x00,0x00};
-	start[1] = code;
-	SendCANBuf(start, sizeof(start));
-	return ;
-}
 
 void startServoServer(BYTE code)
 {
@@ -164,7 +157,7 @@ void TeststartServoServer(BYTE code)
 	usleep(WAIT_DELAY);
 	TestabsPosRequest(code);
 	usleep(WAIT_DELAY);
-	teststartServo(code);
+	startServo(code);
 	usleep(WAIT_DELAY);
 	return ;
 }

@@ -69,34 +69,30 @@ PIF_servo_control getTurretServoContrlObj()
 }
 
 //-------------------CAN packets--- speed --------------
-static unsigned char Turretbuf[]		 = {0x03, 0x42, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
-static unsigned char  Machbuf[] 		 = {0x03, 0x2c, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
-static unsigned char  Grenadebuf[]	 = {0x03,0x37,0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char Turretbuf[]		 = {0x03, 0x42, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char  Machbuf[] 		 = {0x03, 0x2c, 0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char  Grenadebuf[]	 = {0x03,0x37,0x4A, 0x56, 0x00, 0x00,0x00,0x00,0x00,0x00};
 /**************** CAN packets         position**************/
-static unsigned char Pos_Turretbuf[] 	= {0x03, 0x42, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
-static unsigned char Pos_Machbuf[] 		= {0x03, 0x2c, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
-static unsigned char Pos_Grenadebuf[] 	= {0x03,0x37,0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char Pos_Turretbuf[] 	= {0x03, 0x42, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char Pos_Machbuf[] 		= {0x03, 0x2c, 0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char Pos_Grenadebuf[] 	= {0x03,0x37,0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00,0x00};
 
 /*********************TEST buf ************************/
 static char  TestMachSpebuf[] 	 = {0x03, 0x2c, 0x53, 0x50, 0x00, 0x00,0x00,0x00,0x00,0x00};
 static char  TestMachPosbuf[] = {0x03,0x2c,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x00};
 
-#define MACH_SERVO_SPEED_RATE  1139
+#define MACH_SERVO_SPEED_RATE  1067
 #define MACH_SERVO_RESOLUTION  4096
 
-#define TURRET_SERVO_SPEED_RATE 1139
+#define TURRET_SERVO_SPEED_RATE  1239
 #define TURRET_SERVO_RESOLUTION  4096
 
-#define GRENADE_SERVO_SPEED_RATE 1139
+#define GRENADE_SERVO_SPEED_RATE  1067
 #define GRENADE_SERVO_RESOLUTION  4096
 
 //#define DEGREE2CANVALUE(degree,name) ((degree)*2*##name##_SERVO_SPEED_RATE*##name##_SERVO_RESOLUTION/(360*60*60))
 
-#define DEGREE2CANVALUE_MACH(degree)		((degree)*2*MACH_SERVO_SPEED_RATE*MACH_SERVO_RESOLUTION)/(360*60*60)
-#define DEGREE2CANVALUE_TURRET(degree)		((degree)*2*TURRET_SERVO_SPEED_RATE*TURRET_SERVO_RESOLUTION)/(360*60*60)
-#define DEGREE2CANVALUE_GRENADE(degree)		((degree)*2*GRENADE_SERVO_SPEED_RATE*GRENADE_SERVO_RESOLUTION)/(360*60*60)
-
-
+#define DEGREE2RADS(degree)					((degree)*3600)
 
 #define FILLBUFFSPEED(canbuf, milsecond) {canbuf[2]=0x4A;\
 										  canbuf[3]=0x56;\
@@ -142,21 +138,21 @@ static char  TestMachPosbuf[] = {0x03,0x2c,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x
 long cmd_machservo_moveoffset_tmp = 0;
 long cmd_grenadeservo_moveoffset_tmp = 0;
 
-static int DEGREE2CANVALUE(double degree,int id)
+static int Rads2CANValue(double degree,int id)
 {
 	double temp = 0.0;
 	int re = 0;
 	if(id == TURRET)
 	{
-		temp = degree*2*TURRET_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
+		temp = degree*TURRET_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
 	}
 	else if(id == MACH)
 	{
-		temp = degree*2*MACH_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
+		temp = degree*MACH_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
 	}
 	else if(id == GRENADE)
 	{
-		temp = degree*2*GRENADE_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
+		temp = degree*GRENADE_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
 	}
 	re = (int)(temp/(360*60*60));
 	return re;
@@ -187,8 +183,11 @@ static void MachServoMoveOffset(float xOffset, float yOffset)
 	double x = OFFSET_TO_ANGLE(xOffset);
 	double y = OFFSET_TO_ANGLE(yOffset);
 
-	xmils.value = DEGREE2CANVALUE(x,TURRET);
-	ymils.value = DEGREE2CANVALUE(y,MACH);
+	x = DEGREE2RADS(x);
+	y = DEGREE2RADS(y);
+	
+	xmils.value = Rads2CANValue(x,TURRET);
+	ymils.value = Rads2CANValue(y,MACH);
 	MSGDRIV_send(CMD_TURRETSERVO_MOVEOFFSET,&(xmils.value));
 	MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, &(ymils.value));
 	return ;
@@ -210,6 +209,7 @@ static void GrenadeServoMoveOffset(float xOffset, float yOffset)
 }
 static void GrenadeServoMoveSpeed(float xSpeed, float ySpeed)
 {
+	
 	MSGDRIV_send(CMD_GRENADESERVO_MOVESPEED,0);
 }
 static void GrenadeServoStop()
@@ -225,7 +225,6 @@ void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
 	} xmils, ymils;
 //	ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
 	ymils.value = (lParam)*2*(4096/6000.0);
-
 	FILLBUFFOFFST(Machbuf, ymils);//35榴弹伺服转动
 	FILLBUFFBGIN(Machbuf);
 	SendCANBuf(Machbuf, CAN_CMD_SIZE_SHORT);	
@@ -351,7 +350,7 @@ void testjiqiangqidong()
 	//TestMachPosbuf[2] = 0x41;
 	//TestMachPosbuf[3] = 0x43;
 	//SendCANBuf(TestMachPosbuf,10);
-	teststartServo(CODE_MACHGUN);
+	startServo(CODE_MACHGUN);
 }
 
 void testliudanqidong()
@@ -360,17 +359,23 @@ void testliudanqidong()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	ymilsecond.value = 1000;
+	double x = 0.0,y=0.0;
+
+	x = DEGREE2RADS(0.333);
+	
+	ymilsecond.value = 500;//8000;
 	FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
-	TestMachPosbuf[2] = 0x53;
-	TestMachPosbuf[3] = 0x50;
+	TestMachPosbuf[2] = 0x4a;
+	TestMachPosbuf[3] = 0x56;
 	SendCANBuf(TestMachSpebuf,10);
-	//ymilsecond.value = 5000;//8000;
-	//FILLBUFFOFFST(TestMachPosbuf, ymilsecond);
+	
+	ymilsecond.value = Rads2CANValue(x,MACH);
+	FILLBUFFOFFST(TestMachPosbuf, ymilsecond);
 	//TestMachPosbuf[2] = 0x44;
 	//TestMachPosbuf[3] = 0x43;
-	//SendCANBuf(TestMachPosbuf,10);
-	teststartServo(CODE_MACHGUN);
+	SendCANBuf(TestMachPosbuf,10);
+	
+	startServo(CODE_MACHGUN);
 }
 
 

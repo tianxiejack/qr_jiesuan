@@ -2583,20 +2583,20 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_OPEN,				processCMD_LIHEQI_OPEN,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_ERR,				processCMD_GRENADE_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_OK,				processCMD_GRENADE_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_ERR,			processCMD_FIREBUTTON_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_ERR,				processCMD_FIREBUTTON_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_OK,				processCMD_FIREBUTTON_OK,	0);
 
     MSGDRIV_attachMsgFun(handle,	CMD_FULSCREENCAN_ERR,			processCMD_FULSCREENCAN_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_FULSCREENCAN_OK,			processCMD_FULSCREENCAN_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_ERR,		processCMD_DISCONTRLCAN0_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_ERR,			processCMD_DISCONTRLCAN0_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_OK,			processCMD_DISCONTRLCAN0_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_ERR,		processCMD_DISCONTRLCAN1_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_ERR,			processCMD_DISCONTRLCAN1_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_OK,			processCMD_DISCONTRLCAN1_OK,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_DIANCITIE_ERR,				processCMD_DIANCITIE_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_DIANCITIE_OK,				processCMD_DIANCITIE_OK,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_POSMOTOR_ERR,				processCMD_POSMOTOR_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_POSMOTOR_OK,				processCMD_POSMOTOR_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_ERR,		processCMD_MACHGUNMOTOR_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_ERR,			processCMD_MACHGUNMOTOR_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_OK,			processCMD_MACHGUNMOTOR_OK,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADEMOTOR_ERR,			processCMD_GRENADEMOTOR_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADEMOTOR_OK,			processCMD_GRENADEMOTOR_OK,	0);
@@ -4938,6 +4938,11 @@ void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
 	//Posd[eDynamicZone] = DynamicOsd[9];
 	//OSDCTRL_ItemShine(eDynamicZone);
 	OSDCTRL_ItemShine(eGuiling);
+
+	requstServoContrl();
+	COUNTER = 0;
+	SCHEDULE_RESET = TRUE;
+	startSCHEDULEtimer();
 	//tiao ling wei
 	#if 0
 		Posd[eSuperOrder] = SuperOsd[2];
@@ -4947,7 +4952,6 @@ void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
 		SCHEDULE_RESET = TRUE;
 		startSCHEDULEtimer();
  	#endif
- 	//OSA_printf("%s,line:%d ... processCMD_SCHEDULE_RESET",__func__,__LINE__);
 	return ;
  }
 
@@ -4958,21 +4962,17 @@ void CProcess021::processCMD_TRACE_SENDFRAME0(LPARAM lParam)
 	return ;
  }
 
-
 void CProcess021::processCMD_TRIGGER_AVT(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... processCMD_TRIGGER_AVT",__func__,__LINE__);
 	return ;
  }
 
-
-
 void CProcess021::quitAVTtrigger(LPARAM lParam)
  {
  	OSA_printf("%s,line:%d ... quitAVTtrigger",__func__,__LINE__);
 	return ;
  }
-
 
 void CProcess021::processCMD_SEND_MIDPARAMS(LPARAM lParam)
  {
