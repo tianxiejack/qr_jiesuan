@@ -2465,64 +2465,64 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	MSGID_HIDE_OSD,                                      OSDCTRL_hideOsd  ,	                  0);
     MSGDRIV_attachMsgFun(handle,	MSGID_TRA_ENLOCK,                                  DRAMCTRL_settrackBreakLock ,    0);
 #endif
-    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_AUTOCHECK,                 processCMD_BUTTON_AUTOCHECK ,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_BOOT_UP_CHECK_COMPLETE,           processCMD_BOOT_UP_CHECK_COMPLETE,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_EXIT_SELF_CHECK,                  processCMD_EXIT_SELF_CHECK ,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_AUTOCHECK,                         processCMD_BUTTON_AUTOCHECK ,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_BOOT_UP_CHECK_COMPLETE,              processCMD_BOOT_UP_CHECK_COMPLETE,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_EXIT_SELF_CHECK,                             processCMD_EXIT_SELF_CHECK ,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_CALIBRATION,		          processCMD_BUTTON_CALIBRATION ,	0); // \u6821\u51c6\u951f\u65a4\u62f7\u94ae
 	
     MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SENSOR_OK,		          onPositionSensorOK,	0); // \u951f\u65a4\u62f7\u4f4d\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SENSOR_ERR,		      onPositionSensorERR,	0); // \u951f\u65a4\u62f7\u4f4d\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SENSOR_ERR,		          onPositionSensorERR,	0); // \u951f\u65a4\u62f7\u4f4d\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
 	
-    MSGDRIV_attachMsgFun(handle,	CMD_DISPLAY_ERR,				      onDisplayErr,	0); // OSD\u951f\u65a4\u62f7\u793a\u951f\u5c4a\u5e38
+    MSGDRIV_attachMsgFun(handle,	CMD_DISPLAY_ERR,				          onDisplayErr,	0); // OSD\u951f\u65a4\u62f7\u793a\u951f\u5c4a\u5e38
     MSGDRIV_attachMsgFun(handle,	CMD_DISPLAY_OK,				          onDisplayOK,	0); // OSD\u951f\u65a4\u62f7\u793a\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_OK,				      onJoyStickOK,	0); // \u951f\u8857\u618b\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
-    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_ERR,				      onJoyStickErr,	0); // \u951f\u8857\u618b\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
+    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_OK,				          onJoyStickOK,	0); // \u951f\u8857\u618b\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
+    MSGDRIV_attachMsgFun(handle,	CMD_JOYSTICK_ERR,				          onJoyStickErr,	0); // \u951f\u8857\u618b\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_WEAPONCTRL_OK,			          onWeaponCtrlOK,		0); //\u951f\u7686\u5321\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_WEAPONCTRL_ERR,			          onWeaponCtrlErr,		0); //\u951f\u7686\u5321\u62f7\u951f\u65a4\u62f7
   
-    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_OK,				      onDipAngleSensorOK,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u8c34\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
-    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_ERR,				      onDipAngleSensorERR,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u8c34\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
+    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_OK,				          onDipAngleSensorOK,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u8c34\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
+    MSGDRIV_attachMsgFun(handle,	CMD_DIP_ANGLE_ERR,				          onDipAngleSensorERR,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u8c34\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?    
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_OK,	          onMachineGunSensorOK,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SENSOR_ERR,	          onMachineGunSensorERR,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_OK,		      onMachineGunServoOK,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_ERR,		      onMachineGunServoERR,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_OK,		          onMachineGunServoOK,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHINEGUN_SERVO_ERR,		          onMachineGunServoERR,	0); // \u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
     
-    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_OK,			   	  onPositionServoOK,	0); // \u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_ERR,	     	      onPositionServoERR,	0); // \u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_OK,			   	   onPositionServoOK,	0); // \u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_POSITION_SERVO_ERR,	     	          onPositionServoERR,	0); // \u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
     
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SENSOR_OK,		          onGrenadeSensorOK,	0); // 35\u951f\u4eca\u4f20\u9769\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SENSOR_ERR,		      onGrenadeSensorERR,	0); // 35\u951f\u4eca\u4f20\u9769\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SENSOR_ERR,		          onGrenadeSensorERR,	0); // 35\u951f\u4eca\u4f20\u9769\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_OK,		          onGrenadeServoOK,	0); // 35\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GENERADE_SERVO_ERR,		          onGrenadeServoERR,	0); // 35\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7
 
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE,				processCMD_BUTTON_BATTLE,	0); // qie huan wei zhan dou mo shi
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_QUIT,				processCMD_BUTTON_QUIT,	0); //tui chu an jian
-    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,				processCMD_BUTTON_UNLOCK,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?   
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UNLOCK,			processCMD_BUTTON_UNLOCK,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f?   
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_DOWN,				processCMD_BUTTON_DOWN,	0); // \u951f\u65a4\u62f7\u951f\u94f0\u5e2e\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_UP,					processCMD_BUTTON_UP,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_LEFT,				processCMD_BUTTON_LEFT,	0); // \u951f\u65a4\u62f7\u951f\u895f\u6309\u7877\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_RIGHT,				processCMD_BUTTON_RIGHT,	0); // \u951f\u65a4\u62f7\u951f\u63ed\u5e2e\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_ENTER,				processCMD_BUTTON_ENTER,	0); // \u786e\u951f\u8f83\u5e2e\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH0,				processCMD_BULLET_SWITCH0,	0); // \u951f\u65a4\u62f7\u67aa0\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH1,				processCMD_BULLET_SWITCH1,	0); // \u951f\u65a4\u62f7\u67aa1\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH2,				processCMD_BULLET_SWITCH2,	0); // \u951f\u65a4\u62f7\u67aa2\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH3,				processCMD_BULLET_SWITCH3,	0); // \u951f\u65a4\u62f7\u67aa3\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH0,			processCMD_BULLET_SWITCH0,	0); // \u951f\u65a4\u62f7\u67aa0\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH1,			processCMD_BULLET_SWITCH1,	0); // \u951f\u65a4\u62f7\u67aa1\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH2,			processCMD_BULLET_SWITCH2,	0); // \u951f\u65a4\u62f7\u67aa2\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_BULLET_SWITCH3,			processCMD_BULLET_SWITCH3,	0); // \u951f\u65a4\u62f7\u67aa3\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_AUTOCATCH,			processCMD_BUTTON_AUTOCATCH,0); // \u951f\u7686\u8bb9\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE_AUTO,			processCMD_BUTTON_BATTLE_AUTO,	0); // \u6218\u951f\u65a4\u62f7\u6a21\u5f0f
+    MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE_AUTO,		processCMD_BUTTON_BATTLE_AUTO,	0); // \u6218\u951f\u65a4\u62f7\u6a21\u5f0f
     MSGDRIV_attachMsgFun(handle,	CMD_BUTTON_BATTLE_ALERT,		processCMD_BUTTON_BATTLE_ALERT,	0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u6a21\u5f0f
     MSGDRIV_attachMsgFun(handle,	CMD_USER_FIRED,					processCMD_USER_FIRED,	0); // \u786e\u951f\u8f83\u51e4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_DETEND_LOCK,				processCMD_DETEND_LOCK,	0); // \u6b62\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_DETEND_UNLOCK,				processCMD_DETEND_UNLOCK,	0); // \u6b62\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MAINTPORT_LOCK,				processCMD_MAINTPORT_LOCK,	0); //\u7ef4\u951f\u65a4\u62f7\u951f\u811a\u7678\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_DETEND_UNLOCK,			processCMD_DETEND_UNLOCK,	0); // \u6b62\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MAINTPORT_LOCK,			processCMD_MAINTPORT_LOCK,	0); //\u7ef4\u951f\u65a4\u62f7\u951f\u811a\u7678\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MAINTPORT_UNLOCK,			processCMD_MAINTPORT_UNLOCK,	0); // \u7ef4\u951f\u65a4\u62f7\u951f\u811a\u5321\u62f7
     
     MSGDRIV_attachMsgFun(handle,	CMD_MEASURE_DISTANCE_SWITCH,			processCMD_MEASURE_DISTANCE_SWITCH,	0); //\u951f\u53eb\u4f19\u62f7\u951f\u65a4\u62f7\u55be\u65a4\u62f7?    
-    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_SAVE,			processCMD_CALIBRATION_SWITCH_TO_SAVE,	0); // \u6821\u51c6-\u951f\u53eb\u4f19\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_ZERO,			processCMD_CALIBRATION_SWITCH_TO_ZERO,	0); // \u6821\u51c6-\u951f\u53eb\u4f19\u62f7\u6821\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_WEATHER,		processCMD_CALIBRATION_SWITCH_TO_WEATHER,	0); // \u6821\u51c6-\u951f\u53eb\u4f19\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_GENERAL,		processCMD_CALIBRATION_SWITCH_TO_GENERAL,	0); // \u6821\u51c6-\u951f\u53eb\u4f19\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_GENPRAM,		processCMD_CALIBRATION_SWITCH_TO_GENPRAM,	0); // \u6821\u51c6-\u951f\u6854\u8be7\u62f7\u6821\u51c6
-    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_HORIZEN,		processCMD_CALIBRATION_SWITCH_TO_HORIZEN,	0); // \u6821\u51c6-\u951f\u65a4\u62f7\u5e73\u6821\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_SAVE,		processCMD_CALIBRATION_SWITCH_TO_SAVE,	0); // \u6821\u51c6-\u951f\u53eb\u4f19\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_ZERO,		processCMD_CALIBRATION_SWITCH_TO_ZERO,	0); // \u6821\u51c6-\u951f\u53eb\u4f19\u62f7\u6821\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_WEATHER,	processCMD_CALIBRATION_SWITCH_TO_WEATHER,	0); // \u6821\u51c6-\u951f\u53eb\u4f19\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_GENERAL,	processCMD_CALIBRATION_SWITCH_TO_GENERAL,	0); // \u6821\u51c6-\u951f\u53eb\u4f19\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_GENPRAM,	processCMD_CALIBRATION_SWITCH_TO_GENPRAM,	0); // \u6821\u51c6-\u951f\u6854\u8be7\u62f7\u6821\u51c6
+    MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_HORIZEN,	processCMD_CALIBRATION_SWITCH_TO_HORIZEN,	0); // \u6821\u51c6-\u951f\u65a4\u62f7\u5e73\u6821\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_CALIBRATION_SWITCH_TO_LASER,		processCMD_CALIBRATION_SWITCH_TO_LASER,	0); // \u6821\u51c6-\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u6821\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_LASER_FAIL,							processCMD_LASER_FAIL,		0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u5931\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_TRACKING_FAIL,						processCMD_TRACKING_FAIL,	0); // \u951f\u7686\u8bb9\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u5931\u951f\u65a4\u62f7
@@ -2541,22 +2541,22 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_FOV_LARGE,					processCMD_MODE_FOV_LARGE,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u63a5\u7b79\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_SCALE_SWITCH,				MSGAPI_inputzoom /*processCMD_MODE_SCALE_SWITCH*/,		0); // \u951f\u53eb\u4f19\u62f7\u951f\u811a\u8fbe\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_PIC_COLOR_SWITCH,			processCMD_MODE_PIC_COLOR_SWITCH,		0); // \u951f\u53eb\u4f19\u62f7\u56fe\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ENHANCE_SWITCH,			processCMD_MODE_ENHANCE_SWITCH,		0); // \u951f\u65a4\u62f7\u9891\u951f\u65a4\u62f7\u5f3a\u951f\u53eb\u4f19\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_SHORT,				processCMD_MODE_SHOT_SHORT,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u6559\u7889\u62f7\u951f\u6212\u3001\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_ENHANCE_SWITCH,				processCMD_MODE_ENHANCE_SWITCH,		0); // \u951f\u65a4\u62f7\u9891\u951f\u65a4\u62f7\u5f3a\u951f\u53eb\u4f19\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_SHORT,					processCMD_MODE_SHOT_SHORT,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u6559\u7889\u62f7\u951f\u6212\u3001\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MODE_SHOT_LONG,					processCMD_MODE_SHOT_LONG,		0); // \u951f\u53eb\u4f19\u62f7\u4e3a\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u6212\u3001\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_GUN,					processCMD_SCHEDULE_GUN,		0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_STRONG,				processCMD_SCHEDULE_STRONG,		0); // \u951f\u65a4\u62f7\u5f3a\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_GUN,						processCMD_SCHEDULE_GUN,		0); // \u951f\u65a4\u62f7\u67aa\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_STRONG,					processCMD_SCHEDULE_STRONG,		0); // \u951f\u65a4\u62f7\u5f3a\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_SCHEDULE_RESET,					processCMD_SCHEDULE_RESET,		0); // \u951f\u65a4\u62f7\u951f\u65a4\u62f7\u4f4d
     
-    MSGDRIV_attachMsgFun(handle,	CMD_TIMER_SENDFRAME0,				processCMD_TIMER_SENDFRAME0,		0); //send frame0 through CAN
-    MSGDRIV_attachMsgFun(handle,	CMD_TRACE_SENDFRAME0,				processCMD_TRACE_SENDFRAME0,		0); //send frame0 through TracePort
-    MSGDRIV_attachMsgFun(handle,	CMD_TRIGGER_AVT,					processCMD_TRIGGER_AVT,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7AVT\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_QUIT_AVT_TRACKING,				quitAVTtrigger,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7AVT\u951f\u527f\u7b79\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_TIMER_SENDFRAME0,					processCMD_TIMER_SENDFRAME0,		0); //send frame0 through CAN
+    MSGDRIV_attachMsgFun(handle,	CMD_TRACE_SENDFRAME0,					processCMD_TRACE_SENDFRAME0,		0); //send frame0 through TracePort
+    MSGDRIV_attachMsgFun(handle,	CMD_TRIGGER_AVT,						processCMD_TRIGGER_AVT,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7AVT\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_QUIT_AVT_TRACKING,					quitAVTtrigger,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7AVT\u951f\u527f\u7b79\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_SEND_MIDPARAMS,					processCMD_SEND_MIDPARAMS,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u53eb\u7877\u62f7\u951f\u65a4\u62f7\u951f?    
-    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_LOAD_IN_POSITION,		processCMD_GRENADE_LOAD_IN_POSITION,		0); //35\u951f\u65a4\u62f7\u88c5\u951f?\u4f4d\u6307\u793a\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_CALCNUM_SHOW,					processCMD_CALCNUM_SHOW,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u53eb\u7877\u62f7\u503c\u951f\u65a4\u62f7\u793a
-    MSGDRIV_attachMsgFun(handle,	CMD_CALCNUM_HIDE,					processCMD_CALCNUM_HIDE,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u53eb\u7877\u62f7\u503c\u951f\u65a4\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_MIDPARAMS_SWITCH,				processCMD_MIDPARAMS_SWITCH,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7F5
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_LOAD_IN_POSITION,			processCMD_GRENADE_LOAD_IN_POSITION,		0); //35\u951f\u65a4\u62f7\u88c5\u951f?\u4f4d\u6307\u793a\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_CALCNUM_SHOW,						processCMD_CALCNUM_SHOW,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u53eb\u7877\u62f7\u503c\u951f\u65a4\u62f7\u793a
+    MSGDRIV_attachMsgFun(handle,	CMD_CALCNUM_HIDE,						processCMD_CALCNUM_HIDE,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u53eb\u7877\u62f7\u503c\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MIDPARAMS_SWITCH,					processCMD_MIDPARAMS_SWITCH,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7F5
     MSGDRIV_attachMsgFun(handle,	CMD_LASERSELECT_SWITCH,				processCMD_LASERSELECT_SWITCH,		0); //F5
     MSGDRIV_attachMsgFun(handle,	CMD_STABLEVIDEO_SWITCH,				processCMD_STABLEVIDEO_SWITCH,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7F3(\u951f\u65a4\u62f7\u9891\u951f\u65a4\u62f7\u5f3a)
     MSGDRIV_attachMsgFun(handle,	CMD_ADCALIBMENU_SWITCH,				processCMD_ADCALIBMENU_SWITCH,		0);
@@ -2565,43 +2565,42 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_SENSOR_SWITCH,					processCMD_SENSOR_SWITCH,		0); //F6
     MSGDRIV_attachMsgFun(handle,	CMD_CONNECT_SWITCH,					processCMD_CONNECT_SWITCH,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7F6
     
-    MSGDRIV_attachMsgFun(handle,	CMD_IDENTIFY_KILL,					processCMD_IDENTIFY_KILL,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u7ede\u6485\u62f7\u951f\u8f83\u247d\u72f5ILL
-    MSGDRIV_attachMsgFun(handle,	CMD_IDENTIFY_GAS,					processCMD_IDENTIFY_GAS,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u7ede\u6485\u62f7\u951f\u8f83\u247d\u72e6AS
-    MSGDRIV_attachMsgFun(handle,	CMD_SERVO_INIT,						processCMD_SERVO_INIT,		0); //\u951f\u65a4\u62f7\u59cb\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_IDENTIFY_KILL,						processCMD_IDENTIFY_KILL,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u7ede\u6485\u62f7\u951f\u8f83\u247d\u72f5ILL
+    MSGDRIV_attachMsgFun(handle,	CMD_IDENTIFY_GAS,						processCMD_IDENTIFY_GAS,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u7ede\u6485\u62f7\u951f\u8f83\u247d\u72e6AS
+    MSGDRIV_attachMsgFun(handle,	CMD_SERVO_INIT,							processCMD_SERVO_INIT,		0); //\u951f\u65a4\u62f7\u59cb\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_SERVOTIMER_MACHGUN,				processCMD_SERVOTIMER_MACHGUN,	0); //\u951f\u65a4\u62f7\u59cb\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u65a4\u62f7
 
-    MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVEOFFSET,		processCMD_GRENADESERVO_MOVEOFFSET,	0); //\u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7\u4f4d\u951f\u77eb\u5321\u62f7\u951f\u65a4\u62f7
-	MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVESPEED,			processCMD_MACHSERVO_MOVESPEED,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u951f\u52ab\u5ea6\u5321\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVEOFFSET,				processCMD_MACHSERVO_MOVEOFFSET,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u4f4d\u951f\u77eb\u5321\u62f7\u951f\u65a4\u62f7
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVESPEED,				processCMD_MACHSERVO_MOVESPEED,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u951f\u52ab\u5ea6\u5321\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_STOP,					processCMD_MACHSERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
-    MSGDRIV_attachMsgFun(handle,	CMD_MACHSERVO_MOVEOFFSET,			processCMD_MACHSERVO_MOVEOFFSET,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u4f4d\u951f\u77eb\u5321\u62f7\u951f\u65a4\u62f7
+
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVEOFFSET,			processCMD_GRENADESERVO_MOVEOFFSET,	0); //\u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7\u4f4d\u951f\u77eb\u5321\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVESPEED,			processCMD_GRENADESERVO_MOVESPEED,	0); //\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u52ab\u5ea6\u5321\u62f7\u951f\u65a4\u62f7
-	MSGDRIV_attachMsgFun(handle, 	CMD_GRENADESERVO_STOP, 				processCMD_GRENADESERVO_STOP, 0);
-	MSGDRIV_attachMsgFun(handle,	CMD_TURRETSERVO_MOVEOFFSET,			processCMD_TURRETSERVO_MOVEOFFSET, 0);
-	MSGDRIV_attachMsgFun(handle,	CMD_TURRETSERVO_MOVESPEED,			processCMD_TURRETSERVO_MOVESPEED, 0);
-	MSGDRIV_attachMsgFun(handle,	CMD_TURRETSERVO_STOP,				processCMD_TURRETSERVO_STOP, 0);
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_STOP,					processCMD_MACHSERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
 
 	
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_CLOSE,				processCMD_LIHEQI_CLOSE,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_OPEN,				processCMD_LIHEQI_OPEN,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_ERR,				processCMD_GRENADE_ERR,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_OK,					processCMD_GRENADE_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_ERR,				processCMD_FIREBUTTON_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADE_OK,				processCMD_GRENADE_OK,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_ERR,			processCMD_FIREBUTTON_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_FIREBUTTON_OK,				processCMD_FIREBUTTON_OK,	0);
 
     MSGDRIV_attachMsgFun(handle,	CMD_FULSCREENCAN_ERR,			processCMD_FULSCREENCAN_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_FULSCREENCAN_OK,			processCMD_FULSCREENCAN_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_ERR,			processCMD_DISCONTRLCAN0_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_ERR,		processCMD_DISCONTRLCAN0_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN0_OK,			processCMD_DISCONTRLCAN0_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_ERR,			processCMD_DISCONTRLCAN1_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_ERR,		processCMD_DISCONTRLCAN1_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_DISCONTRLCAN1_OK,			processCMD_DISCONTRLCAN1_OK,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_DIANCITIE_ERR,				processCMD_DIANCITIE_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_DIANCITIE_OK,				processCMD_DIANCITIE_OK,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_POSMOTOR_ERR,				processCMD_POSMOTOR_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_POSMOTOR_OK,				processCMD_POSMOTOR_OK,	0);
-    MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_ERR,			processCMD_MACHGUNMOTOR_ERR,	0);
+    MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_ERR,		processCMD_MACHGUNMOTOR_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_MACHGUNMOTOR_OK,			processCMD_MACHGUNMOTOR_OK,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADEMOTOR_ERR,			processCMD_GRENADEMOTOR_ERR,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADEMOTOR_OK,			processCMD_GRENADEMOTOR_OK,	0);
+
     return 0;
 }
 

@@ -4,7 +4,7 @@
 #include "app_global.h"
 
 
-#define CAN_CMD_SIZE_SHORT		6
+#define CAN_CMD_SIZE_SHORT	6
 #define CAN_CMD_SIZE_LONG    	10
 #define CAN_CMD_SIZE_MINI		4
 
@@ -38,8 +38,6 @@ static void TurretServoStop();
 static void TurretServoMoveSpeed(float xSpeed,float ySpeed);
 static void TurretServoMoveOffset(float xOffset,float yOffset);
 static int DEGREE2CANVALUE(double degree,int id);
-void servoStop(char id);
-
 
 #endif
 

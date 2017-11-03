@@ -169,12 +169,12 @@ static void TurretServoMoveOffset(float xOffset,float yOffset)
 
 static void TurretServoMoveSpeed(float xSpeed,float ySpeed)
 {
-
+	
 }
 
 static void TurretServoStop()
 {
-	
+	MSGDRIV_send(CMD_TURRETSERVO_STOP,0);
 }
 
 static void MachServoMoveOffset(float xOffset, float yOffset)
@@ -223,101 +223,93 @@ void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
 		unsigned char c[4];
 		int value;
 	} xmils, ymils;
-	//ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
+//	ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
 	ymils.value = (lParam)*2*(4096/6000.0);
 
-	FILLBUFFOFFST(Machbuf, ymils);
-	SendCANBuf(Machbuf, CAN_CMD_SIZE_LONG);
+	FILLBUFFOFFST(Machbuf, ymils);//35榴弹伺服转动
 	FILLBUFFBGIN(Machbuf);
 	SendCANBuf(Machbuf, CAN_CMD_SIZE_SHORT);	
+	
 }
-
 void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam)
 {
 	union {
 		unsigned char c[4];
 		int value;
-	} xmilsecond, ymilsecond;
-	ymilsecond.value = 0x100790;
-	FILLBUFFSPEED(Machbuf, ymilsecond);	
+	} milsecond;
+	milsecond.value = 1000000;
+	FILLBUFFSPEED(Machbuf, milsecond);	
 	SendCANBuf(Machbuf, CAN_CMD_SIZE_LONG);
 	FILLBUFFBGIN(Machbuf);
 	SendCANBuf(Machbuf, CAN_CMD_SIZE_SHORT);	
+	return ;
 }
-
 void processCMD_MACHSERVO_STOP(LPARAM lParam)
 {
 	FILLBUFFSTOP(Machbuf);
-	SendCANBuf((Machbuf),CAN_CMD_SIZE_SHORT);
+	SendCANBuf(Machbuf, CAN_CMD_SIZE_SHORT);
 }
-
 void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
 {
 	union {
 		unsigned char c[4];
 		int value;
 	} xmils, ymils;
-	//ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
+//	ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
 	ymils.value = (lParam)*2*(4096/6000.0);
 
-	FILLBUFFOFFST(Grenadebuf, ymils);
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_LONG);
+	FILLBUFFOFFST(Grenadebuf, ymils);//35榴弹伺服转动
 	FILLBUFFBGIN(Grenadebuf);
-	WeaponCtrlPORT_send(Grenadebuf, CAN_CMD_SIZE_SHORT);	
-	
+	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_SHORT);	
 }
-
 void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam)
 {
 	union {
 		unsigned char c[4];
 		int value;
-	} xmilsecond, ymilsecond;
-	ymilsecond.value = 0x100790;
-	FILLBUFFSPEED(Grenadebuf, ymilsecond);	
+	} milsecond;
+	milsecond.value = 1000000;
+	FILLBUFFSPEED(Grenadebuf, milsecond);	
 	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_LONG);
 	FILLBUFFBGIN(Grenadebuf);
 	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_SHORT);	
+	return ;
 }
-
 void processCMD_GRENADESERVO_STOP(LPARAM lParam)
 {
 	FILLBUFFSTOP(Grenadebuf);
-	SendCANBuf((Grenadebuf),CAN_CMD_SIZE_SHORT);
+	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_SHORT);
 }
-
 void processCMD_TURRETSERVO_MOVEOFFSET(LPARAM lParam)
 {
 	union {
 		unsigned char c[4];
 		int value;
 	} xmils, ymils;
-	//ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
+//	ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
 	ymils.value = (lParam)*2*(4096/6000.0);
 
-	FILLBUFFOFFST(Turretbuf, ymils);
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_LONG);
+	FILLBUFFOFFST(Turretbuf, ymils);//35榴弹伺服转动
 	FILLBUFFBGIN(Turretbuf);
-	WeaponCtrlPORT_send(Turretbuf, CAN_CMD_SIZE_SHORT);
+	SendCANBuf(Turretbuf, CAN_CMD_SIZE_SHORT);	
 }
-
 void processCMD_TURRETSERVO_MOVESPEED(LPARAM lParam)
 {
 	union {
 		unsigned char c[4];
 		int value;
-	} xmilsecond, ymilsecond;
-	ymilsecond.value = 0x100790;
-	FILLBUFFSPEED(Turretbuf, ymilsecond);	
+	} milsecond;
+	milsecond.value = 1000000;
+	FILLBUFFSPEED(Turretbuf, milsecond);	
 	SendCANBuf(Turretbuf, CAN_CMD_SIZE_LONG);
 	FILLBUFFBGIN(Turretbuf);
 	SendCANBuf(Turretbuf, CAN_CMD_SIZE_SHORT);	
+	return ;
 }
-
 void processCMD_TURRETSERVO_STOP(LPARAM lParam)
 {
 	FILLBUFFSTOP(Turretbuf);
-	SendCANBuf((Turretbuf),CAN_CMD_SIZE_SHORT);
+	SendCANBuf(Turretbuf, CAN_CMD_SIZE_SHORT);
 }
 
 static void initServo(unsigned char *pBuf)
@@ -386,20 +378,5 @@ void teststopserver()
 {
 	FILLBUFFSTOP(TestMachPosbuf);
 	SendCANBuf((TestMachPosbuf), CAN_CMD_SIZE_SHORT);
-}
-
-void servoStop(char id)
-{	
-	/*		
-		0 --- TURRET		
-		1 --- MACH		
-		2 --- GRENADE	
-	*/	
-	if(id & (1<<0))	
-		getTurretServoContrlObj()->stop;
-	if(id & (1<<1))
-		getMachGunServoContrlObj()->stop;
-	if(id & (1<<2))
-		getGrenadeServoContrlObj()->stop;
 }
 
