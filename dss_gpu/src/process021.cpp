@@ -56,7 +56,7 @@ static bool switchDisLen = 0;
 bool gProjectileMachFovlast = 0; //0 - small   1 - big
 bool gProjectileGreFovlast = 0;
 static bool lastSHINE = 0;
-	
+			int xxxx = 12;
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
 {
@@ -1689,7 +1689,7 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if (key == 'n' || key == 'N')
 	{
-		testliudanqidong();
+		//MSGDRIV_send(CMD_GRENADESERVO_STOP, &xxxx);
 	}
 	
 
@@ -2576,7 +2576,7 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVEOFFSET,			processCMD_GRENADESERVO_MOVEOFFSET,	0); //\u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7\u4f4d\u951f\u77eb\u5321\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVESPEED,			processCMD_GRENADESERVO_MOVESPEED,	0); //\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u52ab\u5ea6\u5321\u62f7\u951f\u65a4\u62f7
-    MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_STOP,					processCMD_MACHSERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
+    MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_STOP,					processCMD_GRENADESERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
 
 	
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_CLOSE,				processCMD_LIHEQI_CLOSE,	0);

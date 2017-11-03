@@ -17,11 +17,19 @@ typedef enum
 
 PIF_servo_control getMachGunServoContrlObj();
 PIF_servo_control getGrenadeServoContrlObj();
-void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam);
-void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam);
-void processCMD_MACHSERVO_STOP(LPARAM lParam);
+
 void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam);
+void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam);
+void processCMD_MACHSERVO_STOP(LPARAM lParam);
+
 void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam);
+void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam);
+void processCMD_GRENADESERVO_STOP(LPARAM lParam);
+
+void processCMD_TURRETSERVO_MOVEOFFSET(LPARAM lParam);
+void processCMD_TURRETSERVO_MOVESPEED(LPARAM lParam);
+void processCMD_TURRETSERVO_STOP(LPARAM lParam);
+
 
 void initAllServos();
 void setServoControlObj();

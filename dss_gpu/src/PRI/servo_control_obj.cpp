@@ -160,7 +160,7 @@ static int Rads2CANValue(double degree,int id)
 
 static void TurretServoMoveOffset(float xOffset,float yOffset)
 {
-	
+	processCMD_TURRETSERVO_MOVEOFFSET(xOffset);
 }
 
 static void TurretServoMoveSpeed(float xSpeed,float ySpeed)
@@ -170,7 +170,7 @@ static void TurretServoMoveSpeed(float xSpeed,float ySpeed)
 
 static void TurretServoStop()
 {
-	MSGDRIV_send(CMD_TURRETSERVO_STOP,0);
+	processCMD_TURRETSERVO_STOP(0);
 }
 
 static void MachServoMoveOffset(float xOffset, float yOffset)
@@ -179,42 +179,41 @@ static void MachServoMoveOffset(float xOffset, float yOffset)
 		unsigned char c[4];
 		int value;
 	} xmils, ymils;
-	// pixel vert to degree
-	double x = OFFSET_TO_ANGLE(xOffset);
-	double y = OFFSET_TO_ANGLE(yOffset);
+	
+	double x = xOffset;//OFFSET_TO_ANGLE(xOffset);
+	double y = yOffset;//OFFSET_TO_ANGLE(yOffset);
 
 	x = DEGREE2RADS(x);
 	y = DEGREE2RADS(y);
 	
 	xmils.value = Rads2CANValue(x,TURRET);
 	ymils.value = Rads2CANValue(y,MACH);
-	MSGDRIV_send(CMD_TURRETSERVO_MOVEOFFSET,&(xmils.value));
-	MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET, &(ymils.value));
+	processCMD_TURRETSERVO_MOVEOFFSET(xmils.value);
+	processCMD_MACHSERVO_MOVEOFFSET(ymils.value);
 	return ;
 }
 
 static void MachServoMoveSpeed(float xSpeed, float ySpeed)
 {
-	MSGDRIV_send(CMD_MACHSERVO_MOVESPEED,0);
+	processCMD_MACHSERVO_MOVESPEED(0);
 }
 
 static void MachServoStop()
 {
-	MSGDRIV_send(CMD_MACHSERVO_STOP,0);
+	processCMD_MACHSERVO_STOP(0);
 }
 
 static void GrenadeServoMoveOffset(float xOffset, float yOffset)
 {
-	MSGDRIV_send(CMD_GRENADESERVO_MOVEOFFSET,0);
+	processCMD_GRENADESERVO_MOVEOFFSET(0);
 }
 static void GrenadeServoMoveSpeed(float xSpeed, float ySpeed)
 {
-	
-	MSGDRIV_send(CMD_GRENADESERVO_MOVESPEED,0);
+	processCMD_GRENADESERVO_MOVESPEED(0);
 }
 static void GrenadeServoStop()
 {
-	MSGDRIV_send(CMD_GRENADESERVO_STOP,0);
+	processCMD_GRENADESERVO_STOP(0);
 }
 
 void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
@@ -276,18 +275,23 @@ void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam)
 }
 void processCMD_GRENADESERVO_STOP(LPARAM lParam)
 {
+	//printf("lParam = %x\n",lParam);
+	//printf("*lParam = %d\n",*(int *)(lParam));
 	FILLBUFFSTOP(Grenadebuf);
 	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_SHORT);
 }
 void processCMD_TURRETSERVO_MOVEOFFSET(LPARAM lParam)
 {
+	double tmp = 0.0;
 	union {
 		unsigned char c[4];
 		int value;
 	} xmils, ymils;
-//	ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
-	ymils.value = (lParam)*2*(4096/6000.0);
-
+	//ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
+	//ymils.value = (lParam)*2*(4096/6000.0);
+	tmp = 0;
+	ymils.value = 0;
+	
 	FILLBUFFOFFST(Turretbuf, ymils);//35榴弹伺服转动
 	FILLBUFFBGIN(Turretbuf);
 	SendCANBuf(Turretbuf, CAN_CMD_SIZE_SHORT);	

@@ -61,6 +61,11 @@ bool bUnlock = TRUE;
 bool AUTOCATCH = FALSE;
 volatile bool finish_laser_measure = 0;
 
+extern PIF_servo_control getTurretServoContrlObj();
+extern PIF_servo_control getMachGunServoContrlObj();
+extern PIF_servo_control getGrenadeServoContrlObj();
+
+
 
 CTimerCtrl * pTimerObj = (CTimerCtrl*)OSA_memAlloc(sizeof(CTimerCtrl));
 
@@ -652,23 +657,19 @@ void loadFiringTable_Enter()
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-			requstServoContrl();
+			processCMD_FIRING_TABLE_LOAD_OK(0);
 			if(isMachineGun())
 			{
 				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
 				cmd_machservo_moveoffset_tmp = output.AimOffsetY-DEGREE2MIL(getGrenadeAngle());
-				//processCMD_MACHSERVO_MOVEOFFSET(0);	
 				MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET,&cmd_machservo_moveoffset_tmp);
 			}
 			else
 			{
 				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
 				cmd_grenadeservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
-				//processCMD_GRENADESERVO_MOVEOFFSET(0);
 				MSGDRIV_send(CMD_GRENADESERVO_MOVEOFFSET, &cmd_grenadeservo_moveoffset_tmp);
-			}
-			processCMD_FIRING_TABLE_LOAD_OK(0);
-				
+			}				
 			return ;
 		}
 		FOVSHINE = TRUE;
@@ -1051,7 +1052,7 @@ void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
 			OSDCTRL_ItemShow(eCorrectionTip);
 
 			// auto track and shoot.
-			//requstServoContrl();
+			requstServoContrl();
 
 			OSDCTRL_ItemShow(ePlatFormX);
 			//start a timer in 6sec timeout set osd CORRECTION_RGQ
@@ -1063,6 +1064,7 @@ void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
 			OSDCTRL_ItemShow(eCorrectionTip);
+			//requstServoContrl();
 
 	}
 }
@@ -1276,7 +1278,9 @@ void SCHEDULE_cbFxn(void* cbParam)
 			y = (getpanoAngleV() - getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 			{
-				//getPelcoServoContrlObj()->stop();
+				getTurretServoContrlObj()->stop();
+				getMachGunServoContrlObj()->stop();
+				
 				killSCHEDULEtimer();
 				releaseServoContrl();
 				SCHEDULE_GUN = FALSE;
@@ -1284,7 +1288,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 				OSDCTRL_ItemHide(eDynamicZone);
 				return;
 			}
-			//getPelcoServoContrlObj()->moveOffset(x,y);
+			getMachGunServoContrlObj()->moveOffset(x,y);
 			startSCHEDULEtimer();
 		}
 		else if(SCHEDULE_STRONG/*not timeout and angle not ok*/)
@@ -1294,31 +1298,50 @@ void SCHEDULE_cbFxn(void* cbParam)
 			y = (getpanoAngleV() - getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 			{
-	//			getPelcoServoContrlObj()->stop();
+				getTurretServoContrlObj()->stop();
+				getMachGunServoContrlObj()->stop();
+				
 				killSCHEDULEtimer();
 				releaseServoContrl();
 				SCHEDULE_STRONG = FALSE;
 				OSDCTRL_ItemHide(eSuperOrder);
 				return;
 			}
-	//		getPelcoServoContrlObj()->moveOffset(x,y);
+			getMachGunServoContrlObj()->moveOffset(x,y);
 			startSCHEDULEtimer();
 		}
 		else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
 		{	
-			#if 0
+			//guilinig  test
 			x = (getTurretTheta());
 			y = (getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 			{
-	//			getPelcoServoContrlObj()->stop();
+				getTurretServoContrlObj()->stop();
+				getMachGunServoContrlObj()->stop();
+				
 				killSCHEDULEtimer();
 				releaseServoContrl();
 				SCHEDULE_RESET = FALSE;
 				OSDCTRL_ItemHide(eSuperOrder);
 				return;
 			}
-	//		getPelcoServoContrlObj()->moveOffset(x,y);
+
+			
+			getMachGunServoContrlObj()->moveOffset(x,y);
+			#if 0
+				x = (getTurretTheta());
+				y = (getMachGunAngle());
+				if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
+				{
+					//getPelcoServoContrlObj()->stop();
+					killSCHEDULEtimer();
+					releaseServoContrl();
+					SCHEDULE_RESET = FALSE;
+					OSDCTRL_ItemHide(eSuperOrder);
+					return;
+				}
+					//getPelcoServoContrlObj()->moveOffset(x,y);
 			#endif
 			startSCHEDULEtimer();
 		}
