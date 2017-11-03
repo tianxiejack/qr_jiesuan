@@ -15,6 +15,7 @@
 #include "spiH.h"
 #include "dx.h"
 #include "osdProcess.h"
+#include "If_servo_control.h"
 
 float FOVSIZE_V=FOVDEGREE_VLARGE, FOVSIZE_H=FOVDEGREE_HLARGE;
 Level_one_state gLevel1Mode = MODE_BOOT_UP,gLevel1LastMode = MODE_BATTLE;
@@ -47,12 +48,17 @@ extern void setJoyStickStat(BOOL stat);
 extern void setServoControlObj();
 extern void setPicEnhance(BOOL context);
 extern WeatherItem gWeatherTable;
-//extern PIF_servo_control pServoControlObj;
 extern volatile  int vpstatus;
 extern void setJoyStickStat(bool stat);
 extern bool gProjectileMachFovlast;
 extern bool gProjectileGreFovlast;
 
+extern PIF_servo_control pServoControlObj;
+extern PIF_servo_control getMachGunServoContrlObj();
+extern PIF_servo_control getGrenadeServoContrlObj();
+extern PIF_servo_control getTurretServoContrlObj();
+
+	
 static double AimOffsetX=0.000,AimOffsetY=0.000;
 static bool gTrackingMode=FALSE;
 //servo control related
@@ -568,7 +574,7 @@ void loadFiringTable_Enter()
 	input.Temperature = gWeatherTable.Temparature;
 	
 	input.TurretDirectionTheta = DEGREE2MIL(getTurretTheta());
-
+	#if 0
 	printf("\n--------------------------INPUT-----------------------------------\n");
 	printf("PlatformXTheta = %f\n",(input.PlatformXTheta));
 	printf("PlatformYTheta = %f\n",(input.PlatformYTheta));
@@ -582,17 +588,17 @@ void loadFiringTable_Enter()
 	printf("TargetAngularVelocityY = %f\n",(input.TargetAngularVelocityY));
 	//printf("DipAngle = %f\n",input.DipAngle);
 	printf("\n------------------------------------------------------------------\n");
-
+	#endif
 	ret = FiringCtrl(&input, &output);
 	//output_prm_print(input, output);
+	#if 0
 	printf("\n--------------------------OUTPUT-----------------------------------\n");
 	printf("AimOffsetThetaX = %f\n",output.AimOffsetThetaX);
 	printf("AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
 	printf("AimOffsetX = %d\n",output.AimOffsetX);
 	printf("AimOffsetY = %d\n",output.AimOffsetY);
-
 	printf("\n------------------------------------------------------------------\n");
-	
+	#endif
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
 		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
@@ -662,16 +668,17 @@ void loadFiringTable_Enter()
 			{
 				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
 				cmd_machservo_moveoffset_tmp = output.AimOffsetY-DEGREE2MIL(getGrenadeAngle());
-				processCMD_MACHSERVO_MOVEOFFSET(0);			
+				//processCMD_MACHSERVO_MOVEOFFSET(0);
+				MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET,&cmd_machservo_moveoffset_tmp);
 			}
 			else
 			{
 				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
 				cmd_grenadeservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
-				processCMD_GRENADESERVO_MOVEOFFSET(0);
+				//processCMD_GRENADESERVO_MOVEOFFSET(0);
+				MSGDRIV_send(CMD_GRENADESERVO_MOVEOFFSET,&cmd_grenadeservo_moveoffset_tmp);
 			}
-			processCMD_FIRING_TABLE_LOAD_OK(0);
-				
+			processCMD_FIRING_TABLE_LOAD_OK(0);		
 			return ;
 		}
 		FOVSHINE = TRUE;
@@ -1266,64 +1273,63 @@ void killSCHEDULEtimer()
 	}
 }
 
-
 void SCHEDULE_cbFxn(void* cbParam)
 {
 	static int jsq1 = 0,jsq2 = 0;
-	//	killSCHEDULEtimer();
-		float x=0.0,y=0.0;
-		if(SCHEDULE_GUN/*not timeout and angle not ok*/)
+	float x=0.0,y=0.0,z=0.0;
+	if(SCHEDULE_GUN/*not timeout and angle not ok*/)// turret and mach and gre
+	{
+		float tempX = (getpanoAngleH()<180)?(getpanoAngleH()):(getpanoAngleH()-360);
+		x = (tempX - getTurretTheta());
+		y = (getpanoAngleV() - getMachGunAngle());
+		if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 		{
-			float tempX = (getpanoAngleH()<180)?(getpanoAngleH()):(getpanoAngleH()-360);
-			x = (tempX - getTurretTheta());
-			y = (getpanoAngleV() - getMachGunAngle());
-			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
-			{
-				//getPelcoServoContrlObj()->stop();
-				killSCHEDULEtimer();
-				releaseServoContrl();
-				SCHEDULE_GUN = FALSE;
-				OSDCTRL_ItemHide(eSuperOrder);
-				OSDCTRL_ItemHide(eDynamicZone);
-				return;
-			}
-			//getPelcoServoContrlObj()->moveOffset(x,y);
-			startSCHEDULEtimer();
+			servoStop(0b11);
+			killSCHEDULEtimer();
+			releaseServoContrl();
+			SCHEDULE_GUN = FALSE;
+			OSDCTRL_ItemHide(eSuperOrder);
+			OSDCTRL_ItemHide(eDynamicZone);
+			return;
 		}
-		else if(SCHEDULE_STRONG/*not timeout and angle not ok*/)
+		getMachGunServoContrlObj()->moveOffset(x,y);
+		startSCHEDULEtimer();
+	}
+	else if(SCHEDULE_STRONG/*not timeout and angle not ok*/)//only turret
+	{
+		float tempX = (getpanoAngleH()<180)?(getpanoAngleH()-180):(getpanoAngleH()-180);
+		x = (tempX - getTurretTheta());
+		y = (getpanoAngleV() - getMachGunAngle());
+		if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 		{
-			float tempX = (getpanoAngleH()<180)?(getpanoAngleH()-180):(getpanoAngleH()-180);
-			x = (tempX - getTurretTheta());
-			y = (getpanoAngleV() - getMachGunAngle());
-			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
-			{
-	//			getPelcoServoContrlObj()->stop();
-				killSCHEDULEtimer();
-				releaseServoContrl();
-				SCHEDULE_STRONG = FALSE;
-				OSDCTRL_ItemHide(eSuperOrder);
-				return;
-			}
-	//		getPelcoServoContrlObj()->moveOffset(x,y);
-			startSCHEDULEtimer();
+ 			servoStop(0b11);
+			killSCHEDULEtimer();
+			releaseServoContrl();
+			SCHEDULE_STRONG = FALSE;
+			OSDCTRL_ItemHide(eSuperOrder);
+			return;
 		}
-		else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
-		{			
-			x = (getTurretTheta());
-			y = (getMachGunAngle());
-			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
-			{
-	//			getPelcoServoContrlObj()->stop();
-				killSCHEDULEtimer();
-				releaseServoContrl();
-				SCHEDULE_RESET = FALSE;
-				OSDCTRL_ItemHide(eSuperOrder);
-				return;
-			}
-	//		getPelcoServoContrlObj()->moveOffset(x,y);
-			startSCHEDULEtimer();
+		getMachGunServoContrlObj()->moveOffset(x,y);
+		startSCHEDULEtimer();
+	}
+	else if(SCHEDULE_RESET/*not timeout and angle not ok*/)//turret and mach and gre
+	{			
+		x = (getTurretTheta());
+		y = (getMachGunAngle());
+		z = (getGrenadeAngle());
+		if(((abs(x)<1)&&(abs(y)<1))&&(abs(z)<1)||(100<COUNTER))
+		{
+			servoStop(0b11);
+			killSCHEDULEtimer();
+			releaseServoContrl();
+			SCHEDULE_RESET = FALSE;
+			OSDCTRL_ItemHide(eSuperOrder);
+			return;
 		}
-		COUNTER++;
+		getMachGunServoContrlObj()->moveOffset(x,y);
+		startSCHEDULEtimer();
+	}
+	COUNTER++;
 }
 
 
@@ -1332,7 +1338,7 @@ void processCMD_SCHEDULE_GUN(long lParam)
  	OSDCTRL_NoShine();
 	if(isCalibrationMode())
 		return;
-	// tiao qiang ta
+	//tiao qiang ta
 	Posd[eSuperOrder] = SuperOsd[0];
 	Posd[eDynamicZone] = DynamicOsd[4];
 	OSDCTRL_ItemShow(eSuperOrder);
