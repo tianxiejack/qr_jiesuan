@@ -1678,17 +1678,18 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		
 	if (key == 'L' || key == 'l')
 	{
-		testjiqiangqidong();
+		testjiqiangqidong();  //LIU
 	}
 
 	if (key == 'm' || key == 'M')
 	{
-		testliudanqidong();
+		testliudanqidong();  //JI
 		//MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
 	}
 
 	if (key == 'n' || key == 'N')
 	{
+		testturdanqidong();//turret
 		//MSGDRIV_send(CMD_GRENADESERVO_STOP, &xxxx);
 	}
 	

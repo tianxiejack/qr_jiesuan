@@ -80,6 +80,11 @@ static char Pos_Grenadebuf[] 	= {0x03,0x37,0x50, 0x52, 0x00, 0x00,0x00,0x00,0x00
 /*********************TEST buf ************************/
 static char  TestMachSpebuf[] 	 = {0x03, 0x2c, 0x53, 0x50, 0x00, 0x00,0x00,0x00,0x00,0x00};
 static char  TestMachPosbuf[] = {0x03,0x2c,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x00};
+static char  TestGRESpebuf[] 	 = {0x03, 0x37, 0x53, 0x50, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char  TestGREPosbuf[] = {0x03,0x37,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x00};
+static char  TestTURSpebuf[] 	 = {0x03, 0x42, 0x53, 0x50, 0x00, 0x00,0x00,0x00,0x00,0x00};
+static char  TestTURPosbuf[] = {0x03,0x42,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x00};
+
 
 #define MACH_SERVO_SPEED_RATE  1067
 #define MACH_SERVO_RESOLUTION  4096
@@ -343,17 +348,22 @@ void testjiqiangqidong()
 		unsigned char c[4];
 		int value;
 	}ymilsecond;
-	//ymilsecond.value = 112800;
-	ymilsecond.value = 90000;
+	double x = 0.0,y=0.0;
+
+	x = DEGREE2RADS(0.333);
+	
+	ymilsecond.value = 500;//8000;
 	FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
-	TestMachPosbuf[2] = 0x53;
-	TestMachPosbuf[3] = 0x50;
+	TestMachSpebuf[2] = 0x4a;
+	TestMachSpebuf[3] = 0x56;
 	SendCANBuf(TestMachSpebuf,10);
-	ymilsecond.value = 5000;//8000;
-	//FILLBUFFOFFST(TestMachPosbuf, ymilsecond);
-	//TestMachPosbuf[2] = 0x41;
+	
+	ymilsecond.value = Rads2CANValue(x,GRENADE);
+	FILLBUFFOFFST(TestMachSpebuf, ymilsecond);
+	//TestMachPosbuf[2] = 0x44;
 	//TestMachPosbuf[3] = 0x43;
-	//SendCANBuf(TestMachPosbuf,10);
+	SendCANBuf(TestMachSpebuf,10);
+	
 	startServo(CODE_MACHGUN);
 }
 
@@ -368,23 +378,53 @@ void testliudanqidong()
 	x = DEGREE2RADS(0.333);
 	
 	ymilsecond.value = 500;//8000;
-	FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
-	TestMachPosbuf[2] = 0x4a;
-	TestMachPosbuf[3] = 0x56;
-	SendCANBuf(TestMachSpebuf,10);
+	FILLBUFFSPEED(TestGRESpebuf, ymilsecond);
+	TestGRESpebuf[2] = 0x4a;
+	TestGRESpebuf[3] = 0x56;
+	SendCANBuf(TestGRESpebuf,10);
 	
 	ymilsecond.value = Rads2CANValue(x,MACH);
-	FILLBUFFOFFST(TestMachPosbuf, ymilsecond);
+	FILLBUFFOFFST(TestGRESpebuf, ymilsecond);
 	//TestMachPosbuf[2] = 0x44;
 	//TestMachPosbuf[3] = 0x43;
-	SendCANBuf(TestMachPosbuf,10);
+	SendCANBuf(TestGRESpebuf,10);
 	
-	startServo(CODE_MACHGUN);
+	startServo(CODE_GRENADE);
 }
 
+void testturdanqidong()
+{
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	double x = 0.0,y=0.0;
+
+	x = DEGREE2RADS(0.333);
+	
+	ymilsecond.value = 500;//8000;
+	FILLBUFFSPEED(TestTURSpebuf, ymilsecond);
+	TestTURSpebuf[2] = 0x4a;
+	TestTURSpebuf[3] = 0x56;
+	SendCANBuf(TestTURSpebuf,10);
+	
+	ymilsecond.value = Rads2CANValue(x,MACH);
+	FILLBUFFOFFST(TestTURSpebuf, ymilsecond);
+	//TestMachPosbuf[2] = 0x44;
+	//TestMachPosbuf[3] = 0x43;
+	SendCANBuf(TestTURSpebuf,10);
+	
+	startServo(CODE_TURRET);
+}
 
 void teststopserver()
 {
+	FILLBUFFSTOP(TestGREPosbuf);
+	SendCANBuf((TestGREPosbuf), CAN_CMD_SIZE_SHORT);
+
+	FILLBUFFSTOP(TestTURPosbuf);
+	SendCANBuf((TestTURPosbuf), CAN_CMD_SIZE_SHORT);
+
 	FILLBUFFSTOP(TestMachPosbuf);
 	SendCANBuf((TestMachPosbuf), CAN_CMD_SIZE_SHORT);
 }
