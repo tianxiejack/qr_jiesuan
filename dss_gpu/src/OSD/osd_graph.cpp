@@ -77,7 +77,12 @@ void OSDCTRL_erase_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 				tmpOsd = Posd[eErrorZone];
 				Posd[eErrorZone] = ErrorOsd[18];
 			}
-			else if(pTextObj->osdId == eCursorX &&  g_Text[eCursorX].osdInitY == 100 || g_Text[eCursorX].osdInitY == 170)
+			else if(pTextObj->osdId == eCursorX &&  
+				g_Text[eCursorX].osdInitY == 100 
+			 	|| g_Text[eCursorX].osdInitY == 170
+				|| g_Text[eCursorX].osdInitY == 205
+				|| g_Text[eCursorX].osdInitY == 240
+				|| g_Text[eCursorX].osdInitY == 275)
 			{
 				#if 1
 				XtempY = g_Text[eCursorX].osdInitY;

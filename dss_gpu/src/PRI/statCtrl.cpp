@@ -656,7 +656,7 @@ void loadFiringTable_Enter()
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-			processCMD_FIRING_TABLE_LOAD_OK(0);
+			MSGDRIV_send(CMD_FIRING_TABLE_LOAD_OK, 0);
 			if(isMachineGun())
 			{
 				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
@@ -668,7 +668,7 @@ void loadFiringTable_Enter()
 				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
 				cmd_grenadeservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
 				MSGDRIV_send(CMD_GRENADESERVO_MOVEOFFSET, &cmd_grenadeservo_moveoffset_tmp);
-			}				
+			}		
 			return ;
 		}
 		FOVSHINE = TRUE;
@@ -1063,7 +1063,7 @@ void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
 			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
 			OSDCTRL_ItemShow(eCorrectionTip);
-			//requstServoContrl();
+			requstServoContrl();
 
 	}
 }

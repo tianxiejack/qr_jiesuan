@@ -36,7 +36,6 @@ void saveLastAndGetNewZeroParam(int type)
 //		gMachineGun_ZCTable.distance = DistanceManual;
 		gMachineGun_ZCTable.data.deltaX = getCrossX();
 		gMachineGun_ZCTable.data.deltaY = getCrossY();
-		//AVTCTRL_UpdateFOV(1,gMachineGun_ZCTable.data.deltaX,gMachineGun_ZCTable.data.deltaY);
 		gMachineGun_ZCTable.Angle		= getMachGunAngleAbs();
 		gGrenadeKill_ZCTable.Angle	 	= getGrenadeAngleAbs();
 
@@ -45,7 +44,6 @@ void saveLastAndGetNewZeroParam(int type)
 //		gGrenadeKill_ZCTable.distance = DistanceManual;
 		gGrenadeKill_ZCTable.data.deltaX = getCrossX();
 		gGrenadeKill_ZCTable.data.deltaY = getCrossY();
-		//AVTCTRL_UpdateFOV(2,gGrenadeKill_ZCTable.data.deltaX,gGrenadeKill_ZCTable.data.deltaY);
 		gMachineGun_ZCTable.Angle		= getMachGunAngleAbs();
 		gGrenadeKill_ZCTable.Angle		 = getGrenadeAngleAbs();
 	}
