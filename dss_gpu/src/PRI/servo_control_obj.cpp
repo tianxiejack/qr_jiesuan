@@ -147,30 +147,31 @@ static int Rads2CANValue(double degree,int id)
 {
 	double temp = 0.0;
 	int re = 0;
-	if(id == TURRET)
+	switch(id)
 	{
-		temp = degree*TURRET_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
+		case TURRET:
+			temp = degree*TURRET_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
+			break;
+		case MACH:
+			//temp = degree*MACH_SERVO_RESOLUTION*MACH_SERVO_SPEED_RATE;
+			temp = degree*MACH_SERVO_RESOLUTION;
+			break;
+		case GRENADE:
+			temp = degree*GRENADE_SERVO_RESOLUTION*GRENADE_SERVO_SPEED_RATE;
+			break;
+		default:
+			break;
 	}
-	else if(id == MACH)
-	{
-		temp = degree*MACH_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
-	}
-	else if(id == GRENADE)
-	{
-		temp = degree*GRENADE_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
-	}
-	re = (int)(temp/(360*60*60));
+	re = (int)(temp/360.0);
 	return re;
 }
 
 static void TurretServoMoveOffset(float xOffset,float yOffset)
 {
-	processCMD_TURRETSERVO_MOVEOFFSET(xOffset);
 }
 
 static void TurretServoMoveSpeed(float xSpeed,float ySpeed)
 {
-	
 }
 
 static void TurretServoStop()
@@ -179,18 +180,17 @@ static void TurretServoStop()
 }
 
 static void MachServoMoveOffset(float xOffset, float yOffset)
-{
+{	
 	union {
 		unsigned char c[4];
 		int value;
 	} xmils, ymils;
-	
 	double x = xOffset;//OFFSET_TO_ANGLE(xOffset);
 	double y = yOffset;//OFFSET_TO_ANGLE(yOffset);
-
+	/*
 	x = DEGREE2RADS(x);
 	y = DEGREE2RADS(y);
-	
+	*/
 	xmils.value = Rads2CANValue(x,TURRET);
 	ymils.value = Rads2CANValue(y,MACH);
 	//processCMD_TURRETSERVO_MOVEOFFSET(xmils.value);
@@ -210,7 +210,15 @@ static void MachServoStop()
 
 static void GrenadeServoMoveOffset(float xOffset, float yOffset)
 {
-	processCMD_GRENADESERVO_MOVEOFFSET(0);
+	union {
+		unsigned char c[4];
+		int value;
+	} xmils;
+	double x = xOffset;
+	
+	xmils.value = Rads2CANValue(x,GRENADE);	
+	processCMD_GRENADESERVO_MOVEOFFSET(xmils.value);
+	return ;
 }
 static void GrenadeServoMoveSpeed(float xSpeed, float ySpeed)
 {
@@ -222,29 +230,18 @@ static void GrenadeServoStop()
 }
 
 void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
-{
+{	
 	union {
 		unsigned char c[4];
 		int value;
 	} xmils, ymils;
-//	ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
-	ymils.value = (lParam)*2*(4096/6000.0);
-	FILLBUFFOFFST(Machbuf, ymils);//35榴弹伺服转动
-	FILLBUFFBGIN(Machbuf);
-	SendCANBuf(Machbuf, CAN_CMD_SIZE_SHORT);	
-	
+	ymils.value = lParam;
+	FILLBUFFOFFST(Machbuf, ymils);
+	SendCANBuf(Machbuf, CAN_CMD_SIZE_LONG);	
+	startServo(CODE_MACHGUN);
 }
 void processCMD_MACHSERVO_MOVESPEED(LPARAM lParam)
 {
-	union {
-		unsigned char c[4];
-		int value;
-	} milsecond;
-	milsecond.value = 1000000;
-	FILLBUFFSPEED(Machbuf, milsecond);	
-	SendCANBuf(Machbuf, CAN_CMD_SIZE_LONG);
-	FILLBUFFBGIN(Machbuf);
-	SendCANBuf(Machbuf, CAN_CMD_SIZE_SHORT);	
 	return ;
 }
 void processCMD_MACHSERVO_STOP(LPARAM lParam)
@@ -257,25 +254,15 @@ void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
 	union {
 		unsigned char c[4];
 		int value;
-	} xmils, ymils;
-//	ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
-	ymils.value = (lParam)*2*(4096/6000.0);
+	} xmils;
+	xmils.value = lParam;
 
-	FILLBUFFOFFST(Grenadebuf, ymils);//35榴弹伺服转动
-	FILLBUFFBGIN(Grenadebuf);
-	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_SHORT);	
+	FILLBUFFOFFST(Grenadebuf, xmils);
+	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_LONG);	
+	startServo(CODE_GRENADE);
 }
 void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam)
 {
-	union {
-		unsigned char c[4];
-		int value;
-	} milsecond;
-	milsecond.value = 1000000;
-	FILLBUFFSPEED(Grenadebuf, milsecond);	
-	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_LONG);
-	FILLBUFFBGIN(Grenadebuf);
-	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_SHORT);	
 	return ;
 }
 void processCMD_GRENADESERVO_STOP(LPARAM lParam)
@@ -287,22 +274,18 @@ void processCMD_GRENADESERVO_STOP(LPARAM lParam)
 }
 void processCMD_TURRETSERVO_MOVEOFFSET(LPARAM lParam)
 {
-	double tmp = 0.0;
 	union {
 		unsigned char c[4];
 		int value;
-	} xmils, ymils;
-	//ymils.value = MIL2DEGREE(lParam)*3600*2*(4464640/360/60/60/1090);
-	//ymils.value = (lParam)*2*(4096/6000.0);
-	tmp = 0;
-	ymils.value = 0;
-	
-	FILLBUFFOFFST(Turretbuf, ymils);//35榴弹伺服转动
-	FILLBUFFBGIN(Turretbuf);
-	SendCANBuf(Turretbuf, CAN_CMD_SIZE_SHORT);	
+	} xmils;
+	xmils.value = lParam;
+	FILLBUFFOFFST(Turretbuf, xmils);
+	SendCANBuf(Turretbuf, CAN_CMD_SIZE_LONG);	
+	startServo(CODE_TURRET);
 }
 void processCMD_TURRETSERVO_MOVESPEED(LPARAM lParam)
 {
+	#if 0
 	union {
 		unsigned char c[4];
 		int value;
@@ -312,6 +295,7 @@ void processCMD_TURRETSERVO_MOVESPEED(LPARAM lParam)
 	SendCANBuf(Turretbuf, CAN_CMD_SIZE_LONG);
 	FILLBUFFBGIN(Turretbuf);
 	SendCANBuf(Turretbuf, CAN_CMD_SIZE_SHORT);	
+	#endif
 	return ;
 }
 void processCMD_TURRETSERVO_STOP(LPARAM lParam)
@@ -350,17 +334,18 @@ void testjiqiangqidong()
 	}ymilsecond;
 	double x = 0.0,y=0.0;
 
-	x = DEGREE2RADS(0.8);
-	
-	ymilsecond.value = 500;//8000;
-	FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
-	TestMachSpebuf[2] = 0x4a;
-	TestMachSpebuf[3] = 0x56;
-	SendCANBuf(TestMachSpebuf,10);
-	
+	//x = DEGREE2RADS(1);
+	x = 90;
+	//ymilsecond.value = 500;//8000;
+	//FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
+	//TestMachSpebuf[2] = 0x4a;
+	//TestMachSpebuf[3] = 0x56;
+	//SendCANBuf(TestMachSpebuf,10);
+		
 	ymilsecond.value = Rads2CANValue(x,MACH);
 	ymilsecond.value = -ymilsecond.value ;
 	FILLBUFFOFFST(TestMachSpebuf, ymilsecond);
+	SendCANBuf(TestMachSpebuf,6);
 	//TestMachPosbuf[2] = 0x44;
 	//TestMachPosbuf[3] = 0x43;
 	SendCANBuf(TestMachSpebuf,10);
@@ -376,7 +361,32 @@ void testliudanqidong()
 	}ymilsecond;
 	double x = 0.0,y=0.0;
 
-	x = DEGREE2RADS(0.8);
+	x = DEGREE2RADS(90);
+	
+	//ymilsecond.value = 500;//8000;
+	//FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
+	//TestMachSpebuf[2] = 0x4a;
+	//TestMachSpebuf[3] = 0x56;
+	//SendCANBuf(TestMachSpebuf,10);
+	
+	
+	ymilsecond.value = Rads2CANValue(x,MACH);
+	ymilsecond.value = -ymilsecond.value ;
+	FILLBUFFOFFST(TestMachSpebuf, ymilsecond);
+	//SendCANBuf(TestMachSpebuf,6);
+	TestMachSpebuf[2] = 0x4d;
+	TestMachSpebuf[3] = 0x53;
+	SendCANBuf(TestMachSpebuf,6);
+	printf("!!!!!!TestMachSpebuf = %x",TestMachSpebuf);
+	//startServo(CODE_MACHGUN);
+	#if 0
+	union {
+		unsigned char c[4];
+		int value;
+	}ymilsecond;
+	double x = 0.0,y=0.0;
+
+	x = DEGREE2RADS(90);
 	
 	ymilsecond.value = 500;//8000;
 	FILLBUFFSPEED(TestGRESpebuf, ymilsecond);
@@ -392,6 +402,7 @@ void testliudanqidong()
 	SendCANBuf(TestGRESpebuf,10);
 	
 	startServo(CODE_GRENADE);
+	#endif
 }
 
 void testturdanqidong()

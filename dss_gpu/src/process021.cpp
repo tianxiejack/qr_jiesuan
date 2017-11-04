@@ -1678,12 +1678,12 @@ void CProcess021::OnKeyDwn(unsigned char key)
 		
 	if (key == 'L' || key == 'l')
 	{
-		testjiqiangqidong();  //LIU
+		testjiqiangqidong();  
 	}
 
 	if (key == 'm' || key == 'M')
 	{
-		
+		testliudanqidong();  
 		//MSGDRIV_send(CMD_CALCNUM_SHOW, NULL);
 	}
 
@@ -1721,12 +1721,12 @@ void CProcess021::OnKeyDwn(unsigned char key)
 
 	if(key == 'R' || key == 'r')
 	{
-		testliudanqidong();  //JI
+		
 	}
 
 	if(key == 'S' || key == 's')
 	{
-
+		
 	}
 	
 		
@@ -4932,20 +4932,14 @@ void CProcess021::processCMD_SCHEDULE_STRONG(LPARAM lParam)
 
 
 void CProcess021::processCMD_SCHEDULE_RESET(LPARAM lParam)
- {
+ {	
  	OSDCTRL_NoShine();
 	if(isCalibrationMode())
 		return;
 	
 	tiaolingwei_flag = 1;
-	//Posd[eDynamicZone] = DynamicOsd[9];
-	//OSDCTRL_ItemShine(eDynamicZone);
 	OSDCTRL_ItemShine(eGuiling);
 
-	requstServoContrl();
-	COUNTER = 0;
-	SCHEDULE_RESET = TRUE;
-	startSCHEDULEtimer();
 	//tiao ling wei
 	#if 0
 		Posd[eSuperOrder] = SuperOsd[2];

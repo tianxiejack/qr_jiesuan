@@ -35,10 +35,6 @@
 #include "msgDriv.h"
 #endif
 
-#define CAN_ID_PANEL 	(0x0002)
-#define CAN_ID_TURRET	(0x02AC)
-#define CAN_ID_MACHGUN (0x02B7)
-#define CAN_ID_GRENADE	(0x2C2)
 
 #define WAIT_DELAY		50000
 
@@ -1561,6 +1557,12 @@ void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf)
 		sendCommand(CMD_MACHINEGUN_SERVO_OK);
 	killSelfCheckMachGunServoTimer();
 	startSelfCheckMachGunServo_Timer();
+	RecvParseByteMachGun(buf);
+}
+
+static void RecvParseByteMachGun(unsigned char *buf)
+{
+	//if(buf[2] == 0x50)
 }
 
 static void WeaponCtrlPORT_ParseGrenade(UartObj*pUartObj)
@@ -1568,7 +1570,6 @@ static void WeaponCtrlPORT_ParseGrenade(UartObj*pUartObj)
 
 	if(!bGrenadeServoOK())
 		MSGDRIV_send(CMD_GENERADE_SERVO_OK,0);
-
 	killSelfCheckGrenadeServoTimer();
 	startSelfCheckGrenadeServo_Timer();
 	return ;

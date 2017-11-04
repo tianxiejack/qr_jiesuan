@@ -1268,83 +1268,83 @@ void killSCHEDULEtimer()
 void SCHEDULE_cbFxn(void* cbParam)
 {
 	static int jsq1 = 0,jsq2 = 0;
-	//	killSCHEDULEtimer();
-		float x=0.0,y=0.0;
-		if(SCHEDULE_GUN/*not timeout and angle not ok*/)
+	float x=0.0,y=0.0;
+	if(SCHEDULE_GUN/*not timeout and angle not ok*/)
+	{
+		float tempX = (getpanoAngleH()<180)?(getpanoAngleH()):(getpanoAngleH()-360);
+		x = (tempX - getTurretTheta());
+		y = (getpanoAngleV() - getMachGunAngle());
+		if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 		{
-			float tempX = (getpanoAngleH()<180)?(getpanoAngleH()):(getpanoAngleH()-360);
-			x = (tempX - getTurretTheta());
-			y = (getpanoAngleV() - getMachGunAngle());
-			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
-			{
-				getTurretServoContrlObj()->stop();
-				getMachGunServoContrlObj()->stop();
-				
-				killSCHEDULEtimer();
-				releaseServoContrl();
-				SCHEDULE_GUN = FALSE;
-				OSDCTRL_ItemHide(eSuperOrder);
-				OSDCTRL_ItemHide(eDynamicZone);
-				return;
-			}
-			getMachGunServoContrlObj()->moveOffset(x,y);
-			startSCHEDULEtimer();
+			getTurretServoContrlObj()->stop();
+			getMachGunServoContrlObj()->stop();
+			
+			killSCHEDULEtimer();
+			releaseServoContrl();
+			SCHEDULE_GUN = FALSE;
+			OSDCTRL_ItemHide(eSuperOrder);
+			OSDCTRL_ItemHide(eDynamicZone);
+			return;
 		}
-		else if(SCHEDULE_STRONG/*not timeout and angle not ok*/)
+		getMachGunServoContrlObj()->moveOffset(x,y);
+		startSCHEDULEtimer();
+	}
+	else if(SCHEDULE_STRONG/*not timeout and angle not ok*/)
+	{
+		float tempX = (getpanoAngleH()<180)?(getpanoAngleH()-180):(getpanoAngleH()-180);
+		x = (tempX - getTurretTheta());
+		y = (getpanoAngleV() - getMachGunAngle());
+		if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 		{
-			float tempX = (getpanoAngleH()<180)?(getpanoAngleH()-180):(getpanoAngleH()-180);
-			x = (tempX - getTurretTheta());
-			y = (getpanoAngleV() - getMachGunAngle());
-			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
-			{
-				getTurretServoContrlObj()->stop();
-				getMachGunServoContrlObj()->stop();
-				
-				killSCHEDULEtimer();
-				releaseServoContrl();
-				SCHEDULE_STRONG = FALSE;
-				OSDCTRL_ItemHide(eSuperOrder);
-				return;
-			}
-			getMachGunServoContrlObj()->moveOffset(x,y);
-			startSCHEDULEtimer();
+			getTurretServoContrlObj()->stop();
+			getMachGunServoContrlObj()->stop();
+			
+			killSCHEDULEtimer();
+			releaseServoContrl();
+			SCHEDULE_STRONG = FALSE;
+			OSDCTRL_ItemHide(eSuperOrder);
+			return;
 		}
-		else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
-		{	
-			//guilinig  test
-			//x = (getTurretTheta());
-			x = (getGrenadeAngleAbs());//(getGrenadeAngle());
-			y = (getMachGunAngleAbs());// (getMachGunAngle());
+		getMachGunServoContrlObj()->moveOffset(x,y);
+		startSCHEDULEtimer();
+	}
+	else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
+	{	
+		//guilinig  test
+		//x = (getTurretTheta());
+		x = (getGrenadeAngleAbs());//(getGrenadeAngle());
+		y = (getMachGunAngleAbs());// (getMachGunAngle());
+		if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
+		{
+			getTurretServoContrlObj()->stop();
+			getMachGunServoContrlObj()->stop();
+			getGrenadeServoContrlObj()->stop();
+			killSCHEDULEtimer();
+			releaseServoContrl();
+			SCHEDULE_RESET = FALSE;
+			OSDCTRL_ItemHide(eSuperOrder);
+			return;
+		}
+		getGrenadeServoContrlObj()->moveOffset(x,0);
+		getMachGunServoContrlObj()->moveOffset(0,y);
+		
+		#if 0
+			x = (getTurretTheta());
+			y = (getMachGunAngle());
 			if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
 			{
-				getTurretServoContrlObj()->stop();
-				getMachGunServoContrlObj()->stop();
-				
+				//getPelcoServoContrlObj()->stop();
 				killSCHEDULEtimer();
 				releaseServoContrl();
 				SCHEDULE_RESET = FALSE;
 				OSDCTRL_ItemHide(eSuperOrder);
 				return;
 			}
-		
-			getMachGunServoContrlObj()->moveOffset(0,y);
-			#if 0
-				x = (getTurretTheta());
-				y = (getMachGunAngle());
-				if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
-				{
-					//getPelcoServoContrlObj()->stop();
-					killSCHEDULEtimer();
-					releaseServoContrl();
-					SCHEDULE_RESET = FALSE;
-					OSDCTRL_ItemHide(eSuperOrder);
-					return;
-				}
-					//getPelcoServoContrlObj()->moveOffset(x,y);
-			#endif
-			startSCHEDULEtimer();
-		}
-		COUNTER++;
+				//getPelcoServoContrlObj()->moveOffset(x,y);
+		#endif
+		startSCHEDULEtimer();
+	}
+	COUNTER++;
 }
 
 

@@ -22,7 +22,7 @@ extern "C" {
 #define MSG_CHSUM_SIZE	(0x01)
 
 #define CAN_ID_PANEL 		(0x0002)
-#define CAN_ID_MACHGUN 	(0x02AC)	//Confirm
+#define CAN_ID_MACHGUN 	(0x02AC)	// all Confirm
 #define CAN_ID_GRENADE		(0x02B7)
 #define CAN_ID_TURRET 		(0x02C2)
 
