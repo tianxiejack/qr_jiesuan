@@ -1312,14 +1312,18 @@ void SCHEDULE_cbFxn(void* cbParam)
 	}
 	else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
 	{	
+		#if 1
 		if(guiling && gGrenadeGetPos==0) 
 		{
-			x = (getGrenadeAngleAbs());
+			x = -(getGrenadeAngleAbs());
 			if(abs(x)>0.3)
 				getGrenadeServoContrlObj()->moveOffset(x,0);
 			else
 				grenadeDone = 1;
 		}
+		#endif
+		machDone = 1;
+		#if 0
 		if(guiling && gMachGetPos==0 ) 
 		{
 			y = (getMachGunAngleAbs());
@@ -1328,22 +1332,23 @@ void SCHEDULE_cbFxn(void* cbParam)
 			else
 				machDone = 1;
 		}
-		
+		#endif
 		if(((machDone&&grenadeDone)||(100<COUNTER)) && guiling)
 		{
 			killSCHEDULEtimer();
 			releaseServoContrl();
 			SCHEDULE_RESET = FALSE;
 			OSDCTRL_ItemHide(eSuperOrder);
+			guiling = 0;
 			return;
 		}
 
 		if(!guiling)
 		{
-			x = (getGrenadeAngleAbs());
+			x = -(getGrenadeAngleAbs());
 			y = (getMachGunAngleAbs());
 			getGrenadeServoContrlObj()->moveOffset(x,0);
-			getMachGunServoContrlObj()->moveOffset(0,y);
+			//getMachGunServoContrlObj()->moveOffset(0,y);
 			guiling = 1;
 		}
 		servoLookupGetPos();
@@ -1384,7 +1389,6 @@ void processCMD_SCHEDULE_GUN(long lParam)
 	startSCHEDULEtimer();
 	return ;
  }
-
 
 
 void startRGQtimer()

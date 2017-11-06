@@ -117,21 +117,15 @@ void startServoServer(BYTE code)
 	char MOTOR1[10]	={0x03,0x00,0x4D,0x4F,0x00,0x00,0x01,0x00,0x00,0x00};
 	char MODE[10]	={0x03,0x00,0x55,0x4D,0x00,0x00,0x05,0x00,0x00,0x00};
 	SendCANBuf(buf, sizeof(buf));
-	usleep(WAIT_DELAY);
 	MOTOR0[1] = code;
 	SendCANBuf(MOTOR0, sizeof(MOTOR0));
-	usleep(WAIT_DELAY);
 	MODE[1] = code;
 	SendCANBuf(MODE, sizeof(MODE));
-	usleep(WAIT_DELAY);
 	MOTOR1[1] = code;
 	SendCANBuf(MOTOR1, sizeof(MOTOR1));
-	usleep(WAIT_DELAY);
 	//absPosRequest(code);
 	absSetPosRequest(code);
-	usleep(WAIT_DELAY);
 	startServo(code);
-	usleep(WAIT_DELAY);
 	return ;
 }
 
@@ -415,9 +409,9 @@ void resetGrenadeInPositionFlag(void)
 
 void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 {
-	//absPosRequest(CODE_GRENADE);
-	//absPosRequest(CODE_MACHGUN);
-	//absPosRequest(CODE_TURRET);
+	absPosRequest(CODE_GRENADE);
+	absPosRequest(CODE_MACHGUN);
+	absPosRequest(CODE_TURRET);
 	return ;
 }
 
@@ -441,7 +435,7 @@ void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 	CANSendbuf[9] = (TempAngle&0xFF);
 	
 	SendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
-	servoLookupMainPos();
+	//servoLookupMainPos();
 }
 
 void processCMD_TIMER_SENDFRAME1(LPARAM lParam)

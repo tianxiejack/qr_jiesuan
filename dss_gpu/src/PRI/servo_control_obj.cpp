@@ -154,7 +154,6 @@ static int Rads2CANValue(double degree,int id)
 			break;
 		case MACH:
 			temp = degree*MACH_SERVO_RESOLUTION*MACH_SERVO_SPEED_RATE;
-			//temp = degree*MACH_SERVO_RESOLUTION;
 			break;
 		case GRENADE:
 			temp = degree*GRENADE_SERVO_RESOLUTION*GRENADE_SERVO_SPEED_RATE;
@@ -215,9 +214,10 @@ static void GrenadeServoMoveOffset(float xOffset, float yOffset)
 		int value;
 	} xmils;
 	double x = xOffset;
-	
 	xmils.value = Rads2CANValue(x,GRENADE);	
 	processCMD_GRENADESERVO_MOVEOFFSET(xmils.value);
+
+	
 	return ;
 }
 static void GrenadeServoMoveSpeed(float xSpeed, float ySpeed)
@@ -234,7 +234,7 @@ void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
 	union {
 		unsigned char c[4];
 		int value;
-	} xmils, ymils;
+	} ymils;
 	ymils.value = lParam;
 	FILLBUFFOFFST(Machbuf, ymils);
 	SendCANBuf(Machbuf, CAN_CMD_SIZE_LONG);	
@@ -256,9 +256,13 @@ void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
 		int value;
 	} xmils;
 	xmils.value = lParam;
-
 	FILLBUFFOFFST(Grenadebuf, xmils);
-	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_LONG);	
+	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_LONG);
+	xmils.value = 43700000;
+	FILLBUFFSPEED(TestGRESpebuf, xmils);
+	TestGRESpebuf[2] = 0x53;
+	TestGRESpebuf[3] = 0x50;
+	SendCANBuf(TestGRESpebuf,10);
 	startServo(CODE_GRENADE);
 }
 void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam)
@@ -334,23 +338,29 @@ void testjiqiangqidong()
 	}ymilsecond;
 	double x = 0.0,y=0.0;
 
-	//x = DEGREE2RADS(1);
 	x = 10;
-	//ymilsecond.value = 500;//8000;
-	//FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
-	//TestMachSpebuf[2] = 0x4a;
-	//TestMachSpebuf[3] = 0x56;
-	//SendCANBuf(TestMachSpebuf,10);
-		
-	ymilsecond.value = Rads2CANValue(x,MACH);
-	ymilsecond.value = -ymilsecond.value ;
-	FILLBUFFOFFST(TestMachSpebuf, ymilsecond);
-	SendCANBuf(TestMachSpebuf,6);
-	//TestMachPosbuf[2] = 0x44;
-	//TestMachPosbuf[3] = 0x43;
-	SendCANBuf(TestMachSpebuf,10);
-	
-	startServo(CODE_MACHGUN);
+	#if 0
+	ymilsecond.value = -182800;;
+	FILLBUFFSPEED(TestGRESpebuf, ymilsecond);
+	TestGRESpebuf[2] = 0x4a;
+	TestGRESpebuf[3] = 0x56;
+	SendCANBuf(TestGRESpebuf,10);
+	//startServo(CODE_GRENADE);
+	#endif
+	#if 1
+	ymilsecond.value= x;
+	ymilsecond.value = Rads2CANValue(x,GRENADE);
+	FILLBUFFOFFST(TestGRESpebuf, ymilsecond);
+	TestGRESpebuf[2] = 0x50;
+	TestGRESpebuf[3] = 0x52;
+	SendCANBuf(TestGRESpebuf,10);
+
+	FILLBUFFSPEED(TestGRESpebuf, ymilsecond);
+	TestGRESpebuf[2] = 0x53;
+	TestGRESpebuf[3] = 0x50;
+	SendCANBuf(TestGRESpebuf,10);
+	#endif
+	startServo(CODE_GRENADE);
 }
 
 void testliudanqidong()

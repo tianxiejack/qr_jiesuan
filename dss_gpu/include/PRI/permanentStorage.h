@@ -65,7 +65,7 @@ extern GeneralCorrectionItem gGrenadeGas_GCParam;
 #define OFFSET_TO_ANGLE(pixels) offsetToAngle(pixels) //pixels 2 degree,not mil
 
 #define PI (3.14159)
-#define MIL2RADIAN(mil) 	((mil)*360*PI/(180*6000))
+#define MIL2RADIAN(mil) 	((mil)*2*PI/6000)//((mil)*360*PI/(180*6000))
 #define DEGREE2MIL(degree) 	((degree)*6000.0/360.0)
 #define RADIAN2MIL(radian)	(DEGREE2MIL((radian)*(180/PI)))
 #define BIAS2MIL(bias, distance)	RADIAN2MIL(((bias)/(distance)))

@@ -353,7 +353,7 @@ void CProcess021::process_osd(void *pPrm)
 			OSDCTRL_ItemShow(eShotType);
 	*/
 	OSDCTRL_updateAreaN();
-
+//printf(" \n\nprocess Osd !!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	if(isMultiChanged())
 	{
 		if(SHINE)

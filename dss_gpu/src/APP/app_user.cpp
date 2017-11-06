@@ -739,7 +739,7 @@ static Int32 APP_onTimer( Int32 timerId )
 		 {
 			ShineOne_cbFxn();
 		 }	
-	
+		 	
     	return OSA_SOK;
 }
 

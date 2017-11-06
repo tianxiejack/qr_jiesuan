@@ -30,18 +30,8 @@
 
 #define SIZE		1024
 
-#define CAN_ID_PANEL 		(0x0002)
-#define CAN_ID_TURRET 		(0x02AC)
-#define CAN_ID_MACHGUN 	(0x02B7)
-#define CAN_ID_GRENADE		(0x2C2)
 
-#define CODE_SERVO_MACHGUN   	(0x37)
-#define CODE_SERVO_GRENADE	(0x42)
-#define CODE_SERVO_TURRET     	(0x2C)
 
-#define CODE_MACHGUN 		(0x37)
-#define CODE_GRENADE 		(0x42)
-#define CODE_TURRET   		(0x2C)
 
 #define CAN_DEBUG 0
 

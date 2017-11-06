@@ -165,7 +165,7 @@ typedef enum _time_id
 #define 	BOOTUP_TIMER 			2000
 #define 	LASER_TIMER 			6000
 #define 	RGQ_TIMER 				6000//3000
-#define 	CAN_TIMER 				500
+#define 	CAN_TIMER 				200
 #define 	DYNAMIC_TIMER 		6000
 #define 	AVT_TIMER 				2000
 #define 	SCHEDULE_TIMER 		500
@@ -326,6 +326,8 @@ void startSelfCheckVertoAuto();
 void startShineOnetimer();
 void killShineOnetimer();
 void ShineOne_cbFxn();
+
+
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;
