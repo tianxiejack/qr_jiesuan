@@ -143,10 +143,11 @@ void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf);
 void startF2_Timer();
 void killF2Timer();
 void absSetPosRequest(BYTE code);
-static void RecvParseByteMachGun(unsigned char *buf);
+int GetPosCanRecvParse(unsigned char * buf);
 
 extern BOOL bTraceSend;
 extern int servoInit;
+extern volatile int gTurretGetPos,gGrenadeGetPos,gMachGetPos;
 #ifdef __cplusplus
 }
 #endif

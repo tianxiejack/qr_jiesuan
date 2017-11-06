@@ -15,6 +15,7 @@
 #include "spiH.h"
 #include "dx.h"
 #include "osdProcess.h"
+#include "UartCanMessage.h"
 
 float FOVSIZE_V=FOVDEGREE_VLARGE, FOVSIZE_H=FOVDEGREE_HLARGE;
 Level_one_state gLevel1Mode = MODE_BOOT_UP,gLevel1LastMode = MODE_BATTLE;
@@ -1267,7 +1268,8 @@ void killSCHEDULEtimer()
 
 void SCHEDULE_cbFxn(void* cbParam)
 {
-	static int jsq1 = 0,jsq2 = 0;
+	static int guiling = 0,jsq2 = 0;
+	static bool grenadeDone = 0,machDone = 0,TurretDone = 0;
 	float x=0.0,y=0.0;
 	if(SCHEDULE_GUN/*not timeout and angle not ok*/)
 	{
@@ -1310,23 +1312,41 @@ void SCHEDULE_cbFxn(void* cbParam)
 	}
 	else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
 	{	
-		//guilinig  test
-		//x = (getTurretTheta());
-		x = (getGrenadeAngleAbs());//(getGrenadeAngle());
-		y = (getMachGunAngleAbs());// (getMachGunAngle());
-		if(((abs(x)<1)&&(abs(y)<1))||(100<COUNTER))
+		if(guiling && gGrenadeGetPos==0) 
 		{
-			getTurretServoContrlObj()->stop();
-			getMachGunServoContrlObj()->stop();
-			getGrenadeServoContrlObj()->stop();
+			x = (getGrenadeAngleAbs());
+			if(abs(x)>0.3)
+				getGrenadeServoContrlObj()->moveOffset(x,0);
+			else
+				grenadeDone = 1;
+		}
+		if(guiling && gMachGetPos==0 ) 
+		{
+			y = (getMachGunAngleAbs());
+			if(abs(y)>0.3)
+				getMachGunServoContrlObj()->moveOffset(0,y);
+			else
+				machDone = 1;
+		}
+		
+		if(((machDone&&grenadeDone)||(100<COUNTER)) && guiling)
+		{
 			killSCHEDULEtimer();
 			releaseServoContrl();
 			SCHEDULE_RESET = FALSE;
 			OSDCTRL_ItemHide(eSuperOrder);
 			return;
 		}
-		getGrenadeServoContrlObj()->moveOffset(x,0);
-		getMachGunServoContrlObj()->moveOffset(0,y);
+
+		if(!guiling)
+		{
+			x = (getGrenadeAngleAbs());
+			y = (getMachGunAngleAbs());
+			getGrenadeServoContrlObj()->moveOffset(x,0);
+			getMachGunServoContrlObj()->moveOffset(0,y);
+			guiling = 1;
+		}
+		servoLookupGetPos();
 		
 		#if 0
 			x = (getTurretTheta());

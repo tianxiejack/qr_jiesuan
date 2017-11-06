@@ -512,7 +512,27 @@ void Servo_start_init()
 	startServoServer( CODE_SERVO_TURRET );
 }
 
+void servoLookupMainPos()
+{
+	char servo_canbuf[] = {0x03,0x00,0x50,0x58};
+	servo_canbuf[1] = CODE_MACHGUN;
+	SendCANBuf(servo_canbuf, 6);
+	servo_canbuf[1] = CODE_GRENADE;
+	SendCANBuf(servo_canbuf, 6);
+	servo_canbuf[1] = CODE_TURRET;
+	SendCANBuf(servo_canbuf, 6);
+}
 
+void servoLookupGetPos()
+{
+	char servo_canbuf[] = {0x03,0x00,0x4d,0x53};
+	servo_canbuf[1] = CODE_MACHGUN;
+	SendCANBuf(servo_canbuf, 6);
+	servo_canbuf[1] = CODE_GRENADE;
+	SendCANBuf(servo_canbuf, 6);
+	servo_canbuf[1] = CODE_TURRET;
+	SendCANBuf(servo_canbuf, 6);
+}
 
 
 

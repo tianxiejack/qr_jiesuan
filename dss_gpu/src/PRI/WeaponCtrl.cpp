@@ -68,6 +68,7 @@ static BYTE CANSendFrame2[10]={0x01,0x04,0xB2,0x00,};
 
 static char WeaponCtrl[16]={0};
 static 	unsigned short panoAngleV=0,panoAngleH=0;
+volatile	int gTurretGetPos =0,gGrenadeGetPos = 0,gMachGetPos = 0;
 
 
 
@@ -440,9 +441,10 @@ void processCMD_TIMER_SENDFRAME0(LPARAM lParam)
 	CANSendbuf[9] = (TempAngle&0xFF);
 	
 	SendCANBuf((char *)CANSendbuf, sizeof(CANSendbuf));
-	
+	servoLookupMainPos();
 }
-void processCMD_TIMER_SENDFRAME1(LPARAM lParam)//����֡1
+
+void processCMD_TIMER_SENDFRAME1(LPARAM lParam)
 {
 #if 0
 	short TempAngle;
@@ -1538,6 +1540,7 @@ void WeaponCtrlPORT_ParseByteTurret(unsigned char *buf)
 {
 	if(!bPositionServoOK())
 		sendCommand(CMD_POSITION_SERVO_OK);
+	gTurretGetPos = GetPosCanRecvParse(buf);
 	killSelfCheckPosServoTimer();
 	startSelfCheckPosServo_Timer();
 }
@@ -1555,15 +1558,11 @@ void WeaponCtrlPORT_ParseByteMachGun(unsigned char *buf)
 {
 	if(!bMachineGunServoOK())
 		sendCommand(CMD_MACHINEGUN_SERVO_OK);
+	gMachGetPos = GetPosCanRecvParse(buf);
 	killSelfCheckMachGunServoTimer();
 	startSelfCheckMachGunServo_Timer();
-	RecvParseByteMachGun(buf);
 }
 
-static void RecvParseByteMachGun(unsigned char *buf)
-{
-	//if(buf[2] == 0x50)
-}
 
 static void WeaponCtrlPORT_ParseGrenade(UartObj*pUartObj)
 {
@@ -1579,8 +1578,16 @@ void WeaponCtrlPORT_ParseByteGrenade(unsigned char *buf)
 {
 	if(!bGrenadeServoOK())
 		sendCommand(CMD_GENERADE_SERVO_OK);
+	gGrenadeGetPos = GetPosCanRecvParse(buf);
 	killSelfCheckGrenadeServoTimer();
 	startSelfCheckGrenadeServo_Timer();
+}
+
+int GetPosCanRecvParse(unsigned char * buf)
+{
+	if(stoh34(buf) == 0x4d53)
+		return buf[4];
+	return -1;
 }
 
 int WeaponCtrlPort_ParseByte(BYTE* buf)

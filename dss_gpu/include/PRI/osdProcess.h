@@ -40,6 +40,7 @@ extern "C"{
 
 #define stoh2(buf) ((buf[0]<<8)|(buf[1]))
 #define stoh23(buf) ((buf[1]<<8)|(buf[2]))
+#define stoh34(buf) ((buf[2]<<8)|(buf[3]))
 
 #define STOH2 stoh2
 #define BYTE0(buf)   (buf[0])

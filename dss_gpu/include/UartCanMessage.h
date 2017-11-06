@@ -17,7 +17,8 @@ int ReadCANBuf(char *buf, int length);
 void Servo_start_init();
 
 int TestSendCANBuf(char *buf, int length);
-
+void servoLookupMainPos();
+void servoLookupGetPos();
 extern bool test_flag_uart;
 
 #endif

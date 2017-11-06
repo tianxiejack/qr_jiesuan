@@ -153,8 +153,8 @@ static int Rads2CANValue(double degree,int id)
 			temp = degree*TURRET_SERVO_RESOLUTION*TURRET_SERVO_SPEED_RATE;
 			break;
 		case MACH:
-			//temp = degree*MACH_SERVO_RESOLUTION*MACH_SERVO_SPEED_RATE;
-			temp = degree*MACH_SERVO_RESOLUTION;
+			temp = degree*MACH_SERVO_RESOLUTION*MACH_SERVO_SPEED_RATE;
+			//temp = degree*MACH_SERVO_RESOLUTION;
 			break;
 		case GRENADE:
 			temp = degree*GRENADE_SERVO_RESOLUTION*GRENADE_SERVO_SPEED_RATE;
@@ -335,7 +335,7 @@ void testjiqiangqidong()
 	double x = 0.0,y=0.0;
 
 	//x = DEGREE2RADS(1);
-	x = 90;
+	x = 10;
 	//ymilsecond.value = 500;//8000;
 	//FILLBUFFSPEED(TestMachSpebuf, ymilsecond);
 	//TestMachSpebuf[2] = 0x4a;
