@@ -5041,7 +5041,7 @@ void CProcess021::processCMD_MODE_AIM_SKY(LPARAM lParam)
 
 void CProcess021::processCMD_LIHEQI_CLOSE(long lParam )
 {
-	OSA_printf("%s,line:%d ... processCMD_LIHEQI_CLOSE",__func__,__LINE__);
+	//OSA_printf("%s,line:%d ... processCMD_LIHEQI_CLOSE",__func__,__LINE__);
 	return ;
 }
 
@@ -5056,110 +5056,109 @@ void CProcess021::processCMD_LIHEQI_OPEN(long lParam )
 
  void CProcess021::processCMD_GRENADE_ERR(long lParam )
  {
- 	
- 	OSA_printf("%s,line:%d ... processCMD_GRENADE_ERR",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_GRENADE_ERR",__func__,__LINE__);
  	return ;
  }
 
  void CProcess021::processCMD_GRENADE_OK(long lParam )
  {
- 	OSA_printf("%s,line:%d ... processCMD_GRENADE_OK",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_GRENADE_OK",__func__,__LINE__);
  	return ;
  }
 
  void CProcess021::processCMD_FIREBUTTON_ERR(long lParam )
  {
- 	OSA_printf("%s,line:%d ... processCMD_FIREBUTTON_ERR",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_FIREBUTTON_ERR",__func__,__LINE__);
  	return ;
  }
 
  void CProcess021::processCMD_FIREBUTTON_OK(long lParam )
  {
- 	OSA_printf("%s,line:%d ... processCMD_FIREBUTTON_OK",__func__,__LINE__);
+ 	//OSA_printf("%s,line:%d ... processCMD_FIREBUTTON_OK",__func__,__LINE__);
  	return ;
  }
 
   void CProcess021::processCMD_FULSCREENCAN_ERR(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_FULSCREENCAN_ERR",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_FULSCREENCAN_ERR",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_FULSCREENCAN_OK(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_FULSCREENCAN_OK",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_FULSCREENCAN_OK",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_DISCONTRLCAN0_ERR(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_DISCONTRLCAN0_ERR",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_DISCONTRLCAN0_ERR",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_DISCONTRLCAN0_OK(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_DISCONTRLCAN0_OK",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_DISCONTRLCAN0_OK",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_DISCONTRLCAN1_ERR(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_DISCONTRLCAN1_ERR",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_DISCONTRLCAN1_ERR",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_DISCONTRLCAN1_OK(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_DISCONTRLCAN1_OK",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_DISCONTRLCAN1_OK",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_DIANCITIE_ERR(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_DIANCITIE_ERR",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_DIANCITIE_ERR",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_DIANCITIE_OK(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_DIANCITIE_OK",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_DIANCITIE_OK",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_POSMOTOR_ERR(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_POSMOTOR_ERR",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_POSMOTOR_ERR",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_POSMOTOR_OK(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_POSMOTOR_OK",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_POSMOTOR_OK",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_MACHGUNMOTOR_ERR(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_MACHGUNMOTOR_ERR",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_MACHGUNMOTOR_ERR",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_MACHGUNMOTOR_OK(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_MACHGUNMOTOR_OK",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_MACHGUNMOTOR_OK",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_GRENADEMOTOR_ERR(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_GRENADEMOTOR_ERR",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_GRENADEMOTOR_ERR",__func__,__LINE__);
   	return ;
   }
 
   void CProcess021::processCMD_GRENADEMOTOR_OK(long lParam )
   {
-  	OSA_printf("%s,line:%d ... processCMD_GRENADEMOTOR_OK",__func__,__LINE__);
+  	//OSA_printf("%s,line:%d ... processCMD_GRENADEMOTOR_OK",__func__,__LINE__);
   	return ;
   }
   

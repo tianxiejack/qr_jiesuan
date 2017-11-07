@@ -967,6 +967,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	
 	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf)))  //5.8ǹʽ
 	{   
+	printf("\n  can parse F1\n");
 		if(BIT0(BYTE4(buf)) == 0x00)
 		{
 			MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);
@@ -984,6 +985,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT6(BYTE3(FrameBuf1)) != BIT6(BYTE5(buf)))  //ͼɫF2
 	{    
+	printf("\n  can parse F2\n");
 		if(BIT6(BYTE5(buf)) == 0x01)	
 		{
 			if(isTimerAlive(eF2_Timer))
@@ -1001,6 +1003,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT5(BYTE3(FrameBuf1)) != BIT5(BYTE5(buf)))	//ǿʾ
 	{ 
+	printf("\n  can parse F3\n");
 		if(BIT5(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
 		{
 			if(isTimerAlive(eF3_Timer)/*״ֵ̬*/)
@@ -1016,11 +1019,13 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT4(BYTE3(FrameBuf1)) != BIT4(BYTE5(buf)))	   //F4
 	{   
+	printf("\n  can parse F4\n");
 		if(BIT4(BYTE5(buf)) == 0x01)
 			MSGDRIV_send(CMD_MEASURE_DISTANCE_SWITCH,0);
 	}
 	if(BIT3(BYTE3(FrameBuf1)) != BIT3(BYTE5(buf)))	//F5
 	{	
+	printf("\n  can parse F5\n");
 		if(BIT3(BYTE5(buf)) == 0x01)
 		{
 			if(!isCalibrationMode())
@@ -1041,7 +1046,8 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		}
 	}
 	if(BIT2(BYTE3(FrameBuf1)) != BIT2(BYTE5(buf)))	//F6
-	{
+	{	
+	printf("\n  can parse F6\n");
 		if(BIT2(BYTE5(buf)) == 0x01)
 		{
 			if(isTimerAlive(eF6_Timer)/*״ֵ̬*/)

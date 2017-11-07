@@ -283,7 +283,7 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				{
 					laser_dis = buf[2]<<8|buf[3];
 #if 1//SPI_DEBUG
-					printf(" count=%d laser_dis=%d  \n", buf[1], laser_dis);
+					printf("\n\r count=%d laser_dis=%d  \n", buf[1], laser_dis);
 #endif 
 					
 					
@@ -342,8 +342,11 @@ int SPI_mirror_send_requst()  //发送测距请求
 	buf[3] = ( buf[0]^buf[1]^buf[2] );
 
 	startLaserTimer();
+	//sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
 	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
-
+	sendDataToSpi( RS422_ROTER, buf, sizeof(buf));
+	sendDataToSpi( RS422_BAK1, buf, sizeof(buf));
+	
 	printf("###spi_mirror_buf_sent = %02x%02x%02x%02x\n",buf[0],buf[1],buf[2],buf[3]);
 
 	 return 0;
@@ -357,8 +360,8 @@ int SPI_mirror_send_ack()  //激光数据确认
 	buf[3] = ( buf[0]^buf[1]^buf[2] );
 
 	killLaserTimer();
-	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
-	printf("###SPI_mirror_send_ack = %02x%02x%02x%02x\n",buf[0],buf[1],buf[2],buf[3]);
+	//sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
+	//printf("###SPI_mirror_send_ack = %02x%02x%02x%02x\n",buf[0],buf[1],buf[2],buf[3]);
 
 	return 0;
 }
@@ -642,7 +645,6 @@ int Process_hcode(struct RS422_data * pRS422_data)
 				//解析数据
 				if(!bPositionSensorOK())
 				{
-					printf("### send CMD_POSITION_SENSOR_OK\n\n");
 					sendCommand(CMD_POSITION_SENSOR_OK);
 				}
 				killSelfCheckPosAngleTimer();
@@ -905,7 +907,7 @@ int transfer_init_all(uint8_t interuptThreshold,int Baudrate)
 		return 1;
 #endif
 
-	ret=transfer_init(3,interuptThreshold,Baudrate);
+	ret=transfer_init(3,interuptThreshold,19200);
 	if(ret)
 		return 1;
 	ret=transfer_init(4,interuptThreshold,Baudrate);
@@ -1293,7 +1295,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 #if SPI_DEBUG
-					printf("from RS422_MIRROR: ");
+					printf("LINE: %d  from RS422_MIRROR: ",__LINE__);
 #endif
 					Process_mirror(RS422_MIRROR_buff);
 					break;
@@ -1321,7 +1323,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 #if SPI_DEBUG
-					printf("from RS422_BAK1: ");
+					printf("LINE: %d  from RS422_BAK1: ",__LINE__);
 #endif
 					break;
 				case 24:
@@ -1334,7 +1336,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 #if SPI_DEBUG
-					printf("from RS422_MIRROR: ");
+					printf("LINE: %d  from RS422_MIRROR: ",__LINE__);
 #endif
 					Process_mirror(RS422_MIRROR_buff);
 
@@ -1361,7 +1363,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 #if SPI_DEBUG
-					printf("from RS422_BAK1: ");
+					printf("LINE: %d  from RS422_BAK1: ",__LINE__);
 #endif
 
 
@@ -1374,7 +1376,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 #if SPI_DEBUG
-					printf("from RS422_MIRROR: ");
+				printf("LINE: %d  from RS422_MIRROR: ",__LINE__);
 #endif
 					Process_mirror(RS422_MIRROR_buff);
 					break;
@@ -1401,7 +1403,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 #if SPI_DEBUG
-					printf("from RS422_BAK1: ");
+					printf("LINE: %d  from RS422_BAK1: ",__LINE__);
 #endif
 					break;
 				case 56:
@@ -1428,7 +1430,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 #if SPI_DEBUG
-					printf("from RS422_BAK1: ");
+					printf("LINE: %d  from RS422_BAK1: ",__LINE__);
 #endif
 
 					transfer_ban(fd1,com0);
@@ -1440,7 +1442,7 @@ void interuptHandleDataSpi2(int interuptNum,struct RS422_data* RS422_MIRROR_buff
 					ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 					transfer_open(fdtmp,comtmp);
 #if SPI_DEBUG
-					printf("from RS422_MIRROR: ");
+					printf("LINE:%d from RS422_MIRROR: ",__LINE__);
 #endif
 					Process_mirror(RS422_MIRROR_buff);
 					break;
@@ -1511,7 +1513,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=0;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
-#if SPI_DEBUG
+#if 1//SPI_DEBUG
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length",RS422_ROTER_buff->length);
 #endif
 
@@ -1611,7 +1613,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=0;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
-#if SPI_DEBUG
+#if 1//SPI_DEBUG
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
 #endif
 

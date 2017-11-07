@@ -2951,7 +2951,7 @@ void * SPI_CAN_process(void * prm)
 									
 									if(offset<dataLength)
 									{
-										printf(" length<dataLength ...\n");
+										printf("LINE:%d length<dataLength ...\n",__LINE__);
 										memset(buf+offset, 0, sizeof(buf)-offset);
 										haveData=0;
 									}else{
@@ -2971,7 +2971,7 @@ void * SPI_CAN_process(void * prm)
 
 								if(offset<dataLength)
 								{
-									printf(" length<dataLength ...\n");
+									printf("LINE:%d length<dataLength ...\n",__LINE__);
 									memset(buf+offset, 0, sizeof(buf)-offset);
 									haveData=0;
 								}
