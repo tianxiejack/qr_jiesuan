@@ -192,8 +192,8 @@ static void MachServoMoveOffset(float xOffset, float yOffset)
 	*/
 	xmils.value = Rads2CANValue(x,TURRET);
 	ymils.value = Rads2CANValue(y,MACH);
-	//processCMD_TURRETSERVO_MOVEOFFSET(xmils.value);
-	processCMD_MACHSERVO_MOVEOFFSET(ymils.value);
+	processCMD_TURRETSERVO_MOVEOFFSET(xmils.value);
+	//processCMD_MACHSERVO_MOVEOFFSET(ymils.value);
 	return ;
 }
 

@@ -1270,7 +1270,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 {
 	static int guiling = 0,jsq2 = 0;
 	static bool grenadeDone = 0,machDone = 0,TurretDone = 0;
-	float x=0.0,y=0.0;
+	float x=0.0,y=0.0,z = 0.0;
 	if(SCHEDULE_GUN/*not timeout and angle not ok*/)
 	{
 		float tempX = (getpanoAngleH()<180)?(getpanoAngleH()):(getpanoAngleH()-360);
@@ -1312,7 +1312,18 @@ void SCHEDULE_cbFxn(void* cbParam)
 	}
 	else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
 	{	
-		#if 1
+		if(guiling && gGrenadeGetPos==0) 
+		{
+			//z = -(getTurretTheta());
+			z = 3;
+			if(abs(z)>0.3)
+				getMachGunServoContrlObj()->moveOffset(z,0);
+			else
+				TurretDone = 1;
+		}
+
+		
+		#if 0 //liu dan  oK
 		if(guiling && gGrenadeGetPos==0) 
 		{
 			x = -(getGrenadeAngleAbs());
@@ -1322,8 +1333,8 @@ void SCHEDULE_cbFxn(void* cbParam)
 				grenadeDone = 1;
 		}
 		#endif
-		machDone = 1;
-		#if 0
+		
+		#if 0   // MACH  OK
 		if(guiling && gMachGetPos==0 ) 
 		{
 			y = (getMachGunAngleAbs());
@@ -1333,7 +1344,9 @@ void SCHEDULE_cbFxn(void* cbParam)
 				machDone = 1;
 		}
 		#endif
-		if(((machDone&&grenadeDone)||(100<COUNTER)) && guiling)
+		machDone = 1;
+		grenadeDone = 1;
+		if(((machDone&&grenadeDone&&TurretDone)||(100<COUNTER)) && guiling)
 		{
 			killSCHEDULEtimer();
 			releaseServoContrl();
@@ -1347,8 +1360,9 @@ void SCHEDULE_cbFxn(void* cbParam)
 		{
 			x = -(getGrenadeAngleAbs());
 			y = (getMachGunAngleAbs());
-			getGrenadeServoContrlObj()->moveOffset(x,0);
-			//getMachGunServoContrlObj()->moveOffset(0,y);
+			z = (getTurretTheta());
+			//getGrenadeServoContrlObj()->moveOffset(x,0);
+			getMachGunServoContrlObj()->moveOffset(z,0);
 			guiling = 1;
 		}
 		servoLookupGetPos();

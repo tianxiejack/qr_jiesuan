@@ -966,8 +966,11 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	
 	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf)))  //5.8ǹʽ
-	{   
-	printf("\n  can parse F1\n");
+	{  
+		for(int nmm=0;nmm<4;nmm++)
+			printf("FrameBuf1[%d] =%x     ",nmm,FrameBuf1[nmm]);
+		putchar(10);
+		printf("\n  can parse F1\n");
 		if(BIT0(BYTE4(buf)) == 0x00)
 		{
 			MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);
