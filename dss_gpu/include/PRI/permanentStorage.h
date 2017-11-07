@@ -79,6 +79,8 @@ extern GeneralCorrectionItem gGrenadeKill_GCTable[];
 extern GeneralCorrectionItem gGrenadeGas_GCTable[];
 extern ZeroCorrectionItem gMachineGun_ZCTable;
 extern ZeroCorrectionItem gGrenadeKill_ZCTable;
+extern ZeroCorrectionItem gTurret_ZCTable;
+
 int getGrenadeSize();
 int getGrenadeGasSize();
 int getMachGunSize();

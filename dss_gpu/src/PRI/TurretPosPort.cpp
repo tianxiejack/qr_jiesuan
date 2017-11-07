@@ -135,6 +135,12 @@ double getTurretTheta()
 	return gTurretTheta.theta;
 }
 
+double getTurretThetaDelta()
+{
+	return (gTurretTheta.theta - gTurret_ZCTable.Angle);
+}
+
+
 BOOL isTurretVelocityValid()
 {
 	//return (Measure_dist_time_delta() >= 2000) ;//&& (counter>0);

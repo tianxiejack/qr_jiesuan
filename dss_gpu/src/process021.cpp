@@ -56,7 +56,8 @@ static bool switchDisLen = 0;
 bool gProjectileMachFovlast = 0; //0 - small   1 - big
 bool gProjectileGreFovlast = 0;
 static bool lastSHINE = 0;
-			int xxxx = 12;
+extern bool menu_jiancha_flag;
+int xxxx = 12;
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
 {
@@ -4033,6 +4034,10 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 					break;
 				}
 		}
+		else if(isCalibrationHorizen())
+		{
+			menu_jiancha_flag = !menu_jiancha_flag;
+		}
 		else if(isCalibrationSave())
 		{
 			changeSaveOption();
@@ -4162,6 +4167,15 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 						break;
 					default:
 						break;
+				}
+			}
+			else if(isCalibrationHorizen())
+			{
+				if(menu_jiancha_flag)
+				{
+					gTurret_ZCTable.Angle = getTurretTheta();
+					gMachineGun_ZCTable.Angle = getMachGunAngle();
+					gGrenadeKill_ZCTable.Angle = getGrenadeAngle();
 				}
 			}
 			//gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
@@ -4541,6 +4555,7 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_HORIZEN(LPARAM lParam)
  {
 	if(isCalibrationMode())
 	{
+		menu_jiancha_flag = 1;
 		gLevel2CalibrationState = STATE_CALIBRATION_HORIZEN;
 		//update OSDdisplay
 			//initilGeneralParam();

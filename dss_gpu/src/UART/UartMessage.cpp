@@ -2985,7 +2985,7 @@ void * SPI_CAN_process(void * prm)
 							}
 
 						}
-						printf("recv_length=%d, offset=%d\n",recv_length, offset);						
+			//			printf("recv_length=%d, offset=%d\n",recv_length, offset);						
 					}	
 			}
 

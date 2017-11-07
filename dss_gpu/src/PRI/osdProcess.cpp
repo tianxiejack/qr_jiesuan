@@ -49,6 +49,8 @@ char tmparray[12] = "abcdef";
 bool AdCalibMenuFlag = false; 
 extern bool isMaintPortOpen;
 
+bool menu_jiancha_flag = 0;
+
 #if 1
 const char ModeOsd[9][8]=
 {
@@ -1544,18 +1546,10 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%s",Posd[eDynamicZone]);//); //��������
 			break;
 		case eAngleH:
-			PositionX = getPlatformPositionX();
-			PositionY = getPlatformPositionY();
-			//sprintf(pStr,"Q%+03.0f%+03.0f",(PositionX),(PositionY)); 
-			//sprintf(pStr,"%c%+03.0f%+03.0f",200,(PositionX),(PositionY)); 
-			sprintf(pStr,"%c%+03.0f",200,getMachGunAngle()); 
+			sprintf(pStr,"%c%+03.0f",200,getMachGunAngleAbs()); 
 			break;
 		case eAngleV:
-			AngleGun = getMachGunAngle();
-			AngleGrenade = getGrenadeAngle();
-			//sprintf(pStr,"G%+03.0f%+03.0f",(AngleGun),(AngleGrenade)); //��λΪ��
-			//sprintf(pStr,"%c%+03.0f%+03.0f",211,(AngleGun),(AngleGrenade)); 		
-			sprintf(pStr,"%c%+03.0f",211,getGrenadeAngle());
+			sprintf(pStr,"%c%+03.0f",211,getGrenadeAngleAbs());
 			break;
 		case eCorrectionTip:
 			sprintf(pStr,"%s",Posd[eCorrectionTip]);
@@ -1743,12 +1737,12 @@ int ls2tmp = 0000;
 			sprintf(pStr,"Fy:%+05d",288 - getCrossY()); 	//Fy
 			break;
 		case eCalibZero_AngleGun:
-			value = getMachGunAngleAbs();
+			value = getMachGunAngle();
 			sprintf(pStr,"%c%cY:%+08.3f",200,216,value);
 			break;
 		
 		case eCalibZero_AngleGrenade:
-			value = getGrenadeAngleAbs();
+			value = getGrenadeAngle();
 			sprintf(pStr,"%c%cY:%+08.3f",211,214,value);
 			break;
 
@@ -1876,7 +1870,10 @@ int ls2tmp = 0000;
 			break;
 			
 		case eCalibHorizen_Menu:
-			sprintf(pStr,"%c%c<->",203,184); 
+			if(menu_jiancha_flag)
+				sprintf(pStr,"%c%c",181,182); // cun chu
+			else
+				sprintf(pStr,"%c%c<->",203,184); // jian cha	
 			break;
 		case eCalibHorizen_Pos:
 			sprintf(pStr,"%c%c_X:%+08.3f",216,236,getTurretTheta()); 		//����
