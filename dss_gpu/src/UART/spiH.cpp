@@ -1474,8 +1474,9 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=0;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
-
+#if SPI_DEBUG
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
+#endif
 						//CanPort_parseByte(RS422_ROTER_buff->receiveData);
 						/*
 						for(i=0; i<RS422_ROTER_buff->length; i++)
@@ -1513,7 +1514,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=0;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
-#if 1//SPI_DEBUG
+#if SPI_DEBUG
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length",RS422_ROTER_buff->length);
 #endif
 
@@ -1613,7 +1614,7 @@ void interuptHandleDataSpi1(int interuptNum,struct RS422_data* RS422_ROTER_buff,
 						interuptNumTmp=0;
 						ioctl(fdtmp, SPI_IOC_WR_OPEN_INTERUPT, &interuptNumTmp);
 						transfer_open(fdtmp,comtmp);
-#if 1//SPI_DEBUG
+#if SPI_DEBUG
 						printf("from RS422_ROTER:--%d--RS422_R0TER_buff->length\n",RS422_ROTER_buff->length);
 #endif
 

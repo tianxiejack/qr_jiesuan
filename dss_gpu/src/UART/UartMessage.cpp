@@ -33,7 +33,7 @@
 
 
 
-#define CAN_DEBUG 0
+#define CAN_DEBUG  0
 
 int globalflag = 1;
   OSA_SemHndl semSend;
@@ -2743,7 +2743,9 @@ int CanPort_recvFlg(char * buf, int iLen, int * index)
 			     	CAN_ID_MACHGUN == stoh23(pCur)  ||
 			    	 CAN_ID_GRENADE == stoh23(pCur) )
 			 {
-				memcpy(pCur, pCur+1, length-1);
+				//memcpy(pCur, pCur+1, length-1);
+				self_memcpy(pCur, pCur+1, length-1);
+				
 				length--;
 				(*index) +=1 ;
 
@@ -2761,7 +2763,8 @@ int CanPort_recvFlg(char * buf, int iLen, int * index)
 			break;
 		}else{
 			//printf("move one data..%d\n",i++);
-			memcpy(pCur, pCur+1, length-1);
+			//memcpy(pCur, pCur+1, length-1);
+			self_memcpy(pCur, pCur+1, length-1);
 			length--;
 			(*index) +=1 ;
 
@@ -2804,6 +2807,7 @@ void * SPI_CAN_process(void * prm)
 		//CanPort_parseByte();
 
 		char buf[2048] = {0};
+		char tmp[2048] = {0};
 		char tempBuf[2048] = {0};
 		const int bufLen=2048;
 		char recvbuf[2048];
@@ -2818,6 +2822,7 @@ void * SPI_CAN_process(void * prm)
 		int canfd = 0;
 		int haveData=0;
 
+		
 		init_record_log(record_log_roter,    "/config/log/record_log_roter.txt");
 		init_record_log(record_log_decode, "/config/log/record_log_decode.txt");
 		init_record_log(record_log_bak2,    "/config/log/record_log_bak2.txt");
@@ -2931,7 +2936,7 @@ void * SPI_CAN_process(void * prm)
 									case 0xA5 :
 												dataLength =4; break;
 									default :
-												memcpy(buf, buf+2, offset-2);
+												self_memcpy(buf, buf+2, offset-2);
 												memset(buf+offset-2, 0, sizeof(buf)-(offset-2)  );
 												dataLength =0;
 												offset -= 2;
@@ -2943,21 +2948,26 @@ void * SPI_CAN_process(void * prm)
 								{	
 									//��ӡҪ���������
 									#if CAN_DEBUG
-									for(i=0; i<dataLength; i++)
-										printf("%02x ", buf[i]);
-										
-									printf("\n length=%d, dataLength=%d\n", offset, dataLength);
+										for(i=0; i<dataLength; i++)
+											printf("%02x ", buf[i]);
+											
+										printf("\n length=%d, dataLength=%d\n", offset, dataLength);
 									#endif
 									
 									if(offset<dataLength)
 									{
 										printf("LINE:%d length<dataLength ...\n",__LINE__);
+										offset = 0;
 										memset(buf+offset, 0, sizeof(buf)-offset);
 										haveData=0;
 									}else{
 										//�������
 										CanPort_parseByte((unsigned char*)buf);
-										memcpy(buf, buf+dataLength, offset-dataLength);
+										self_memcpy(buf, buf+dataLength, offset-dataLength);
+										//memset(tmp,0,sizeof(tmp));
+										//memcpy(tmp,buf+dataLength,offset-dataLength);
+										//memcpy(buf,tmp,offset-dataLength);
+										
 										memset(buf+offset-dataLength, 0, sizeof(buf)-(offset-dataLength)  );
 										offset -= dataLength;
 									}
@@ -2972,13 +2982,15 @@ void * SPI_CAN_process(void * prm)
 								if(offset<dataLength)
 								{
 									printf("LINE:%d length<dataLength ...\n",__LINE__);
+									offset = 0;
 									memset(buf+offset, 0, sizeof(buf)-offset);
 									haveData=0;
 								}
 								else
 								{
 									CanPort_parseByte((unsigned char*)buf);
-									memcpy(buf, buf+dataLength, offset-dataLength);
+									self_memcpy(buf, buf+dataLength, offset-dataLength);
+										
 									memset(buf+offset-dataLength, 0, sizeof(buf)-(offset-dataLength)  );
 									offset -= dataLength;
 								}
@@ -2996,6 +3008,39 @@ void * SPI_CAN_process(void * prm)
 }
 
 
+void *self_memcpy(void *__dest, __const void *__src, int __n)
+{
+	int i = 0;
+	unsigned char *d = (unsigned char *)__dest, *s = (unsigned char *)__src;
+
+	for (i = __n >> 3; i > 0; i--) {
+		*d++ = *s++;
+		*d++ = *s++;
+		*d++ = *s++;
+		*d++ = *s++;
+		*d++ = *s++;
+		*d++ = *s++;
+		*d++ = *s++;
+		*d++ = *s++;
+	}
+
+	if (__n & 1 << 2) {
+		*d++ = *s++;
+		*d++ = *s++;
+		*d++ = *s++;
+		*d++ = *s++;
+	}
+
+	if (__n & 1 << 1) {
+		*d++ = *s++;
+		*d++ = *s++;
+	}
+
+	if (__n & 1)
+		*d++ = *s++;
+
+	return __dest;
+}
 
 
 
