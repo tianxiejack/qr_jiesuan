@@ -323,7 +323,7 @@ static double getGrenadeDipAngleCorrection(double dipAngle)
 //视差修正
 static int visualCorrection(FiringInputs *input, CorrectionDelta* output)
 {
-	static const int ZeroPointDistance = 500; //getZeroDistance(input->ProjectileType);
+	static const int ZeroPointDistance = 100; //getZeroDistance(input->ProjectileType);
 	static const double XGapLaser_to_MachineGun = 0.000;//0.005;
 	static const double YGapLaser_to_MachineGun = 0.000;//0.01;
 	static const double XGapLaser_to_grenade = 1.000;//0.405;
@@ -388,7 +388,7 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 	if(PROJECTILE_BULLET == input->ProjectileType)
 	{
 		double distanceDelta = 0.0;
-		if(0 == (ret = getMachineGunDipCorrection(RADIAN2DEGREE(thetaDip)+getMachGunAngle(), input->TargetDistance ,&distanceDelta)))
+		if(0 == (ret = getMachineGunDipCorrection(RADIAN2DEGREE(thetaDip)+getMachGunAngleAbs(), input->TargetDistance ,&distanceDelta)))
 		{
 			input->TargetDistance = input->TargetDistance + distanceDelta;
 		}

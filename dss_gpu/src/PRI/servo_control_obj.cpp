@@ -193,7 +193,7 @@ static void MachServoMoveOffset(float xOffset, float yOffset)
 	xmils.value = Rads2CANValue(x,TURRET);
 	ymils.value = Rads2CANValue(y,MACH);
 	processCMD_TURRETSERVO_MOVEOFFSET(xmils.value);
-	//processCMD_MACHSERVO_MOVEOFFSET(ymils.value);
+	processCMD_MACHSERVO_MOVEOFFSET(ymils.value);
 	return ;
 }
 
@@ -285,6 +285,13 @@ void processCMD_TURRETSERVO_MOVEOFFSET(LPARAM lParam)
 	xmils.value = lParam;
 	FILLBUFFOFFST(Turretbuf, xmils);
 	SendCANBuf(Turretbuf, CAN_CMD_SIZE_LONG);	
+	#if 0
+		xmils.value = 43700000;
+		FILLBUFFSPEED(Turretbuf, xmils);
+		Turretbuf[2] = 0x53;
+		Turretbuf[3] = 0x50;
+		SendCANBuf(Turretbuf,10);	
+	#endif
 	startServo(CODE_TURRET);
 }
 void processCMD_TURRETSERVO_MOVESPEED(LPARAM lParam)
