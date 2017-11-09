@@ -2448,7 +2448,9 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_FOVSTAT,                   MSGAPI_inputfovchange,               0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_SEARCHMOD,             MSGAPI_inputsearchmod,              0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_VIDEOEN,            	   MSGAPI_inputvideotect,                 0);
-	
+
+  //  MSGDRIV_attachMsgFun(handle,    CMD_GRE2MACH,            	   Grenade2Mach_cbFxn,                 0);
+
 //add function
     MSGDRIV_attachMsgFun(handle,	MSGID_SYS_RESET,                                     MSGAPI_reset_device,	           0);
 #if 0
@@ -3672,6 +3674,11 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 	}
 	LaserDistance = 0;
 	LaserDistance_m = 0;
+
+	if(SCHEDULE_RESET)
+	{
+		ResetScheduleFx();
+	}
 	teststopserver();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_QUIT",__func__,__LINE__);
 	return ;
@@ -3722,7 +3729,7 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 			OSDCTRL_ItemHide(eDynamicZone);
 	}
 	
- 
+ 	releaseServoContrl();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_UNLOCK",__func__,__LINE__);
 	return ;
  }

@@ -153,6 +153,7 @@ typedef enum _time_id
 	eWeaponCtrl_Timer,
 	eSelftoAuto_timer,
 	eShineOne_timer,
+	eGrenade2Mach_timer,
 	MAX_TIMER_NUM
 }eTimerId;
 
@@ -326,8 +327,10 @@ void startSelfCheckVertoAuto();
 void startShineOnetimer();
 void killShineOnetimer();
 void ShineOne_cbFxn();
+void starGrenade2Machtimer();
+void killGrenade2Machtimer();
 
-
+void ResetScheduleFx();
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;

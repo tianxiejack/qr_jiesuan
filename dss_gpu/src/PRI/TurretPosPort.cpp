@@ -137,7 +137,7 @@ double getTurretTheta()
 
 double getTurretThetaDelta()
 {
-	return (gTurretTheta.theta - gTurret_ZCTable.Angle);
+	return (gTurret_ZCTable.Angle - gTurretTheta.theta);
 }
 
 

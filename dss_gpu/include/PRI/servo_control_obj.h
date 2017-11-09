@@ -48,5 +48,6 @@ static void TurretServoMoveSpeed(float xSpeed,float ySpeed);
 static void TurretServoMoveOffset(float xOffset,float yOffset);
 static int Rads2CANValue(double degree,int id);
 void testturdanqidong();
+void Grenade2Mach_cbFxn(long lParam);
 #endif
 

@@ -988,8 +988,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT6(BYTE3(FrameBuf1)) != BIT6(BYTE5(buf)))  //ͼɫF2
 	{    
-		
-		#if 0
+		#if 1
 		if(BIT6(BYTE5(buf)) == 0x01)	
 		{
 			if(isTimerAlive(eF2_Timer))

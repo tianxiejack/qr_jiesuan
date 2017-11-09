@@ -738,7 +738,13 @@ static Int32 APP_onTimer( Int32 timerId )
 		  if(timerId == eShineOne_timer)
 		 {
 			ShineOne_cbFxn();
-		 }	
+		 }
+		  
+		  if(timerId == eGrenade2Mach_timer)
+		 {	
+			MSGDRIV_send(CMD_GRE2MACH,0);	
+		 }
+
 		 	
     	return OSA_SOK;
 }

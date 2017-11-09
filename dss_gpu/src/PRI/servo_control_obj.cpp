@@ -9,6 +9,8 @@
 #include "firingCtrl.h"
 #include "UartCanMessage.h"
 #include "UartMessage.h"
+#include "GrenadePort.h"
+#include "MachGunPort.h"
 //#include "dramMsgDef.h"
 //#include "main.h"
 
@@ -475,12 +477,16 @@ void teststopserver()
 {
 	FILLBUFFSTOP(TestGREPosbuf);
 	SendCANBuf((TestGREPosbuf), CAN_CMD_SIZE_SHORT);
-
-	FILLBUFFSTOP(TestTURPosbuf);
-	SendCANBuf((TestTURPosbuf), CAN_CMD_SIZE_SHORT);
-
-	FILLBUFFSTOP(TestMachPosbuf);
-	SendCANBuf((TestMachPosbuf), CAN_CMD_SIZE_SHORT);
-	releaseServoContrl();
 }
 
+void Grenade2Mach_cbFxn(long lParam)
+{
+	double tmp = getGrenadeAngleAbs() - getMachGunAngleAbs();
+	if(tmp > 0.3)
+	{
+		requstServoContrl();
+		getGrenadeServoContrlObj()->moveOffset(tmp,0);
+		releaseServoContrl();
+	}
+	return ;
+}

@@ -17,6 +17,7 @@
 #include "osdProcess.h"
 #include "UartCanMessage.h"
 
+static bool guiling = 0;
 float FOVSIZE_V=FOVDEGREE_VLARGE, FOVSIZE_H=FOVDEGREE_HLARGE;
 Level_one_state gLevel1Mode = MODE_BOOT_UP,gLevel1LastMode = MODE_BATTLE;
 Level_two_state gLevel2BattleState = STATE_BATTLE_AUTO, gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU,
@@ -1244,6 +1245,23 @@ void ShineOne_cbFxn()
 	}
 }
 
+void starGrenade2Machtimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eGrenade2Mach_timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eGrenade2Mach_timer,100);	
+	}
+}
+
+void killGrenade2Machtimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eGrenade2Mach_timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eGrenade2Mach_timer);
+	}
+}
 
 void startSCHEDULEtimer()
 {
@@ -1267,7 +1285,7 @@ void killSCHEDULEtimer()
 
 void SCHEDULE_cbFxn(void* cbParam)
 {
-	static int guiling = 0,jsq2 = 0;
+	static int jsq2 = 0;
 	static bool grenadeDone = 0,machDone = 0,TurretDone = 0;
 	float x=0.0,y=0.0,z = 0.0;
 	if(SCHEDULE_GUN/*not timeout and angle not ok*/)
@@ -1314,7 +1332,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 	
 		if(guiling && gTurretGetPos==0) 
 		{
-			z = (getTurretTheta());
+			z = (getTurretThetaDelta());
 			if(abs(z)>0.18)
 				getMachGunServoContrlObj()->moveOffset(z,0);
 			else
@@ -1521,6 +1539,16 @@ void processCMD_CONNECT_SWITCH(long lParam)
 		//OSDCTRL_BaseMenuHide();
 		OSDCTRL_ConnectMenuHide();
 	}
+}
+
+void ResetScheduleFx()
+{
+	killSCHEDULEtimer();
+	releaseServoContrl();
+	SCHEDULE_RESET = FALSE;
+	OSDCTRL_ItemHide(eSuperOrder);
+	guiling = 0;
+	return;
 }
 
 

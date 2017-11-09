@@ -668,7 +668,6 @@ int Process_hcode(struct RS422_data * pRS422_data)
 					gTurretTheta.theta = tmp;
 				
 				pFovCtrlObj->theta = (int)getTurretThetaDelta();
-				
 				memcpy(buf, buf+parse_length, length-parse_length);
 				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );
 				length -= parse_length;
