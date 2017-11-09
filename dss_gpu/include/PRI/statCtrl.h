@@ -170,7 +170,7 @@ typedef enum _time_id
 #define 	AVT_TIMER 				2000
 #define 	SCHEDULE_TIMER 		500
 #define 	FN_TIMER 				2000
-#define 	SELFCHECK_TIMER 		1000
+#define 	SELFCHECK_TIMER 		1500
 #define 	SERVOCHECK_TIMER 		500
 
 typedef enum timer_stat

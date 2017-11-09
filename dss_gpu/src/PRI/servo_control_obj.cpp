@@ -235,6 +235,13 @@ void processCMD_MACHSERVO_MOVEOFFSET(LPARAM lParam)
 		unsigned char c[4];
 		int value;
 	} ymils;
+	#if 0
+	ymils.value = 0x56030;
+	FILLBUFFSPEED(Machbuf, ymils);
+	Machbuf[2] = 0x53;
+	Machbuf[3] = 0x50;
+	SendCANBuf(Machbuf,10);
+	#endif
 	ymils.value = lParam;
 	FILLBUFFOFFST(Machbuf, ymils);
 	SendCANBuf(Machbuf, CAN_CMD_SIZE_LONG);	
@@ -255,14 +262,17 @@ void processCMD_GRENADESERVO_MOVEOFFSET(LPARAM lParam)
 		unsigned char c[4];
 		int value;
 	} xmils;
+
+	xmils.value = 0x56030;
+	FILLBUFFSPEED(Grenadebuf, xmils);
+	Grenadebuf[2] = 0x53;
+	Grenadebuf[3] = 0x50;
+	SendCANBuf(Grenadebuf,10);
+	
 	xmils.value = lParam;
 	FILLBUFFOFFST(Grenadebuf, xmils);
 	SendCANBuf(Grenadebuf, CAN_CMD_SIZE_LONG);
-	xmils.value = 43700000;
-	FILLBUFFSPEED(TestGRESpebuf, xmils);
-	TestGRESpebuf[2] = 0x53;
-	TestGRESpebuf[3] = 0x50;
-	SendCANBuf(TestGRESpebuf,10);
+	
 	startServo(CODE_GRENADE);
 }
 void processCMD_GRENADESERVO_MOVESPEED(LPARAM lParam)
@@ -282,16 +292,18 @@ void processCMD_TURRETSERVO_MOVEOFFSET(LPARAM lParam)
 		unsigned char c[4];
 		int value;
 	} xmils;
-	xmils.value = lParam;
-	FILLBUFFOFFST(Turretbuf, xmils);
-	SendCANBuf(Turretbuf, CAN_CMD_SIZE_LONG);	
 	#if 0
-		xmils.value = 43700000;
+		xmils.value = 0x1da38;
 		FILLBUFFSPEED(Turretbuf, xmils);
 		Turretbuf[2] = 0x53;
 		Turretbuf[3] = 0x50;
 		SendCANBuf(Turretbuf,10);	
 	#endif
+	
+	xmils.value = lParam;
+	FILLBUFFOFFST(Turretbuf, xmils);
+	SendCANBuf(Turretbuf, CAN_CMD_SIZE_LONG);	
+	
 	startServo(CODE_TURRET);
 }
 void processCMD_TURRETSERVO_MOVESPEED(LPARAM lParam)
