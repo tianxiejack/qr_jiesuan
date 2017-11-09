@@ -1192,10 +1192,12 @@ void WeaponCtrlPORT_ParseFrameByte_type3(unsigned char* buf)
 	{
 		if(BIT2(BYTE3(buf)) == 0x01)//ֹ��������״̬
 		{
-			MSGDRIV_send(CMD_DETEND_LOCK,0);//ֹ����
+			MSGDRIV_send(CMD_DETEND_UNLOCK,0);
+			//MSGDRIV_send(CMD_DETEND_LOCK,0);//ֹ����
 		}else if(BIT2(BYTE3(buf)) == 0x00)
 		{
-			MSGDRIV_send(CMD_DETEND_UNLOCK,0); //ֹ����
+			//MSGDRIV_send(CMD_DETEND_UNLOCK,0); //ֹ����
+			MSGDRIV_send(CMD_DETEND_LOCK,0);
 		}
 	}
 	

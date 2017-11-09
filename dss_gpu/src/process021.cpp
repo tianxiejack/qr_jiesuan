@@ -1165,7 +1165,7 @@ bool CProcess021::OnProcess(int chId, Mat &frame)
 			DrawMoveDetect = 1;
 			for(i =0;i<detect_num;i++)
 			{
-				if(detect_vect[i].targetRect.width > 50 && detect_vect[i].targetRect.height > 50 )
+				if(detect_vect[i].targetRect.width > 10 && detect_vect[i].targetRect.height > 10 )
 				{
 					DrawjsRect(m_dccv, detect_vect[i].targetRect,2);
 					random.x = detect_vect[i].targetRect.x;
