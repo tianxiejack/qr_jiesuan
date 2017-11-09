@@ -2581,6 +2581,8 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVEOFFSET,			processCMD_GRENADESERVO_MOVEOFFSET,	0); //\u951f\u65a4\u62f7\u4f4d\u951f\u811a\u51e4\u62f7\u4f4d\u951f\u77eb\u5321\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVESPEED,			processCMD_GRENADESERVO_MOVESPEED,	0); //\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u52ab\u5ea6\u5321\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_STOP,					processCMD_GRENADESERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
+    MSGDRIV_attachMsgFun(handle,	CMD_TURRETSERVO_STOP,					processCMD_TURRETSERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
+    MSGDRIV_attachMsgFun(handle,	CMD_ALLSERVO_STOP,					processCMD_TURRETSERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
 
 	
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_CLOSE,				processCMD_LIHEQI_CLOSE,	0);
@@ -3668,6 +3670,9 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 		OSDCTRL_NoShine();
 		tiaolingwei_flag = 0;
 	}
+	LaserDistance = 0;
+	LaserDistance_m = 0;
+	teststopserver();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_QUIT",__func__,__LINE__);
 	return ;
  }
@@ -4457,8 +4462,12 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 			isfixingMeasure = FALSE;
 
 		if(!isMeasureManual() && DrawInDrawopen)
-			DrawInDraw_open_close();		
-
+			DrawInDraw_open_close();	
+		
+		if(isMeasureManual())
+			OSDCTRL_ItemShow(eMeasureDis);
+		else
+			OSDCTRL_ItemHide(eMeasureDis);
 		
 	}
  	return ;
@@ -4592,7 +4601,6 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 		Posd[eMeasureType] = MeasureTypeOsd[lParam+3];
 		Posd[eDynamicZone] = DynamicOsd[2];
 		OSDCTRL_ItemShow(eDynamicZone);
-		startDynamicTimer();
 		//sendCommand(CMD_QUIT_AVT_TRACKING);
 	}
 	else if(isBattleMode()&&isStatBattleAuto()&&isAutoPreparation())
@@ -4604,12 +4612,8 @@ void CProcess021::processCMD_LASER_FAIL(LPARAM lParam)
 		//OSDCTRL_ItemShow(eMeasureType);
 		Posd[eDynamicZone] = DynamicOsd[2];
 		OSDCTRL_ItemShow(eDynamicZone);
-		startDynamicTimer();
-	}	
-
-	if(pTimerObj->GetTimerStat(eDynamic_Timer) == eTimer_Stat_Stop)
-		startDynamicTimer();
-	
+	}		
+	startDynamicTimer();
  	return ;
  }
 
@@ -4711,8 +4715,8 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 		else
 		{
 			//sendCommand(CMD_VELOCITY_FAIL);
-			Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG			
-			OSDCTRL_ItemShine(eMeasureType);
+			//Posd[eMeasureType] = MeasureTypeOsd[2];//LSBG			
+			//OSDCTRL_ItemShine(eMeasureType);
 			OSDCTRL_ItemHide(eMeasureDis);
 
 			
@@ -4728,11 +4732,11 @@ void CProcess021::processCMD_MEASURE_DISTANCE(LPARAM lParam)
 			else
 			{
 				//gLevel3CalculatorState = Auto_Idle;
-				if(!isCalibrationZero())
-				{
-					Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
-					OSDCTRL_ItemShow(eCorrectionTip);
-				}
+				//if(!isCalibrationZero())
+				//{
+				//	Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+				//	OSDCTRL_ItemShow(eCorrectionTip);
+				//}
 				SPI_mirror_send_requst();
 			}
 		}

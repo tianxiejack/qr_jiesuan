@@ -29,6 +29,7 @@ void processCMD_GRENADESERVO_STOP(LPARAM lParam);
 void processCMD_TURRETSERVO_MOVEOFFSET(LPARAM lParam);
 void processCMD_TURRETSERVO_MOVESPEED(LPARAM lParam);
 void processCMD_TURRETSERVO_STOP(LPARAM lParam);
+void processCMD_ALLSERVO_STOP(LPARAM lParam);
 
 
 void initAllServos();

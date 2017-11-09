@@ -352,9 +352,6 @@ int SPI_mirror_send_requst()  //发送测距请求
 	startLaserTimer();
 	//sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
 	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
-	sendDataToSpi( RS422_ROTER, buf, sizeof(buf));
-	sendDataToSpi( RS422_BAK1, buf, sizeof(buf));
-	
 	printf("###spi_mirror_buf_sent = %02x%02x%02x%02x\n",buf[0],buf[1],buf[2],buf[3]);
 
 	 return 0;
@@ -670,7 +667,7 @@ int Process_hcode(struct RS422_data * pRS422_data)
 				if(tmp>= -180 && tmp<= 180)
 					gTurretTheta.theta = tmp;
 				
-				pFovCtrlObj->theta = (int)tmp;
+				pFovCtrlObj->theta = (int)getTurretThetaDelta();
 				
 				memcpy(buf, buf+parse_length, length-parse_length);
 				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );

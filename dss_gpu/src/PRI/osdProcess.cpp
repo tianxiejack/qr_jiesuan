@@ -1477,11 +1477,8 @@ int ls2tmp = 0000;
 				int Distance = getLaserDistance();
 				int DistanceM = getLaserDistanceM();
 				//Distance = (Distance < 0)? 0:(Distance);
-				if(Distance>1700)
-					;//printf("Distance = %d\n",Distance);
+
 				Distance = (Distance>1700)?0:(Distance);
-				if(DistanceM>1700)
-					;//printf("Distance = %d\n",Distance);
 				DistanceM= (DistanceM>1700)?0:(DistanceM);
 				
 				if(isMeasureOsdNormal())
@@ -1489,7 +1486,7 @@ int ls2tmp = 0000;
 					if(Posd[eLaserState] == LaserOsd[0])
 						sprintf(pStr,"%s:%04d",Posd[eLaserState],Distance); //shou
 					else
-						sprintf(pStr,"%s:%04d",Posd[eLaserState],DistanceM); //shou
+						sprintf(pStr,"%s:%04d",Posd[eLaserState],DistanceM);
 				}
 				else
 				{
@@ -1508,7 +1505,9 @@ int ls2tmp = 0000;
 				//do nothing
 			}
 			else
+			{
 				sprintf(pStr,"%04d",DistanceManual);			
+			}
 			break;
 	
 		case eLaserState:

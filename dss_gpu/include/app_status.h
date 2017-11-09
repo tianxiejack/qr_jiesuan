@@ -372,7 +372,7 @@ typedef enum
     // osd control
     MSGID_EXT_INPUT_DISPGRADE = 0x00000030,  ///< external cmd, osd show or hide
     MSGID_EXT_INPUT_DISPCOLOR,              ///< external cmd, osd color
-    MSGID_SHIN_OSD	,		//ÉÁË¸OSD×Ö·û
+    MSGID_SHIN_OSD	,		//ï¿½ï¿½Ë¸OSDï¿½Ö·ï¿½
 
     MSGID_EXT_INPUT_COLOR,                 ///< external cmd, switch input video color.
 
@@ -411,7 +411,7 @@ typedef enum
     CMD_MACHINEGUN_SENSOR_ERR,         
     CMD_MACHINEGUN_SERVO_OK,          
     CMD_MACHINEGUN_SERVO_ERR,          
-    CMD_POSITION_SENSOR_OK	   ,		//·½Î»´«¸ÐÆ÷Õý³£
+    CMD_POSITION_SENSOR_OK	   ,		//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     CMD_POSITION_SENSOR_ERR,
     CMD_POSITION_SERVO_OK,            
     CMD_POSITION_SERVO_ERR,
@@ -530,7 +530,7 @@ typedef enum
     CMD_TURRETSERVO_MOVEOFFSET,
     CMD_TURRETSERVO_MOVESPEED,
     CMD_TURRETSERVO_STOP,
-
+    CMD_ALLSERVO_STOP,
 	//addtion ext cmd mvdetect
     MSGID_EXT_MVDETECT,
     MAX_MSG_NUM,

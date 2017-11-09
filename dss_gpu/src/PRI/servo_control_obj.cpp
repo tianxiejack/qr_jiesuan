@@ -326,6 +326,18 @@ void processCMD_TURRETSERVO_STOP(LPARAM lParam)
 	FILLBUFFSTOP(Turretbuf);
 	SendCANBuf(Turretbuf, CAN_CMD_SIZE_SHORT);
 }
+void processCMD_ALLSERVO_STOP(LPARAM lParam)
+{	
+	FILLBUFFSTOP(TestGREPosbuf);
+	SendCANBuf((TestGREPosbuf), CAN_CMD_SIZE_SHORT);
+
+	FILLBUFFSTOP(TestTURPosbuf);
+	SendCANBuf((TestTURPosbuf), CAN_CMD_SIZE_SHORT);
+
+	FILLBUFFSTOP(TestMachPosbuf);
+	SendCANBuf((TestMachPosbuf), CAN_CMD_SIZE_SHORT);
+	releaseServoContrl();
+}
 
 static void initServo(unsigned char *pBuf)
 {
@@ -469,5 +481,6 @@ void teststopserver()
 
 	FILLBUFFSTOP(TestMachPosbuf);
 	SendCANBuf((TestMachPosbuf), CAN_CMD_SIZE_SHORT);
+	releaseServoContrl();
 }
 

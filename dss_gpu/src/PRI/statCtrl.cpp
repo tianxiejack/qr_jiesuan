@@ -608,8 +608,7 @@ void loadFiringTable_Enter()
 	if(CALC_OK == ret)
 	{
 		int borX=0,borY=0;
-		pTimerObj->startTimer(eRGQ_Timer,RGQ_TIMER);
-		
+		startRGQtimer();
 		//todo ValidateOutput(&output);//check offset overflow. 5.6x4.2 16x12
 
 		if(isMachineGun())
@@ -1313,10 +1312,10 @@ void SCHEDULE_cbFxn(void* cbParam)
 	else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
 	{	
 	
-		if(guiling && gGrenadeGetPos==0) 
+		if(guiling && gTurretGetPos==0) 
 		{
-			z = -(getTurretTheta());
-			if(abs(z)>0.3)
+			z = (getTurretTheta());
+			if(abs(z)>0.18)
 				getMachGunServoContrlObj()->moveOffset(z,0);
 			else
 				TurretDone = 1;
@@ -1326,7 +1325,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		if(guiling && gGrenadeGetPos==0) 
 		{
 			x = -(getGrenadeAngleAbs());
-			if(abs(x)>0.3)
+			if(abs(x)>0.18)
 				getGrenadeServoContrlObj()->moveOffset(x,0);
 			else
 				grenadeDone = 1;
@@ -1337,7 +1336,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		if(guiling && gMachGetPos==0 ) 
 		{
 			y = (getMachGunAngleAbs());
-			if(abs(y)>0.3)
+			if(abs(y)>0.18)
 				getMachGunServoContrlObj()->moveOffset(0,y);
 			else
 				machDone = 1;
@@ -1345,7 +1344,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		#endif
 		//machDone = 1;
 		//grenadeDone = 1;
-		if(((machDone&&grenadeDone&&TurretDone)||(100<COUNTER)) && guiling)
+		if(((machDone&&grenadeDone&&TurretDone)||(60<COUNTER)) && guiling)
 		{
 			killSCHEDULEtimer();
 			releaseServoContrl();
@@ -1359,7 +1358,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		{
 			x = -(getGrenadeAngleAbs());
 			y = (getMachGunAngleAbs());
-			z = (getTurretTheta());
+			z = (getTurretThetaDelta());
 			getGrenadeServoContrlObj()->moveOffset(x,0);
 			getMachGunServoContrlObj()->moveOffset(z,y);
 			guiling = 1;

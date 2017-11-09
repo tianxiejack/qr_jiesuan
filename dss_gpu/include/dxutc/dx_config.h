@@ -604,13 +604,15 @@
 
 
 
+
+
 #define BLKID_DATA3_SAVE			(152)
 //CCD-BIG /CCD-SMALL
 #define CFGID_CCD_BIG0					CFGID_BUILD(BLKID_DATA3_SAVE, 0)
 #define CFGID_CCD_BIG1					CFGID_BUILD(BLKID_DATA3_SAVE, 1)
 #define CFGID_CCD_SMALL0				CFGID_BUILD(BLKID_DATA3_SAVE, 2)
 #define CFGID_CCD_SMALL1				CFGID_BUILD(BLKID_DATA3_SAVE, 3)
-
+#define CFGID_TURRET_ZC_Angle				CFGID_BUILD(BLKID_DATA3_SAVE, 4)
 
 #endif
 /***********************************END**************************************/
