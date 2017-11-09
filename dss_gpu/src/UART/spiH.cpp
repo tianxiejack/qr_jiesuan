@@ -242,11 +242,11 @@ int Process_mirror(struct RS422_data * pRS422_data)
 		int have_data = 1;
 		int parse_length = 0;
 
-		int16_t  laser_dis=0;
+		int16_t  laser_dis=0,laser_dis_m=0;
 		int16_t sum_xor=0;
 		int i=0;
 
-		static int16_t last_laser_dis = 0;
+		static int16_t last_laser_dis = 0,last_laser_dis_m;
 
 		int length = pRS422_data->length;
 		char * buf = (char*)pRS422_data->receiveData;
@@ -282,6 +282,7 @@ int Process_mirror(struct RS422_data * pRS422_data)
 				if(1)
 				{
 					laser_dis = buf[2]<<8|buf[3];
+					laser_dis_m = buf[4]<<8|buf[5];
 #if 1//SPI_DEBUG
 					printf("\n\r count=%d laser_dis=%d  \n", buf[1], laser_dis);
 #endif 
@@ -291,12 +292,14 @@ int Process_mirror(struct RS422_data * pRS422_data)
 					{
 						//LaserDistance = -1;
 						LaserDistance = last_laser_dis;
+						LaserDistance_m = last_laser_dis_m;
 						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOECHO);
 					}
 					else if(0 == laser_dis)
 					{
 						//LaserDistance = -1;	
 						LaserDistance = last_laser_dis;
+						LaserDistance_m = last_laser_dis_m;
 						MSGDRIV_send(CMD_LASER_FAIL,(void*)LASERERR_NOSAMPLE);
 					}
 					else
@@ -304,10 +307,15 @@ int Process_mirror(struct RS422_data * pRS422_data)
 						if(valid_measure)
 						{
 							LaserDistance = laser_dis;
+							LaserDistance_m = laser_dis_m;
 							last_laser_dis = LaserDistance;
+							last_laser_dis_m = LaserDistance_m;
 						}
 						else
+						{
 							LaserDistance = last_laser_dis;
+							LaserDistance_m = last_laser_dis_m;
+						}
 						
 						finish_laser_measure = 1;
 						MSGDRIV_send(CMD_LASER_OK,0);
@@ -360,7 +368,7 @@ int SPI_mirror_send_ack()  //激光数据确认
 	buf[3] = ( buf[0]^buf[1]^buf[2] );
 
 	killLaserTimer();
-	//sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
+	sendDataToSpi( RS422_MIRROR, buf, sizeof(buf));
 	//printf("###SPI_mirror_send_ack = %02x%02x%02x%02x\n",buf[0],buf[1],buf[2],buf[3]);
 
 	return 0;

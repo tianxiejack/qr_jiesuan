@@ -13,13 +13,17 @@ static int ibInit=0;
 //static PVE_MSG *pOutMsg=NULL;
 //static BYTE g_bSendBuf[256]={0};
 
-int LaserDistance=0;
+int LaserDistance=0,LaserDistance_m = 0;
 static BOOL LaserPORT_open();
 static void LaserPORT_close();
 
 int getLaserDistance()
 {
 	return (LaserDistance>=0)?(LaserDistance):(0);
+}
+int getLaserDistanceM()
+{
+	return (LaserDistance_m>=0)?(LaserDistance_m):(0);
 }
  void startLaserTimer()
 {

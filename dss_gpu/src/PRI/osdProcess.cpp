@@ -1475,14 +1475,21 @@ int ls2tmp = 0000;
 			else
 			{	
 				int Distance = getLaserDistance();
+				int DistanceM = getLaserDistanceM();
 				//Distance = (Distance < 0)? 0:(Distance);
 				if(Distance>1700)
 					;//printf("Distance = %d\n",Distance);
 				Distance = (Distance>1700)?0:(Distance);
+				if(DistanceM>1700)
+					;//printf("Distance = %d\n",Distance);
+				DistanceM= (DistanceM>1700)?0:(DistanceM);
+				
 				if(isMeasureOsdNormal())
 				{
-					//sprintf(pStr,"%s:%04d",Posd[eMeasureType],Distance); //laser
-					sprintf(pStr,"%s:%04d",Posd[eLaserState],Distance); //shou
+					if(Posd[eLaserState] == LaserOsd[0])
+						sprintf(pStr,"%s:%04d",Posd[eLaserState],Distance); //shou
+					else
+						sprintf(pStr,"%s:%04d",Posd[eLaserState],DistanceM); //shou
 				}
 				else
 				{
