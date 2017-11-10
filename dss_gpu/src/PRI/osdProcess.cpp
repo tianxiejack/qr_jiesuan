@@ -425,7 +425,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eReady,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
 
 	{eGuiling,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	300,				70,	0,	{0}},
-	//{erase_guntip,			eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	353,		70,	0,	{0}},
+	{eLwOrGen,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180,		500,	0,	{0}},
 };
 
 volatile FONT_OBJ g_Font={NULL,WHITECOLOR,1,0,0,0,NULL};
@@ -502,7 +502,7 @@ static void OSDCTRL_OsdInitial()
 	sprintf(DynamicOsd[4],"%c%c%c%c",235,236,205,229);//TIAO TA JIE SUO
 	sprintf(DynamicOsd[5],"%c%c%c%c",179,202,195,248);//CE JU GUO YUAN
 	sprintf(DynamicOsd[6],"%c%c%c%c",209,239,203,184);//LING WEI JIAN CHA
-	//sprintf(DynamicOsd[7],"%c%c%c%c",163,164,166,167);//MU BIAO SHI BAI
+	sprintf(DynamicOsd[7],"%c%c%c%c",253,243,203,184);//zong xiu jian cha
 	sprintf(DynamicOsd[8],"%c%c%c%c",163,164,165,166);//MU BIAO DIU SHI
 	sprintf(DynamicOsd[9],"%c%c%c%c?",161,162,209,239);//shi fou gui ling
 
@@ -2317,6 +2317,9 @@ int ls2tmp = 0000;
 			break;
 		case eGuiling:
 			sprintf(pStr,"%c%c%c%c?",235,236,140,209);
+			break;
+		case eLwOrGen:
+			sprintf(pStr,Posd[eLwOrGen]);
 			break;
 		
 		default:

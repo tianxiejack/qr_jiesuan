@@ -149,10 +149,6 @@ void moveCrossCenter(int x, int y)
 		borX = gMachineGun_ZCTable.data.deltaX+x;
 		//borY = gMachineGun_ZCTable.data.deltaY+(y>>1);
 		borY = gMachineGun_ZCTable.data.deltaY+y;
-		//printf("x = %d \n",x);
-		//printf("y = %d \n",y);
-		//printf(" borX = %d\n",borX);
-		//printf(" borY = %d\n",borY);
 	}
 	else
 	{

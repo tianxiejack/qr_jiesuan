@@ -33,7 +33,7 @@ using namespace std;
 using namespace cv;
 
 //extern OSDCTRL_Handle pOsdCtrlObj;
-
+bool LwOrGenflag = 0;
 extern OSDCTRL_Handle pCtrlObj;
 int msgEraseId = 0;
 OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
@@ -3811,6 +3811,8 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 	{
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{	
+			LwOrGenflag = 0;
+			OSDCTRL_ItemHide(eLwOrGen);	
 			increaseMeasureDis();
 			loadFiringTable_Enter();
 		}
@@ -3894,13 +3896,19 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 		if(isfixingMeasure && (MEASURETYPE_MANUAL == gMeasureType))
 		{
 			decreaseMeasureDis();
-			if(0 == DistanceManual)
+			if(!DistanceManual)
 			{
-				Posd[eDynamicZone] = DynamicOsd[6];
-				OSDCTRL_ItemShow(eDynamicZone);
-				startDynamicTimer();
+				LwOrGenflag = !LwOrGenflag;
+				if(LwOrGenflag)
+					Posd[eLwOrGen] = DynamicOsd[7];
+				else
+					Posd[eLwOrGen] = DynamicOsd[6];
+				OSDCTRL_ItemShow(eLwOrGen);	
 			}
-			loadFiringTable_Enter();
+			else
+			{
+				loadFiringTable_Enter();
+			}	
 		}
 	}
 
