@@ -1286,8 +1286,9 @@ void killSCHEDULEtimer()
 void SCHEDULE_cbFxn(void* cbParam)
 {
 	static int jsq2 = 0;
-	static bool grenadeDone = 0,machDone = 0,TurretDone = 0;
+	static bool grenadeDone = 0,machDone = 0,TurretDone = 0,delta1ZFflag = 0;
 	float x=0.0,y=0.0,z = 0.0;
+	static double delta1 = 0.0,delta2 = 0.0;
 	if(SCHEDULE_GUN/*not timeout and angle not ok*/)
 	{
 		#if 0
@@ -1333,17 +1334,17 @@ void SCHEDULE_cbFxn(void* cbParam)
 	}
 	else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
 	{	
-		#if 0
+		#if 1
 		if(guiling && gTurretGetPos==0) 
 		{
 			z = (getTurretThetaDelta());
-			if(abs(z)>1)
+			if(abs(z)>2)
 				getMachGunServoContrlObj()->moveOffset(z,0);
 			else
 				TurretDone = 1;
 		}
 		#endif
-		#if 1 //liu dan  oK
+		#if 0 //liu dan  oK
 		if(guiling && gGrenadeGetPos==0) 
 		{
 			x = -(getGrenadeAngleAbs());
@@ -1354,7 +1355,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		}
 		#endif
 		
-		#if 1  // MACH  OK
+		#if 0  // MACH  OK
 		if(guiling && gMachGetPos==0 ) 
 		{
 			y = (getMachGunAngleAbs());
@@ -1364,8 +1365,8 @@ void SCHEDULE_cbFxn(void* cbParam)
 				machDone = 1;
 		}
 		#endif
-		//machDone = 1;
-		//grenadeDone = 1;
+		machDone = 1;
+		grenadeDone = 1;
 		if(((machDone&&grenadeDone&&TurretDone)||(60<COUNTER)) && guiling)
 		{
 			killSCHEDULEtimer();
@@ -1378,11 +1379,32 @@ void SCHEDULE_cbFxn(void* cbParam)
 
 		if(!guiling)
 		{
-			x = -(getGrenadeAngleAbs());
-			y = (getMachGunAngleAbs());
-			z = (getTurretThetaDelta());
-			getGrenadeServoContrlObj()->moveOffset(x,0);
-			getMachGunServoContrlObj()->moveOffset(0,y);
+			delta1ZFflag = 0;
+			//x = -(getGrenadeAngleAbs());
+			//y = (getMachGunAngleAbs());
+			delta1 = (getTurretThetaDelta());
+		
+			if(delta1< 0)
+			{	
+				delta1ZFflag = 1; // fu
+				delta1 = -delta1;
+			}
+			delta2 = 360 - delta1;
+
+			if(delta1 <= delta2)
+			{
+				z = delta1;
+			}
+			else
+			{
+				z = delta2;
+			}
+			if( abs(z - delta1) < 0.01 && !delta1ZFflag)
+				z = -z;
+			else if(abs(z - delta2) < 0.01 && delta1ZFflag)
+				z = -z;		
+			//getGrenadeServoContrlObj()->moveOffset(x,0);
+			getMachGunServoContrlObj()->moveOffset(z,0);
 			guiling = 1;
 		}
 		servoLookupGetPos();
