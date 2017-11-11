@@ -26,7 +26,7 @@
 #include "msgDriv.h"
 #include "UartCanMessage.h"
 #include "UartMessage.h"
-
+#include "servo_control_obj.h"
 #if 0
 #include "MachGunPort.h"
 #include "GrenadePort.h"
@@ -967,7 +967,8 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	
 	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf)))  //5.8ǹʽ
 	{  
-		MSGDRIV_send(CMD_ALLSERVO_STOP, 0);
+		if(BIT0(BYTE4(buf)) == 0x00)
+			MSGDRIV_send(CMD_ALLSERVO_STOP, 0);
 		
 		#if 0
 		if(BIT0(BYTE4(buf)) == 0x00)
@@ -1007,6 +1008,9 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT5(BYTE3(FrameBuf1)) != BIT5(BYTE5(buf)))	//ǿʾ
 	{ 
+		if(BIT5(BYTE5(buf)) == 0x01)
+			testliudanqidong();
+	#if 0
 		if(BIT5(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
 		{
 			if(isTimerAlive(eF3_Timer)/*״ֵ̬*/)
@@ -1019,11 +1023,16 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		{
 			startF3_Timer();
 		}
+	#endif
 	}
 	if(BIT4(BYTE3(FrameBuf1)) != BIT4(BYTE5(buf)))	   //F4
 	{   
 		if(BIT4(BYTE5(buf)) == 0x01)
+			testjiqiangqidong();
+		#if 0
+		if(BIT4(BYTE5(buf)) == 0x01)
 			MSGDRIV_send(CMD_MEASURE_DISTANCE_SWITCH,0);
+		#endif
 	}
 	if(BIT3(BYTE3(FrameBuf1)) != BIT3(BYTE5(buf)))	//F5
 	{	
@@ -1048,6 +1057,9 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT2(BYTE3(FrameBuf1)) != BIT2(BYTE5(buf)))	//F6
 	{	
+		if(BIT2(BYTE5(buf)) == 0x01)
+			requstServoContrl();
+		#if 0
 		printf("\n  can parse F6\n");
 		if(BIT2(BYTE5(buf)) == 0x01)
 		{
@@ -1061,6 +1073,7 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		{
 			startF6_Timer();
 		}
+		#endif
 	}
 	if(BIT1(BYTE3(FrameBuf1)) != BIT1(BYTE5(buf)))//shou bing shang zi dong bu huo an jian
 	{    
