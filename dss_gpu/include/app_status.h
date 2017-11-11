@@ -531,7 +531,6 @@ typedef enum
     CMD_TURRETSERVO_MOVESPEED,
     CMD_TURRETSERVO_STOP,
     CMD_ALLSERVO_STOP,
-    CMD_GRE2MACH,
 	//addtion ext cmd mvdetect
     MSGID_EXT_MVDETECT,
     MAX_MSG_NUM,

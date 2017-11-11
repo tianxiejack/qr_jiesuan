@@ -32,8 +32,8 @@ void OSDCTRL_draw_text(Mat frame,OSDCTRL_Handle pCtrlObj)
 	UInt32 frcolor,bgcolor;
 
 
-	if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
-		OSDCTRL_ItemShow(eReady);
+	//if(isBattleMode()&&isStatBattleAuto()&&(isBattleReady()||isAutoReady())&&(isGrenadeGas()||isGrenadeKill()))
+	//	OSDCTRL_ItemShow(eReady);
 	
 	for(i=eModeId;i<eBoreSightLinId;i++)
 	{

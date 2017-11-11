@@ -154,6 +154,7 @@ typedef enum _time_id
 	eSelftoAuto_timer,
 	eShineOne_timer,
 	eGrenade2Mach_timer,
+	eDisplayJiuXu_timer,
 	MAX_TIMER_NUM
 }eTimerId;
 
@@ -331,6 +332,9 @@ void starGrenade2Machtimer();
 void killGrenade2Machtimer();
 void ResetScheduleFx();
 double TurretDeltaHandle();
+void startDisplayJiuXuTimer();
+void killDisplayJiuXutimer();
+
 
 extern Level_one_state gLevel1Mode,gLevel1LastMode;
 extern Level_two_state gLevel2CalibrationState,gLevel2BootUpState,gLevel2BattleState;

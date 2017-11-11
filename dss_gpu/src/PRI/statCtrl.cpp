@@ -39,7 +39,7 @@ bool SCHEDULE_GUN=FALSE,SCHEDULE_RESET=FALSE,SCHEDULE_STRONG=FALSE;
 Derection_Type SHINE_DERECTION=DERECTION_NULL;//DERECTION_DOWN;
 bool isfixingMeasure = FALSE;
 int COUNTER=0;
-
+bool gGrenadeLoadFireFlag = 0;
 static bool MIDPARAMS=FALSE;
 static bool BASEMENU=FALSE;
 static bool CONNECT=FALSE;
@@ -601,7 +601,8 @@ void loadFiringTable_Enter()
 	#endif
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
-		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
+		//setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
+		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getGrenadeAngleAbs());
 	}
 	AimOffsetX = (double)output.AimOffsetX;
 	AimOffsetY = (double)output.AimOffsetY;
@@ -657,19 +658,18 @@ void loadFiringTable_Enter()
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-			MSGDRIV_send(CMD_FIRING_TABLE_LOAD_OK, 0);
-			if(isMachineGun())
+
+			if(isGrenadeKill())
 			{
-				//SendMessage(CMD_MACHSERVO_MOVEOFFSET, output.AimOffsetY-DEGREE2MIL(getGrenadeAngle()));
-				cmd_machservo_moveoffset_tmp = output.AimOffsetY-DEGREE2MIL(getGrenadeAngle());
-				MSGDRIV_send(CMD_MACHSERVO_MOVEOFFSET,&cmd_machservo_moveoffset_tmp);
-			}
-			else
-			{
-				//SendMessage(CMD_GRENADESERVO_MOVEOFFSET, output.AimOffsetX-DEGREE2MIL(getTurretTheta()));
-				cmd_grenadeservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
+				gGrenadeLoadFireFlag = 1;
+				MSGDRIV_send(CMD_FIRING_TABLE_LOAD_OK, 0);
+				cmd_grenadeservo_moveoffset_tmp = Rads2CANValue(MIL2DEGREE(output.AimOffsetY),GRENADE);
 				MSGDRIV_send(CMD_GRENADESERVO_MOVEOFFSET, &cmd_grenadeservo_moveoffset_tmp);
-			}		
+			}
+			
+			//cmd_turretservo_moveoffset_tmp = output.AimOffsetX-DEGREE2MIL(getTurretTheta());
+			//cmd_turretservo_moveoffset_tmp = Rads2CANValue(MIL2DEGREE(output.AimOffsetX),TURRET);
+			//MSGDRIV_send(CMD_TURRETSERVO_MOVEOFFSET, &cmd_turretservo_moveoffset_tmp);
 			return ;
 		}
 		FOVSHINE = TRUE;
@@ -790,10 +790,6 @@ void loadFiringTable()
 		{
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
 
-			//AVTCTRL_ShiftAimOffsetX(output.AimOffsetX);
-			if(isMachineGun())
-				;//AVTCTRL_ShiftAimOffsetY(output.AimOffsetY);
-			
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
 
 			processCMD_FIRING_TABLE_LOAD_OK(0);
@@ -1185,6 +1181,27 @@ void processCMD_MODE_ATTACK_MULTI(LPARAM lParam)
 		gShotType = SHOTTYPE_LONG;
 	return ;
  }
+
+void startDisplayJiuXuTimer()
+{
+	OSDCTRL_ItemShow(eReady);
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eDisplayJiuXu_timer)==eTimer_Stat_Stop)
+	{
+		pCtrlTimer->startTimer(eDisplayJiuXu_timer,2000);	
+	}
+}
+
+void killDisplayJiuXutimer()
+{
+	CTimerCtrl * pCtrlTimer = pTimerObj;
+	if(pCtrlTimer->GetTimerStat(eDisplayJiuXu_timer)!=eTimer_Stat_Stop)
+	{
+		pCtrlTimer->KillTimer(eDisplayJiuXu_timer);
+	}
+	OSDCTRL_ItemHide(eReady);
+}
+
 
 void startSelfCheckVertoAuto()
 {

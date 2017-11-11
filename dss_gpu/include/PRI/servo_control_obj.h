@@ -31,7 +31,7 @@ void processCMD_TURRETSERVO_MOVESPEED(LPARAM lParam);
 void processCMD_TURRETSERVO_STOP(LPARAM lParam);
 void processCMD_ALLSERVO_STOP(LPARAM lParam);
 
-
+int Rads2CANValue(double degree,int id);
 void initAllServos();
 void setServoControlObj();
 extern long cmd_machservo_moveoffset_tmp;
@@ -46,7 +46,6 @@ void teststopserver();
 static void TurretServoStop();
 static void TurretServoMoveSpeed(float xSpeed,float ySpeed);
 static void TurretServoMoveOffset(float xOffset,float yOffset);
-static int Rads2CANValue(double degree,int id);
 void testturdanqidong();
 void Grenade2Mach_cbFxn(long lParam);
 #endif

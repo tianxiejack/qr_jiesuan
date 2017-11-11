@@ -20,7 +20,7 @@ static void MachServoMoveSpeed(float xSpeed, float ySpeed);
 static void GrenadeServoMoveSpeed(float xSpeed, float ySpeed);
 static void MachServoStop();
 static void GrenadeServoStop();
-
+extern bool gGrenadeLoadFireFlag;
 
 static IF_servo_control gMachServoControlObj = {
 	MachServoMoveOffset,
@@ -144,8 +144,9 @@ static char  TestTURPosbuf[] = {0x03,0x42,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x0
 
 long cmd_machservo_moveoffset_tmp = 0;
 long cmd_grenadeservo_moveoffset_tmp = 0;
+long cmd_turretservo_moveoffset_tmp = 0;
 
-static int Rads2CANValue(double degree,int id)
+int Rads2CANValue(double degree,int id)
 {
 	double temp = 0.0;
 	int re = 0;
@@ -483,8 +484,22 @@ void teststopserver()
 
 void Grenade2Mach_cbFxn(long lParam)
 {
-	static double aver1 = 0.0,aver2 = 0.0,aver3 = 0.0;
-	if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL)
+	if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL && gGrenadeLoadFireFlag)
+	{
+		killDisplayJiuXutimer();
+		double tmp = getGrenadeDestTheta() - getGrenadeAngleAbs();
+		if(tmp > 2)
+			getGrenadeServoContrlObj()->moveOffset(1,0);
+		else if(tmp < -2)
+			getGrenadeServoContrlObj()->moveOffset(-1,0);
+		else
+		{
+			gGrenadeLoadFireFlag = 0;
+			//display jiu xu
+			startDisplayJiuXuTimer();
+		}
+	}
+	else if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL)
 	{
 		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() - getMach2GrenadeAngle();
 

@@ -739,11 +739,12 @@ static Int32 APP_onTimer( Int32 timerId )
 		 {
 			ShineOne_cbFxn();
 		 }
-		  
-		  if(timerId == eGrenade2Mach_timer)
+
+		 if(timerId == eDisplayJiuXu_timer)
 		 {	
-			MSGDRIV_send(CMD_GRE2MACH,0);	
+			killDisplayJiuXutimer();
 		 }
+
 
 		 	
     	return OSA_SOK;

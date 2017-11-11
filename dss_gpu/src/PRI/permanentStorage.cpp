@@ -72,6 +72,7 @@ GeneralCorrectionItem gGrenadeGas_GCTable[]=
 ZeroCorrectionItem gMachineGun_ZCTable = {500,	{360,288}};
 ZeroCorrectionItem gGrenadeKill_ZCTable  = {500,{360,288}};//{500,	{352,288}};
 ZeroCorrectionItem gTurret_ZCTable  = {0,{360,288},0};
+double gTurret_DP_Angle = 0.0,gMach_DP_Angle = 0.0,gGrenade_DP_Angle = 0.0;
 WeatherItem gWeatherTable={15,1013250};
 
 

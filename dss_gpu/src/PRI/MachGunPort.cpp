@@ -60,7 +60,7 @@ void killSelfCheckMachGunAngleTimer()
 void SelfCheckMachGunAngleTimer_cbFxn(void* cbParam)
 {
 	killSelfCheckMachGunAngleTimer();
-	printf("CMD_MACHINEGUN_SENSOR_ERR\n\n");
+	//printf("CMD_MACHINEGUN_SENSOR_ERR\n\n");
 	MSGDRIV_send(CMD_MACHINEGUN_SENSOR_ERR,0);
 }
 
@@ -91,7 +91,7 @@ double getMachGunAngleAbs()
 
 double getMach2GrenadeAngle()
 {
-	return (gGrenadeKill_ZCTable.Angle -gMachineGun_ZCTable.Angle );
+	return (gGrenade_DP_Angle -gMach_DP_Angle);
 }
 
 double getMachGunAngle()

@@ -80,6 +80,7 @@ extern GeneralCorrectionItem gGrenadeGas_GCTable[];
 extern ZeroCorrectionItem gMachineGun_ZCTable;
 extern ZeroCorrectionItem gGrenadeKill_ZCTable;
 extern ZeroCorrectionItem gTurret_ZCTable;
+extern double gTurret_DP_Angle,gMach_DP_Angle,gGrenade_DP_Angle;
 
 int getGrenadeSize();
 int getGrenadeGasSize();

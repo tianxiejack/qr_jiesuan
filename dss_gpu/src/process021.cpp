@@ -2448,9 +2448,6 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_FOVSTAT,                   MSGAPI_inputfovchange,               0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_SEARCHMOD,             MSGAPI_inputsearchmod,              0);
     MSGDRIV_attachMsgFun(handle,    MSGID_EXT_INPUT_VIDEOEN,            	   MSGAPI_inputvideotect,                 0);
-
-  //  MSGDRIV_attachMsgFun(handle,    CMD_GRE2MACH,            	   Grenade2Mach_cbFxn,                 0);
-
 //add function
     MSGDRIV_attachMsgFun(handle,	MSGID_SYS_RESET,                                     MSGAPI_reset_device,	           0);
 #if 0
@@ -2568,7 +2565,7 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_ADCALIBMENU_SWITCH,				processCMD_ADCALIBMENU_SWITCH,		0);
 
 	
-    MSGDRIV_attachMsgFun(handle,	CMD_SENSOR_SWITCH,					processCMD_SENSOR_SWITCH,		0); //F6
+    MSGDRIV_attachMsgFun(handle,	CMD_SENSOR_SWITCH,						processCMD_SENSOR_SWITCH,		0); //F6
     MSGDRIV_attachMsgFun(handle,	CMD_CONNECT_SWITCH,					processCMD_CONNECT_SWITCH,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7F6
     
     MSGDRIV_attachMsgFun(handle,	CMD_IDENTIFY_KILL,						processCMD_IDENTIFY_KILL,		0); //\u951f\u65a4\u62f7\u951f\u65a4\u62f7\u951f\u7ede\u6485\u62f7\u951f\u8f83\u247d\u72f5ILL
@@ -2584,8 +2581,8 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_MOVESPEED,			processCMD_GRENADESERVO_MOVESPEED,	0); //\u951f\u65a4\u62f7\u951f\u811a\u51e4\u62f7\u951f\u52ab\u5ea6\u5321\u62f7\u951f\u65a4\u62f7
     MSGDRIV_attachMsgFun(handle,	CMD_GRENADESERVO_STOP,					processCMD_GRENADESERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
     MSGDRIV_attachMsgFun(handle,	CMD_TURRETSERVO_STOP,					processCMD_TURRETSERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
-    MSGDRIV_attachMsgFun(handle,	CMD_ALLSERVO_STOP,					processCMD_TURRETSERVO_STOP,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
-
+    MSGDRIV_attachMsgFun(handle,	CMD_ALLSERVO_STOP,						processCMD_ALLSERVO_STOP,			0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
+    MSGDRIV_attachMsgFun(handle,	CMD_TURRETSERVO_MOVEOFFSET,			processCMD_TURRETSERVO_MOVEOFFSET,	0); //\u951f\u65a4\u62f7\u67aa\u951f\u811a\u51e4\u62f7\u505c\u6b62
 	
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_CLOSE,				processCMD_LIHEQI_CLOSE,	0);
     MSGDRIV_attachMsgFun(handle,	CMD_LIHEQI_OPEN,				processCMD_LIHEQI_OPEN,	0);
@@ -3903,7 +3900,8 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 					Posd[eLwOrGen] = DynamicOsd[7];
 				else
 					Posd[eLwOrGen] = DynamicOsd[6];
-				OSDCTRL_ItemShow(eLwOrGen);	
+				OSDCTRL_ItemShow(eLwOrGen);
+				killDisplayJiuXutimer();
 			}
 			else
 			{
@@ -4193,9 +4191,13 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			{
 				if(menu_jiancha_flag)
 				{
-					gTurret_ZCTable.Angle = getTurretTheta();
-					gMachineGun_ZCTable.Angle = getMachGunAngleAbs();
-					gGrenadeKill_ZCTable.Angle = getGrenadeAngleAbs();
+					//gTurret_ZCTable.Angle = getTurretTheta();
+					//gMachineGun_ZCTable.Angle = getMachGunAngleAbs();
+					//gGrenadeKill_ZCTable.Angle = getGrenadeAngleAbs();
+
+					gTurret_DP_Angle = getTurretTheta();
+					gMach_DP_Angle = getMachGunAngleAbs();
+					gGrenade_DP_Angle = getGrenadeAngleAbs();
 				}
 			}
 			//gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;

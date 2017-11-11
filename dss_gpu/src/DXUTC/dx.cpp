@@ -1567,6 +1567,9 @@ void button_to_save()
 	CFGID_CONFIG_SETSAVE(CFGID_Kill_ZC_Angle,         		(int)(gGrenadeKill_ZCTable.Angle*100));
 
 	CFGID_CONFIG_SETSAVE(CFGID_TURRET_ZC_Angle,        	(int)(gTurret_ZCTable.Angle*100));
+	CFGID_CONFIG_SETSAVE(CFGID_TURRET_DP_Angle,        	(int)(gTurret_DP_Angle*100));
+	CFGID_CONFIG_SETSAVE(CFGID_MACH_DP_Angle,        	(int)(gMach_DP_Angle*100));
+	CFGID_CONFIG_SETSAVE(CFGID_GRENADE_DP_Angle,        	(int)(gGrenade_DP_Angle*100));
 
 
 	CFGID_CONFIG_SETSAVE(CFGID_Weather_Temparature,   	gWeatherTable.Temparature);
@@ -1634,6 +1637,9 @@ void button_to_read()
 	CCD_Small[1] = gDXD_info.sysConfig[CFGID_CCD_SMALL1];
 
 	gTurret_ZCTable.Angle = gDXD_info.sysConfig[CFGID_TURRET_ZC_Angle]*0.01;
+	gTurret_DP_Angle = gDXD_info.sysConfig[CFGID_TURRET_DP_Angle]*0.01;
+	gMach_DP_Angle   = gDXD_info.sysConfig[CFGID_MACH_DP_Angle]*0.01;
+	gGrenade_DP_Angle  = gDXD_info.sysConfig[CFGID_GRENADE_DP_Angle]*0.01;
 
 	
 	//printf("gMachineGun_ZCTable.distance = %f\n\n",gMachineGun_ZCTable.distance);
