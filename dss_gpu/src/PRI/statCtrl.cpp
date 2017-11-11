@@ -1344,7 +1344,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 				TurretDone = 1;
 		}
 		#endif
-		#if 0 //liu dan  oK
+		#if 1 //liu dan  oK
 		if(guiling && gGrenadeGetPos==0) 
 		{
 			x = -(getGrenadeAngleAbs());
@@ -1355,7 +1355,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		}
 		#endif
 		
-		#if 0  // MACH  OK
+		#if 1 // MACH  OK
 		if(guiling && gMachGetPos==0 ) 
 		{
 			y = (getMachGunAngleAbs());
@@ -1365,8 +1365,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 				machDone = 1;
 		}
 		#endif
-		machDone = 1;
-		grenadeDone = 1;
+
 		if(((machDone&&grenadeDone&&TurretDone)||(60<COUNTER)) && guiling)
 		{
 			killSCHEDULEtimer();
@@ -1380,8 +1379,8 @@ void SCHEDULE_cbFxn(void* cbParam)
 		if(!guiling)
 		{
 			delta1ZFflag = 0;
-			//x = -(getGrenadeAngleAbs());
-			//y = (getMachGunAngleAbs());
+			x = -(getGrenadeAngleAbs());
+			y = (getMachGunAngleAbs());
 			delta1 = (getTurretThetaDelta());
 		
 			if(delta1< 0)
@@ -1403,8 +1402,9 @@ void SCHEDULE_cbFxn(void* cbParam)
 				z = -z;
 			else if(abs(z - delta2) < 0.01 && delta1ZFflag)
 				z = -z;		
-			//getGrenadeServoContrlObj()->moveOffset(x,0);
-			getMachGunServoContrlObj()->moveOffset(z,0);
+			
+			getGrenadeServoContrlObj()->moveOffset(x,0);
+			getMachGunServoContrlObj()->moveOffset(z,y);
 			guiling = 1;
 		}
 		servoLookupGetPos();
