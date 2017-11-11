@@ -555,8 +555,8 @@ int Process_grenade(struct RS422_data * pRS422_data)
 				printf(" about the GrenadeAngle  !!!!!! positive=%d angle=%d  \n", positive, angle);
 #endif
 				tmp = positive*angle*0.01;
-				
-				if(tmp >= -5 && tmp <= 75)
+				//printf("tmp = %f\n",tmp);			
+				if(tmp >= -10 && tmp <= 84)
 					GrenadeAngle = tmp;
 
 				if(!bGrenadeSensorOK())

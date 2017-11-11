@@ -60,7 +60,7 @@ int NetPort_ParseByte(unsigned char* buf);
 void * SPI_CAN_process(void * prm);
 int CanPort_parseByte(unsigned char* buf );
 void *self_memcpy(void *__dest, __const void *__src, int __n);
-
+void * SPI_CAN_Send40(void * prm);
 
 
 #ifdef __cplusplus

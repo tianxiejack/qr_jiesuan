@@ -483,12 +483,28 @@ void teststopserver()
 
 void Grenade2Mach_cbFxn(long lParam)
 {
-	double tmp = getGrenadeAngleAbs() - getMachGunAngleAbs();
-	if(tmp > 0.3)
+	static double aver1 = 0.0,aver2 = 0.0,aver3 = 0.0;
+	if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL)
 	{
-		requstServoContrl();
-		getGrenadeServoContrlObj()->moveOffset(tmp,0);
-		releaseServoContrl();
+		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs();
+		printf("\n____________________________________________\n");	
+		printf("Mach angle = %f\n ",getMachGunAngleAbs());
+		printf("Grenade angle = %f\n ",getGrenadeAngleAbs());	
+		printf("\n____________________________________________\n");	
+		if(tmp > 1)
+		{
+			//if(tmp > 2)
+				getGrenadeServoContrlObj()->moveOffset(1,0);
+			//else
+			//	getGrenadeServoContrlObj()->moveOffset(0.5,0);
+		}
+		else if(tmp < -1)
+		{
+		 	//if(tmp < -2)
+				getGrenadeServoContrlObj()->moveOffset(-1,0);
+			//else
+			//	getGrenadeServoContrlObj()->moveOffset(-0.5,0);
+		}
 	}
 	return ;
 }

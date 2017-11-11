@@ -26,7 +26,7 @@
 
 #include "UartCanMessage.h"
 #include "record_log.h"
-
+#include "servo_control_obj.h"
 
 #define SIZE		1024
 
@@ -62,6 +62,7 @@ unsigned int MtdAlg_stat;
 static OSA_ThrHndl spi1ThrHandl;
 static OSA_ThrHndl spi2ThrHandl;
 static OSA_ThrHndl spi3ThrHandl;
+static OSA_ThrHndl CanSend40msHandl;
 
 struct RS422_data RS422_ROTER_buff;  //0
 struct RS422_data RS422_DECODE_buff; //1
@@ -2822,7 +2823,8 @@ void * SPI_CAN_process(void * prm)
 		int canfd = 0;
 		int haveData=0;
 
-		
+		int status =-1;
+		#if 0
 		init_record_log(record_log_roter,    "/config/log/record_log_roter.txt");
 		init_record_log(record_log_decode, "/config/log/record_log_decode.txt");
 		init_record_log(record_log_bak2,    "/config/log/record_log_bak2.txt");
@@ -2833,11 +2835,21 @@ void * SPI_CAN_process(void * prm)
 		init_record_log(record_log_hcode,   "/config/log/record_log_hcode.txt");
 		init_record_log(record_log_can,      "/config/log/record_log_can.txt");
 		init_record_log(record_log_can_send,      "/config/log/record_log_can_send.txt");								
-
+		#endif
 		InitDevice_spi();
 		
 		OpenCANDevice();
-
+		
+		
+		status = OSA_thrCreate(
+					&CanSend40msHandl,
+					SPI_CAN_Send40,
+					0,
+					0,
+					prm
+				);
+		OSA_assert(status==OSA_SOK);
+		
 		canfd = GetCanfd();
 
 		while(1)
@@ -3055,7 +3067,21 @@ int BAK2Port_parseByte(unsigned char * buf)
 		return 0;
 }
 
+void * SPI_CAN_Send40(void * prm)
+{
+	struct timeval timeout;
 
+	while(1)
+	{
+		timeout.tv_sec = 0;
+		timeout.tv_usec = 22000;
+
+		select(0,NULL,NULL,NULL,&timeout);
+		// check the mach and grenade
+		Grenade2Mach_cbFxn(0);
+	}
+	return NULL;
+}
 
 
 

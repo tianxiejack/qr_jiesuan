@@ -15,7 +15,6 @@
 
 
 //extern  Multich_graphic grpxChWinPrms;
-
 #if 0
 static GrenadePort_t GrenadeObj;
 SYSTRC_Handle pSysTrcObj= NULL;
