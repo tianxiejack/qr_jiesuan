@@ -3074,7 +3074,7 @@ void * SPI_CAN_Send40(void * prm)
 	while(1)
 	{
 		timeout.tv_sec = 0;
-		timeout.tv_usec = 22000;
+		timeout.tv_usec = 40000;
 
 		select(0,NULL,NULL,NULL,&timeout);
 		// check the mach and grenade

@@ -31,7 +31,7 @@ int getAverageDipVelocity(double* value);
 void SelfCheckMachGunAngleTimer_cbFxn(void* cbParam);
 void startSelfCheckMachGunAngle_Timer();
 void killSelfCheckMachGunAngleTimer();
-
+double getMach2GrenadeAngle();
 
 extern C_Thetas MachGunAngle;
 

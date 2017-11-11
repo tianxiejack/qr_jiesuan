@@ -486,19 +486,22 @@ void Grenade2Mach_cbFxn(long lParam)
 	static double aver1 = 0.0,aver2 = 0.0,aver3 = 0.0;
 	if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL)
 	{
-		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs();
+		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() - getMach2GrenadeAngle();
+
+		#if 0
 		printf("\n____________________________________________\n");	
 		printf("Mach angle = %f\n ",getMachGunAngleAbs());
 		printf("Grenade angle = %f\n ",getGrenadeAngleAbs());	
 		printf("\n____________________________________________\n");	
-		if(tmp > 1)
+		#endif
+		if(tmp > 2)		//when >1   will swing
 		{
 			//if(tmp > 2)
 				getGrenadeServoContrlObj()->moveOffset(1,0);
 			//else
 			//	getGrenadeServoContrlObj()->moveOffset(0.5,0);
 		}
-		else if(tmp < -1)
+		else if(tmp < -2)
 		{
 		 	//if(tmp < -2)
 				getGrenadeServoContrlObj()->moveOffset(-1,0);

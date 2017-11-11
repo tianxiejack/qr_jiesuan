@@ -89,6 +89,11 @@ double getMachGunAngleAbs()
 	return MachGunAngle.theta;
 }
 
+double getMach2GrenadeAngle()
+{
+	return (gGrenadeKill_ZCTable.Angle -gMachineGun_ZCTable.Angle );
+}
+
 double getMachGunAngle()
 {
 	return MachGunAngle.theta - gMachineGun_ZCTable.Angle;

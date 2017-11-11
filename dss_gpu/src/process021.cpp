@@ -4194,8 +4194,8 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 				if(menu_jiancha_flag)
 				{
 					gTurret_ZCTable.Angle = getTurretTheta();
-					gMachineGun_ZCTable.Angle = getMachGunAngle();
-					gGrenadeKill_ZCTable.Angle = getGrenadeAngle();
+					gMachineGun_ZCTable.Angle = getMachGunAngleAbs();
+					gGrenadeKill_ZCTable.Angle = getGrenadeAngleAbs();
 				}
 			}
 			//gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
