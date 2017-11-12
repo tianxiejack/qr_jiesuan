@@ -125,7 +125,7 @@ void FOVCTRL_erase_draw(Mat frame,HANDLE hFov)
 	if(cthis->drawflag & (1<<6))
 		DrawjsAlertFrame(frame,cthis);
 	if(cthis->drawflag & (1<<7))
-		DrawjsAngleFrame(frame,cthis,cthis->last_angle);
+		DrawjsAngleFrame(frame,cthis,0);
 	if(cthis->drawflag & (1<<8))
 		DrawjsLittleCross(frame,cthis);
 	if(cthis->drawflag & (1<<9))
@@ -152,10 +152,6 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 	cthis->drawflag = 0;
 	cthis->last_angle = 0;
 	cthis->fovdraw = 1;
- 	
-	cthis->last_angle = getGrenadeAngle()-getMachGunAngle();
-	DrawjsAngleFrame(frame,cthis,cthis->last_angle);
-	cthis->drawflag |= 1<<7;
 
 	if(DrawInDrawopen)
 	{
@@ -208,20 +204,12 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 				cthis->fovbig = 1;
 				DrawjsBigFovCross(frame, cthis);
 				cthis->drawflag |= 1<<10;
-			}
-				
-		}
-		else if(isStatBattleAlert())
-		{
-			
-		}
-		
+			}			
+		}	
 	}
-	else
-	{
-		
-		
-	}
+
+	DrawjsAngleFrame(frame,cthis,getGrenadeAngleAbs()-getMachGunAngleAbs());
+	cthis->drawflag |= 1<<7;
 		
 	if(/*isFovShine() && */(((shin++)%6)<3) )//yue jie kuang
 	{
@@ -250,16 +238,6 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 		static int i=0;
 		DrawjsAlertFrame(frame,cthis);
 		cthis->drawflag |= 1<<6;
-		
-		#if 0
-			if((i++)%8 == 0)
-				FOVCTRL_clearAlertMovingAim(hFov,pImg);
-			else
-				FOVCTRL_drawAlertMovingAim(hFov,pImg);
-		#endif
-//		FOVCTRL_drawAimBolder(hFov, pImg, 5,-5,32,32);
 	}
-
-	//FOVSYMBOL_drawTrk(handle,pImg);
 }
 

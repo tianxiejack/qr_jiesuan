@@ -791,19 +791,28 @@ void DrawjsAngleFrame(Mat frame,CFOV * fovOsdCtrl,double angle)
 	end.y = start.y;
 	DrawcvLine(frame,&start,&end,cthis->frcolor,linew);
 
-	if(isFovSmall())
+	if(cthis->fovdraw)
 	{
-		angle = angle/FOVDEGREE_HSMALL*200;
-		angle = (angle<200)?angle:200;
-		angle = (angle>-200)?angle:-200;
+		if(isFovSmall())
+		{
+			cthis->fovbig = 0;
+			angle = angle/FOVDEGREE_HSMALL*200;
+			angle = (angle<200)?angle:200;
+			angle = (angle>-200)?angle:-200;
+		}
+		else
+		{
+			cthis->fovbig = 1;
+			angle = angle/FOVDEGREE_HLARGE*200;
+			angle = (angle<200)?angle:200;
+			angle = (angle>-200)?angle:-200;
+		}
+		cthis->last_angle = angle;
 	}
 	else
-	{
-		angle = angle/FOVDEGREE_HLARGE*200;
-		angle = (angle<200)?angle:200;
-		angle = (angle>-200)?angle:-200;
-	}
+		angle = cthis->last_angle;
 
+	
 	start.x = 670 ;
 	start.y = 285-angle + 5 ;
 	end.x = start.x+25;

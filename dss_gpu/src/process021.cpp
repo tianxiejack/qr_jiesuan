@@ -2630,7 +2630,7 @@ void CProcess021::msgdriv_event(MSG_PROC_ID msgId, void *prm)
 	//	pIStuts->SensorStat = (pIStuts->SensorStat + 1)%eSen_Max;
 	sThis->msgdriv_event(MSGID_EXT_INPUT_SENSOR,NULL);
 	#endif
-	OSA_printf("%s,line:%d ... MSGAPI_inputsensor!",__func__,__LINE__);
+	//OSA_printf("%s,line:%d ... MSGAPI_inputsensor!",__func__,__LINE__);
 	return ;
 }
 

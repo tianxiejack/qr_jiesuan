@@ -67,7 +67,7 @@ typedef struct _fov_ctrl
 	bool fovdraw;	// 1-drawing 0-erasing
 	int lastStepGap ;  // Ruler step
 	int lastLen;		//Ruler Len --1 mil
-	unsigned int drawflag ;		
+	unsigned int drawflag ;	//confirm the kinds of something that have drawed		
 	double last_angle;
 /*	
 
