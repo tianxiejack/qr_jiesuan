@@ -651,6 +651,10 @@ void OSDCTRL_ItemShine(int Id)
 	ShinId = Id;
 	if(ShinId == eMeasureDis)
 		shine_table[0] = eMeasureType;
+
+	OSDCTRL_ItemShow(ShinId);
+	if(shine_table[0])
+		OSDCTRL_ItemShow(eMeasureType);
 }
 
 void OSDCTRL_BattleShow()
