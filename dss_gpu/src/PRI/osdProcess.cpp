@@ -186,7 +186,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eMeasureDis_Value4,	eOsd_Disp,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	468+LOFFSET,	30,	0,	{0}},
 	*/
 	{eLaserState,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	350+LOFFSET,		30,	0,	{0}},
-	{eSuperOrder,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	610+LOFFSET,		436,	0,	{0}},
+	{eSuperOrder,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	606+LOFFSET,		436,	0,	{0}},
 	{eErrorZone,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		436,	0,	{0}},
 	{eWeather1,		eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420+LOFFSET+WOFFSET,		470,	0,	{0}},
 	{eWeather1_T,	eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	479+LOFFSET+WOFFSET,		470,	0,	{0}},
@@ -425,7 +425,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eReady,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
 
 	{eGuiling,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	300,				70,	0,	{0}},
-	{eLwOrGen,			eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180,		500,	0,	{0}},
+	{eLwOrGen,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180,		500,	0,	{0}},
 };
 
 volatile FONT_OBJ g_Font={NULL,WHITECOLOR,1,0,0,0,NULL};
@@ -496,7 +496,7 @@ static void OSDCTRL_OsdInitial()
 	
 	//sprintf(DynamicOsd[0],"%c%c%c%c",221,185,205,229);//QI DONG JIE SUO
 	sprintf(DynamicOsd[0],"35%c%c%c",211,205,229);	  //35liu jie suo
-	sprintf(DynamicOsd[1],"%c%c%c%c",209,239,205,229);//LING WEI JIE SUO
+	sprintf(DynamicOsd[1],"%c%c%c%c",140,209,205,229);//GUI LIN JIE SUO
 	sprintf(DynamicOsd[2],"%c%c%c%c",179,202,245,183);//CE JU YI CHANG
 	sprintf(DynamicOsd[3],"%c%c%c%c",179,231,188,232);//CE SU DUAN SHI
 	sprintf(DynamicOsd[4],"%c%c%c%c",235,236,205,229);//TIAO TA JIE SUO

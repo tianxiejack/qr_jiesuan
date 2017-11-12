@@ -11,8 +11,7 @@
 #include "UartMessage.h"
 #include "GrenadePort.h"
 #include "MachGunPort.h"
-//#include "dramMsgDef.h"
-//#include "main.h"
+#include "osdProcess.h"
 
 static void MachServoMoveOffset(float xOffset, float yOffset);
 static void GrenadeServoMoveOffset(float xOffset, float yOffset);
@@ -496,6 +495,7 @@ void Grenade2Mach_cbFxn(long lParam)
 		{
 			gGrenadeLoadFireFlag = 0;
 			//display jiu xu
+			OSDCTRL_ItemShow(eReady);
 			startDisplayJiuXuTimer();
 		}
 	}

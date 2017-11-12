@@ -17,7 +17,7 @@
 #include "osdProcess.h"
 #include "UartCanMessage.h"
 
-static bool guiling = 0;
+bool guiling = 0;
 float FOVSIZE_V=FOVDEGREE_VLARGE, FOVSIZE_H=FOVDEGREE_HLARGE;
 Level_one_state gLevel1Mode = MODE_BOOT_UP,gLevel1LastMode = MODE_BATTLE;
 Level_two_state gLevel2BattleState = STATE_BATTLE_AUTO, gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU,
@@ -1184,7 +1184,6 @@ void processCMD_MODE_ATTACK_MULTI(LPARAM lParam)
 
 void startDisplayJiuXuTimer()
 {
-	OSDCTRL_ItemShow(eReady);
 	CTimerCtrl * pCtrlTimer = pTimerObj;
 	if(pCtrlTimer->GetTimerStat(eDisplayJiuXu_timer)==eTimer_Stat_Stop)
 	{
@@ -1199,7 +1198,6 @@ void killDisplayJiuXutimer()
 	{
 		pCtrlTimer->KillTimer(eDisplayJiuXu_timer);
 	}
-	OSDCTRL_ItemHide(eReady);
 }
 
 
@@ -1382,18 +1380,22 @@ void SCHEDULE_cbFxn(void* cbParam)
 		}
 		#endif
 
-		if(((machDone&&grenadeDone&&TurretDone)||(60<COUNTER)) && guiling)
+		if(((machDone&&grenadeDone&&TurretDone)||(600000<COUNTER)) && guiling)
 		{
 			killSCHEDULEtimer();
 			releaseServoContrl();
 			SCHEDULE_RESET = FALSE;
-			OSDCTRL_ItemHide(eSuperOrder);
+			OSDCTRL_NoShineShow();
+			startDisplayJiuXuTimer();
 			guiling = 0;
 			return;
 		}
 
 		if(!guiling)
 		{
+			TurretDone = 0;
+			machDone = 0;
+			grenadeDone =0;
 			x = -(getGrenadeAngleAbs());
 			y = (getMachGunAngleAbs());	
 			z = TurretDeltaHandle();			

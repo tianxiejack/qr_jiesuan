@@ -743,6 +743,10 @@ static Int32 APP_onTimer( Int32 timerId )
 		 if(timerId == eDisplayJiuXu_timer)
 		 {	
 			killDisplayJiuXutimer();
+			if(OSDCTRL_IsOsdDisplay(eReady))
+				OSDCTRL_ItemHide(eReady);
+			else if(OSDCTRL_IsOsdDisplay(eSuperOrder))
+				OSDCTRL_ItemHide(eSuperOrder);
 		 }
 
 

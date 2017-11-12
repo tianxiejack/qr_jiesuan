@@ -142,9 +142,9 @@ typedef enum _time_id
 	eF2_Timer,
 	eFxbutton_Timer,
 	eDipAngle_Timer,
-	eOSD_shine_Timer	,					// the max of the timer number  is 0x20
+	eOSD_shine_Timer	,					
 	ePosAngle_Timer,
-	eMachGunAngle_Timer,
+	eMachGunAngle_Timer,					
 	eGrenadeAngle_Timer,
 	ePosServo_Timer,
 	eMachGunServo_Timer,
@@ -154,7 +154,7 @@ typedef enum _time_id
 	eSelftoAuto_timer,
 	eShineOne_timer,
 	eGrenade2Mach_timer,
-	eDisplayJiuXu_timer,
+	eDisplayJiuXu_timer,				//display 2s
 	MAX_TIMER_NUM
 }eTimerId;
 

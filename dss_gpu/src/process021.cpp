@@ -35,6 +35,7 @@ using namespace cv;
 //extern OSDCTRL_Handle pOsdCtrlObj;
 bool LwOrGenflag = 0;
 extern OSDCTRL_Handle pCtrlObj;
+extern bool guiling;
 int msgEraseId = 0;
 OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 OSDCTRL_Handle pCtrlObjLocal = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
@@ -3725,6 +3726,16 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 		if(OSDCTRL_IsOsdDisplay(eDynamicZone))
 			OSDCTRL_ItemHide(eDynamicZone);
 	}
+
+	if(SCHEDULE_RESET)	//tui chu gui ling
+	{
+		killSCHEDULEtimer();
+		SCHEDULE_RESET = FALSE;
+		OSDCTRL_NoShine();
+		guiling = 0;
+	}
+	if(OSDCTRL_IsOsdDisplay(eLwOrGen) && isBattleMode())
+		OSDCTRL_ItemHide(eLwOrGen);
 	
  	releaseServoContrl();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_UNLOCK",__func__,__LINE__);
@@ -4230,10 +4241,11 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 	{	
 		if(tiaolingwei_flag)
 		{	
-			//OSDCTRL_NoShine();
 			OSDCTRL_ItemHide(eGuiling);
 			Posd[eSuperOrder] = SuperOsd[2];
-			OSDCTRL_ItemShow(eSuperOrder);
+			OSDCTRL_ItemShine(eSuperOrder);
+			Posd[eLwOrGen] = DynamicOsd[1];
+			OSDCTRL_ItemShow(eLwOrGen);
 			requstServoContrl();
 			COUNTER = 0;
 			SCHEDULE_RESET = TRUE;
