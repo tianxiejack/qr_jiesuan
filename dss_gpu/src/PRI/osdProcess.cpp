@@ -690,7 +690,6 @@ void OSDCTRL_CalibMenuShow()
 	{
 		OSDCTRL_ItemShow(i);
 	}
-	Posd[eSaveYesNo] = SaveYesNoOsd[1];
 	for(i=eCursorX; i<=eSaveYesNo; i++)
 	{
 		OSDCTRL_ItemShow(i);
@@ -716,8 +715,8 @@ void OSDCTRL_CalibMenuShow()
 		OSDCTRL_ItemHide(eCalibMenu_Horizen);
 		OSDCTRL_ItemHide(eCalibMenu_Laser);
 	}
-	
-
+	if(!isCalibrationSave())
+		Posd[eSaveYesNo] = SaveYesNoOsd[1];
 	OSDCTRL_NoShine();
 	//OSDCTRL_AlgSelect();
 	OSDCTRL_updateMainMenu(getProjectileType());
@@ -726,12 +725,9 @@ void OSDCTRL_CalibMenuShow()
 
 void OSDCTRL_CalibSaveShow()
 {
-#if 1
 	OSDCTRL_CalibMenuShow();
-	OSDCTRL_ItemShow(eSaveYesNo);
 	OSDCTRL_ItemShine(eSaveYesNo);
 	Posd[eWorkMode] = WorkOsd[wCalibration];
-#endif
 }
 
 void OSDCTRL_CalibGenPramMenu0Show()

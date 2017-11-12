@@ -3936,9 +3936,14 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 		if(isCalibrationMainMenu())
 		{
 			//do nothing
+			if(isXatSave())
+			{
+				Posd[eSaveYesNo] = SaveYesNoOsd[1];
+				processCMD_CALIBRATION_SWITCH_TO_SAVE(0);
+			}
 			if(4 == getXPosition())
 			{
-				decreaseAdvancedMenu();
+				//decreaseAdvancedMenu();
 			}
 		}
 		else if(isCalibrationZero())
@@ -3983,10 +3988,10 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 					break;
 			}
 		}
-		else if(isCalibrationSave())
-		{
-			changeSaveOption();
-		}
+		//else if(isCalibrationSave())
+		//{
+		//	changeSaveOption();
+		//}
 	}
 	else if(isBattleMode())
 	{
@@ -4012,11 +4017,12 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 			if(isXatSave())
 			{
 				Posd[eSaveYesNo] = SaveYesNoOsd[0];
-				processCMD_CALIBRATION_SWITCH_TO_SAVE(0);	
+				//processCMD_CALIBRATION_SWITCH_TO_SAVE(0);
+				MSGDRIV_send(CMD_CALIBRATION_SWITCH_TO_SAVE, 0);
 			}
 			else if(4 == getXPosition())
 			{
-				increaseAdvancedMenu();
+				//increaseAdvancedMenu();
 			}
 		}
 		else if(isCalibrationZero())
@@ -4070,10 +4076,10 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 		{
 			menu_jiancha_flag = !menu_jiancha_flag;
 		}
-		else if(isCalibrationSave())
-		{
-			changeSaveOption();
-		}
+		//else if(isCalibrationSave())
+		//{
+		//	changeSaveOption();
+		//}
 	}
 	else if(isBattleMode())
 	{
