@@ -4332,6 +4332,8 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 	Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
 	//gProjectileType = (PROJECTILE_TYPE)(PROJECTILE_BULLET+5);
 	//Posd[eGunTip] = GunOsd[5];
+	if(DistanceManual < 100)
+		DistanceManual = 100;
 	EnterCMD_BULLET_SWITCH1();
 	return ;
  }
@@ -4347,6 +4349,8 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
+	if(DistanceManual < 100)
+		DistanceManual = 100;
  	EnterCMD_BULLET_SWITCH2();
 	return ;
  }
