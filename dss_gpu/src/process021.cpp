@@ -4474,29 +4474,28 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 		gMeasureType =(DIS_MEASURE_TYPE)(MEASURETYPE_MANUAL - gMeasureType);
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
 		
-		if(MEASURETYPE_MANUAL == gMeasureType &&  isCalibrationZero())
+		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
-			OSDCTRL_ItemShine(eMeasureDis);
+			if(isCalibrationZero())
+			{
+				OSDCTRL_ItemShine(eMeasureDis);
+				finish_laser_measure = 0;
+			}
+			else
+				OSDCTRL_ItemShow(eMeasureDis);
 			isfixingMeasure = TRUE;
-			finish_laser_measure = 0;
 		}
-		else if(MEASURETYPE_LASER == gMeasureType && isCalibrationZero())
+		else if(MEASURETYPE_LASER == gMeasureType)
 		{
-			OSDCTRL_ItemShine(eMeasureDis);
+			if(isCalibrationZero())
+				OSDCTRL_ItemShine(eMeasureDis);
+			else
+				OSDCTRL_ItemHide(eMeasureDis);
 			isfixingMeasure = FALSE;
 		}
-		else if(MEASURETYPE_MANUAL == gMeasureType)
-			isfixingMeasure = TRUE;
-		else
-			isfixingMeasure = FALSE;
 
 		if(!isMeasureManual() && DrawInDrawopen)
 			DrawInDraw_open_close();	
-		
-		if(isMeasureManual())
-			OSDCTRL_ItemShow(eMeasureDis);
-		else
-			OSDCTRL_ItemHide(eMeasureDis);
 		
 	}
  	return ;
