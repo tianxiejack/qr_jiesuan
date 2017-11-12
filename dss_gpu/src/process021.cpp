@@ -35,7 +35,6 @@ using namespace cv;
 //extern OSDCTRL_Handle pOsdCtrlObj;
 bool LwOrGenflag = 0;
 extern OSDCTRL_Handle pCtrlObj;
-extern bool guiling;
 int msgEraseId = 0;
 OSDCTRL_Handle pCtrlObjbefore = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
 OSDCTRL_Handle pCtrlObjLocal = (OSDCTRL_OBJ *)OSA_memAlloc(sizeof(OSDCTRL_OBJ));
@@ -45,7 +44,7 @@ FOVCTRL_Handle  pFovCtrlLocal = (FOVCTRL_OBJ *)OSA_memAlloc(sizeof(FOVCTRL_OBJ))
 
 int n=0,m=0,ShinId=eCalibGeneral_XPole;
 int shine_table[10] = {0};
-
+static bool gLocalCalcShowflag=FALSE;	//TURE ---show   FALSE---hide
 extern bool isMaintPortOpen;
 
 UInt32 interfaceflag;
@@ -3677,6 +3676,12 @@ void CProcess021::processCMD_BUTTON_QUIT(LPARAM lParam)
 	{
 		ResetScheduleFx();
 	}
+	if(gLocalCalcShowflag)
+	{
+		OSDCTRL_CalcNumHide();
+		gLocalCalcShowflag = 0;
+	}
+	
 	teststopserver();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_QUIT",__func__,__LINE__);
 	return ;
@@ -3729,10 +3734,7 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 
 	if(SCHEDULE_RESET)	//tui chu gui ling
 	{
-		killSCHEDULEtimer();
-		SCHEDULE_RESET = FALSE;
-		OSDCTRL_NoShine();
-		guiling = 0;
+		ResetScheduleFx();
 	}
 	if(OSDCTRL_IsOsdDisplay(eLwOrGen) && isBattleMode())
 		OSDCTRL_ItemHide(eLwOrGen);
@@ -5034,14 +5036,8 @@ void CProcess021::processCMD_GRENADE_LOAD_IN_POSITION(LPARAM lParam)
 
 void CProcess021::processCMD_CALCNUM_SHOW(LPARAM lParam)
  {
- 	static BOOL ENHANCE=FALSE;
-	ENHANCE = !ENHANCE;
-
-	if(ENHANCE)
-		OSDCTRL_CalcNumShow();
-	else
-		OSDCTRL_CalcNumHide();
-	
+ 	gLocalCalcShowflag = TRUE;
+	OSDCTRL_CalcNumShow();
 	return ;
  }
 

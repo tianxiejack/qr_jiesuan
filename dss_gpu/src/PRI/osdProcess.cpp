@@ -450,10 +450,10 @@ static void OSDCTRL_OsdInitial()
 	sprintf(WorkOsd[0],"%c%c",249,185);//zi dong
 	sprintf(WorkOsd[1],"%c%c",198,199);//alert
 	sprintf(WorkOsd[2],"%c%c",197,250);//У׼
-	sprintf(WorkOsd[3],"%c%c",197,250);//jiao ling
-	sprintf(WorkOsd[4],"%c%c",197,250);//zong xiu
-	sprintf(WorkOsd[5],"%c%c",197,250);//qi xiang
-	sprintf(WorkOsd[6],"%c%c",249,185);//gen zong
+	sprintf(WorkOsd[3],"%c%c",197,209);//jiao ling
+	sprintf(WorkOsd[4],"%c%c",253,243);//zong xiu
+	sprintf(WorkOsd[5],"%c%c",219,242);//qi xiang
+	sprintf(WorkOsd[6],"%c%c",161,162);//gen zong
 	sprintf(WorkOsd[7],"%c%c",253,180);//zong can
 	sprintf(WorkOsd[8],"%c%c",186,153);//di ping
 	sprintf(WorkOsd[9],"%c%c",201,144);//ji guang
