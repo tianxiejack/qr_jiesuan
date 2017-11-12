@@ -390,7 +390,7 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 						((index >=48  && index <=57) |
 						(index >=33  && index <=47) | 
 						//(index >=58  && index <=64) |
-						index == 58 |
+						index == 58 |index == 60 |
 						(index >=65  && index <=90) |
 						(index >=97 && index <122))
 					  )

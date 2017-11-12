@@ -708,12 +708,14 @@ void OSDCTRL_CalibMenuShow()
 		OSDCTRL_ItemShow(eCalibMenu_GenPram);
 		OSDCTRL_ItemShow(eCalibMenu_Horizen);
 		OSDCTRL_ItemShow(eCalibMenu_Laser);
+		OSDCTRL_ItemShow(eCalibMenu_Child);
 	}
 	else
 	{ 
 		OSDCTRL_ItemHide(eCalibMenu_GenPram);
 		OSDCTRL_ItemHide(eCalibMenu_Horizen);
 		OSDCTRL_ItemHide(eCalibMenu_Laser);
+		OSDCTRL_ItemHide(eCalibMenu_Child);
 	}
 	if(!isCalibrationSave())
 		Posd[eSaveYesNo] = SaveYesNoOsd[1];
