@@ -197,6 +197,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 			cthis->drawflag |= 1<<2;
 			if(isFovSmall())
 			{
+				cthis->fovbig = 0;
 				DrawjsRuler(frame,cthis);
 				cthis->drawflag |= 1<<1;
 				DrawjsCross(frame, cthis);
@@ -204,6 +205,7 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 			}
 			else
 			{
+				cthis->fovbig = 1;
 				DrawjsBigFovCross(frame, cthis);
 				cthis->drawflag |= 1<<10;
 			}

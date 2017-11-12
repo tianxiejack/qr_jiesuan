@@ -63,8 +63,10 @@ typedef struct _fov_ctrl
 	RECT 			fovRect;						
 	CBrush 			fovBrush;
 
-	bool fovdraw;
-	int lastStepGap ;
+	bool fovbig;		// 1--big  0 --small
+	bool fovdraw;	// 1-drawing 0-erasing
+	int lastStepGap ;  // Ruler step
+	int lastLen;		//Ruler Len --1 mil
 	unsigned int drawflag ;		
 	double last_angle;
 /*	
