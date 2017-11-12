@@ -416,9 +416,9 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 
 	{eAnglePosn,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		500,	0,	{0}},
 	{eAngleDipX,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	30+LOFFSET,		465,	0,	{0}},
-	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		465,	0,	{0}},
-	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	200+LOFFSET,		500,	0,	{0}},
-	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	330+LOFFSET,		500,	0,	{0}},
+	{eAngleDipY,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		465,	0,	{0}},
+	{eAngleMach,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	170+LOFFSET,		500,	0,	{0}},
+	{eAngleGred,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	310+LOFFSET,		500,	0,	{0}},
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		70,	0,	{0}},
 	{eLaserjlx,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,				500,	0,	{0}},
 	{eLaserjly,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,				500,	0,	{0}},
@@ -2289,16 +2289,16 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%c%c%+07.2f",190,239,getTurretTheta()); //��λ��
 			break;
 		case eAngleDipX:
-			sprintf(pStr,"%cX:%+06.2f",220,getPlatformPositionX()); //���X
+			sprintf(pStr,"%cX:%+07.2f",220,getPlatformPositionX()); //���X
 			break;
 		case eAngleDipY:
-			sprintf(pStr,"%cY:%+06.2f",220,getPlatformPositionY()); //���Y
+			sprintf(pStr,"%cY:%+07.2f",220,getPlatformPositionY()); //���Y
 			break;
 		case eAngleMach:
-			sprintf(pStr,"%cY:%+06.2f",200,getMachGunAngle()); //��ǹY
+			sprintf(pStr,"%cY:%+07.2f",200,getMachGunAngle()); //��ǹY
 			break;
 		case eAngleGred:
-			sprintf(pStr,"%cY:%+06.2f",211,getGrenadeAngle()); //��Y
+			sprintf(pStr,"%cY:%+07.2f",211,getGrenadeAngle()); //��Y
 			break;
 		case eGunTip:
 			sprintf(pStr,"%s",Posd[eGunTip]); //����ȷ����ʾ

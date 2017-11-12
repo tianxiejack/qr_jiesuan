@@ -288,7 +288,7 @@ void setNextGeneralParam(GeneralCorrectionItem * Item)
 		value = getLaserDistance();
 
 	value = (value>0)?(value):500;//���δ���þ���ֵ��Ĭ������500��
-printf("general[0123] = %d%d%d%d\n",General[0],General[1],General[2],General[3]);
+//printf("general[0123] = %d%d%d%d\n",General[0],General[1],General[2],General[3]);
 	General[0] = value/1000%10;
 	General[1] = value/100%10;
 	General[2] = value/10%10;
@@ -301,7 +301,7 @@ printf("general[0123] = %d%d%d%d\n",General[0],General[1],General[2],General[3])
 	General[6]  = value/100%10;
 	General[7]  = value/10%10;
 	General[8]  = value%10;
-printf("general[5678] = %d%d%d%d\n",General[5],General[6],General[7],General[8]);	
+//printf("general[5678] = %d%d%d%d\n",General[5],General[6],General[7],General[8]);	
 	General[9]  = (Item->data.deltaY >= 0)?0:-1;
 	value = abs(Item->data.deltaY);
 	
@@ -309,7 +309,7 @@ printf("general[5678] = %d%d%d%d\n",General[5],General[6],General[7],General[8])
 	General[11]  = value/100%10;
 	General[12]  = value/10%10;
 	General[13] = value%10;
-printf("general[10111213] = %d%d%d%d\n",General[10],General[11],General[12],General[13]);	
+//printf("general[10111213] = %d%d%d%d\n",General[10],General[11],General[12],General[13]);	
 }
 
 

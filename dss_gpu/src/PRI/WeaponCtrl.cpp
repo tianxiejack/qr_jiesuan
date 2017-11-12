@@ -967,18 +967,19 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	
 	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf)))  //5.8ǹʽ
 	{  
-		if(BIT0(BYTE4(buf)) == 0x00)
-			MSGDRIV_send(CMD_ALLSERVO_STOP, 0);
-		
 		#if 0
-		if(BIT0(BYTE4(buf)) == 0x00)
-		{
-			MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);
-		}
-		else if(BIT0(BYTE4(buf)) == 0x01)
-		{
-			MSGDRIV_send(CMD_MODE_SHOT_LONG,0);
-		}	
+			if(BIT0(BYTE4(buf)) == 0x00)
+				MSGDRIV_send(CMD_ALLSERVO_STOP, 0);
+		#endif
+		#if 1
+			if(BIT0(BYTE4(buf)) == 0x00)
+			{
+				MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);
+			}
+			else if(BIT0(BYTE4(buf)) == 0x01)
+			{
+				MSGDRIV_send(CMD_MODE_SHOT_LONG,0);
+			}	
 		#endif
 	}
 	
@@ -1003,35 +1004,38 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 		{
 			startF2_Timer();
 		}
-		#endif
-			
+		#endif		
 	}
 	if(BIT5(BYTE3(FrameBuf1)) != BIT5(BYTE5(buf)))	//ǿʾ
 	{ 
+		#if 0
 		if(BIT5(BYTE5(buf)) == 0x01)
 			testliudanqidong();
-	#if 0
-		if(BIT5(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
-		{
-			if(isTimerAlive(eF3_Timer)/*״ֵ̬*/)
+		#endif
+		#if 1
+			if(BIT5(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
 			{
-				killF3Timer();
-				MSGDRIV_send(CMD_MODE_ENHANCE_SWITCH,0);
+				if(isTimerAlive(eF3_Timer)/*״ֵ̬*/)
+				{
+					killF3Timer();
+					MSGDRIV_send(CMD_MODE_ENHANCE_SWITCH,0);
+				}
 			}
-		}
-		else if(BIT5(BYTE5(buf)) == 0x00)
-		{
-			startF3_Timer();
-		}
-	#endif
+			else if(BIT5(BYTE5(buf)) == 0x00)
+			{
+				startF3_Timer();
+			}
+		#endif
 	}
 	if(BIT4(BYTE3(FrameBuf1)) != BIT4(BYTE5(buf)))	   //F4
 	{   
-		if(BIT4(BYTE5(buf)) == 0x01)
-			testjiqiangqidong();
 		#if 0
-		if(BIT4(BYTE5(buf)) == 0x01)
-			MSGDRIV_send(CMD_MEASURE_DISTANCE_SWITCH,0);
+			if(BIT4(BYTE5(buf)) == 0x01)
+				testjiqiangqidong();
+		#endif
+		#if 1
+			if(BIT4(BYTE5(buf)) == 0x01)
+				MSGDRIV_send(CMD_MEASURE_DISTANCE_SWITCH,0);
 		#endif
 	}
 	if(BIT3(BYTE3(FrameBuf1)) != BIT3(BYTE5(buf)))	//F5
@@ -1057,22 +1061,23 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT2(BYTE3(FrameBuf1)) != BIT2(BYTE5(buf)))	//F6
 	{	
-		if(BIT2(BYTE5(buf)) == 0x01)
-			requstServoContrl();
 		#if 0
-		printf("\n  can parse F6\n");
-		if(BIT2(BYTE5(buf)) == 0x01)
-		{
-			if(isTimerAlive(eF6_Timer)/*״ֵ̬*/)
+			if(BIT2(BYTE5(buf)) == 0x01)
+				requstServoContrl();
+		#endif
+		#if 1
+			if(BIT2(BYTE5(buf)) == 0x01)
 			{
-				killF6Timer();
-				MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
+				if(isTimerAlive(eF6_Timer)/*״ֵ̬*/)
+				{
+					killF6Timer();
+					MSGDRIV_send(CMD_LASERSELECT_SWITCH,0);
+				}
 			}
-		}
-		else if(BIT2(BYTE5(buf)) == 0x00)
-		{
-			startF6_Timer();
-		}
+			else if(BIT2(BYTE5(buf)) == 0x00)
+			{
+				startF6_Timer();
+			}
 		#endif
 	}
 	if(BIT1(BYTE3(FrameBuf1)) != BIT1(BYTE5(buf)))//shou bing shang zi dong bu huo an jian
