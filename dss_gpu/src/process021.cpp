@@ -3222,23 +3222,24 @@ void CProcess021::MSGAPI_settrackBreakLock(LPARAM lParam)
 
 void CProcess021::processCMD_BUTTON_AUTOCHECK(LPARAM lParam)
  {
- 		OSDCTRL_NoShine();
-		
+ 		if(isCalibrationMode())
+			return ;
+ 		OSDCTRL_NoShine();	
 	 	if(!isBootUpMode())
 		{
 			if(isCalibrationMode()&&!isCalibrationMainMenu())
 			{
 				if(isCalibrationZero())
 				{
-					saveZeroParam();
+					//saveZeroParam();
 				}
 				else if(isCalibrationGeneral())
 				{
-					saveGeneralParam();
+					//saveGeneralParam();
 				}
 				else if(isCalibrationWeather())
 				{
-					saveWeatherParam();
+					//saveWeatherParam();
 				}		
 				gLevel2CalibrationState = STATE_CALIBRATION_MAIN_MENU;
 			//	OSDCTRL_NoShine();
