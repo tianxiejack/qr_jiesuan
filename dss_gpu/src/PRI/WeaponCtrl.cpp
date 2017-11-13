@@ -967,11 +967,11 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	
 	if(BIT0(BYTE2(FrameBuf1)) != BIT0(BYTE4(buf)))  //5.8ǹʽ
 	{  
-		#if 1
+		#if 0
 			if(BIT0(BYTE4(buf)) == 0x00)
 				MSGDRIV_send(CMD_ALLSERVO_STOP, 0);
 		#endif
-		#if 0
+		#if 1
 			if(BIT0(BYTE4(buf)) == 0x00)
 			{
 				MSGDRIV_send(CMD_MODE_SHOT_SHORT,0);
@@ -1008,11 +1008,11 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT5(BYTE3(FrameBuf1)) != BIT5(BYTE5(buf)))	//ǿʾ
 	{ 
-		#if 1
+		#if 0
 		if(BIT5(BYTE5(buf)) == 0x01)
 			testliudanqidong();
 		#endif
-		#if 0
+		#if 1
 			if(BIT5(BYTE5(buf)) == 0x01)	// tai qi shi qie huan
 			{
 				if(isTimerAlive(eF3_Timer)/*״ֵ̬*/)
@@ -1061,11 +1061,11 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	}
 	if(BIT2(BYTE3(FrameBuf1)) != BIT2(BYTE5(buf)))	//F6
 	{	
-		#if 1
+		#if 0
 			if(BIT2(BYTE5(buf)) == 0x01)
 				requstServoContrl();
 		#endif
-		#if 0
+		#if 1
 			if(BIT2(BYTE5(buf)) == 0x01)
 			{
 				if(isTimerAlive(eF6_Timer)/*״ֵ̬*/)
