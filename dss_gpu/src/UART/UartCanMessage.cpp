@@ -532,6 +532,10 @@ void servoLookupGetPos()
 	SendCANBuf(servo_canbuf, 6);
 	servo_canbuf[1] = CODE_TURRET;
 	SendCANBuf(servo_canbuf, 6);
+
+	//printf("222gGrenadeGetPos= %d\n",gGrenadeGetPos);
+	//printf("222gTurretGetPos= %d\n",gTurretGetPos);
+	//printf("222gMachGetPos= %d\n",gMachGetPos);	
 }
 
 

@@ -410,14 +410,22 @@ void testliudanqidong()
 		int value;
 	}ymilsecond;
 	double x = 0.0,y=0.0;
-	x=3;
-	ymilsecond.value = Rads2CANValue(x,GRENADE);
-	FILLBUFFOFFST(TestGREPosbuf, ymilsecond);
-	TestGREPosbuf[2] = 0x50;
-	TestGREPosbuf[3] = 0x52;
-	SendCANBuf(TestGREPosbuf,10);
 
-	startServo(CODE_GRENADE);
+	ymilsecond.value = 500;
+	FILLBUFFSPEED(TestMachPosbuf, ymilsecond);
+	TestMachPosbuf[2] = 0x53;
+	TestMachPosbuf[3] = 0x50;
+	SendCANBuf(TestMachPosbuf,10);
+
+	
+	x=1;
+	ymilsecond.value = Rads2CANValue(x,MACH);
+	FILLBUFFOFFST(TestMachPosbuf, ymilsecond);
+	TestMachPosbuf[2] = 0x50;
+	TestMachPosbuf[3] = 0x52;
+	SendCANBuf(TestMachPosbuf,10);
+
+	startServo(CODE_MACHGUN);
 	#if 0
 	FILLBUFFSPEED(TestTURPosbuf, ymilsecond);
 	TestTURPosbuf[2] = 0x53;
@@ -485,57 +493,38 @@ void Grenade2Mach_cbFxn(long lParam)
 {
 	static bool firstgrenademoveflag = 1;
 
-	#if 1
-	static int times = 0;
-	if(times++ > 20)
-	{
-		times = 0;
-		//gGrenadeLoadFireFlag = 0;
-		//display jiu xu
-		//OSDCTRL_ItemShow(eReady);
-		//startDisplayJiuXuTimer();
-		#if 1
-		if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL && gGrenadeLoadFireFlag)
+
+	if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL && gGrenadeLoadFireFlag)
+	{		
+		killDisplayJiuXutimer();
+		double tmp = getGrenadeDestTheta() - getGrenadeAngleAbs();
+
+		if(firstgrenademoveflag)
 		{
-			servoLookupGetPos();
-			killDisplayJiuXutimer();
-			double tmp = getGrenadeDestTheta() - getGrenadeAngleAbs();
-		printf("111tmp= %f\n",tmp);
-		printf("111gGrenadeGetPos= %d\n",gGrenadeGetPos);
-		printf("gTurretGetPos= %d\n",gTurretGetPos);
-		printf("gMachGetPos= %d\n",gMachGetPos);		
-			if(firstgrenademoveflag)
-			{
-				printf("1111111111111111 \n\n");
+			getGrenadeServoContrlObj()->moveOffset(tmp,0);
+			firstgrenademoveflag = 0;
+		}
+		else if(gGrenadeGetPos == 0)  
+		{
+			if(tmp > 1.5)
 				getGrenadeServoContrlObj()->moveOffset(tmp,0);
-				firstgrenademoveflag = 0;
-			}
-			else if(gGrenadeGetPos == -1)  // why return -1????
+			else if(tmp < -1.5)
+				getGrenadeServoContrlObj()->moveOffset(tmp,0);
+			else
 			{
-			printf("22222222222 \n\n");
-				if(tmp > 1.5)
-					getGrenadeServoContrlObj()->moveOffset(tmp,0);
-				else if(tmp < -1.5)
-					getGrenadeServoContrlObj()->moveOffset(tmp,0);
-				else
-				{
-					printf("done \n\n");
-					gGrenadeLoadFireFlag = 0;
-					//display jiu xu
-					OSDCTRL_ItemShow(eReady);
-					startDisplayJiuXuTimer();
-					firstgrenademoveflag = 1;
-				}
+				printf("###done \n\n");
+				gGrenadeLoadFireFlag = 0;
+				//display jiu xu
+				OSDCTRL_ItemShow(eReady);
+				startDisplayJiuXuTimer();
+				firstgrenademoveflag = 1;
 			}
 		}
-		#endif
+		servoLookupGetPos();
 	}
-	#endif
-	#if 1
 	else if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL && !isMeasureManual())
 	{
 		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() - getMach2GrenadeAngle();
-
 		#if 0
 		printf("\n____________________________________________\n");	
 		printf("Mach angle = %f\n ",getMachGunAngleAbs());
@@ -557,6 +546,5 @@ void Grenade2Mach_cbFxn(long lParam)
 			//	getGrenadeServoContrlObj()->moveOffset(-0.5,0);
 		}
 	}
-	#endif
 	return ;
 }
