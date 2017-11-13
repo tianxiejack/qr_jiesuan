@@ -543,7 +543,8 @@ void loadFiringTable_Enter()
 	input.PlatformXTheta = DEGREE2MIL(getPlatformPositionX());
 	input.PlatformYTheta = DEGREE2MIL(getPlatformPositionY());
 	input.ProjectileType = getProjectileType();
-
+static double lastaimoffsetY = 0.0;
+static bool sssflag = 0;
 	ret = getAverageVelocity(&input.TargetAngularVelocityX);
 	if(ret < 0)
 		input.TargetAngularVelocityX = 0.0;
@@ -652,13 +653,19 @@ void loadFiringTable_Enter()
 			//printf("loadFiringTable_EnteloadFiringTable_EnterrloadFiringTable_Enter\n\n");
 			//printf("getMeasureType = %d\n",getMeasureType());
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
-
+			if(lastaimoffsetY <= output.AimOffsetY)
+				sssflag = 1;
+			else
+				sssflag = -1;
+				
+			lastaimoffsetY = output.AimOffsetY;
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-
+			
+printf("AimOffsetY = %f\n",AimOffsetY);
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
 		//setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
-		setGrenadeDestTheta(((output.AimOffsetThetaY)*0.01) + getGrenadeAngleAbs());
+		setGrenadeDestTheta(sssflag*((output.AimOffsetThetaY)*0.01)*0.7 + getGrenadeAngleAbs());
 #if 0
 printf("_______________set the dest theta ____________________\n");
 printf("output.AimOffsetThetaY)*0.01 = %f\n",output.AimOffsetThetaY*0.01);

@@ -422,7 +422,7 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 	{eGunTip,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	270+LOFFSET,		70,	0,	{0}},
 	{eLaserjlx,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	420,				500,	0,	{0}},
 	{eLaserjly,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	530,				500,	0,	{0}},
-	{eReady,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	560+LOFFSET,		435,	0,	{0}},
+	{eReady,					eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	620+LOFFSET,		435,	0,	{0}},
 
 	{eGuiling,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	300,				70,	0,	{0}},
 	{eLwOrGen,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180,		500,	0,	{0}},

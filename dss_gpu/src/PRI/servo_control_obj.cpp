@@ -531,8 +531,8 @@ void Grenade2Mach_cbFxn(long lParam)
 		#endif
 	}
 	#endif
-	#if 0
-	else if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL)
+	#if 1
+	else if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL && !isMeasureManual())
 	{
 		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() - getMach2GrenadeAngle();
 
