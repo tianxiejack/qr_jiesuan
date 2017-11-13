@@ -144,6 +144,7 @@ void startF2_Timer();
 void killF2Timer();
 void absSetPosRequest(BYTE code);
 int GetPosCanRecvParse(unsigned char * buf);
+void CanSendProcess();
 
 extern BOOL bTraceSend;
 extern int servoInit;

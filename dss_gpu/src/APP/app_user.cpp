@@ -449,7 +449,7 @@ static Int32 APP_start( int nType )
 
 	
 	startSelfCheckTimer();
-	startCANSendTimer();
+	//startCANSendTimer();
 	
 
 	OSA_printf("%s:exit", __func__);

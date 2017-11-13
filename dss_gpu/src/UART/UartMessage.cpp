@@ -3075,10 +3075,11 @@ void * SPI_CAN_Send40(void * prm)
 	{
 		timeout.tv_sec = 0;
 		timeout.tv_usec = 40000;
-
+		
 		select(0,NULL,NULL,NULL,&timeout);
-		// check the mach and grenade
+		// check the mach and grenade		
 		Grenade2Mach_cbFxn(0);
+		CanSendProcess();
 	}
 	return NULL;
 }
