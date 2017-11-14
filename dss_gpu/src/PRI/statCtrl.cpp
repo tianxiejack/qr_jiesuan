@@ -670,8 +670,8 @@ static bool sssflag = 0;
 
 			if(isGrenadeKill())
 			{
+				resetGrenadeInPositionFlag();
 				MSGDRIV_send(CMD_FIRING_TABLE_LOAD_OK, 0);
-				//testliudanqidong();
 				//cmd_grenadeservo_moveoffset_tmp = Rads2CANValue(MIL2DEGREE(output.AimOffsetY),GRENADE);
 				//cmd_grenadeservo_moveoffset_tmp = Rads2CANValue((output.AimOffsetThetaY*0.01),GRENADE);
 				//printf("output.AimOffsetThetaY*0.01 =%f\n",output.AimOffsetThetaY*0.01);

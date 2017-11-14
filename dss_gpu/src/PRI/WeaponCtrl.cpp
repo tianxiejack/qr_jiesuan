@@ -399,7 +399,7 @@ void releaseServoContrl(void)
 
 void setGrenadeInPositonFlag(void)
 {
-	CANSendbuf[3] = (CANSendbuf[3]&0x0F) |0x30 ;
+	CANSendbuf[3] = (CANSendbuf[3]&0x0F) |0x3 ;
 }
 
 void resetGrenadeInPositionFlag(void)

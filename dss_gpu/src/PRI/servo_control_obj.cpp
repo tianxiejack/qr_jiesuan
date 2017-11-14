@@ -498,7 +498,6 @@ void Grenade2Mach_cbFxn(long lParam)
 	{		
 		killDisplayJiuXutimer();
 		double tmp = getGrenadeDestTheta() - getGrenadeAngleAbs();
-
 		if(firstgrenademoveflag)
 		{
 			getGrenadeServoContrlObj()->moveOffset(tmp,0);
@@ -516,8 +515,9 @@ void Grenade2Mach_cbFxn(long lParam)
 				gGrenadeLoadFireFlag = 0;
 				//display jiu xu
 				OSDCTRL_ItemShow(eReady);
-				startDisplayJiuXuTimer();
+				startDisplayJiuXuTimer();			
 				firstgrenademoveflag = 1;
+				setGrenadeInPositonFlag();
 			}
 		}
 		servoLookupGetPos();
