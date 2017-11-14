@@ -543,8 +543,8 @@ void loadFiringTable_Enter()
 	input.PlatformXTheta = DEGREE2MIL(getPlatformPositionX());
 	input.PlatformYTheta = DEGREE2MIL(getPlatformPositionY());
 	input.ProjectileType = getProjectileType();
-static double lastaimoffsetY = 0.0;
-static bool sssflag = 0;
+	static double lastaimoffsetY = 0.0;
+	static bool sssflag = 0;
 	ret = getAverageVelocity(&input.TargetAngularVelocityX);
 	if(ret < 0)
 		input.TargetAngularVelocityX = 0.0;
@@ -563,6 +563,7 @@ static bool sssflag = 0;
 			input.TargetDistance = DistanceManual;
 		}
 	}	
+//printf("loadfiretable_enter input.targetdistance = %f\n",input.TargetDistance);
 	assert(input.TargetDistance >= 0);
 /*	if(0 == input.TargetDistance){
 		sendCommand(CMD_FIRING_TABLE_FAILURE);
@@ -603,7 +604,7 @@ static bool sssflag = 0;
 	
 	AimOffsetX = (double)output.AimOffsetX;
 	AimOffsetY = (double)output.AimOffsetY;
-
+//printf("loadfire ret = %d\n",ret);
 	if(CALC_OK == ret)
 	{
 		int borX=0,borY=0;
@@ -670,6 +671,7 @@ static bool sssflag = 0;
 
 			if(isGrenadeKill())
 			{
+			printf("loadfire heiheihei!!!\n");
 				resetGrenadeInPositionFlag();
 				MSGDRIV_send(CMD_FIRING_TABLE_LOAD_OK, 0);
 				//cmd_grenadeservo_moveoffset_tmp = Rads2CANValue(MIL2DEGREE(output.AimOffsetY),GRENADE);

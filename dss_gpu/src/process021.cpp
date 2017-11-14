@@ -4810,6 +4810,7 @@ void CProcess021::processCMD_LASER_OK(LPARAM lParam)
 	}
 	else if(isBattleMode()&& isStatBattleAuto()&& isAutoPreparation())
 	{
+		printf("### laser into loadfire \n");
 		gLevel3CalculatorState = Auto_LoadFiringTable;
 		loadFiringTable_Enter();
 	}
