@@ -1070,9 +1070,9 @@ void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
 			gLevel3CalculatorState = Battle_Ready;
 			//OSDdisplay
 		
-			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+		//	Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
-			OSDCTRL_ItemShow(eCorrectionTip);
+		//	OSDCTRL_ItemShow(eCorrectionTip);
 
 			// auto track and shoot.
 			requstServoContrl();
@@ -1084,9 +1084,9 @@ void processCMD_FIRING_TABLE_LOAD_OK(long lParam)
 	{
 			gLevel3CalculatorState = Auto_Ready;
 			//OSDdisplay
-			Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
+		//	Posd[eCorrectionTip] = AngleCorrectOsd[CORRECTION_GQ];
 			//start a timer in 6sec timeout set osd CORRECTION_RGQ			
-			OSDCTRL_ItemShow(eCorrectionTip);
+		//	OSDCTRL_ItemShow(eCorrectionTip);
 			requstServoContrl();
 
 	}
