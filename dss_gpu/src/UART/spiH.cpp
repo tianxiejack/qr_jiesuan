@@ -135,6 +135,8 @@ int process_decode(struct RS422_data * pRS422_data)
 					hPositionY = PlatformThetaY*0.001;
 					Temparature = (int)Temperature*0.01; 
 				}
+				hPositionX -= 20.75;
+				hPositionY -=2.1;
 				
 				memcpy(buf, buf+parse_length, length-parse_length);
 				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );

@@ -127,6 +127,10 @@ int trajectoryCalc( FiringInputs *input, FiringOutputs* output)
 			output->AimOffsetX = ANGLE_TO_OFFSET(output->AimOffsetThetaX);
 			output->AimOffsetY = ANGLE_TO_OFFSET(output->AimOffsetThetaY);
 			output->correctionData = getGeneralCorrectionTheta(input->TargetDistance, input->ProjectileType);
+		//	if(getProjectileType() == PROJECTILE_GRENADE_KILL)
+		//		output->correctionData = gGrenadeKill_GCParam;
+		//	else if(getProjectileType() == PROJECTILE_GRENADE_GAS)
+		//		output->correctionData = gGrenadeGas_GCParam;
 			return CALC_OK;
 		}
 		

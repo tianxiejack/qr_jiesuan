@@ -23,7 +23,7 @@ GeneralCorrectionItem gMachineGun_GCTable[]=
 	{1500, 	{0,0}}
 };
 GeneralCorrectionItem gMachineGun_GCParam 		={0,		{0,0}};
-GeneralCorrectionItem gGrenadeKill_GCParam		={0,		{0,0}};
+GeneralCorrectionItem gGrenadeKill_GCParam			={0,		{0,0}};
 GeneralCorrectionItem gGrenadeGas_GCParam		={0,		{0,0}};
 
 GeneralCorrectionItem gGrenadeKill_GCTable[]=

@@ -653,31 +653,19 @@ static bool sssflag = 0;
 			//printf("loadFiringTable_EnteloadFiringTable_EnterrloadFiringTable_Enter\n\n");
 			//printf("getMeasureType = %d\n",getMeasureType());
 			Posd[eMeasureType] = MeasureTypeOsd[getMeasureType()];
-			if(lastaimoffsetY <= output.AimOffsetY)
-				sssflag = 1;
-			else
-				sssflag = -1;
-				
-			lastaimoffsetY = output.AimOffsetY;
+			//if(lastaimoffsetY <= output.AimOffsetY)
+			//	sssflag = 1;
+			//else
+			//	sssflag = -1;		
+			//lastaimoffsetY = output.AimOffsetY;
+			
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
 			
-printf("AimOffsetY = %f\n",AimOffsetY);
+printf("2222222AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
+printf("2222222MIL2DEGREE(AimOffsetThetaY) = %f\n",MIL2DEGREE(output.AimOffsetThetaY));
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
-		//setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
-		setGrenadeDestTheta(sssflag*((output.AimOffsetThetaY)*0.01)*0.7 + getGrenadeAngleAbs());
-#if 0
-printf("_______________set the dest theta ____________________\n");
-printf("output.AimOffsetThetaY)*0.01 = %f\n",output.AimOffsetThetaY*0.01);
-printf("getGrenadeAngleAbs = %f\n",GrenadeAngle);
-printf("getGrenadeDestTheta = %f\n",gGrenadeDestTheta);
-
-printf("\n(MIL2DEGREE(output.AimOffsetThetaY)*0.01)= %f\n",(MIL2DEGREE(output.AimOffsetThetaY)*0.01) 
-);
-
-printf("___________________________________________________\n");
-// da yin chu lai grenade angle = 0 ????
-#endif
+		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
 	}
 
 			if(isGrenadeKill())
@@ -1405,7 +1393,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		}
 		#endif
 
-		if(((machDone&&grenadeDone&&TurretDone)||(600000<COUNTER)) && guiling)
+		if(((machDone&&grenadeDone&&TurretDone)||(100<COUNTER)) && guiling)
 		{
 			killSCHEDULEtimer();
 			releaseServoContrl();
@@ -1415,7 +1403,9 @@ void SCHEDULE_cbFxn(void* cbParam)
 			guiling = 0;
 			return;
 		}
-
+	printf("schedule TurretDone =%d\n",TurretDone);
+	printf("schedule machDone =%d\n",machDone);
+	printf("schedule grenadeDone =%d\n",grenadeDone);
 		if(!guiling)
 		{
 			TurretDone = 0;
