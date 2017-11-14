@@ -4210,7 +4210,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			}
 			else if(isCalibrationHorizen())
 			{
-				if(!menu_jiancha_flag)
+				if(menu_jiancha_flag)
 				{
 					//gTurret_ZCTable.Angle = getTurretTheta();
 					//gMachineGun_ZCTable.Angle = getMachGunAngleAbs();
@@ -4340,8 +4340,10 @@ void CProcess021::processCMD_BULLET_SWITCH1(LPARAM lParam)
 	Posd[eGunType] = GunOsd[PROJECTILE_BULLET];
 	//gProjectileType = (PROJECTILE_TYPE)(PROJECTILE_BULLET+5);
 	//Posd[eGunTip] = GunOsd[5];
-	if(DistanceManual < 100)
-		DistanceManual = 100;
+
+	DistanceManual = 100;
+	LaserDistance = 0;
+	LaserDistance_m = 0;
 	EnterCMD_BULLET_SWITCH1();
 	return ;
  }
@@ -4360,8 +4362,10 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
-	if(DistanceManual < 100)
-		DistanceManual = 100;
+	
+	DistanceManual = 50;
+	LaserDistance = 0;
+	LaserDistance_m = 0;
  	EnterCMD_BULLET_SWITCH2();
 	return ;
  }
@@ -4381,6 +4385,10 @@ void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
 		gProjectileTypeBefore = gProjectileType;
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_GAS+2);
 	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_GAS+2];	
+	
+	DistanceManual = 40;
+	LaserDistance = 0;
+	LaserDistance_m = 0;
  	EnterCMD_BULLET_SWITCH3();
 	return ;
  }

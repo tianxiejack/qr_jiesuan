@@ -4,6 +4,7 @@
 #include "PolyNomialCalc.h"
 #include "LaserPort.h"
 #include "MachGunPort.h"
+#include "GrenadePort.h"
 #include <math.h>
 //#include "OSDCtrl.h"
 #include "permanentStorage.h"
@@ -139,10 +140,17 @@ int getParamBuf(BYTE *buf)
 	return 0;
 }
 
+double setGrenadethetaOffset(void)
+{
+	double tmp1 = getGrenadeAngleAbs() - getMachGunAngleAbs();
+	double tmp2 = getMach2GrenadeAngle();
+	return (tmp1 - tmp2);
+}
 
 void setGrenadeDestTheta(double theta)
 {
 	gGrenadeDestTheta = theta;
+	return;
 }
 
 double getGrenadeDestTheta()

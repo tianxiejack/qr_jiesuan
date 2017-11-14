@@ -662,17 +662,28 @@ void loadFiringTable_Enter()
 			//lastaimoffsetY = output.AimOffsetY;
 			
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
-			
 //printf("2222222AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
 //printf("2222222MIL2DEGREE(AimOffsetThetaY) = %f\n",MIL2DEGREE(output.AimOffsetThetaY));
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
-		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());
+		double tmptheta = MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngleAbs() + getMach2GrenadeAngle();
+
+
+
+		printf("\n\nsetGrenadeDestTheta  tmptheta = %f\n",tmptheta);
+		printf("\n\nsetGrenadeDestTheta  output.AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
+		printf("\n\nsetGrenadeDestTheta  getMachGunAngleAbs = %f\n",getMachGunAngleAbs());
+		printf("\n\nsetGrenadeDestTheta  getMach2GrenadeAngle() = %f\n",getMach2GrenadeAngle());
+
+
+
+
+		
+		setGrenadeDestTheta(tmptheta);
 	}
 
 			if(isGrenadeKill())
 			{
-			printf("loadfire heiheihei!!!\n");
 				resetGrenadeInPositionFlag();
 				MSGDRIV_send(CMD_FIRING_TABLE_LOAD_OK, 0);
 				//cmd_grenadeservo_moveoffset_tmp = Rads2CANValue(MIL2DEGREE(output.AimOffsetY),GRENADE);
@@ -899,10 +910,6 @@ void EnterCMD_BULLET_SWITCH1()
 	gProjectileType = PROJECTILE_BULLET;
 	UpdataBoreSight();
 	setServoControlObj();
-
-	DistanceManual = 0;
-	LaserDistance = 0;
-	LaserDistance_m = 0;
 }
 
 
@@ -938,10 +945,6 @@ void EnterCMD_BULLET_SWITCH2( )
 	gProjectileType=PROJECTILE_GRENADE_KILL;
 	UpdataBoreSight();
 	setServoControlObj();
-	
-	DistanceManual = 0;
-	LaserDistance = 0;
-	LaserDistance_m = 0;
 }
 
 
@@ -980,10 +983,7 @@ void EnterCMD_BULLET_SWITCH3( )
 	}
 	UpdataBoreSight();
 	setServoControlObj();
-	
-	DistanceManual = 0;
-	LaserDistance = 0;
-	LaserDistance_m = 0;
+
 }
 
 

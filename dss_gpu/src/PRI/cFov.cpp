@@ -199,11 +199,19 @@ void FOVCTRL_draw(Mat frame,HANDLE hFov)
 				DrawjsCross(frame, cthis);
 				cthis->drawflag |= 1<<0;
 			}
-			else
+			else if(!isFovSmall() && getProjectileType() == PROJECTILE_BULLET )
 			{
 				cthis->fovbig = 1;
 				DrawjsBigFovCross(frame, cthis);
 				cthis->drawflag |= 1<<10;
+			}
+			else
+			{
+				cthis->fovbig = 0;
+				DrawjsRuler(frame,cthis);
+				cthis->drawflag |= 1<<1;
+				DrawjsCross(frame, cthis);
+				cthis->drawflag |= 1<<0;
 			}			
 		}	
 	}

@@ -492,7 +492,7 @@ void teststopserver()
 void Grenade2Mach_cbFxn(long lParam)
 {
 	static bool firstgrenademoveflag = 1;
-
+	static double Grenade2Machoffset = 0.0;//jie suan bu chang
 
 	if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL && gGrenadeLoadFireFlag)
 	{		
@@ -502,6 +502,7 @@ void Grenade2Mach_cbFxn(long lParam)
 		{
 			getGrenadeServoContrlObj()->moveOffset(tmp,0);
 			firstgrenademoveflag = 0;
+			//printf("###firstgrenademoveflag \n\n");
 		}
 		else if(gGrenadeGetPos == 0)  
 		{
@@ -511,23 +512,31 @@ void Grenade2Mach_cbFxn(long lParam)
 				getGrenadeServoContrlObj()->moveOffset(tmp,0);
 			else
 			{
-				//printf("###done \n\n");
+			//	printf("###done \n\n");
 				gGrenadeLoadFireFlag = 0;
 				//display jiu xu
 				OSDCTRL_ItemShow(eReady);
 				startDisplayJiuXuTimer();			
 				firstgrenademoveflag = 1;
 				setGrenadeInPositonFlag();
+				//Grenade2Machoffset = setGrenadethetaOffset();
+				Grenade2Machoffset = getGrenadeDestTheta() -getMachGunAngleAbs() -getMach2GrenadeAngle();
+				printf("\n###Grenade2Machoffset = %f\n",Grenade2Machoffset);
 			}
 		}
 		servoLookupGetPos();
 	}
 	else if((isBattleMode() && 
 		(getProjectileType() == PROJECTILE_GRENADE_KILL || getProjectileType() == PROJECTILE_GRENADE_GAS) 
-		&& !isMeasureManual()) 
-		&& !(OSDCTRL_IsOsdDisplay(eDynamicZone) && Posd[eDynamicZone] == DynamicOsd[0]))
+		//&& !isMeasureManual()
+		) 
+		&&!(OSDCTRL_IsOsdDisplay(eDynamicZone) && Posd[eDynamicZone] == DynamicOsd[0])
+		&& !gGrenadeLoadFireFlag
+	//	&& !(OSDCTRL_IsOsdDisplay(eLwOrGen) && Posd[eLwOrGen] == DynamicOsd[1])
+		)
 	{
-		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() - getMach2GrenadeAngle();
+		double tmp = 0.0;
+		tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() + getMach2GrenadeAngle() + Grenade2Machoffset;	
 		#if 0
 		printf("\n____________________________________________\n");	
 		printf("Mach angle = %f\n ",getMachGunAngleAbs());
@@ -549,5 +558,6 @@ void Grenade2Mach_cbFxn(long lParam)
 			//	getGrenadeServoContrlObj()->moveOffset(-0.5,0);
 		}
 	}
+	
 	return ;
 }
