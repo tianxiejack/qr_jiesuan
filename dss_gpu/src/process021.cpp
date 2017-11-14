@@ -3988,10 +3988,11 @@ void CProcess021::processCMD_BUTTON_LEFT(LPARAM lParam)
 					break;
 			}
 		}
-		//else if(isCalibrationSave())
-		//{
-		//	changeSaveOption();
-		//}
+		else if(isCalibrationSave())
+		{
+			Posd[eSaveYesNo] = SaveYesNoOsd[1];
+			//changeSaveOption();
+		}
 	}
 	else if(isBattleMode())
 	{
@@ -4075,10 +4076,11 @@ void CProcess021::processCMD_BUTTON_RIGHT(LPARAM lParam)
 		{
 			menu_jiancha_flag = !menu_jiancha_flag;
 		}
-		//else if(isCalibrationSave())
-		//{
-		//	changeSaveOption();
-		//}
+		else if(isCalibrationSave())
+		{
+			Posd[eSaveYesNo] = SaveYesNoOsd[0];
+			//changeSaveOption();
+		}
 	}
 	else if(isBattleMode())
 	{
