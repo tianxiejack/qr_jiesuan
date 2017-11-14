@@ -4351,9 +4351,12 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
  {
  	OSDCTRL_NoShine();
 	Posd[eGunTip] = GunOsd[PROJECTILE_GRENADE_KILL+2];
-	if(!isCalibrationMainMenu())
+	if(isCalibrationMode())
+	{
+		//do nothing
+	}
+	else
  		OSDCTRL_ItemShine(eGunTip);
-	
 	if(gProjectileType <= PROJECTILE_GRENADE_GAS)
 		gProjectileTypeBefore = gProjectileType;
 	gProjectileType=(PROJECTILE_TYPE)(PROJECTILE_GRENADE_KILL+2);
@@ -4367,7 +4370,11 @@ void CProcess021::processCMD_BULLET_SWITCH2(LPARAM lParam)
 void CProcess021::processCMD_BULLET_SWITCH3(LPARAM lParam)
  {
  	OSDCTRL_NoShine();
-	if(!isCalibrationMainMenu())
+	if(isCalibrationMode())
+	{
+		//do nothing
+	}
+	else
  		OSDCTRL_ItemShine(eGunTip);
 
  	if(gProjectileType <= PROJECTILE_GRENADE_GAS)

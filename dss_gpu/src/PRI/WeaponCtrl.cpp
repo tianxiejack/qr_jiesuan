@@ -954,13 +954,13 @@ void WeaponCtrlPORT_ParseFrameByte_type1(unsigned char* buf)
 	
 	if(BIT3_2(BYTE2(FrameBuf1)) != BIT3_2(BYTE4(buf)))  //ƵӳСѡ
 	{     
+		if(getProjectileType() == 2)
+				return;
 		if(BIT3_2(BYTE4(buf)) == 0x01)
 		{
-			if(getProjectileType() == 2)
-				return;
 			MSGDRIV_send(CMD_MODE_FOV_SMALL,0);
 		}	
-		else
+		else if(BIT3_2(BYTE4(buf)) == 0x00)
 		{
 			MSGDRIV_send(CMD_MODE_FOV_LARGE,0);
 		}		
