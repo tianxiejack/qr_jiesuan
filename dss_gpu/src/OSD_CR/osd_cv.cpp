@@ -432,9 +432,17 @@ void DrawjsRuler(Mat frame,CFOV * fovOsdCtrl)
 	
 	if(cthis->fovdraw)
 	{
-		Len = angleToOffset(1);
-		cthis->lastLen= Len;
-		StepGap = angleToOffset(10);
+		if(isFovSmall())
+		{
+			Len = angleToOffset(1);
+			StepGap = angleToOffset(10);   // 1_5_2
+		}
+		else
+		{
+			Len = angleToOffset(3);
+			StepGap = angleToOffset(10);	
+		}	
+		cthis->lastLen= Len;	
 		cthis->lastStepGap = StepGap;
 	}
 	else

@@ -144,7 +144,7 @@ static char  TestTURPosbuf[] = {0x03,0x42,0x50,0x52,0x00,0x00,0x00,0x00,0x00,0x0
 long cmd_machservo_moveoffset_tmp = 0;
 long cmd_grenadeservo_moveoffset_tmp = 0;
 long cmd_turretservo_moveoffset_tmp = 0;
-
+double gGrenade2Machoffset = 0.0;//jie suan bu chang
 int Rads2CANValue(double degree,int id)
 {
 	double temp = 0.0;
@@ -492,7 +492,6 @@ void teststopserver()
 void Grenade2Mach_cbFxn(long lParam)
 {
 	static bool firstgrenademoveflag = 1;
-	static double Grenade2Machoffset = 0.0;//jie suan bu chang
 
 	if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL && gGrenadeLoadFireFlag)
 	{		
@@ -520,23 +519,21 @@ void Grenade2Mach_cbFxn(long lParam)
 				firstgrenademoveflag = 1;
 				setGrenadeInPositonFlag();
 				//Grenade2Machoffset = setGrenadethetaOffset();
-				Grenade2Machoffset = getGrenadeDestTheta() -getMachGunAngleAbs() -getMach2GrenadeAngle();
-				printf("\n###Grenade2Machoffset = %f\n",Grenade2Machoffset);
+				gGrenade2Machoffset = getGrenadeDestTheta() -getMachGunAngleAbs() -getMach2GrenadeAngle();
 			}
 		}
 		servoLookupGetPos();
 	}
 	else if((isBattleMode() && 
-		(getProjectileType() == PROJECTILE_GRENADE_KILL || getProjectileType() == PROJECTILE_GRENADE_GAS) 
-		//&& !isMeasureManual()
-		) 
+		(getProjectileType() == PROJECTILE_GRENADE_KILL || getProjectileType() == PROJECTILE_GRENADE_GAS) ) 
 		&&!(OSDCTRL_IsOsdDisplay(eDynamicZone) && Posd[eDynamicZone] == DynamicOsd[0])
 		&& !gGrenadeLoadFireFlag
-	//	&& !(OSDCTRL_IsOsdDisplay(eLwOrGen) && Posd[eLwOrGen] == DynamicOsd[1])
+		&& !(OSDCTRL_IsOsdDisplay(eLwOrGen) && Posd[eLwOrGen] == DynamicOsd[1])
 		)
 	{
 		double tmp = 0.0;
-		tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() + getMach2GrenadeAngle() + Grenade2Machoffset;	
+		tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() + getMach2GrenadeAngle() + gGrenade2Machoffset;
+		//tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() + getMach2GrenadeAngle() + Grenade2Machoffset;	
 		#if 0
 		printf("\n____________________________________________\n");	
 		printf("Mach angle = %f\n ",getMachGunAngleAbs());

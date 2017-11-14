@@ -426,6 +426,8 @@ OSDText_Obj g_Text[OSD_TEXT_SIZE]=
 
 	{eGuiling,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	300,				70,	0,	{0}},
 	{eLwOrGen,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	180,		500,	0,	{0}},
+	{efenhua,				eOsd_Hide,	eOsd_Update,	eWhite,	eTransparent,	MAX_CONTEXT_LEN,	400,		500,	0,	{0}},
+
 };
 
 volatile FONT_OBJ g_Font={NULL,WHITECOLOR,1,0,0,0,NULL};
@@ -2331,6 +2333,12 @@ int ls2tmp = 0000;
 			break;
 		case eLwOrGen:
 			sprintf(pStr,Posd[eLwOrGen]);
+			break;
+		case efenhua:
+			if(isFovSmall())
+				sprintf(pStr,"1_5_2");
+			else
+				sprintf(pStr,"3_5_6");
 			break;
 		
 		default:

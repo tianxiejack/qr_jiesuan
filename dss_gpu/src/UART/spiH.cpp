@@ -115,10 +115,19 @@ int process_decode(struct RS422_data * pRS422_data)
 				killSelfCheckDipAngleTimer();
 				startSelfCheckDipAngle_Timer();				
 #if 1
-				PlatformThetaX = buf[1]<<8|buf[2];
-				PlatformThetaY = buf[3]<<8|buf[4];
-				Temperature =  buf[5]<<8|buf[6];
+				PlatformThetaX = buf[3]<<8|buf[2];
+				PlatformThetaY = buf[5]<<8|buf[4];
+				Temperature =  buf[7]<<8|buf[6];
+				
 //printf("Temperature = %d\n",Temperature);
+#if 0
+printf("***************************************\n");
+for(int abc = 0; abc<8 ; abc++)
+{
+	printf("buf[%d] = %02x\n",abc,buf[abc]);
+}
+printf("***************************************\n");
+#endif
 				#if SPI_DEBUG
 					for(int aaa = 0;aaa<=7;aaa++)
 						printf("recvbuf[%d] = %x\n",aaa,buf[aaa]);
@@ -135,8 +144,6 @@ int process_decode(struct RS422_data * pRS422_data)
 					hPositionY = PlatformThetaY*0.001;
 					Temparature = (int)Temperature*0.01; 
 				}
-				hPositionX -= 20.75;
-				hPositionY -=2.1;
 				
 				memcpy(buf, buf+parse_length, length-parse_length);
 				memset(buf+length-parse_length, 0, sizeof(buf)-(length-parse_length)  );

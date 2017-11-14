@@ -332,6 +332,7 @@ typedef enum _eOsdTypeId{
 	eReady,
 	eGuiling,
 	eLwOrGen,	
+	efenhua,
 	eBoreSightLinId,
 	OSD_TEXT_SIZE
 }eOsdId;

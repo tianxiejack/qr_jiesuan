@@ -23,7 +23,7 @@
 #include "cFov.h"
 #include "servo_control_obj.h"
 #include "app_user.h"
-
+#include "osdProcess.h"
 #include "spiH.h"
 #include "servo_control_obj.h"
 
@@ -57,6 +57,8 @@ bool gProjectileMachFovlast = 0; //0 - small   1 - big
 bool gProjectileGreFovlast = 0;
 static bool lastSHINE = 0;
 extern bool menu_jiancha_flag;
+extern double gGrenade2Machoffset;
+
 int xxxx = 12;
 CProcess021 * CProcess021::sThis = NULL;
 CProcess021::CProcess021()
@@ -405,6 +407,7 @@ void CProcess021::process_osd(void *pPrm)
 	memcpy(pCtrlObjLocal,pCtrlObj,sizeof(OSDCTRL_OBJ));
 //	memcpy(pCtrlObjbefore,pCtrlObjLocal,sizeof(OSDCTRL_OBJ));
 	OSDCTRL_draw_text(frame,pCtrlObjLocal);
+
 
 	flag = 1;
 	sThis->m_display.UpDateOsd(0);
@@ -3738,8 +3741,10 @@ void CProcess021::processCMD_BUTTON_UNLOCK(LPARAM lParam)
 		ResetScheduleFx();
 	}
 	if(OSDCTRL_IsOsdDisplay(eLwOrGen) && isBattleMode())
+	{
 		OSDCTRL_ItemHide(eLwOrGen);
-	
+		OSDCTRL_ItemHide(efenhua);
+	}
  	releaseServoContrl();
  	//OSA_printf("%s,line:%d ... processCMD_BUTTON_UNLOCK",__func__,__LINE__);
 	return ;
@@ -3916,6 +3921,8 @@ void CProcess021::processCMD_BUTTON_DOWN(LPARAM lParam)
 					Posd[eLwOrGen] = DynamicOsd[6];
 				OSDCTRL_ItemShow(eLwOrGen);
 				killDisplayJiuXutimer();
+				
+				OSDCTRL_ItemShow(efenhua);
 			}
 			else
 			{
@@ -4502,7 +4509,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 	{	
 		gMeasureType =(DIS_MEASURE_TYPE)(MEASURETYPE_MANUAL - gMeasureType);
 		Posd[eMeasureType] = MeasureTypeOsd[gMeasureType];
-		
+		gGrenade2Machoffset = 0;
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
 			DistanceManual = 0;

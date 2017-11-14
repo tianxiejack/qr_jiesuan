@@ -2836,6 +2836,7 @@ void * SPI_CAN_process(void * prm)
 		init_record_log(record_log_can,      "/config/log/record_log_can.txt");
 		init_record_log(record_log_can_send,      "/config/log/record_log_can_send.txt");								
 		#endif
+
 		InitDevice_spi();
 		
 		OpenCANDevice();
