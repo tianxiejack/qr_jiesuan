@@ -522,9 +522,10 @@ void Grenade2Mach_cbFxn(long lParam)
 		}
 		servoLookupGetPos();
 	}
-	else if(isBattleMode() && 
+	else if((isBattleMode() && 
 		(getProjectileType() == PROJECTILE_GRENADE_KILL || getProjectileType() == PROJECTILE_GRENADE_GAS) 
-		&& !isMeasureManual())
+		&& !isMeasureManual()) 
+		&& !(OSDCTRL_IsOsdDisplay(eDynamicZone) && Posd[eDynamicZone] == DynamicOsd[0]))
 	{
 		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() - getMach2GrenadeAngle();
 		#if 0
