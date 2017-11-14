@@ -4488,6 +4488,7 @@ void CProcess021::processCMD_MEASURE_DISTANCE_SWITCH(LPARAM lParam)
 		
 		if(MEASURETYPE_MANUAL == gMeasureType)
 		{
+			DistanceManual = 0;
 			if(isCalibrationZero())
 			{
 				OSDCTRL_ItemShine(eMeasureDis);

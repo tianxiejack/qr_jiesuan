@@ -661,8 +661,8 @@ static bool sssflag = 0;
 			
 			moveCrossCenter(output.AimOffsetX,output.AimOffsetY);
 			
-printf("2222222AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
-printf("2222222MIL2DEGREE(AimOffsetThetaY) = %f\n",MIL2DEGREE(output.AimOffsetThetaY));
+//printf("2222222AimOffsetThetaY = %f\n",output.AimOffsetThetaY);
+//printf("2222222MIL2DEGREE(AimOffsetThetaY) = %f\n",MIL2DEGREE(output.AimOffsetThetaY));
 	if(PROJECTILE_GRENADE_KILL == input.ProjectileType || PROJECTILE_GRENADE_GAS== input.ProjectileType)
 	{
 		setGrenadeDestTheta(MIL2DEGREE(output.AimOffsetThetaY) + getMachGunAngle());

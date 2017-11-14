@@ -512,7 +512,7 @@ void Grenade2Mach_cbFxn(long lParam)
 				getGrenadeServoContrlObj()->moveOffset(tmp,0);
 			else
 			{
-				printf("###done \n\n");
+				//printf("###done \n\n");
 				gGrenadeLoadFireFlag = 0;
 				//display jiu xu
 				OSDCTRL_ItemShow(eReady);
@@ -522,7 +522,9 @@ void Grenade2Mach_cbFxn(long lParam)
 		}
 		servoLookupGetPos();
 	}
-	else if(isBattleMode() && getProjectileType() == PROJECTILE_GRENADE_KILL && !isMeasureManual())
+	else if(isBattleMode() && 
+		(getProjectileType() == PROJECTILE_GRENADE_KILL || getProjectileType() == PROJECTILE_GRENADE_GAS) 
+		&& !isMeasureManual())
 	{
 		double tmp = getMachGunAngleAbs() - getGrenadeAngleAbs() - getMach2GrenadeAngle();
 		#if 0
