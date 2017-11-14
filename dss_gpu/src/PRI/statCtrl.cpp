@@ -326,6 +326,7 @@ void enterLevel3CalculatorIdle()
 void setServoAvailable(bool avail)
 {
 	bServoAavailable = avail;
+	printf("setServoAvailable avail = %d\n",avail);
 	if(avail)
 	{
 		Posd[eDynamicZone] = DynamicOsd[4];
@@ -899,6 +900,9 @@ void EnterCMD_BULLET_SWITCH1()
 	UpdataBoreSight();
 	setServoControlObj();
 
+	DistanceManual = 0;
+	LaserDistance = 0;
+	LaserDistance_m = 0;
 }
 
 
@@ -934,6 +938,10 @@ void EnterCMD_BULLET_SWITCH2( )
 	gProjectileType=PROJECTILE_GRENADE_KILL;
 	UpdataBoreSight();
 	setServoControlObj();
+	
+	DistanceManual = 0;
+	LaserDistance = 0;
+	LaserDistance_m = 0;
 }
 
 
@@ -972,6 +980,10 @@ void EnterCMD_BULLET_SWITCH3( )
 	}
 	UpdataBoreSight();
 	setServoControlObj();
+	
+	DistanceManual = 0;
+	LaserDistance = 0;
+	LaserDistance_m = 0;
 }
 
 

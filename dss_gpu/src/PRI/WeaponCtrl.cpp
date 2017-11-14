@@ -818,7 +818,7 @@ int WeaponCtrlPORT_ParseFrameByte_type0(unsigned char* buf)
 	if(BYTE1(FrameBuf0)!= BYTE3(buf)){
 		if(0x05==(BYTE3(buf)))   //�ŷ�����Ȩ���Ƿ�仯
 		{
-			setServoAvailable(TRUE);
+			//setServoAvailable(TRUE);
 			// Send CMD_Servo_Control_request_accepted
 		}
 	}
