@@ -409,10 +409,10 @@ void resetGrenadeInPositionFlag(void)
 
 void processCMD_SERVOTIMER_MACHGUN(LPARAM lParam)
 {
-	absPosRequest(CODE_GRENADE);
-	absPosRequest(CODE_MACHGUN);
-	absPosRequest(CODE_TURRET);
-	//servoLookupGetPos();
+	//absPosRequest(CODE_GRENADE);
+	//absPosRequest(CODE_MACHGUN);
+	//absPosRequest(CODE_TURRET);
+	servoLookupGetPos();
 	return ;
 }
 
@@ -1609,7 +1609,7 @@ int GetPosCanRecvParse(unsigned char * buf)
 {
 	if(stoh34(buf) == 0x4d53)
 		return buf[6];
-	return -1;
+	return 2;
 }
 
 int WeaponCtrlPort_ParseByte(BYTE* buf)

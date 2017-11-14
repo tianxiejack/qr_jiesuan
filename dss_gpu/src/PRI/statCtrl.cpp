@@ -1361,6 +1361,16 @@ void SCHEDULE_cbFxn(void* cbParam)
 	}
 	else if(SCHEDULE_RESET/*not timeout and angle not ok*/)
 	{	
+#if 0
+	printf("\n###############################\n");
+		printf("schedule machDone =%d\n",machDone);
+		printf("schedule grenadeDone =%d\n",grenadeDone);
+		printf("schedule TurretDone =%d\n",TurretDone);	
+		printf("schedule gMachGetPos =%d\n",gMachGetPos);
+		printf("schedule gGrenadeGetPos =%d\n",gGrenadeGetPos);
+		printf("schedule gGrenadeGetPos =%d\n",gTurretGetPos);
+	printf("\n###############################\n");
+#endif
 		#if 1
 		if(guiling && gTurretGetPos==0) 
 		{
@@ -1375,6 +1385,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		if(guiling && gGrenadeGetPos==0) 
 		{
 			x = -(getGrenadeAngleAbs());
+	//printf("schedule getGrenadeAngleAbs =%f\n",getGrenadeAngleAbs());
 			if(abs(x)>1)
 				getGrenadeServoContrlObj()->moveOffset(x,0);
 			else
@@ -1386,6 +1397,7 @@ void SCHEDULE_cbFxn(void* cbParam)
 		if(guiling && gMachGetPos==0 ) 
 		{
 			y = (getMachGunAngleAbs());
+	//printf("schedule getMachGunAngleAbs =%f\n",getMachGunAngleAbs());
 			if(abs(y)>1)
 				getMachGunServoContrlObj()->moveOffset(0,y);
 			else
@@ -1401,11 +1413,16 @@ void SCHEDULE_cbFxn(void* cbParam)
 			OSDCTRL_NoShineShow();
 			startDisplayJiuXuTimer();
 			guiling = 0;
+		#if 0
+		printf("\n#############LAST##############\n");
+		printf("schedule machDone =%d\n",machDone);
+		printf("schedule grenadeDone =%d\n",grenadeDone);
+		printf("schedule TurretDone =%d\n",TurretDone);
+		printf("\n#############LAST##############\n");
+		#endif
 			return;
 		}
-	printf("schedule TurretDone =%d\n",TurretDone);
-	printf("schedule machDone =%d\n",machDone);
-	printf("schedule grenadeDone =%d\n",grenadeDone);
+
 		if(!guiling)
 		{
 			TurretDone = 0;
