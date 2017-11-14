@@ -3830,6 +3830,7 @@ void CProcess021::processCMD_BUTTON_UP(LPARAM lParam)
 			LwOrGenflag = 0;
 			OSDCTRL_ItemHide(eLwOrGen);	
 			increaseMeasureDis();
+			OSDCTRL_ItemHide(efenhua);
 			loadFiringTable_Enter();
 		}
 	}

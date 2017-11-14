@@ -279,6 +279,8 @@ void DrawString(Mat frame, int startx, int starty, char *pString, UInt32 frcolor
 			}
 			else if(index == 95)
 			{
+				if(lastnumflag)
+					lenctl += 36;
 				lastxhxflag = 1;
 				lastmhflag   = 0;
 				lastnumflag = 0;
