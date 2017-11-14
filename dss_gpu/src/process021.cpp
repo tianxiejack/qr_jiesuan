@@ -4208,7 +4208,7 @@ void CProcess021::processCMD_BUTTON_ENTER(LPARAM lParam)
 			}
 			else if(isCalibrationHorizen())
 			{
-				if(menu_jiancha_flag)
+				if(!menu_jiancha_flag)
 				{
 					//gTurret_ZCTable.Angle = getTurretTheta();
 					//gMachineGun_ZCTable.Angle = getMachGunAngleAbs();
@@ -4605,7 +4605,7 @@ void CProcess021::processCMD_CALIBRATION_SWITCH_TO_HORIZEN(LPARAM lParam)
  {
 	if(isCalibrationMode())
 	{
-		menu_jiancha_flag = 1;
+		menu_jiancha_flag = 0;
 		gLevel2CalibrationState = STATE_CALIBRATION_HORIZEN;
 		//update OSDdisplay
 			//initilGeneralParam();

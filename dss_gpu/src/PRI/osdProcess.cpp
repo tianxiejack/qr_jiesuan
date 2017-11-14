@@ -49,7 +49,7 @@ char tmparray[12] = "abcdef";
 bool AdCalibMenuFlag = false; 
 extern bool isMaintPortOpen;
 
-bool menu_jiancha_flag = 0;
+bool menu_jiancha_flag = 0;	// note 0 -- stand for  cunchu    1 stand for jiancha
 
 #if 1
 const char ModeOsd[9][8]=
@@ -1884,13 +1884,22 @@ int ls2tmp = 0000;
 				sprintf(pStr,"%c%c<->",203,184); // jian cha	
 			break;
 		case eCalibHorizen_Pos:
-			sprintf(pStr,"%c%c_X:%+08.3f",216,236,getTurretTheta()); 		//����
+			if(menu_jiancha_flag)
+				sprintf(pStr,"%c%c_X:%+08.3f",216,236,getTurretTheta()); 
+			else
+				sprintf(pStr,"%c%c_X:%+08.3f",216,236,gTurret_DP_Angle); 		//����
 			break;
 		case eCalibHorizen_Mach:
-			sprintf(pStr,"%c%c_Y:%+08.3f",200,216,getMachGunAngleAbs()); 		//��ǹ
+			if(menu_jiancha_flag)
+				sprintf(pStr,"%c%c_Y:%+08.3f",200,216,getMachGunAngleAbs()); 		//��ǹ
+			else
+				sprintf(pStr,"%c%c_X:%+08.3f",216,236,gMach_DP_Angle);
 			break;
 		case eCalibHorizen_Grenade:
-			sprintf(pStr,"%c%c_Y:%+08.3f",211,175,getGrenadeAngleAbs()); 		//��
+			if(menu_jiancha_flag)
+				sprintf(pStr,"%c%c_Y:%+08.3f",211,175,getGrenadeAngleAbs()); 		//��
+			else
+				sprintf(pStr,"%c%c_X:%+08.3f",216,236,gGrenade_DP_Angle);
 			break;
 		case eCalibGenPram_Menu:
 			sprintf(pStr,"VF-Degree"); 		//���
