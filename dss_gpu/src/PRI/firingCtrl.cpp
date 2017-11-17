@@ -332,33 +332,45 @@ static double getGrenadeDipAngleCorrection(double dipAngle)
 static int visualCorrection(FiringInputs *input, CorrectionDelta* output)
 {
 	static const int ZeroPointDistance = 500; //getZeroDistance(input->ProjectileType);
-	static const double XGapLaser_to_MachineGun = 0.000;//0.005;
+	static const double XGapLaser_to_MachineGun = 0.104;//0.005;
 	static const double YGapLaser_to_MachineGun = 0.000;//0.01;
-	static const double XGapLaser_to_grenade = 1.000;//0.405;
-	static const double YGapLaser_to_grenade = 0.000;//0.01;
+	static const double XGapLaser_to_grenade = 0.945;//0.405;
+	static const double YGapLaser_to_grenade = -0.025;//0.01;
 
 	double zeroPointThetaX, zeroPointThetaY, expectedThetaX, expectedThetaY;
 	if(input->ProjectileType == PROJECTILE_BULLET)
 	{
+		#if 0
 		zeroPointThetaX = XGapLaser_to_MachineGun/ZeroPointDistance;
 		zeroPointThetaY = YGapLaser_to_MachineGun/ZeroPointDistance;
 
 		expectedThetaX = XGapLaser_to_MachineGun/input->TargetDistance;
 		expectedThetaY = YGapLaser_to_MachineGun/input->TargetDistance;
+		#endif
+		expectedThetaX = XGapLaser_to_MachineGun*((input->TargetDistance - ZeroPointDistance))*(3/(ZeroPointDistance*PI)*0.001);
+		expectedThetaY = YGapLaser_to_MachineGun*((input->TargetDistance - ZeroPointDistance))*(3/(ZeroPointDistance*PI)*0.001);
+
+		
 	}
 	else if(input->ProjectileType == PROJECTILE_GRENADE_KILL || 
 		input->ProjectileType == PROJECTILE_GRENADE_GAS)
 	{
+		#if 0
 		zeroPointThetaX = XGapLaser_to_grenade/ZeroPointDistance;
 		zeroPointThetaY = YGapLaser_to_grenade/ZeroPointDistance;
 
 		expectedThetaX = XGapLaser_to_grenade/input->TargetDistance;
 		expectedThetaY = YGapLaser_to_grenade/input->TargetDistance;
-		
+		#endif
+		expectedThetaX = XGapLaser_to_grenade*((input->TargetDistance - ZeroPointDistance))*(3/(ZeroPointDistance*PI)*0.001);
+		expectedThetaY = YGapLaser_to_grenade*((input->TargetDistance - ZeroPointDistance))*(3/(ZeroPointDistance*PI)*0.001);
+
 	}
 	
-	output->DeltaThetaX = RADIAN2MIL(zeroPointThetaX - expectedThetaX);
-	output->DeltaThetaY = RADIAN2MIL(zeroPointThetaY - expectedThetaY);
+	//output->DeltaThetaX = RADIAN2MIL(zeroPointThetaX - expectedThetaX);
+	//output->DeltaThetaY = RADIAN2MIL(zeroPointThetaY - expectedThetaY);
+	output->DeltaThetaX = RADIAN2MIL(expectedThetaX);
+	output->DeltaThetaY = RADIAN2MIL(expectedThetaY);
 
 	return 0;
 }
@@ -430,10 +442,23 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 	ParamInMid.trunnionCalib.x 	= trunnionCalib.DeltaThetaX;
 	ParamInMid.trunnionCalib.y 	= trunnionCalib.DeltaThetaY;
 
+printf("***************output->AimOffsetThetaX********************\n");
+printf("visualCalib.DeltaThetaX = %f\n",visualCalib.DeltaThetaX);
+printf("output->AimOffsetThetaX = %f\n",output->AimOffsetThetaX);
+printf("trunnionCalib.DeltaThetaX = %f\n",trunnionCalib.DeltaThetaX);	
+printf("***************output->AimOffsetThetaX********************\n");
+printf("***************output->AimOffsetThetaY********************\n");
+printf("visualCalib.DeltaThetaY = %f\n",visualCalib.DeltaThetaY);
+printf("output->AimOffsetThetaY = %f\n",output->AimOffsetThetaY);
+printf("trunnionCalib.DeltaThetaY = %f\n",trunnionCalib.DeltaThetaY);	
+printf("***************output->AimOffsetThetaY********************\n");
+
 	output->AimOffsetThetaX = visualCalib.DeltaThetaX + output->AimOffsetThetaX + trunnionCalib.DeltaThetaX;
 	output->AimOffsetThetaY = visualCalib.DeltaThetaY + output->AimOffsetThetaY + trunnionCalib.DeltaThetaY;
 
-	
+
+
+
 	if(PROJECTILE_GRENADE_KILL == input->ProjectileType || PROJECTILE_GRENADE_GAS == input->ProjectileType)
 	{
 		output->AimOffsetThetaY = output->AimOffsetThetaY + getGrenadeDipAngleCorrection(thetaDip);

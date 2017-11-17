@@ -1538,8 +1538,8 @@ int ls2tmp = 0000;
 			sprintf(pStr,"%s",Posd[eSuperOrder]);//); //��ǹ��
 			break;
 		case eWeather1:
-			//sprintf(pStr,"T%+02d P%03dk",Temparature,Pressure/10000);//gWeatherTable.Temparature,gWeatherTable.Pressure/1000); 
-			sprintf(pStr,"T%+03d",Temparature);
+			//sprintf(pStr,"T%+03d",Temparature);
+			sprintf(pStr,"T%+03d",gWeatherTable.Temparature);
 			break;
 		
 		case eWeather1_T:
