@@ -117,7 +117,7 @@ int process_decode(struct RS422_data * pRS422_data)
 #if 1
 				PlatformThetaX = buf[3]<<8|buf[2];
 				PlatformThetaY = buf[5]<<8|buf[4];
-				Temperature =  buf[7]<<8|buf[6];
+				//Temperature =  buf[7]<<8|buf[6];
 				
 //printf("Temperature = %d\n",Temperature);
 #if 0
