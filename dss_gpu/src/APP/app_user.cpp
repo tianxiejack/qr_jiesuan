@@ -12,7 +12,7 @@
 *               static Int32 APP_create( );
 *               static Int32 APP_destroy( );
 *               static Int32 APP_start( );
-*               static Int32 APP_stop( );
+*               static Int32 APP_stop( ); 
 *               static Int32 APP_getStatus( );
 *               static Int32 APP_control( );
 *               static Int32 APP_getConfig( );

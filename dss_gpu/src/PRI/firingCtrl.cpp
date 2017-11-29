@@ -427,6 +427,22 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 	if(ret < 0)
 		return ret;
 
+	if(input.ProjectileType == PROJECTILE_BULLET)
+	{
+		output->correctionData.deltaX = gMachineGun_GCParam.data.deltaX;
+		output->correctionData.deltaY= gMachineGun_GCParam.data.deltaY;
+	}
+	else if(input.ProjectileType == PROJECTILE_GRENADE_KILL)
+	{
+		output->correctionData.deltaX = gGrenadeKill_GCParam.data.deltaX;
+		output->correctionData.deltaY = gGrenadeKill_GCParam.data.deltaY;
+	}
+	else if(input.ProjectileType == PROJECTILE_GRENADE_GAS)
+	{
+		output->correctionData.deltaX = gGrenadeGas_GCParam.data.deltaX;
+		output->correctionData.deltaY = gGrenadeGas_GCParam.data.deltaY;
+	}
+	
 	memset((void *)&ParamInMid,0,sizeof(ParamInMid));
 	ParamInMid.correctionCalib.x= output->correctionData.deltaX;
 	ParamInMid.correctionCalib.y= output->correctionData.deltaY;
@@ -442,6 +458,11 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 	ParamInMid.trunnionCalib.x 	= trunnionCalib.DeltaThetaX;
 	ParamInMid.trunnionCalib.y 	= trunnionCalib.DeltaThetaY;
 
+
+	output->AimOffsetThetaX = visualCalib.DeltaThetaX + output->AimOffsetThetaX + trunnionCalib.DeltaThetaX;
+	output->AimOffsetThetaY = visualCalib.DeltaThetaY + output->AimOffsetThetaY + trunnionCalib.DeltaThetaY;
+
+#if 0
 printf("***************output->AimOffsetThetaX********************\n");
 printf("visualCalib.DeltaThetaX = %f\n",visualCalib.DeltaThetaX);
 printf("output->AimOffsetThetaX = %f\n",output->AimOffsetThetaX);
@@ -452,12 +473,7 @@ printf("visualCalib.DeltaThetaY = %f\n",visualCalib.DeltaThetaY);
 printf("output->AimOffsetThetaY = %f\n",output->AimOffsetThetaY);
 printf("trunnionCalib.DeltaThetaY = %f\n",trunnionCalib.DeltaThetaY);	
 printf("***************output->AimOffsetThetaY********************\n");
-
-	output->AimOffsetThetaX = visualCalib.DeltaThetaX + output->AimOffsetThetaX + trunnionCalib.DeltaThetaX;
-	output->AimOffsetThetaY = visualCalib.DeltaThetaY + output->AimOffsetThetaY + trunnionCalib.DeltaThetaY;
-
-
-
+#endif
 
 	if(PROJECTILE_GRENADE_KILL == input->ProjectileType || PROJECTILE_GRENADE_GAS == input->ProjectileType)
 	{
