@@ -8,6 +8,7 @@
 #include <math.h>
 //#include "OSDCtrl.h"
 #include "permanentStorage.h"
+#include "statCtrl.h"
 
 enum {
 	DIP_ANGLE_40,
@@ -427,17 +428,17 @@ int FiringCtrl( FiringInputs *input, FiringOutputs* output)
 	if(ret < 0)
 		return ret;
 
-	if(input.ProjectileType == PROJECTILE_BULLET)
+	if(getProjectileType()== PROJECTILE_BULLET)
 	{
 		output->correctionData.deltaX = gMachineGun_GCParam.data.deltaX;
 		output->correctionData.deltaY= gMachineGun_GCParam.data.deltaY;
 	}
-	else if(input.ProjectileType == PROJECTILE_GRENADE_KILL)
+	else if(getProjectileType() == PROJECTILE_GRENADE_KILL)
 	{
 		output->correctionData.deltaX = gGrenadeKill_GCParam.data.deltaX;
 		output->correctionData.deltaY = gGrenadeKill_GCParam.data.deltaY;
 	}
-	else if(input.ProjectileType == PROJECTILE_GRENADE_GAS)
+	else if(getProjectileType() == PROJECTILE_GRENADE_GAS)
 	{
 		output->correctionData.deltaX = gGrenadeGas_GCParam.data.deltaX;
 		output->correctionData.deltaY = gGrenadeGas_GCParam.data.deltaY;
